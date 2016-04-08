@@ -1,0 +1,73 @@
+package com.qa.framework.library.reflect;
+
+import org.apache.log4j.Logger;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
+
+/**
+ * Created by kcgw001 on 2016/3/14.
+ */
+public class AutoInjectHelper {
+    /**
+     * The constant logger.
+     */
+    protected final static Logger logger = Logger.getLogger(AutoInjectHelper.class);
+
+    /**
+     * Init fields.
+     *
+     * @param obj the obj
+     */
+    public static void initFields(Object obj) {
+        Class<?> clazz = obj.getClass();
+        boolean isAbs = Modifier.isAbstract(clazz.getModifiers());
+        while (clazz != Object.class && !isAbs) {
+            proxyFields(obj, clazz);
+            clazz = clazz.getSuperclass();
+            isAbs = Modifier.isAbstract(clazz.getModifiers());
+        }
+    }
+
+    private static void fillForFields(Object obj, Field[] fields) {
+        for (Field field : fields) {
+            if (field.getAnnotation(AutoInject.class) != null) {
+                Object proxy = null;
+                Constructor<?> con = null;
+                try {
+                    con = field.getType().getConstructor();
+                } catch (NoSuchMethodException e) {
+                    logger.error(e.toString(), e);
+                }
+                try {
+                    if (con != null) {
+                        proxy = con.newInstance();
+                    }
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                    logger.error(e.toString(), e);
+                }
+                try {
+                    field.setAccessible(true);
+                    field.set(obj, proxy);
+                } catch (IllegalAccessException e) {
+                    logger.error(e.toString(), e);
+                }
+            }
+        }
+    }
+
+    private static void proxyFields(Object obj, Class<?> clazz) {
+        do {
+            Field[] fields = clazz.getDeclaredFields();
+            fillForFields(obj, fields);
+
+            if (clazz.getSuperclass() == null) {
+                return;
+            }
+            clazz = clazz.getSuperclass();
+
+        } while (true);
+    }
+}
