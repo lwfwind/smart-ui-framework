@@ -1,6 +1,5 @@
 package com.qa.framework.library.admin;
 
-import com.qa.bean.Role.AdminAccount;
 import com.qa.framework.config.ProjectEnvironment;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.library.base.XMLHelper;

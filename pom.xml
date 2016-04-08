@@ -179,12 +179,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.htmlparser</groupId>
-            <artifactId>htmlparser</artifactId>
-            <version>2.1</version>
-        </dependency>
-
-        <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.10</version>
@@ -225,7 +219,7 @@
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                     <testFailureIgnore>true</testFailureIgnore>
                     <suiteXmlFiles>
-                        <suiteXmlFile>${basedir}/test-xml/FullTest_ST.xml</suiteXmlFile>
+                        <suiteXmlFile>${basedir}/test-xml/</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
             </plugin>
