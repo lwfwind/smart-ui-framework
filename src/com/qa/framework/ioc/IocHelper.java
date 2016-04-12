@@ -1,15 +1,15 @@
-package com.qa.framework.library.ioc;
+package com.qa.framework.ioc;
+
+import com.qa.framework.ioc.annotation.AutoInject;
+import com.qa.framework.ioc.annotation.Impl;
+import com.qa.framework.ioc.annotation.Service;
+import com.qa.framework.library.base.ArrayUtil;
+import com.qa.framework.library.base.CollectionHelper;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.qa.framework.library.base.ArrayUtil;
-import com.qa.framework.library.base.CollectionHelper;
-import com.qa.framework.library.ioc.annotation.AutoInject;
-import com.qa.framework.library.ioc.annotation.Impl;
-import com.qa.framework.library.ioc.annotation.Service;
 
 /**
  * 初始化 IOC 容器

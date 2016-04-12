@@ -1,4 +1,4 @@
-package com.qa.framework.library.ioc.annotation;
+package com.qa.framework.ioc.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -6,9 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Sets the default implementing class for the annotated interface.
+ * 定义 Service 类
+ *
+ * @author huangyong
+ * @since 1.0
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface AutoInject {
+public @interface Service {
 }

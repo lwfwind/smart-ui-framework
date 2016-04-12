@@ -1,8 +1,8 @@
 package com.qa.framework;
 
 
+import com.qa.framework.ioc.IocHelper;
 import com.qa.framework.library.base.ClassHelper;
-import com.qa.framework.library.ioc.IocHelper;
 
 /**
  * 加载相应的 Helper 类

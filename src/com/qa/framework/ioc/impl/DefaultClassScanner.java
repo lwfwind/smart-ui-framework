@@ -1,9 +1,9 @@
-package com.qa.framework.library.ioc.impl;
+package com.qa.framework.ioc.impl;
 
-import com.qa.framework.library.ioc.ClassScanner;
-import com.qa.framework.library.ioc.impl.support.AnnotationClassTemplate;
-import com.qa.framework.library.ioc.impl.support.ClassTemplate;
-import com.qa.framework.library.ioc.impl.support.SupperClassTemplate;
+import com.qa.framework.ioc.ClassScanner;
+import com.qa.framework.ioc.impl.support.AnnotationClassTemplate;
+import com.qa.framework.ioc.impl.support.ClassTemplate;
+import com.qa.framework.ioc.impl.support.SupperClassTemplate;
 
 import java.lang.annotation.Annotation;
 import java.util.List;

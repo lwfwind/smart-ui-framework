@@ -1,4 +1,4 @@
-package com.qa.framework.library.ioc.impl.support;
+package com.qa.framework.ioc.impl.support;
 
 import com.qa.framework.library.base.ClassHelper;
 import com.qa.framework.library.base.StringHelper;

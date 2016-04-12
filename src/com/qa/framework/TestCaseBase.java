@@ -22,7 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
 
-import static com.qa.framework.library.ioc.AutoInjectHelper.initFields;
+import static com.qa.framework.ioc.AutoInjectHelper.initFields;
 
 /**
  * Created by apple on 15/10/16.

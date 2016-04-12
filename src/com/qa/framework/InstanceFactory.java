@@ -1,8 +1,8 @@
 package com.qa.framework;
 
+import com.qa.framework.ioc.ClassScanner;
+import com.qa.framework.ioc.impl.DefaultClassScanner;
 import com.qa.framework.library.base.ReflectHelper;
-import com.qa.framework.library.ioc.ClassScanner;
-import com.qa.framework.library.ioc.impl.DefaultClassScanner;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

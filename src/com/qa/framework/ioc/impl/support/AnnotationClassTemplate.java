@@ -1,4 +1,4 @@
-package com.qa.framework.library.ioc.impl.support;
+package com.qa.framework.ioc.impl.support;
 
 import java.lang.annotation.Annotation;
 
