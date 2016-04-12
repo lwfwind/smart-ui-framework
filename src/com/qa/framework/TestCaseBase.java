@@ -22,7 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Set;
 
-import static com.qa.framework.library.reflect.AutoInjectHelper.initFields;
+import static com.qa.framework.library.ioc.AutoInjectHelper.initFields;
 
 /**
  * Created by apple on 15/10/16.
@@ -41,6 +41,7 @@ public abstract class TestCaseBase {
     @BeforeSuite(alwaysRun = true)
     public void BeforeSuite() throws Exception {
         logger.info("beforeSuite");
+        HelperLoader.init();
         Set<Class<? extends SuiteData>> subTypes = reflections.getSubTypesOf(SuiteData.class);
         if (subTypes.size() == 1) {
             Class<? extends SuiteData> clazz = subTypes.iterator().next();

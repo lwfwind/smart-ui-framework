@@ -1,6 +1,7 @@
-package com.qa.framework.library.reflect;
+package com.qa.framework.library.base;
 
 import com.qa.framework.library.base.StringHelper;
+import org.testng.internal.*;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -179,5 +180,20 @@ public class ReflectHelper {
             }
         }
         return stringBuilder.toString();
+    }
+
+    /**
+     * 通过反射创建实例
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T newInstance(String className) {
+        T instance;
+        try {
+            Class<?> commandClass = ClassHelper.loadClass(className);
+            instance = (T) commandClass.newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return instance;
     }
 }

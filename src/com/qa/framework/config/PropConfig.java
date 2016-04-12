@@ -1,7 +1,7 @@
 package com.qa.framework.config;
 
 
-import com.qa.framework.library.reflect.ReflectHelper;
+import com.qa.framework.library.base.ReflectHelper;
 
 import java.io.File;
 import java.io.FileReader;

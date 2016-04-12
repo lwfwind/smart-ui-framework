@@ -1,5 +1,6 @@
-package com.qa.framework.library.reflect;
+package com.qa.framework.library.ioc;
 
+import com.qa.framework.library.ioc.annotation.AutoInject;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Constructor;
