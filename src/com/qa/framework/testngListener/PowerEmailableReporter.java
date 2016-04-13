@@ -1,4 +1,4 @@
-package com.qa.framework.testngListener;
+package com.qa.framework.testnglistener;
 
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.library.base.IOHelper;

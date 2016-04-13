@@ -1,4 +1,4 @@
-package com.qa.framework.testngListener;
+package com.qa.framework.testnglistener;
 
 import org.testng.IAnnotationTransformer;
 import org.testng.IRetryAnalyzer;
