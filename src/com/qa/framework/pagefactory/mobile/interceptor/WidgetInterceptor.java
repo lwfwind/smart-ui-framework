@@ -16,10 +16,10 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
+import com.qa.framework.library.webdriver.Action;
 import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.mobile.AppiumFieldDecorator;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
-import com.qa.framework.library.webdriver.Action;
 import io.appium.java_client.pagefactory.TimeOutDuration;
 import io.appium.java_client.pagefactory.Widget;
 import io.appium.java_client.pagefactory.bys.ContentType;
@@ -44,19 +44,19 @@ import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.get
 
 public class WidgetInterceptor implements MethodInterceptor {
 
+    protected final ElementLocator locator;
+    protected final WebDriver driver;
+    protected final Field field;
+    protected final Action action;
     private final Map<ContentType, Constructor<? extends Widget>> instantiationMap;
     private final Map<ContentType, Widget> cachedInstances = new HashMap<>();
     private final TimeOutDuration duration;
-    private WebElement cachedElement;
-    protected final ElementLocator locator;
-    protected final WebDriver driver;
     protected Logger logger = Logger.getLogger(WidgetInterceptor.class);
-    protected final Field field;
-    protected final Action action;
+    private WebElement cachedElement;
 
     public WidgetInterceptor(CacheableLocator locator, WebDriver driver, WebElement cachedElement,
-                      Map<ContentType, Constructor<? extends Widget>> instantiationMap,
-                      TimeOutDuration duration, Field field) {
+                             Map<ContentType, Constructor<? extends Widget>> instantiationMap,
+                             TimeOutDuration duration, Field field) {
         this.cachedElement = cachedElement;
         this.instantiationMap = instantiationMap;
         this.duration = duration;
@@ -85,7 +85,7 @@ public class WidgetInterceptor implements MethodInterceptor {
     public Object intercept(Object obj, Method method, Object[] args,
                             MethodProxy proxy) throws Throwable {
         if (locator != null) {
-            if(Object.class.equals(method.getDeclaringClass())) {
+            if (Object.class.equals(method.getDeclaringClass())) {
                 return proxy.invokeSuper(obj, args);
             }
 

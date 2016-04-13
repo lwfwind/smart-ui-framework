@@ -2,7 +2,6 @@ package com.qa.framework.ioc.impl.support;
 
 /**
  * 用于获取子类的模板类
- *
  */
 public abstract class SupperClassTemplate extends ClassTemplate {
 

@@ -6,11 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 指定接口的实现类
+ * 定义 Service 类
+ *
+ * @author huangyong
+ * @since 1.0
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Impl {
-
-    Class<?> value();
+public @interface Page {
 }

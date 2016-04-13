@@ -4,7 +4,6 @@ import java.lang.annotation.Annotation;
 
 /**
  * 用于获取注解类的模板类
- *
  */
 public abstract class AnnotationClassTemplate extends ClassTemplate {
 

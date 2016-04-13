@@ -1,9 +1,9 @@
 package com.qa.framework;
 
 import com.qa.framework.cache.DriverCache;
+import com.qa.framework.library.webdriver.Action;
 import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.web.Element;
-import com.qa.framework.library.webdriver.Action;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.log4j.Logger;
@@ -26,11 +26,13 @@ public abstract class PageBase {
 
     public PageBase() {
         this.driver = DriverCache.get();
-        if (!isMobilePlat()) {
-            action = new Action(driver);
-            driver.manage().timeouts().pageLoadTimeout(120000, TimeUnit.MILLISECONDS);
+        if(this.driver != null) {
+            if (!isMobilePlat()) {
+                action = new Action(driver);
+                driver.manage().timeouts().pageLoadTimeout(120000, TimeUnit.MILLISECONDS);
+            }
+            initElements(this);
         }
-        initElements(this);
     }
 
     public boolean isMobilePlat() {

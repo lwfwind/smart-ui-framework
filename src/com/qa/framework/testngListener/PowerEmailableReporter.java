@@ -50,19 +50,15 @@ public class PowerEmailableReporter implements IReporter {
             return;
         }
         String sourceCodeEncoding = PropConfig.getSourceCodeEncoding();
-        if(sourceCodeEncoding != null){
+        if (sourceCodeEncoding != null) {
             builder.setEncoding(PropConfig.getSourceCodeEncoding());
-        }
-        else
-        {
+        } else {
             builder.setEncoding("UTF-8");
         }
         String sourceCodeDir = PropConfig.getSourceCodeDir();
-        if(sourceCodeDir != null){
+        if (sourceCodeDir != null) {
             builder.addSourceTree(new File(PropConfig.getSourceCodeDir()));
-        }
-        else
-        {
+        } else {
             builder.addSourceTree(new File("src"));
         }
         startHtml(m_out);

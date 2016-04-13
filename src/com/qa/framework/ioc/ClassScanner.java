@@ -5,7 +5,6 @@ import java.util.List;
 
 /**
  * 类扫描器
- *
  */
 public interface ClassScanner {
 

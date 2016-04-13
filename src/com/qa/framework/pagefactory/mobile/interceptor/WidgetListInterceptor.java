@@ -16,8 +16,8 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.qa.framework.pagefactory.mobile.ThrowableUtil;
 import com.qa.framework.library.webdriver.Action;
+import com.qa.framework.pagefactory.mobile.ThrowableUtil;
 import io.appium.java_client.pagefactory.TimeOutDuration;
 import io.appium.java_client.pagefactory.Widget;
 import io.appium.java_client.pagefactory.bys.ContentType;
@@ -43,19 +43,19 @@ import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.get
 
 public class WidgetListInterceptor implements MethodInterceptor {
 
+    protected final ElementLocator locator;
+    protected final Field field;
+    protected final Action action;
     private final Map<ContentType, Constructor<? extends Widget>> instantiationMap;
     private final List<Widget> cachedWidgets = new ArrayList<>();
     private final Class<? extends Widget> declaredType;
     private final TimeOutDuration duration;
     private final WebDriver driver;
-    private List<WebElement> cachedElements;
-    protected final ElementLocator locator;
     protected Logger logger = Logger.getLogger(WidgetListInterceptor.class);
-    protected final Field field;
-    protected final Action action;
+    private List<WebElement> cachedElements;
 
     public WidgetListInterceptor(CacheableLocator locator, WebDriver driver, Map<ContentType, Constructor<? extends Widget>> instantiationMap,
-                          Class<? extends Widget> declaredType, TimeOutDuration duration, Field field) {
+                                 Class<? extends Widget> declaredType, TimeOutDuration duration, Field field) {
         this.locator = locator;
         this.instantiationMap = instantiationMap;
         this.declaredType = declaredType;
@@ -67,7 +67,7 @@ public class WidgetListInterceptor implements MethodInterceptor {
 
     public Object intercept(Object obj, Method method, Object[] args,
                             MethodProxy proxy) throws Throwable {
-        if(Object.class.equals(method.getDeclaringClass())) {
+        if (Object.class.equals(method.getDeclaringClass())) {
             return proxy.invokeSuper(obj, args);
         }
 
@@ -96,7 +96,7 @@ public class WidgetListInterceptor implements MethodInterceptor {
                 ContentType type = getCurrentContentType(element);
                 Class<?>[] params = new Class<?>[]{instantiationMap.get(type).getParameterTypes()[0]};
                 cachedWidgets.add(ProxyFactory.getEnhancedProxy(declaredType, params, new Object[]{element},
-                        new WidgetInterceptor(null, driver, element, instantiationMap, duration,field)));
+                        new WidgetInterceptor(null, driver, element, instantiationMap, duration, field)));
             }
         }
         try {

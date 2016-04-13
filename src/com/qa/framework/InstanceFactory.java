@@ -9,7 +9,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 实例工厂
- *
  */
 public class InstanceFactory {
 

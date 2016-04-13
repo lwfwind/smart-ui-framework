@@ -4,7 +4,6 @@ import org.apache.commons.lang.ArrayUtils;
 
 /**
  * 数组操作工具类
- *
  */
 public class ArrayUtil {
 

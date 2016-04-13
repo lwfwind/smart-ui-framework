@@ -193,13 +193,13 @@ public class AppiumFieldDecorator implements FieldDecorator {
 
         if (isAlist) {
             return getEnhancedProxy(ArrayList.class,
-                    new WidgetListInterceptor(locator, originalDriver, map, widgetType, timeOutDuration,field));
+                    new WidgetListInterceptor(locator, originalDriver, map, widgetType, timeOutDuration, field));
         }
 
         Constructor<? extends Widget> constructor = WidgetConstructorUtil.findConvenientConstructor(widgetType);
         return getEnhancedProxy(widgetType, new Class[]{constructor.getParameterTypes()[0]},
                 new Object[]{proxyForAnElement(locator)}, new WidgetInterceptor(locator, originalDriver, null, map,
-                        timeOutDuration,field));
+                        timeOutDuration, field));
     }
 
     private WebElement proxyForAnElement(ElementLocator locator) {

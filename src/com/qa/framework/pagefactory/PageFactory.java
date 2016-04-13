@@ -29,7 +29,7 @@ public class PageFactory {
         }
     }
 
-    private static void proxyFields(WebDriver driver,Object page, Class<?> pageClass) {
+    private static void proxyFields(WebDriver driver, Object page, Class<?> pageClass) {
         Field[] fields = pageClass.getDeclaredFields();
         for (Field field : fields) {
             Object proxy = null;

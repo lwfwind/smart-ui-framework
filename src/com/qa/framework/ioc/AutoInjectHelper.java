@@ -35,19 +35,26 @@ public class AutoInjectHelper {
     private static void fillForFields(Object obj, Field[] fields) {
         for (Field field : fields) {
             if (field.getAnnotation(AutoInject.class) != null) {
-                Object proxy = null;
-                Constructor<?> con = null;
-                try {
-                    con = field.getType().getConstructor();
-                } catch (NoSuchMethodException e) {
-                    logger.error(e.toString(), e);
-                }
-                try {
-                    if (con != null) {
-                        proxy = con.newInstance();
+                Object proxy = IocContainer.getIocObject(field.getType());
+                if (proxy == null) {
+                    logger.info(field.getName() + " is not existed in IOC Container");
+                    Constructor<?> con = null;
+                    try {
+                        con = field.getType().getConstructor();
+                    } catch (NoSuchMethodException e) {
+                        logger.error(e.toString(), e);
                     }
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                    logger.error(e.toString(), e);
+                    try {
+                        if (con != null) {
+                            proxy = con.newInstance();
+                        }
+                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                        logger.error(e.toString(), e);
+                    }
+                }
+                else
+                {
+                    logger.info(field.getName() + " is existed in IOC Container");
                 }
                 try {
                     field.setAccessible(true);

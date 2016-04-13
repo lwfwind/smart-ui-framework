@@ -7,14 +7,13 @@ import java.util.List;
 
 /**
  * 根据条件获取相关类
- *
  */
 public class ClassFinder {
 
     /**
      * 获取基础包名
      */
-    private static final String basePackage = "src";
+    private static final String basePackage = "com.qa";
 
     /**
      * 获取 ClassScanner

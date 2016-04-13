@@ -16,9 +16,9 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
+import com.qa.framework.library.webdriver.Action;
 import com.qa.framework.pagefactory.mobile.ProxyUtil;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
-import com.qa.framework.library.webdriver.Action;
 import io.appium.java_client.MobileElement;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -42,8 +42,8 @@ public class ElementListInterceptor implements MethodInterceptor {
     protected final WebDriver driver;
     protected final Field field;
     protected final Action action;
-    private List<WebElement> proxyedElements;
     protected Logger logger = Logger.getLogger(ElementListInterceptor.class);
+    private List<WebElement> proxyedElements;
 
     public ElementListInterceptor(ElementLocator locator, WebDriver driver, Field field) {
         this.locator = locator;

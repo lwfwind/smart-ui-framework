@@ -1,11 +1,11 @@
 package com.qa.framework.testngListener;
 
-import com.qa.framework.config.PropConfig;
 import com.qa.framework.TestCaseBase;
 import com.qa.framework.bean.Method;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
 import com.qa.framework.cache.ResultCache;
+import com.qa.framework.config.PropConfig;
 import com.qa.framework.library.base.IOHelper;
 import com.qa.framework.library.base.StringHelper;
 import com.qa.framework.library.webdriver.Action;
@@ -42,15 +42,18 @@ public class TestResultListener extends TestListenerAdapter {
         String name = MethodCache.getCurrentMethodName();
         logger.error(name + " Failure");
         setResultCache(tr, "fail");
-        if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-            printAlertInfo(tr);
+        TestCaseBase tb = (TestCaseBase) tr.getInstance();
+        if(!tb.isUnitTest()){
+            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+                printAlertInfo(tr);
+            }
+            saveScreenShot(tr);
+            printBrowserInfo();
+            printStackTrace(tr);
         }
-        saveScreenShot(tr);
-        printBrowserInfo();
-        printStackTrace(tr);
     }
 
-    public void onFailure(ITestResult tr){
+    public void onFailure(ITestResult tr) {
 
     }
 
@@ -61,14 +64,17 @@ public class TestResultListener extends TestListenerAdapter {
         String name = MethodCache.getCurrentMethodName();
         logger.info(name + " Skipped");
         setResultCache(tr, "skip");
-        if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-            printAlertInfo(tr);
+        TestCaseBase tb = (TestCaseBase) tr.getInstance();
+        if(!tb.isUnitTest()) {
+            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+                printAlertInfo(tr);
+            }
+            printBrowserInfo();
+            printStackTrace(tr);
         }
-        printBrowserInfo();
-        printStackTrace(tr);
     }
 
-    public void onSkipped(ITestResult tr){
+    public void onSkipped(ITestResult tr) {
 
     }
 
@@ -79,11 +85,14 @@ public class TestResultListener extends TestListenerAdapter {
         String name = MethodCache.getCurrentMethodName();
         logger.info(name + " Success");
         setResultCache(tr, "pass");
-        printBrowserInfo();
+        TestCaseBase tb = (TestCaseBase) tr.getInstance();
+        if(!tb.isUnitTest()) {
+            printBrowserInfo();
+        }
         IOHelper.deleteDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
     }
 
-    public void onSuccess(ITestResult tr){
+    public void onSuccess(ITestResult tr) {
 
     }
 

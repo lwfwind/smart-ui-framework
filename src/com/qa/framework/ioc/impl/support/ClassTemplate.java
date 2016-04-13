@@ -16,7 +16,6 @@ import java.util.jar.JarFile;
 
 /**
  * 用于获取类的模板类
- *
  */
 public abstract class ClassTemplate {
 
