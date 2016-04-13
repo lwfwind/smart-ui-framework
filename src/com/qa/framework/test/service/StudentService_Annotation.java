@@ -1,6 +1,5 @@
 package com.qa.framework.test.service;
 
-import com.qa.framework.ServiceBase;
 import com.qa.framework.ioc.annotation.AutoInject;
 import com.qa.framework.ioc.annotation.Service;
 import com.qa.framework.test.page.student.LoginPage;

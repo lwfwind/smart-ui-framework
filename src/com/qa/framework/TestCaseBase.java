@@ -85,7 +85,7 @@ public abstract class TestCaseBase {
     @org.testng.annotations.BeforeClass(alwaysRun = true)
     public void BeforeClass(@Optional String browser, @Optional String hubURL) throws Exception {
         logger.info("beforeClass");
-        if(!isUnitTest()){
+        if (!isUnitTest()) {
             if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
                 if (hubURL != null) {
                     DesiredCapabilities capability = null;
@@ -119,7 +119,7 @@ public abstract class TestCaseBase {
     @AfterClass(alwaysRun = true)
     public void AfterClass() {
         logger.info("afterClass");
-        if(!isUnitTest()) {
+        if (!isUnitTest()) {
             if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
                 driver.quit();
             }
@@ -139,7 +139,7 @@ public abstract class TestCaseBase {
             currentMethodName = method.getName();
         }
         MethodCache.set(StringHelper.removeSpecialChar(currentMethodName));
-        if(!isUnitTest()) {
+        if (!isUnitTest()) {
             if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
                 driver.manage().deleteAllCookies();
             }

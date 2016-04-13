@@ -51,9 +51,7 @@ public class AutoInjectHelper {
                     } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
                         logger.error(e.toString(), e);
                     }
-                }
-                else
-                {
+                } else {
                     logger.info(field.getName() + " is existed in IOC Container");
                 }
                 try {

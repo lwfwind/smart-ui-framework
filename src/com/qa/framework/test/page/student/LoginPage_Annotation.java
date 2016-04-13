@@ -1,6 +1,5 @@
 package com.qa.framework.test.page.student;
 
-import com.qa.framework.PageBase;
 import com.qa.framework.ioc.annotation.Page;
 import org.apache.log4j.Logger;
 

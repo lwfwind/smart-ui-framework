@@ -43,7 +43,7 @@ public class TestResultListener extends TestListenerAdapter {
         logger.error(name + " Failure");
         setResultCache(tr, "fail");
         TestCaseBase tb = (TestCaseBase) tr.getInstance();
-        if(!tb.isUnitTest()){
+        if (!tb.isUnitTest()) {
             if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
                 printAlertInfo(tr);
             }
@@ -65,7 +65,7 @@ public class TestResultListener extends TestListenerAdapter {
         logger.info(name + " Skipped");
         setResultCache(tr, "skip");
         TestCaseBase tb = (TestCaseBase) tr.getInstance();
-        if(!tb.isUnitTest()) {
+        if (!tb.isUnitTest()) {
             if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
                 printAlertInfo(tr);
             }
@@ -86,7 +86,7 @@ public class TestResultListener extends TestListenerAdapter {
         logger.info(name + " Success");
         setResultCache(tr, "pass");
         TestCaseBase tb = (TestCaseBase) tr.getInstance();
-        if(!tb.isUnitTest()) {
+        if (!tb.isUnitTest()) {
             printBrowserInfo();
         }
         IOHelper.deleteDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
