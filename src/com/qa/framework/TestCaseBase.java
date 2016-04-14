@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.List;
 
 import static com.qa.framework.ioc.AutoInjectHelper.initFields;
+import static com.qa.framework.ioc.IocHelper.findImplementClass;
 
 /**
  * Created by apple on 15/10/16.
@@ -41,14 +42,10 @@ public abstract class TestCaseBase {
     public void BeforeSuite() throws Exception {
         logger.info("beforeSuite");
         HelperLoader.init();
-        List<Class<?>> subTypes = ClassFinder.getClassListBySuper(SuiteData.class);
-        if (subTypes.size() > 0) {
-            Class<?> clazz = subTypes.get(0);
-            Constructor<?> con = clazz.getConstructor();
-            if (con != null) {
-                suiteData = (SuiteData) con.newInstance();
-                suiteData.setup();
-            }
+        Class<?> clazz = findImplementClass(SuiteData.class);
+        if (clazz != null) {
+            suiteData = (SuiteData) clazz.newInstance();
+            suiteData.setup();
         }
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP")) {
             driver = DriverConfig.getDriverObject();
@@ -66,14 +63,10 @@ public abstract class TestCaseBase {
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP")) {
             driver.quit();
         }
-        List<Class<?>> subTypes = ClassFinder.getClassListBySuper(SuiteData.class);
-        if (subTypes.size() > 0) {
-            Class<?> clazz = subTypes.get(0);
-            Constructor<?> con = clazz.getConstructor();
-            if (con != null) {
-                suiteData = (SuiteData) con.newInstance();
-                suiteData.teardown();
-            }
+        Class<?> clazz = findImplementClass(SuiteData.class);
+        if (clazz != null) {
+            suiteData = (SuiteData) clazz.newInstance();
+            suiteData.teardown();
         }
         afterSuite();
     }

@@ -229,7 +229,7 @@ public class DriverConfig {
                         adb = new Adb();
                     }
                     capabilities = new DesiredCapabilities();
-                    capabilities.setCapability("deviceName", adb.getEmulatorName());
+                    capabilities.setCapability("deviceName", adb.getDeviceName());
                     capabilities.setCapability("app", app.getAbsolutePath());
                     driverObject = new AndroidDriver<>(new URL(appiumServerUrl), capabilities);
                     logger.info("Using Android Driver...");

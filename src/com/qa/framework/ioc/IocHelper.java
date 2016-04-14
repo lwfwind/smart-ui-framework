@@ -18,25 +18,16 @@ public class IocHelper {
         try {
             Map<Class<?>, Object> iocContainer = IocContainer.getIocMap();
             for (Map.Entry<Class<?>, Object> iocObjEntry : iocContainer.entrySet()) {
-                // 获取 Bean 类与 Bean 实例
                 Class<?> iocClass = iocObjEntry.getKey();
                 Object iocInstance = iocObjEntry.getValue();
-                // 获取 Bean 类中所有的字段（不包括父类中的方法）
                 Field[] fields = iocClass.getDeclaredFields();
                 if (ArrayUtil.isNotEmpty(fields)) {
-                    // 遍历所有的 Bean 字段
                     for (Field field : fields) {
-                        // 判断当前 Bean 字段是否带有 Inject 注解
                         if (field.isAnnotationPresent(AutoInject.class)) {
-                            // 获取 Bean 字段对应的接口
                             Class<?> interfaceClass = field.getType();
-                            // 获取 Bean 字段对应的实现类
                             Class<?> implementClass = findImplementClass(interfaceClass);
-                            // 若存在实现类，则执行以下代码
                             if (implementClass != null) {
-                                // 从 Bean Map 中获取该实现类对应的实现类实例
                                 Object implementInstance = iocContainer.get(implementClass);
-                                // 设置该 Bean 字段的值
                                 if (implementInstance != null) {
                                     field.setAccessible(true); // 将字段设置为 public
                                     field.set(iocInstance, implementInstance); // 设置字段初始值

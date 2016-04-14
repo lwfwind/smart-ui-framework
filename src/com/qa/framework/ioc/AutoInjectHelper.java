@@ -8,6 +8,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
+import static com.qa.framework.ioc.IocHelper.findImplementClass;
+
 /**
  * Created by kcgw001 on 2016/3/14.
  */
@@ -38,17 +40,12 @@ public class AutoInjectHelper {
                 Object proxy = IocContainer.getIocObject(field.getType());
                 if (proxy == null) {
                     logger.info(field.getName() + " is not existed in IOC Container");
-                    Constructor<?> con = null;
+                    Class<?> implementClass = findImplementClass(field.getType());
                     try {
-                        con = field.getType().getConstructor();
-                    } catch (NoSuchMethodException e) {
-                        logger.error(e.toString(), e);
-                    }
-                    try {
-                        if (con != null) {
-                            proxy = con.newInstance();
+                        if (implementClass != null) {
+                            proxy = implementClass.newInstance();
                         }
-                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                    } catch (InstantiationException | IllegalAccessException e) {
                         logger.error(e.toString(), e);
                     }
                 } else {

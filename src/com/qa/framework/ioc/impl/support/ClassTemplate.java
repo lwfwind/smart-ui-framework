@@ -36,6 +36,7 @@ public abstract class ClassTemplate {
             while (urls.hasMoreElements()) {
                 URL url = urls.nextElement();
                 if (url != null) {
+                    //logger.info(url.toString());
                     // 获取协议名（分为 file 与 jar）
                     String protocol = url.getProtocol();
                     if (protocol.equals("file")) {
@@ -50,8 +51,9 @@ public abstract class ClassTemplate {
                         while (jarEntries.hasMoreElements()) {
                             JarEntry jarEntry = jarEntries.nextElement();
                             String jarEntryName = jarEntry.getName();
+                            //logger.info(jarEntryName);
                             // 判断该 entry 是否为 class
-                            if (jarEntryName.endsWith(".class")) {
+                            if (jarEntryName.startsWith(packageName.replace(".", "/")) && jarEntryName.endsWith(".class")) {
                                 // 获取类名
                                 String className = jarEntryName.substring(0, jarEntryName.lastIndexOf(".")).replaceAll("/", ".");
                                 // 执行添加类操作

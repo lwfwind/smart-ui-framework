@@ -85,7 +85,7 @@ public class Adb {
         emulatorHelper2.restartEmulator();
 
         Adb emulatorHelper3 = new Adb();
-        logger.info(emulatorHelper3.getEmulatorName());
+        logger.info(emulatorHelper3.getDeviceName());
         emulatorHelper3.adbPush(ProjectEnvironment.resourcePath() + "upload.jpg", "/data/local/tmp");
         emulatorHelper3.adbPull("/data/local/tmp/upload.jpg", ProjectEnvironment.resourcePath() + "upload.jpg");
     }
@@ -252,7 +252,7 @@ public class Adb {
                 Process process = Runtime.getRuntime().exec(cmd);
                 ProcessHelper.getStreamResult(process);
                 Thread.sleep(60000L);
-                emulatorName = getEmulatorName();
+                emulatorName = getDeviceName();
                 start = waitForFullyBooted(600000, emulatorName);
                 Thread.sleep(5000L);
             } catch (Exception e) {
@@ -281,7 +281,7 @@ public class Adb {
         logger.info("Beginning adb remount.");
         for (int i = 0; i < 3; i++) {
             try {
-                String cmd = this.cmdShell + " adb -s " + getEmulatorName() + " remount";
+                String cmd = this.cmdShell + " adb -s " + getDeviceName() + " remount";
                 logger.info("cmd==" + cmd);
                 Process process = Runtime.getRuntime().exec(cmd);
                 String okResult = ProcessHelper.getStreamResult(process);
@@ -367,29 +367,23 @@ public class Adb {
     }
 
     /**
-     * Gets emulator name.
+     * Gets device name.
      *
-     * @return the emulator name
+     * @return the device name
      * @throws Exception the exception
      */
-    public String getEmulatorName()
+    public String getDeviceName()
             throws Exception {
         String result = listDevices();
-        String[] splitResult = result.split(" ");
-        logger.info("result==" + result);
-        for (int i = 0; i < splitResult.length; i++) {
-            logger.info("splitResult[" + i + "]" + splitResult[i]);
-            if (splitResult[i].contains("emulator")) {
-                String[] splitEmulator = splitResult[i].split("\r\n");
-                for (int j = 0; j < splitEmulator.length; j++) {
-                    logger.info("splitEmulator[" + j + "]" + splitEmulator[j]);
-                    if (splitEmulator[j].contains("emulator")) {
-                        return splitEmulator[j].split("\\s")[0];
-                    }
-                }
+        logger.info("listDevices: " + result);
+        String[] splitDevices = result.split("\r\n");
+        for (int j = 0; j < splitDevices.length; j++) {
+            if(splitDevices[j].contains("device") && !splitDevices[j].contains("devices")) {
+                logger.info("splitDevice[" + j + "]: " + splitDevices[j]);
+                return splitDevices[j].split("\\s")[0];
             }
         }
-        throw new Exception("启动模拟器后通过adb device 未找到模拟器名称");
+        throw new Exception("通过adb device 未找到设备名称");
     }
 
     /**
@@ -403,7 +397,7 @@ public class Adb {
         logger.info("Beginning modify hosts file.");
         for (int i = 0; i < 3; i++) {
             try {
-                String cmd = this.cmdShell + " adb -s " + getEmulatorName() + " push " + hostsFilePath + " /system/etc/";
+                String cmd = this.cmdShell + " adb -s " + getDeviceName() + " push " + hostsFilePath + " /system/etc/";
                 logger.info("cmd==" + cmd);
                 Process process = Runtime.getRuntime().exec(cmd);
                 ProcessHelper.getStreamResult(process, 10L, false, true);
@@ -429,7 +423,7 @@ public class Adb {
         for (int i = 0; i < 3; i++) {
             try {
                 logger.info("Beginning Install APK.");
-                String cmd = this.cmdShell + "adb -s " + getEmulatorName() + " wait-for-device install -r " + path;
+                String cmd = this.cmdShell + "adb -s " + getDeviceName() + " wait-for-device install -r " + path;
                 logger.info("cmd==" + cmd);
 
                 Process process = Runtime.getRuntime().exec(cmd);
@@ -459,7 +453,7 @@ public class Adb {
     public void unInstallApk(String packageName)
             throws Exception {
         logger.info("Beginning Uninstall APK.");
-        String cmd = this.cmdShell + "adb -s " + getEmulatorName() + " uninstall " + packageName;
+        String cmd = this.cmdShell + "adb -s " + getDeviceName() + " uninstall " + packageName;
         logger.info("cmd==" + cmd);
 
         Process process = Runtime.getRuntime().exec(cmd);
@@ -478,7 +472,7 @@ public class Adb {
     public void inputKeyEvent(int keyEnvent)
             throws Exception {
         logger.info("Beginning inputKeyEvent.");
-        String cmd = this.cmdShell + "adb -s " + getEmulatorName() + " shell input keyevent  " + keyEnvent;
+        String cmd = this.cmdShell + "adb -s " + getDeviceName() + " shell input keyevent  " + keyEnvent;
         logger.info("cmd==" + cmd);
 
         Process process = Runtime.getRuntime().exec(cmd);
@@ -496,7 +490,7 @@ public class Adb {
         try {
             logger.info("Beginning saveAllLogcat to sdcard.");
             IOHelper.creatFile(savePath);
-            String cmd = this.cmdShell + "adb -s " + getEmulatorName() + " logcat -v time > " + savePath;
+            String cmd = this.cmdShell + "adb -s " + getDeviceName() + " logcat -v time > " + savePath;
 
             logger.info("cmd==" + cmd);
             Process process;
@@ -554,7 +548,7 @@ public class Adb {
     public void clearLogcat()
             throws Exception {
         logger.info("Beginning clearLogcat.");
-        String cmd = this.cmdShell + "adb -s " + getEmulatorName() + " logcat -c";
+        String cmd = this.cmdShell + "adb -s " + getDeviceName() + " logcat -c";
         logger.info("cmd==" + cmd);
 
         Process process = Runtime.getRuntime().exec(cmd);
@@ -574,7 +568,7 @@ public class Adb {
             throws Exception {
         logger.info("Beginning adb Pull File.");
         for (int i = 0; i < 3; i++) {
-            String cmd = this.cmdShell + "adb -s " + getEmulatorName() + " pull " + fromPath + " " + toPath;
+            String cmd = this.cmdShell + "adb -s " + getDeviceName() + " pull " + fromPath + " " + toPath;
             logger.info("cmd==" + cmd);
 
             Process process = Runtime.getRuntime().exec(cmd);
@@ -615,7 +609,7 @@ public class Adb {
         logger.info("Beginning push file.");
         for (int i = 0; i < 3; i++) {
             try {
-                String cmd = this.cmdShell + " adb -s " + getEmulatorName() + " push " + fromPath + " " + toPath;
+                String cmd = this.cmdShell + " adb -s " + getDeviceName() + " push " + fromPath + " " + toPath;
                 logger.info("cmd==" + cmd);
                 Process process = Runtime.getRuntime().exec(cmd);
                 ProcessHelper.getStreamResult(process, timeOut, false, true);
@@ -651,7 +645,7 @@ public class Adb {
     public void adbRemoveFile(String filePath)
             throws Exception {
         logger.info("Beginning adbRemoveFile.");
-        String cmd = this.cmdShell + "adb -s " + getEmulatorName() + " shell rm " + filePath;
+        String cmd = this.cmdShell + "adb -s " + getDeviceName() + " shell rm " + filePath;
         logger.info("cmd==" + cmd);
 
         Process process = Runtime.getRuntime().exec(cmd);
@@ -676,7 +670,7 @@ public class Adb {
     public void adbRemoveDir(String dirPath)
             throws Exception {
         logger.info("Beginning adbRemoveDir.");
-        String cmd = this.cmdShell + "adb -s " + getEmulatorName() + " shell rm -r " + dirPath;
+        String cmd = this.cmdShell + "adb -s " + getDeviceName() + " shell rm -r " + dirPath;
         logger.info("cmd==" + cmd);
 
         Process process = Runtime.getRuntime().exec(cmd);
@@ -702,7 +696,7 @@ public class Adb {
     public String preMonkeyScript(String packageName) throws Exception {
         logger.info("*** start preMonkeyScript ***");
         String result = "";
-        String cmd = this.cmdShell + " adb -s " + getEmulatorName() + " shell monkey --throttle 100 --pct-motion 100 -p " + packageName + " 200";
+        String cmd = this.cmdShell + " adb -s " + getDeviceName() + " shell monkey --throttle 100 --pct-motion 100 -p " + packageName + " 200";
         logger.info("*** cmd ***" + cmd);
         try {
             Process process;
@@ -730,7 +724,7 @@ public class Adb {
     public String executeMonkeyScript(String scriptPath) throws Exception {
         logger.info("*** start executeMonkeyScript ***");
         String result = "";
-        String cmd = this.cmdShell + " adb -s " + getEmulatorName() + " shell monkey -v -f " + scriptPath + " 1";
+        String cmd = this.cmdShell + " adb -s " + getDeviceName() + " shell monkey -v -f " + scriptPath + " 1";
         logger.info("*** cmd ***" + cmd);
         try {
             Process process;
@@ -775,11 +769,11 @@ public class Adb {
             majornav = " --pct-majornav " + majornav;
         }
         int random = (int) (Math.random() * 1000.0D);
-        String cmd = this.cmdShell + "adb -s " + getEmulatorName() + " shell monkey -v -p " + packageName + " --ignore-crashes --ignore-timeouts --throttle " + interval + " -s " + random + touch + syskeys + majornav + " " + counts;
+        String cmd = this.cmdShell + "adb -s " + getDeviceName() + " shell monkey -v -p " + packageName + " --ignore-crashes --ignore-timeouts --throttle " + interval + " -s " + random + touch + syskeys + majornav + " " + counts;
         for (int i = 0; (("".equals(result)) || (result.contains("Error: Unknown option: --pct-syskeys"))) && (i < 3); i++) {
             if (result.contains("Error: Unknown option: --pct-syskeys")) {
                 majornav = " --pct-majornav " + String.valueOf(Long.parseLong(tmpSyskeys) + Long.parseLong(tmpMajornav));
-                cmd = this.cmdShell + "adb -s " + getEmulatorName() + " shell monkey -v -p " + packageName + " --ignore-crashes --ignore-timeouts --throttle " + interval + " -s " + random + touch + majornav + " " + counts;
+                cmd = this.cmdShell + "adb -s " + getDeviceName() + " shell monkey -v -p " + packageName + " --ignore-crashes --ignore-timeouts --throttle " + interval + " -s " + random + touch + majornav + " " + counts;
             }
             logger.info(cmd);
 
