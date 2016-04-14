@@ -34,11 +34,23 @@ public class IocContainer {
         }
     }
 
+    /**
+     * Gets ioc map.
+     *
+     * @return the ioc map
+     */
     public static Map<Class<?>, Object> getIocMap() {
         return container;
     }
 
 
+    /**
+     * Gets ioc object.
+     *
+     * @param <T> the type parameter
+     * @param cls the cls
+     * @return the ioc object
+     */
     @SuppressWarnings("unchecked")
     public static <T> T getIocObject(Class<T> cls) {
         if (!container.containsKey(cls)) {
@@ -47,6 +59,12 @@ public class IocContainer {
         return (T) container.get(cls);
     }
 
+    /**
+     * Sets ioc object.
+     *
+     * @param cls the cls
+     * @param obj the obj
+     */
     public static void setIocObject(Class<?> cls, Object obj) {
         container.put(cls, obj);
     }

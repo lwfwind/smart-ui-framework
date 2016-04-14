@@ -12,5 +12,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Impl {
 
+    /**
+     * Value class.
+     *
+     * @return the class
+     */
     Class<?> value();
 }

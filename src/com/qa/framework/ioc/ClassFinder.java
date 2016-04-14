@@ -22,6 +22,8 @@ public class ClassFinder {
 
     /**
      * 获取基础包名中的所有类
+     *
+     * @return the class list
      */
     public static List<Class<?>> getClassList() {
         return classScanner.getClassList(basePackage);
@@ -29,6 +31,9 @@ public class ClassFinder {
 
     /**
      * 获取基础包名中指定父类或接口的相关类
+     *
+     * @param superClass the super class
+     * @return the class list by super
      */
     public static List<Class<?>> getClassListBySuper(Class<?> superClass) {
         return classScanner.getClassListBySuper(basePackage, superClass);
@@ -36,6 +41,9 @@ public class ClassFinder {
 
     /**
      * 获取基础包名中指定注解的相关类
+     *
+     * @param annotationClass the annotation class
+     * @return the class list by annotation
      */
     public static List<Class<?>> getClassListByAnnotation(Class<? extends Annotation> annotationClass) {
         return classScanner.getClassListByAnnotation(basePackage, annotationClass);

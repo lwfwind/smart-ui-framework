@@ -76,7 +76,13 @@ public class AppiumFieldDecorator implements FieldDecorator {
 
             };
 
+    /**
+     * The constant DEFAULT_IMPLICITLY_WAIT_TIMEOUT.
+     */
     public static long DEFAULT_IMPLICITLY_WAIT_TIMEOUT = 1;
+    /**
+     * The constant DEFAULT_TIMEUNIT.
+     */
     public static TimeUnit DEFAULT_TIMEUNIT = TimeUnit.SECONDS;
     private final WebDriver originalDriver;
     private final DefaultFieldDecorator defaultElementFieldDecoracor;
@@ -86,10 +92,23 @@ public class AppiumFieldDecorator implements FieldDecorator {
     private final TimeOutDuration timeOutDuration;
     private Field field;
 
+    /**
+     * Instantiates a new Appium field decorator.
+     *
+     * @param context               the context
+     * @param implicitlyWaitTimeOut the implicitly wait time out
+     * @param timeUnit              the time unit
+     */
     public AppiumFieldDecorator(SearchContext context, long implicitlyWaitTimeOut, TimeUnit timeUnit) {
         this(context, new TimeOutDuration(implicitlyWaitTimeOut, timeUnit));
     }
 
+    /**
+     * Instantiates a new Appium field decorator.
+     *
+     * @param context         the context
+     * @param timeOutDuration the time out duration
+     */
     public AppiumFieldDecorator(SearchContext context, TimeOutDuration timeOutDuration) {
         this.originalDriver = unpackWebDriverFromSearchContext(context);
         platform = getPlatform(originalDriver);
@@ -142,6 +161,11 @@ public class AppiumFieldDecorator implements FieldDecorator {
                 new WidgetByBuilder(platform, automation));
     }
 
+    /**
+     * Instantiates a new Appium field decorator.
+     *
+     * @param context the context
+     */
     public AppiumFieldDecorator(SearchContext context) {
         this(context, DEFAULT_IMPLICITLY_WAIT_TIMEOUT, DEFAULT_TIMEUNIT);
     }

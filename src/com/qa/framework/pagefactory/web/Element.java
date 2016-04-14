@@ -9,17 +9,43 @@ import org.openqa.selenium.internal.WrapsElement;
  */
 @ImplementedBy(ElementImpl.class)
 public interface Element extends WebElement, WrapsElement, Locatable {
+    /**
+     * Mouse over.
+     */
     void mouseOver();
 
+    /**
+     * Scroll into view.
+     *
+     * @param basedByTop the based by top
+     */
     void scrollIntoView(boolean basedByTop);
 
+    /**
+     * High light.
+     */
     void highLight();
 
+    /**
+     * Gets hide attribute.
+     *
+     * @param attribute the attribute
+     * @return the hide attribute
+     */
     String getHideAttribute(String attribute);
 
+    /**
+     * Remove read only.
+     */
     void removeReadOnly();
 
+    /**
+     * Add read only.
+     */
     void addReadOnly();
 
+    /**
+     * Double click.
+     */
     void doubleClick();
 }

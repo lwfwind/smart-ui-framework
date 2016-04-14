@@ -21,12 +21,25 @@ public abstract class ClassTemplate {
 
     private static final Logger logger = Logger.getLogger(ClassTemplate.class);
 
+    /**
+     * The Package name.
+     */
     protected final String packageName;
 
+    /**
+     * Instantiates a new Class template.
+     *
+     * @param packageName the package name
+     */
     protected ClassTemplate(String packageName) {
         this.packageName = packageName;
     }
 
+    /**
+     * Gets class list.
+     *
+     * @return the class list
+     */
     public final List<Class<?>> getClassList() {
         List<Class<?>> classList = new ArrayList<Class<?>>();
         try {
@@ -122,6 +135,9 @@ public abstract class ClassTemplate {
 
     /**
      * 验证是否允许添加类
+     *
+     * @param cls the cls
+     * @return the boolean
      */
     public abstract boolean checkAddClass(Class<?> cls);
 }

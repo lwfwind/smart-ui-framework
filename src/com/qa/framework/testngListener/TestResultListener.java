@@ -53,6 +53,11 @@ public class TestResultListener extends TestListenerAdapter {
         }
     }
 
+    /**
+     * On failure.
+     *
+     * @param tr the tr
+     */
     public void onFailure(ITestResult tr) {
 
     }
@@ -74,6 +79,11 @@ public class TestResultListener extends TestListenerAdapter {
         }
     }
 
+    /**
+     * On skipped.
+     *
+     * @param tr the tr
+     */
     public void onSkipped(ITestResult tr) {
 
     }
@@ -92,6 +102,11 @@ public class TestResultListener extends TestListenerAdapter {
         IOHelper.deleteDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
     }
 
+    /**
+     * On success.
+     *
+     * @param tr the tr
+     */
     public void onSuccess(ITestResult tr) {
 
     }

@@ -29,6 +29,9 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Driver config.
+ */
 public class DriverConfig {
     private static final String UNKNOWN_BROWSER_TYPE = "' is an unknown browser type!";
     private static final String INTERNET_EXPLORER = "internet explorer";
@@ -99,7 +102,9 @@ public class DriverConfig {
      * Create and get the corresponding driver object based upon the selected
      * browserType Initialized in construct.
      *
-     * @return WebDriver
+     * @param browserType the browser type
+     * @return WebDriver driver object
+     * @throws Exception the exception
      */
     public static synchronized WebDriver getDriverObject(selectedBrowser browserType) throws Exception {
         try {
@@ -247,6 +252,12 @@ public class DriverConfig {
         return driverObject;
     }
 
+    /**
+     * Gets driver object.
+     *
+     * @return the driver object
+     * @throws Exception the exception
+     */
     public static WebDriver getDriverObject() throws Exception {
         if (!stack.isEmpty()) {
             setBrowser(stack.pop());
@@ -316,18 +327,65 @@ public class DriverConfig {
         return capabilities;
     }
 
+    /**
+     * Gets browser type.
+     *
+     * @return the browser type
+     */
     public static selectedBrowser getBrowserType() {
         return browserType;
     }
 
+    /**
+     * The enum Selected browser.
+     */
     public static enum selectedBrowser {
 
-        FIREFOX, IE, SAFARI, OPERA, GOOGLECHROME, ANDROIDAPP, IOSAPP, HTMLUNIT
+        /**
+         * Firefox selected browser.
+         */
+        FIREFOX, /**
+         * Ie selected browser.
+         */
+        IE, /**
+         * Safari selected browser.
+         */
+        SAFARI, /**
+         * Opera selected browser.
+         */
+        OPERA, /**
+         * Googlechrome selected browser.
+         */
+        GOOGLECHROME, /**
+         * Androidapp selected browser.
+         */
+        ANDROIDAPP, /**
+         * Iosapp selected browser.
+         */
+        IOSAPP, /**
+         * Htmlunit selected browser.
+         */
+        HTMLUNIT
     }
 
     private static enum htmlUnitEmulation {
 
-        NONE, FIREFOX, IE6, IE7, IE8
+        /**
+         * None html unit emulation.
+         */
+        NONE, /**
+         * Firefox html unit emulation.
+         */
+        FIREFOX, /**
+         * Ie 6 html unit emulation.
+         */
+        IE6, /**
+         * Ie 7 html unit emulation.
+         */
+        IE7, /**
+         * Ie 8 html unit emulation.
+         */
+        IE8
     }
 
 }

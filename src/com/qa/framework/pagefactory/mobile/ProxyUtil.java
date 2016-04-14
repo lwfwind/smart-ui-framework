@@ -26,6 +26,12 @@ public class ProxyUtil {
                 }
             };
 
+    /**
+     * Gets type for proxy.
+     *
+     * @param driverClass the driver class
+     * @return the type for proxy
+     */
     public static Class<?> getTypeForProxy(Class<? extends SearchContext> driverClass) {
         Iterable<Map.Entry<Class<? extends SearchContext>, Class<? extends WebElement>>> rules = elementRuleMap.entrySet();
         //it will return MobileElement subclass when here is something

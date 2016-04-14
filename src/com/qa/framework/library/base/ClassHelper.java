@@ -12,6 +12,11 @@ public class ClassHelper {
     private final static Logger logger = Logger
             .getLogger(ClassHelper.class);
 
+    public static void main(String[] args) {
+        logger.info(getClassLoader());
+        logger.info(getClassPath());
+    }
+
     /**
      * 获取类加载器
      */

@@ -22,6 +22,9 @@ import static com.qa.framework.pagefactory.web.ImplementedByProcessor.getImpleme
  */
 public class ElementListHandler implements InvocationHandler {
 
+    /**
+     * The Action.
+     */
     protected final Action action;
     private final WebDriver driver;
     private final ElementLocator locator;
@@ -29,6 +32,9 @@ public class ElementListHandler implements InvocationHandler {
     private final Class<?> implementtingType;
     private final String logicParentElementName;
     private final Field field;
+    /**
+     * The Logger.
+     */
     protected Logger logger = Logger.getLogger(ElementListHandler.class);
 
     /**
@@ -36,7 +42,7 @@ public class ElementListHandler implements InvocationHandler {
      *
      * @param interfaceType interface type we're trying to wrap around the element.
      * @param locator       locator on the page for the elements.
-     * @param <T>           type of the interface.
+     * @param field         the field
      */
     public <T> ElementListHandler(Class<T> interfaceType, ElementLocator locator, Field field) {
         this.driver = DriverCache.get();

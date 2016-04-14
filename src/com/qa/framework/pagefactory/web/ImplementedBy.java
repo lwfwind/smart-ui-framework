@@ -13,6 +13,8 @@ import java.lang.annotation.Target;
 public @interface ImplementedBy {
     /**
      * Class implementing the interface. (by default)
+     *
+     * @return the class
      */
     Class<?> value() default ElementImpl.class;
 }

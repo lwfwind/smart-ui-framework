@@ -33,13 +33,39 @@ import java.util.Arrays;
  * Intercepts requests to {@link MobileElement}
  */
 public class SubElementInterceptor implements MethodInterceptor {
+    /**
+     * The Element.
+     */
     protected final WebElement element;
+    /**
+     * The Driver.
+     */
     protected final WebDriver driver;
+    /**
+     * The Field.
+     */
     protected final Field field;
+    /**
+     * The Action.
+     */
     protected final Action action;
+    /**
+     * The Num.
+     */
     protected final int num;
+    /**
+     * The Logger.
+     */
     protected Logger logger = Logger.getLogger(SubElementInterceptor.class);
 
+    /**
+     * Instantiates a new Sub element interceptor.
+     *
+     * @param element the element
+     * @param driver  the driver
+     * @param field   the field
+     * @param num     the num
+     */
     public SubElementInterceptor(WebElement element, WebDriver driver, Field field, int num) {
         this.element = element;
         this.driver = driver;

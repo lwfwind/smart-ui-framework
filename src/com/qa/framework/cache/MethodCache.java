@@ -11,6 +11,11 @@ public class MethodCache {
     private static ThreadLocal<String> methodCache = new ThreadLocal<String>();
     private static Vector<String> caches = new Vector<String>();
 
+    /**
+     * Set.
+     *
+     * @param methodName the method name
+     */
     public static void set(String methodName) {
         String convMethodName = "";
         if (caches.contains(methodName)) {
@@ -22,6 +27,12 @@ public class MethodCache {
         methodCache.set(convMethodName);
     }
 
+    /**
+     * Gets counter.
+     *
+     * @param methodName the method name
+     * @return the counter
+     */
     public static int getCounter(String methodName) {
         if (counter.get(methodName) == null) {
             counter.put(methodName, 1);
@@ -33,6 +44,11 @@ public class MethodCache {
         }
     }
 
+    /**
+     * Gets current method name.
+     *
+     * @return the current method name
+     */
     public static String getCurrentMethodName() {
         return methodCache.get();
     }

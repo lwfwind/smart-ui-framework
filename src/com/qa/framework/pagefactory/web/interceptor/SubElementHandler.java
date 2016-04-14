@@ -14,15 +14,31 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+/**
+ * The type Sub element handler.
+ */
 public class SubElementHandler implements InvocationHandler {
+    /**
+     * The Action.
+     */
     protected final Action action;
     private final Object element;
     private final String logicParentElementName;
     private final int num;
     private final WebDriver driver;
     private final Field field;
+    /**
+     * The Logger.
+     */
     protected Logger logger = Logger.getLogger(SubElementHandler.class);
 
+    /**
+     * Instantiates a new Sub element handler.
+     *
+     * @param element the element
+     * @param field   the field
+     * @param num     the num
+     */
     public SubElementHandler(Object element, Field field, int num) {
         this.element = element;
         this.logicParentElementName = field.getName();

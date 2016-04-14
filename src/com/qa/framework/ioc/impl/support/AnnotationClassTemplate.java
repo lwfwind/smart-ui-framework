@@ -7,8 +7,17 @@ import java.lang.annotation.Annotation;
  */
 public abstract class AnnotationClassTemplate extends ClassTemplate {
 
+    /**
+     * The Annotation class.
+     */
     protected final Class<? extends Annotation> annotationClass;
 
+    /**
+     * Instantiates a new Annotation class template.
+     *
+     * @param packageName     the package name
+     * @param annotationClass the annotation class
+     */
     protected AnnotationClassTemplate(String packageName, Class<? extends Annotation> annotationClass) {
         super(packageName);
         this.annotationClass = annotationClass;

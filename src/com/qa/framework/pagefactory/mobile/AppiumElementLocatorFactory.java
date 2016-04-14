@@ -28,12 +28,23 @@ import org.openqa.selenium.WebDriver;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 
+/**
+ * The type Appium element locator factory.
+ */
 class AppiumElementLocatorFactory implements CacheableElementLocatorFactory {
     private final SearchContext searchContext;
     private final TimeOutDuration timeOutDuration;
     private final WebDriver originalWebDriver;
     private final AppiumByBuilder builder;
 
+    /**
+     * Instantiates a new Appium element locator factory.
+     *
+     * @param searchContext     the search context
+     * @param timeOutDuration   the time out duration
+     * @param originalWebDriver the original web driver
+     * @param builder           the builder
+     */
     public AppiumElementLocatorFactory(SearchContext searchContext,
                                        TimeOutDuration timeOutDuration,
                                        WebDriver originalWebDriver,

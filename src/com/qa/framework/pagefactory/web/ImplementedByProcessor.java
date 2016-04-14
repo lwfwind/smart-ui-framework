@@ -10,8 +10,8 @@ public final class ImplementedByProcessor {
     /**
      * Gets the wrapper class (descended from ElementImpl) for the annotation @ImplementedBy.
      *
-     * @param iface iface to process for annotations
      * @param <T>   type of the wrapped class.
+     * @param iface iface to process for annotations
      * @return The class name of the class in question
      */
     public static <T> Class<?> getImplementClass(Class<T> iface) {

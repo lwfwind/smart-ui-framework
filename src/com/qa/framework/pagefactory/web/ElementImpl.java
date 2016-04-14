@@ -25,6 +25,7 @@ public class ElementImpl implements Element {
     /**
      * Creates a Element for a given WebElement.
      *
+     * @param driver  the driver
      * @param element element to wrap up
      */
     public ElementImpl(final WebDriver driver, final WebElement element) {
@@ -32,6 +33,11 @@ public class ElementImpl implements Element {
         this.element = element;
     }
 
+    /**
+     * Pause.
+     *
+     * @param time the time
+     */
     public void pause(int time) {
         if (time <= 0) {
             return;

@@ -80,10 +80,11 @@ public class ElementDecorator implements FieldDecorator {
      * Generate a type-parameterized locator proxy for the element in question. We use our customized InvocationHandler
      * here to wrap classes.
      *
+     * @param <T>           The interface of the proxy.
      * @param loader        ClassLoader of the wrapping class
      * @param interfaceType Interface wrapping the underlying WebElement
      * @param locator       ElementLocator pointing at a proxy of the object on the page
-     * @param <T>           The interface of the proxy.
+     * @param field         the field
      * @return a proxy representing the class we need to wrap.
      */
     protected <T> T proxyForLocator(ClassLoader loader, Class<T> interfaceType, ElementLocator locator, Field field) {
@@ -98,10 +99,11 @@ public class ElementDecorator implements FieldDecorator {
     /**
      * generates a proxy for a list of elements to be wrapped.
      *
+     * @param <T>           class of the interface.
      * @param loader        classloader for the class we're presently wrapping with proxies
      * @param interfaceType type of the element to be wrapped
      * @param locator       locator for items on the page being wrapped
-     * @param <T>           class of the interface.
+     * @param field         the field
      * @return proxy with the same type as we started with.
      */
     @SuppressWarnings("unchecked")

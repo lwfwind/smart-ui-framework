@@ -46,6 +46,9 @@ public class IocHelper {
 
     /**
      * 查找实现类
+     *
+     * @param interfaceClass the interface class
+     * @return the class
      */
     public static Class<?> findImplementClass(Class<?> interfaceClass) {
         Class<?> implementClass = interfaceClass;

@@ -21,6 +21,12 @@ public class PageFactory {
     private final static Logger logger = Logger
             .getLogger(PageFactory.class);
 
+    /**
+     * Init elements.
+     *
+     * @param driver the driver
+     * @param page   the page
+     */
     public static void initElements(WebDriver driver, Object page) {
         Class<?> pageClass = page.getClass();
         while (pageClass != Object.class && pageClass != PageBase.class) {

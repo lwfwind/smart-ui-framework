@@ -10,10 +10,20 @@ import java.util.HashMap;
 public class ResultCache {
     private static ThreadLocal<HashMap<Integer, Method>> ResultCache = new ThreadLocal<>();
 
+    /**
+     * Set.
+     *
+     * @param hashMap the hash map
+     */
     public static void set(HashMap<Integer, Method> hashMap) {
         ResultCache.set(hashMap);
     }
 
+    /**
+     * Get hash map.
+     *
+     * @return the hash map
+     */
     public static HashMap<Integer, Method> get() {
         return ResultCache.get();
     }

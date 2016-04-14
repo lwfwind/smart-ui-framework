@@ -5,8 +5,17 @@ package com.qa.framework.ioc.impl.support;
  */
 public abstract class SupperClassTemplate extends ClassTemplate {
 
+    /**
+     * The Super class.
+     */
     protected final Class<?> superClass;
 
+    /**
+     * Instantiates a new Supper class template.
+     *
+     * @param packageName the package name
+     * @param superClass  the super class
+     */
     protected SupperClassTemplate(String packageName, Class<?> superClass) {
         super(packageName);
         this.superClass = superClass;

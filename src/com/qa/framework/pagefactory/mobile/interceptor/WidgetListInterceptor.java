@@ -41,19 +41,44 @@ import static com.qa.framework.pagefactory.TimeOutOfFindProcessor.getTimeOutOfFi
 import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.getCurrentContentType;
 
 
+/**
+ * The type Widget list interceptor.
+ */
 public class WidgetListInterceptor implements MethodInterceptor {
 
+    /**
+     * The Locator.
+     */
     protected final ElementLocator locator;
+    /**
+     * The Field.
+     */
     protected final Field field;
+    /**
+     * The Action.
+     */
     protected final Action action;
     private final Map<ContentType, Constructor<? extends Widget>> instantiationMap;
     private final List<Widget> cachedWidgets = new ArrayList<>();
     private final Class<? extends Widget> declaredType;
     private final TimeOutDuration duration;
     private final WebDriver driver;
+    /**
+     * The Logger.
+     */
     protected Logger logger = Logger.getLogger(WidgetListInterceptor.class);
     private List<WebElement> cachedElements;
 
+    /**
+     * Instantiates a new Widget list interceptor.
+     *
+     * @param locator          the locator
+     * @param driver           the driver
+     * @param instantiationMap the instantiation map
+     * @param declaredType     the declared type
+     * @param duration         the duration
+     * @param field            the field
+     */
     public WidgetListInterceptor(CacheableLocator locator, WebDriver driver, Map<ContentType, Constructor<? extends Widget>> instantiationMap,
                                  Class<? extends Widget> declaredType, TimeOutDuration duration, Field field) {
         this.locator = locator;

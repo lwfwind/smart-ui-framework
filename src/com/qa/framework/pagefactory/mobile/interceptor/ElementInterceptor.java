@@ -38,12 +38,34 @@ import static com.qa.framework.pagefactory.TimeOutOfFindProcessor.getTimeOutOfFi
  * Intercepts requests to {@link MobileElement}
  */
 public class ElementInterceptor implements MethodInterceptor {
+    /**
+     * The Locator.
+     */
     protected final ElementLocator locator;
+    /**
+     * The Driver.
+     */
     protected final WebDriver driver;
+    /**
+     * The Field.
+     */
     protected final Field field;
+    /**
+     * The Action.
+     */
     protected final Action action;
+    /**
+     * The Logger.
+     */
     protected Logger logger = Logger.getLogger(ElementInterceptor.class);
 
+    /**
+     * Instantiates a new Element interceptor.
+     *
+     * @param locator the locator
+     * @param driver  the driver
+     * @param field   the field
+     */
     public ElementInterceptor(ElementLocator locator, WebDriver driver, Field field) {
         this.locator = locator;
         this.driver = driver;

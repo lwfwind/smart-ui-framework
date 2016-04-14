@@ -23,11 +23,20 @@ import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Widget constructor util.
+ */
 class WidgetConstructorUtil {
     private WidgetConstructorUtil() {
         super();
     }
 
+    /**
+     * Find convenient constructor constructor.
+     *
+     * @param clazz the clazz
+     * @return the constructor
+     */
     @SuppressWarnings("unchecked")
     static Constructor<? extends Widget> findConvenientConstructor(Class<? extends Widget> clazz) {
         Constructor<?>[] constructors = clazz.getDeclaredConstructors();

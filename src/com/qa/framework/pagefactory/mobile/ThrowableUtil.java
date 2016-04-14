@@ -22,9 +22,18 @@ import org.openqa.selenium.StaleElementReferenceException;
 import java.lang.reflect.InvocationTargetException;
 
 
+/**
+ * The type Throwable util.
+ */
 public class ThrowableUtil {
     private final static String INVALID_SELECTOR_PATTERN = "Invalid locator strategy:";
 
+    /**
+     * Is invalid selector root cause boolean.
+     *
+     * @param e the e
+     * @return the boolean
+     */
     public static boolean isInvalidSelectorRootCause(Throwable e) {
         if (e == null) {
             return false;
@@ -41,6 +50,12 @@ public class ThrowableUtil {
         return isInvalidSelectorRootCause(e.getCause());
     }
 
+    /**
+     * Is stale element reference exception boolean.
+     *
+     * @param e the e
+     * @return the boolean
+     */
     public static boolean isStaleElementReferenceException(Throwable e) {
         if (e == null) {
             return false;
@@ -53,6 +68,12 @@ public class ThrowableUtil {
         return isStaleElementReferenceException(e.getCause());
     }
 
+    /**
+     * Extract readable exception throwable.
+     *
+     * @param e the e
+     * @return the throwable
+     */
     public static Throwable extractReadableException(Throwable e) {
         if (!RuntimeException.class.equals(e.getClass()) && !InvocationTargetException.class.equals(e.getClass())) {
             return e;

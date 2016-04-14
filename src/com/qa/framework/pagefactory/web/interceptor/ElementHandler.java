@@ -24,12 +24,18 @@ import static com.qa.framework.pagefactory.web.ScrollIntoViewProcessor.getScroll
  * mix-ins of WebElement and Locatable, etc. Saves the wrapping type for calling the constructor of the wrapped classes.
  */
 public class ElementHandler implements InvocationHandler {
+    /**
+     * The Action.
+     */
     protected final Action action;
     private final WebDriver driver;
     private final ElementLocator locator;
     private final Class<?> implementtingType;
     private final String logicElementName;
     private final Field field;
+    /**
+     * The Logger.
+     */
     protected Logger logger = Logger.getLogger(ElementHandler.class);
 
     /**
@@ -37,7 +43,7 @@ public class ElementHandler implements InvocationHandler {
      *
      * @param interfaceType Interface wrapping this class. It contains a reference the the implementation.
      * @param locator       Element locator that finds the element on a page.
-     * @param <T>           type of the interface
+     * @param field         the field
      */
     public <T> ElementHandler(Class<T> interfaceType, ElementLocator locator, Field field) {
         this.driver = DriverCache.get();

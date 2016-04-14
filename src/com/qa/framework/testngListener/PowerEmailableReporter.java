@@ -73,6 +73,13 @@ public class PowerEmailableReporter implements IReporter {
         m_out.close();
     }
 
+    /**
+     * Create writer print writer.
+     *
+     * @param outdir the outdir
+     * @return the print writer
+     * @throws IOException the io exception
+     */
     protected PrintWriter createWriter(String outdir) throws IOException {
         IOHelper.createNestDirectory(outdir);
         return new PrintWriter(new BufferedWriter(new FileWriter(new File(outdir, "power-emailable-report.html"))));
@@ -81,6 +88,8 @@ public class PowerEmailableReporter implements IReporter {
     /**
      * Creates a table showing the highlights of each test method with links to
      * the method details
+     *
+     * @param suites the suites
      */
     protected void generateMethodSummaryReport(List<ISuite> suites) {
         startResultSummaryTable("methodOverview");
@@ -109,6 +118,8 @@ public class PowerEmailableReporter implements IReporter {
 
     /**
      * Creates a section showing known results for each method
+     *
+     * @param suites the suites
      */
     protected void generateMethodDetailReport(List<ISuite> suites) {
         for (ISuite suite : suites) {
@@ -336,6 +347,12 @@ public class PowerEmailableReporter implements IReporter {
         }
     }
 
+    /**
+     * Generate exception report.
+     *
+     * @param exception the exception
+     * @param method    the method
+     */
     protected void generateExceptionReport(Throwable exception, ITestNGMethod method) {
         m_out.print("<div class=\"stacktrace\">");
         m_out.print(Utils.stackTrace(exception, true)[0]);
@@ -388,6 +405,11 @@ public class PowerEmailableReporter implements IReporter {
     }
 
 
+    /**
+     * Generate suite summary report.
+     *
+     * @param suites the suites
+     */
     public void generateSuiteSummaryReport(List<ISuite> suites) {
         tableStart("testOverview", null);
         m_out.print("<tr>");
@@ -505,6 +527,8 @@ public class PowerEmailableReporter implements IReporter {
 
     /**
      * Starts HTML stream
+     *
+     * @param out the out
      */
     protected void startHtml(PrintWriter out) {
         out.println("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">");
@@ -535,6 +559,8 @@ public class PowerEmailableReporter implements IReporter {
 
     /**
      * Finishes HTML stream
+     *
+     * @param out the out
      */
     protected void endHtml(PrintWriter out) {
         out.println("</body></html>");

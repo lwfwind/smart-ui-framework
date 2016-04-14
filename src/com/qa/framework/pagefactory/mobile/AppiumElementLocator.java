@@ -29,11 +29,26 @@ import java.util.concurrent.TimeUnit;
 import static com.qa.framework.pagefactory.mobile.ThrowableUtil.*;
 
 
+/**
+ * The type Appium element locator.
+ */
 class AppiumElementLocator implements CacheableLocator {
 
+    /**
+     * The Should cache.
+     */
     final boolean shouldCache;
+    /**
+     * The By.
+     */
     final By by;
+    /**
+     * The Time out duration.
+     */
     final TimeOutDuration timeOutDuration;
+    /**
+     * The Original web driver.
+     */
     final WebDriver originalWebDriver;
     private final SearchContext searchContext;
     private final WaitingFunction waitingFunction;
@@ -49,7 +64,7 @@ class AppiumElementLocator implements CacheableLocator {
      * @param by                a By locator strategy
      * @param shouldCache       is the flag that signalizes that elements which are found once should be cached
      * @param duration          is a POJO which contains timeout parameters
-     * @param originalWebDriver
+     * @param originalWebDriver the original web driver
      */
     public AppiumElementLocator(SearchContext searchContext, By by, boolean shouldCache, TimeOutDuration duration, WebDriver originalWebDriver) {
         this.searchContext = searchContext;
@@ -130,6 +145,9 @@ class AppiumElementLocator implements CacheableLocator {
     private static class WaitingFunction implements
             Function<By, List<WebElement>> {
         private final SearchContext searchContext;
+        /**
+         * The Found stale element reference exception.
+         */
         Throwable foundStaleElementReferenceException;
 
         private WaitingFunction(SearchContext searchContext) {

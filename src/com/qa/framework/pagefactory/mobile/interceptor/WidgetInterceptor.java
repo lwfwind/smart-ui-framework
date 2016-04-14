@@ -42,18 +42,46 @@ import java.util.Map;
 import static com.qa.framework.pagefactory.TimeOutOfFindProcessor.getTimeOutOfFind;
 import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.getCurrentContentType;
 
+/**
+ * The type Widget interceptor.
+ */
 public class WidgetInterceptor implements MethodInterceptor {
 
+    /**
+     * The Locator.
+     */
     protected final ElementLocator locator;
+    /**
+     * The Driver.
+     */
     protected final WebDriver driver;
+    /**
+     * The Field.
+     */
     protected final Field field;
+    /**
+     * The Action.
+     */
     protected final Action action;
     private final Map<ContentType, Constructor<? extends Widget>> instantiationMap;
     private final Map<ContentType, Widget> cachedInstances = new HashMap<>();
     private final TimeOutDuration duration;
+    /**
+     * The Logger.
+     */
     protected Logger logger = Logger.getLogger(WidgetInterceptor.class);
     private WebElement cachedElement;
 
+    /**
+     * Instantiates a new Widget interceptor.
+     *
+     * @param locator          the locator
+     * @param driver           the driver
+     * @param cachedElement    the cached element
+     * @param instantiationMap the instantiation map
+     * @param duration         the duration
+     * @param field            the field
+     */
     public WidgetInterceptor(CacheableLocator locator, WebDriver driver, WebElement cachedElement,
                              Map<ContentType, Constructor<? extends Widget>> instantiationMap,
                              TimeOutDuration duration, Field field) {
@@ -66,6 +94,15 @@ public class WidgetInterceptor implements MethodInterceptor {
         this.action = new Action(driver);
     }
 
+    /**
+     * Gets object.
+     *
+     * @param element the element
+     * @param method  the method
+     * @param args    the args
+     * @return the object
+     * @throws Throwable the throwable
+     */
     protected Object getObject(WebElement element, Method method, Object[] args) throws Throwable {
         ContentType type = getCurrentContentType(element);
         if (cachedElement == null || (locator != null && !((CacheableLocator) locator).isLookUpCached()) ||

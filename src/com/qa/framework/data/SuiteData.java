@@ -5,7 +5,13 @@ package com.qa.framework.data;
  */
 public interface SuiteData {
 
+    /**
+     * Sets .
+     */
     public void setup();
 
+    /**
+     * Teardown.
+     */
     public void teardown();
 }

@@ -30,8 +30,17 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The type Default element by builder.
+ */
 class DefaultElementByBuilder extends AppiumByBuilder {
 
+    /**
+     * Instantiates a new Default element by builder.
+     *
+     * @param platform   the platform
+     * @param automation the automation
+     */
     protected DefaultElementByBuilder(String platform, String automation) {
         super(platform, automation);
     }

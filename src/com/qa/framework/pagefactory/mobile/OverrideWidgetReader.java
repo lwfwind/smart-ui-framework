@@ -33,6 +33,9 @@ import static io.appium.java_client.remote.MobilePlatform.ANDROID;
 import static io.appium.java_client.remote.MobilePlatform.IOS;
 
 
+/**
+ * The type Override widget reader.
+ */
 class OverrideWidgetReader {
     private static final Class<? extends Widget> EMPTY = Widget.class;
     private static final String HTML = "html";
@@ -69,11 +72,27 @@ class OverrideWidgetReader {
 
     }
 
+    /**
+     * Gets default or html widget class.
+     *
+     * @param declaredClass    the declared class
+     * @param annotatedElement the annotated element
+     * @return the default or html widget class
+     */
     static Class<? extends Widget> getDefaultOrHTMLWidgetClass(Class<? extends Widget> declaredClass,
                                                                AnnotatedElement annotatedElement) {
         return getConvenientClass(declaredClass, annotatedElement, HTML);
     }
 
+    /**
+     * Gets mobile native widget class.
+     *
+     * @param declaredClass    the declared class
+     * @param annotatedElement the annotated element
+     * @param platform         the platform
+     * @param automation       the automation
+     * @return the mobile native widget class
+     */
     static Class<? extends Widget> getMobileNativeWidgetClass(Class<? extends Widget> declaredClass,
                                                               AnnotatedElement annotatedElement, String platform,
                                                               String automation) {
@@ -109,6 +128,15 @@ class OverrideWidgetReader {
         return findConvenientConstructor(clazz);
     }
 
+    /**
+     * Read map.
+     *
+     * @param declaredClass    the declared class
+     * @param annotatedElement the annotated element
+     * @param platform         the platform
+     * @param automation       the automation
+     * @return the map
+     */
     static Map<ContentType, Constructor<? extends Widget>> read(Class<? extends Widget> declaredClass,
                                                                 AnnotatedElement annotatedElement,
                                                                 String platform, String automation) {

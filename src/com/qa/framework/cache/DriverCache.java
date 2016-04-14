@@ -8,10 +8,20 @@ import org.openqa.selenium.WebDriver;
 public class DriverCache {
     private static ThreadLocal<WebDriver> DriverCache = new ThreadLocal<WebDriver>();
 
+    /**
+     * Set.
+     *
+     * @param driver the driver
+     */
     public static void set(WebDriver driver) {
         DriverCache.set(driver);
     }
 
+    /**
+     * Get web driver.
+     *
+     * @return the web driver
+     */
     public static WebDriver get() {
         return DriverCache.get();
     }

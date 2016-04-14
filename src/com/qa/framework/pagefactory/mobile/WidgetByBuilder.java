@@ -29,8 +29,17 @@ import static com.qa.framework.pagefactory.mobile.OverrideWidgetReader.getDefaul
 import static com.qa.framework.pagefactory.mobile.OverrideWidgetReader.getMobileNativeWidgetClass;
 
 
+/**
+ * The type Widget by builder.
+ */
 class WidgetByBuilder extends DefaultElementByBuilder {
 
+    /**
+     * Instantiates a new Widget by builder.
+     *
+     * @param platform   the platform
+     * @param automation the automation
+     */
     protected WidgetByBuilder(String platform, String automation) {
         super(platform, automation);
     }
@@ -112,7 +121,13 @@ class WidgetByBuilder extends DefaultElementByBuilder {
     }
 
     private enum WhatIsNeeded {
+        /**
+         * Default or html what is needed.
+         */
         DEFAULT_OR_HTML,
+        /**
+         * Mobile native what is needed.
+         */
         MOBILE_NATIVE
     }
 }
