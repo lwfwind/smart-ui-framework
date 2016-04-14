@@ -32,7 +32,7 @@ public class IocHelper {
                                     field.setAccessible(true); // 将字段设置为 public
                                     field.set(iocInstance, implementInstance); // 设置字段初始值
                                 } else {
-                                    throw new RuntimeException("依赖注入失败！类名：" + iocClass.getSimpleName() + "，字段名：" + interfaceClass.getSimpleName());
+                                    //throw new RuntimeException("依赖注入失败！类名：" + iocClass.getSimpleName() + "，字段名：" + interfaceClass.getSimpleName());
                                 }
                             }
                         }
