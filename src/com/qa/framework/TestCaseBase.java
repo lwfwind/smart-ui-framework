@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ThreadGuard;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Constructor;
@@ -88,7 +89,7 @@ public abstract class TestCaseBase {
                         capability = DesiredCapabilities.chrome();
                     }
                     try {
-                        driver = new RemoteWebDriver(new URL(hubURL), capability);
+                        driver = ThreadGuard.protect(new RemoteWebDriver(new URL(hubURL), capability));
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
