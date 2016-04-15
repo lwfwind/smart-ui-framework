@@ -1,6 +1,6 @@
-﻿## Smart-ui-framework - a light, robust Web/Android/Ios UI automation framework
+﻿## Smart-ui-framework - a light, robust Web/Android/IOS UI automation framework
 
-Smart-ui-framework is a light, robust Web/Android/Ios UI automation framework based on [Selenium](http://seleniumhq.org/), [Appium](http://appium.io/) and [TestNG](http://testng.org/doc/index.html).
+Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework based on [Selenium](http://seleniumhq.org/), [Appium](http://appium.io/) and [TestNG](http://testng.org/doc/index.html).
 
 * Tags: Selenium, Appium, Webdriver, TestNG, Automation
 
