@@ -19,6 +19,7 @@ import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ThreadGuard;
 
 import java.io.File;
 import java.net.URL;
@@ -115,7 +116,7 @@ public class DriverConfig {
                     fp.setPreference("browser.startup.homepage", "about:blank");
                     fp.setPreference("startup.homepage_welcome_url", "about:blank");
                     fp.setPreference("startup.homepage_welcome_url.additional", "about:blank");
-                    driverObject = new FirefoxDriver(fp);
+                    driverObject = ThreadGuard.protect(new FirefoxDriver(fp));
                     logger.info("Using FIREFOX Driver...");
                     break;
                 case IE:
@@ -123,7 +124,7 @@ public class DriverConfig {
                     capabilities = DesiredCapabilities.internetExplorer();
                     capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
                     capabilities.setCapability("requireWindowFocus", true);
-                    driverObject = new InternetExplorerDriver(capabilities);
+                    driverObject = ThreadGuard.protect(new InternetExplorerDriver(capabilities));
                     logger.info("Using INTERNET EXPLORER Driver...");
                     break;
                 case GOOGLECHROME:
@@ -133,7 +134,7 @@ public class DriverConfig {
                     LoggingPreferences loggingprefs = new LoggingPreferences();
                     loggingprefs.enable(LogType.BROWSER, Level.ALL);
                     capabilities.setCapability(CapabilityType.LOGGING_PREFS, loggingprefs);
-                    driverObject = new ChromeDriver(capabilities);
+                    driverObject = ThreadGuard.protect(new ChromeDriver(capabilities));
                     logger.info("Using GOOGLECHROME Driver...");
                     break;
                 case HTMLUNIT:
@@ -154,7 +155,7 @@ public class DriverConfig {
                     // FUTURE
                     break;
                 case OPERA:
-                    driverObject = new OperaDriver();
+                    driverObject = ThreadGuard.protect(new OperaDriver());
                     logger.info("Using Opera Driver...");
                     break;
                 case ANDROIDAPP:
@@ -236,7 +237,7 @@ public class DriverConfig {
                     capabilities = new DesiredCapabilities();
                     capabilities.setCapability("deviceName", adb.getDeviceName());
                     capabilities.setCapability("app", app.getAbsolutePath());
-                    driverObject = new AndroidDriver<>(new URL(appiumServerUrl), capabilities);
+                    driverObject = ThreadGuard.protect(new AndroidDriver<>(new URL(appiumServerUrl), capabilities));
                     logger.info("Using Android Driver...");
                     break;
                 default:
