@@ -8,7 +8,7 @@ Smart-ui-framework is a light, robust Web/Android/Ios UI automation framework ba
 
 * Easy to learn
 * Support multi-thread testing with selenium grid2
-* Provide custom pagefactory to support page object design pattern, and support highlight element, action log and screenshot automatically
+* Provide custom pagefactory to support page object design pattern, and support highlight element, log action and screenshot action automatically
 * Re-run failed test cases
 * Capture screenshot automatically when testcase fails
 * Support dependency injection
