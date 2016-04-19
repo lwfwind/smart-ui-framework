@@ -1,0 +1,9 @@
+<suite name="Methods_MT" thread-count="2" parallel="methods" verbose="1">
+
+    <test name="TestCase" timeout="600000">
+        <classes>
+            <class name="com.qa.framework.test.testcase.TestCase"/>
+        </classes>
+    </test>
+
+</suite>

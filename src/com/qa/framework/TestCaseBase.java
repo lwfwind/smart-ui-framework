@@ -14,6 +14,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ThreadGuard;
+import org.testng.ITestContext;
 import org.testng.annotations.*;
 
 import java.lang.reflect.Constructor;
@@ -31,17 +32,27 @@ import static com.qa.framework.ioc.IocHelper.findImplementClass;
  */
 @Listeners({TestResultListener.class, PowerEmailableReporter.class})
 public abstract class TestCaseBase {
-    public WebDriver driver;
     protected Logger logger = Logger.getLogger(this.getClass());
+    public WebDriver driver;
     private SuiteData suiteData = null;
+    private String parallel = null;
+    private String browser = null;
+    private String hubURL = null;
 
     public WebDriver getDriver() {
         return driver;
     }
 
     @BeforeSuite(alwaysRun = true)
-    public void BeforeSuite() throws Exception {
+    public void BeforeSuite(ITestContext context) throws Exception {
         logger.info("beforeSuite");
+        if(context.getSuite().getXmlSuite().getParallel().equalsIgnoreCase("methods")){
+            parallel = "methods";
+        }
+        else
+        {
+            parallel = "classes";
+        }
         HelperLoader.init();
         Class<?> clazz = findImplementClass(SuiteData.class);
         if (clazz != null) {
@@ -59,7 +70,7 @@ public abstract class TestCaseBase {
     }
 
     @AfterSuite(alwaysRun = true)
-    public void AfterSuite() throws Exception {
+    public void AfterSuite(ITestContext context) throws Exception {
         logger.info("afterSuite");
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP")) {
             driver.quit();
@@ -75,29 +86,35 @@ public abstract class TestCaseBase {
     public void afterSuite() {
     }
 
+    private void getDriverObj() throws Exception {
+        if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+            if (hubURL != null) {
+                DesiredCapabilities capability = null;
+                if (browser.contains("firefox")) {
+                    capability = DesiredCapabilities.firefox();
+                } else if (browser.contains("chrome")) {
+                    capability = DesiredCapabilities.chrome();
+                }
+                try {
+                    driver = ThreadGuard.protect(new RemoteWebDriver(new URL(hubURL), capability));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                driver = DriverConfig.getDriverObject();
+            }
+            DriverCache.set(driver);
+        }
+    }
+
     @Parameters({"browser", "hubURL"})
     @org.testng.annotations.BeforeClass(alwaysRun = true)
     public void BeforeClass(@Optional String browser, @Optional String hubURL) throws Exception {
         logger.info("beforeClass");
-        if (!isUnitTest()) {
-            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-                if (hubURL != null) {
-                    DesiredCapabilities capability = null;
-                    if (browser.contains("firefox")) {
-                        capability = DesiredCapabilities.firefox();
-                    } else if (browser.contains("chrome")) {
-                        capability = DesiredCapabilities.chrome();
-                    }
-                    try {
-                        driver = ThreadGuard.protect(new RemoteWebDriver(new URL(hubURL), capability));
-                    } catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    driver = DriverConfig.getDriverObject();
-                }
-                DriverCache.set(driver);
-            }
+        this.browser = browser;
+        this.hubURL = hubURL;
+        if (parallel.equalsIgnoreCase("classes") && !isUnitTest()) {
+            getDriverObj();
         }
         initFields(this);
         beforeClass();
@@ -125,7 +142,7 @@ public abstract class TestCaseBase {
     }
 
     @BeforeMethod(alwaysRun = true)
-    public void BeforeMethod(Method method, Object[] para) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void BeforeMethod(Method method, Object[] para) throws Exception {
         String currentMethodName;
         if (para != null && para.length > 0 && para[0] != null) {
             currentMethodName = method.getName() + "_" + para[0].toString().trim();
@@ -133,10 +150,18 @@ public abstract class TestCaseBase {
             currentMethodName = method.getName();
         }
         MethodCache.set(StringHelper.removeSpecialChar(currentMethodName));
+
         if (!isUnitTest()) {
-            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-                driver.manage().deleteAllCookies();
+            if (parallel.equalsIgnoreCase("methods")) {
+                getDriverObj();
             }
+            else
+            {
+                if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+                    driver.manage().deleteAllCookies();
+                }
+            }
+
         }
         beforeMethod(method, para);
     }

@@ -39,8 +39,17 @@ public class AutoInjectHelper {
             if (field.getAnnotation(AutoInject.class) != null) {
                 Object proxy = IocContainer.getIocObject(field.getType());
                 if (proxy == null) {
-                    logger.info(field.getName() + " is not existed in IOC Container");
-                    Class<?> implementClass = findImplementClass(field.getType());
+                    logger.debug(field.getName() + " is not existed in IOC Container");
+                    Class<?> clazz = field.getType();
+                    Class<?> implementClass = null;
+                    if(Modifier.isAbstract(clazz.getModifiers()) || Modifier.isInterface(clazz.getModifiers())){
+                        implementClass = findImplementClass(clazz);
+
+                    }
+                    else{
+                        implementClass = clazz;
+                    }
+
                     try {
                         if (implementClass != null) {
                             proxy = implementClass.newInstance();
@@ -49,7 +58,7 @@ public class AutoInjectHelper {
                         logger.error(e.toString(), e);
                     }
                 } else {
-                    logger.info(field.getName() + " is existed in IOC Container");
+                    logger.debug(field.getName() + " is existed in IOC Container");
                 }
                 try {
                     field.setAccessible(true);

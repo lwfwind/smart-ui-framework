@@ -53,7 +53,9 @@ public class DriverConfig {
         } else {
             setBrowser(PropConfig.getCoreType());
         }
-        setHTMLUnitEmulation(PropConfig.getHtmlUnitEmulationType());
+        if(PropConfig.getHtmlUnitEmulationType() != null) {
+            setHTMLUnitEmulation(PropConfig.getHtmlUnitEmulationType());
+        }
     }
 
     /**
