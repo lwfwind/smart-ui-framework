@@ -2,10 +2,10 @@ package com.qa.framework;
 
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
+import com.qa.framework.cache.ParallelModeCache;
 import com.qa.framework.config.DriverConfig;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.data.SuiteData;
-import com.qa.framework.ioc.ClassFinder;
 import com.qa.framework.library.base.StringHelper;
 import com.qa.framework.testnglistener.PowerEmailableReporter;
 import com.qa.framework.testnglistener.TestResultListener;
@@ -17,12 +17,9 @@ import org.openqa.selenium.support.ThreadGuard;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 import static com.qa.framework.ioc.AutoInjectHelper.initFields;
 import static com.qa.framework.ioc.IocHelper.findImplementClass;
@@ -32,10 +29,9 @@ import static com.qa.framework.ioc.IocHelper.findImplementClass;
  */
 @Listeners({TestResultListener.class, PowerEmailableReporter.class})
 public abstract class TestCaseBase {
-    protected Logger logger = Logger.getLogger(this.getClass());
     public WebDriver driver;
+    protected Logger logger = Logger.getLogger(this.getClass());
     private SuiteData suiteData = null;
-    private String parallel = null;
     private String browser = null;
     private String hubURL = null;
 
@@ -46,12 +42,10 @@ public abstract class TestCaseBase {
     @BeforeSuite(alwaysRun = true)
     public void BeforeSuite(ITestContext context) throws Exception {
         logger.info("beforeSuite");
-        if(context.getSuite().getXmlSuite().getParallel().equalsIgnoreCase("methods")){
-            parallel = "methods";
-        }
-        else
-        {
-            parallel = "classes";
+        if (context.getSuite().getXmlSuite().getParallel().equalsIgnoreCase("methods")) {
+            ParallelModeCache.set("methods");
+        } else {
+            ParallelModeCache.set("classes");
         }
         HelperLoader.init();
         Class<?> clazz = findImplementClass(SuiteData.class);
@@ -113,7 +107,7 @@ public abstract class TestCaseBase {
         logger.info("beforeClass");
         this.browser = browser;
         this.hubURL = hubURL;
-        if (parallel.equalsIgnoreCase("classes") && !isUnitTest()) {
+        if (ParallelModeCache.get().equalsIgnoreCase("classes") && !isUnitTest()) {
             getDriverObj();
         }
         initFields(this);
@@ -152,11 +146,9 @@ public abstract class TestCaseBase {
         MethodCache.set(StringHelper.removeSpecialChar(currentMethodName));
 
         if (!isUnitTest()) {
-            if (parallel.equalsIgnoreCase("methods")) {
+            if (ParallelModeCache.get().equalsIgnoreCase("methods")) {
                 getDriverObj();
-            }
-            else
-            {
+            } else {
                 if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
                     driver.manage().deleteAllCookies();
                 }

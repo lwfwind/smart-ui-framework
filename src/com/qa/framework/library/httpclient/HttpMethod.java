@@ -23,9 +23,19 @@ public class HttpMethod {
      */
     protected final static Logger logger = Logger.getLogger(HttpMethod.class);
     private static boolean useProxy = PropConfig.isUseProxy();
-    private static String localhost = PropConfig.getLocalhost();
-    private static Integer localport = Integer.valueOf(PropConfig.getLocalport());
-    private static Integer timeout = Integer.valueOf(PropConfig.getTimeout());
+    private static String localhost;
+    private static Integer localport;
+    private static Integer timeout;
+
+    static {
+        if (useProxy) {
+            localhost = PropConfig.getLocalhost();
+            localport = Integer.valueOf(PropConfig.getLocalport());
+            timeout = Integer.valueOf(PropConfig.getTimeout());
+        } else {
+            timeout = 3000;
+        }
+    }
 
     /**
      * Gets url.

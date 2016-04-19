@@ -378,7 +378,7 @@ public class Adb {
         logger.info("listDevices: " + result);
         String[] splitDevices = result.split("\r\n");
         for (int j = 0; j < splitDevices.length; j++) {
-            if(splitDevices[j].contains("device") && !splitDevices[j].contains("devices")) {
+            if (splitDevices[j].contains("device") && !splitDevices[j].contains("devices")) {
                 logger.info("splitDevice[" + j + "]: " + splitDevices[j]);
                 return splitDevices[j].split("\\s")[0];
             }

@@ -1,7 +1,5 @@
 package com.qa.framework.ioc;
 
-import com.qa.framework.PageBase;
-import com.qa.framework.ServiceBase;
 import com.qa.framework.ioc.annotation.Page;
 import com.qa.framework.ioc.annotation.Service;
 import org.apache.log4j.Logger;

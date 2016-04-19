@@ -3,9 +3,7 @@ package com.qa.framework.ioc;
 import com.qa.framework.ioc.annotation.AutoInject;
 import org.apache.log4j.Logger;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
 import static com.qa.framework.ioc.IocHelper.findImplementClass;
@@ -42,11 +40,10 @@ public class AutoInjectHelper {
                     logger.debug(field.getName() + " is not existed in IOC Container");
                     Class<?> clazz = field.getType();
                     Class<?> implementClass = null;
-                    if(Modifier.isAbstract(clazz.getModifiers()) || Modifier.isInterface(clazz.getModifiers())){
+                    if (Modifier.isAbstract(clazz.getModifiers()) || Modifier.isInterface(clazz.getModifiers())) {
                         implementClass = findImplementClass(clazz);
 
-                    }
-                    else{
+                    } else {
                         implementClass = clazz;
                     }
 
