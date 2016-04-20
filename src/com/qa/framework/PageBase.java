@@ -27,8 +27,8 @@ public abstract class PageBase {
     public PageBase() {
         this.driver = DriverCache.get();
         if (this.driver != null) {
+            action = new Action(driver);
             if (!isMobilePlat()) {
-                action = new Action(driver);
                 driver.manage().timeouts().pageLoadTimeout(120000, TimeUnit.MILLISECONDS);
             }
             initElements(this);
