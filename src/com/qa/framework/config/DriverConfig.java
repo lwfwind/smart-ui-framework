@@ -239,7 +239,7 @@ public class DriverConfig {
                     capabilities = new DesiredCapabilities();
                     capabilities.setCapability("deviceName", adb.getDeviceName());
                     capabilities.setCapability("app", app.getAbsolutePath());
-                    driverObject = ThreadGuard.protect(new AndroidDriver<>(new URL(appiumServerUrl), capabilities));
+                    driverObject = new AndroidDriver<>(new URL(appiumServerUrl), capabilities);
                     logger.info("Using Android Driver...");
                     break;
                 default:
