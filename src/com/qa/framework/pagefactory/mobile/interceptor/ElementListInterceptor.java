@@ -29,6 +29,7 @@ import org.openqa.selenium.support.pagefactory.ElementLocator;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.qa.framework.pagefactory.TimeOutOfFindProcessor.getTimeOutOfFind;
@@ -58,7 +59,7 @@ public class ElementListInterceptor implements MethodInterceptor {
      * The Logger.
      */
     protected Logger logger = Logger.getLogger(ElementListInterceptor.class);
-    private List<WebElement> proxyedElements;
+    private List<WebElement> proxyedElements = new ArrayList<>();
 
     /**
      * Instantiates a new Element list interceptor.
@@ -99,6 +100,7 @@ public class ElementListInterceptor implements MethodInterceptor {
 
         try {
             int index = 0;
+            proxyedElements.clear();
             for (WebElement element : realElements) {
                 index++;
                 SubElementInterceptor elementInterceptor = new SubElementInterceptor(element, driver, field, index);
