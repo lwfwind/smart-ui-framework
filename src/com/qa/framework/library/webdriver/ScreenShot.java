@@ -6,7 +6,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 
-import javax.imageio.*;
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -179,9 +179,9 @@ public class ScreenShot {
             logger.info("injectJQuery done");
         }
 
-        private BufferedImage createBuf() {
-            byte[] bytes = screenShot.getScreenshotAs(OutputType.BYTES);
-            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+        public BufferedImage createImageFromBytes(byte[] imageData) {
+
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(imageData);
             BufferedImage bf = null;
             try {
                 bf = ImageIO.read(byteArrayInputStream);
@@ -206,7 +206,8 @@ public class ScreenShot {
             List<BufferedImage> bufferedImages = new ArrayList<BufferedImage>();
             do {
                 init();
-                BufferedImage bf = createBuf();
+                byte[] bytes = screenShot.getScreenshotAs(OutputType.BYTES);
+                BufferedImage bf = createImageFromBytes(bytes);
                 bufferedImages.add(bf);
                 if (bf.getWidth() > totalWidth) {
                     totalWidth = bf.getWidth();

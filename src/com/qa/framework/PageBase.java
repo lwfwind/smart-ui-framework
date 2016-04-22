@@ -114,14 +114,14 @@ public abstract class PageBase {
     public void swipeToUp(WebDriver driver, int during) {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
-        ((AppiumDriver) driver).swipe(width / 2, height * 7 / 8, width / 2, height / 8, during);
+        ((AppiumDriver) driver).swipe(width / 2, height * 3 / 4, width / 2, height / 4, during);
         pause(3000);
     }
 
     public void swipeToDown(WebDriver driver, int during) {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
-        ((AppiumDriver) driver).swipe(width / 2, height / 8, width / 2, height * 7 / 8, during);
+        ((AppiumDriver) driver).swipe(width / 2, height / 4, width / 2, height * 3 / 4, during);
         pause(3000);
     }
 
