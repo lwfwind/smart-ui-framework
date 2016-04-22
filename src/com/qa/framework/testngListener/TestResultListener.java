@@ -22,6 +22,8 @@ import org.testng.TestListenerAdapter;
 import java.io.File;
 import java.util.*;
 
+import static com.qa.framework.ioc.IocHelper.findImplementClass;
+
 /**
  * Test result Listener.
  */
@@ -38,7 +40,16 @@ public class TestResultListener extends TestListenerAdapter {
     @Override
     public void onTestFailure(ITestResult tr) {
         super.onTestFailure(tr);
-        onFailure(tr);
+        Class<?> clazz = findImplementClass(TestListener.class);
+        if (clazz != null) {
+            TestListener testListenerImp = null;
+            try {
+                testListenerImp = (TestListener) clazz.newInstance();
+                testListenerImp.onTestFailure(tr);
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         String name = MethodCache.getCurrentMethodName();
         logger.error(name + " Failure");
         setResultCache(tr, "fail");
@@ -53,19 +64,19 @@ public class TestResultListener extends TestListenerAdapter {
         }
     }
 
-    /**
-     * On failure.
-     *
-     * @param tr the tr
-     */
-    public void onFailure(ITestResult tr) {
-
-    }
-
     @Override
     public void onTestSkipped(ITestResult tr) {
         super.onTestSkipped(tr);
-        onSkipped(tr);
+        Class<?> clazz = findImplementClass(TestListener.class);
+        if (clazz != null) {
+            TestListener testListenerImp = null;
+            try {
+                testListenerImp = (TestListener) clazz.newInstance();
+                testListenerImp.onTestSkipped(tr);
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         String name = MethodCache.getCurrentMethodName();
         logger.info(name + " Skipped");
         setResultCache(tr, "skip");
@@ -79,19 +90,19 @@ public class TestResultListener extends TestListenerAdapter {
         }
     }
 
-    /**
-     * On skipped.
-     *
-     * @param tr the tr
-     */
-    public void onSkipped(ITestResult tr) {
-
-    }
-
     @Override
     public void onTestSuccess(ITestResult tr) {
         super.onTestSuccess(tr);
-        onSuccess(tr);
+        Class<?> clazz = findImplementClass(TestListener.class);
+        if (clazz != null) {
+            TestListener testListenerImp = null;
+            try {
+                testListenerImp = (TestListener) clazz.newInstance();
+                testListenerImp.onTestSuccess(tr);
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         String name = MethodCache.getCurrentMethodName();
         logger.info(name + " Success");
         setResultCache(tr, "pass");
@@ -100,15 +111,6 @@ public class TestResultListener extends TestListenerAdapter {
             printBrowserInfo();
         }
         IOHelper.deleteDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
-    }
-
-    /**
-     * On success.
-     *
-     * @param tr the tr
-     */
-    public void onSuccess(ITestResult tr) {
-
     }
 
     @Override
