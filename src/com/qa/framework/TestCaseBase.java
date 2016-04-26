@@ -29,15 +29,10 @@ import static com.qa.framework.ioc.IocHelper.findImplementClass;
  */
 @Listeners({TestResultListener.class, PowerEmailableReporter.class})
 public abstract class TestCaseBase {
-    public WebDriver driver;
     protected Logger logger = Logger.getLogger(this.getClass());
     private SuiteData suiteData = null;
     private String browser = null;
     private String hubURL = null;
-
-    public WebDriver getDriver() {
-        return driver;
-    }
 
     @BeforeSuite(alwaysRun = true)
     public void BeforeSuite(ITestContext context) throws Exception {
@@ -54,7 +49,7 @@ public abstract class TestCaseBase {
             suiteData.setup();
         }
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP")) {
-            driver = DriverConfig.getDriverObject();
+            WebDriver driver = DriverConfig.getDriverObject();
             DriverCache.set(driver);
         }
         beforeSuite();
@@ -67,6 +62,7 @@ public abstract class TestCaseBase {
     public void AfterSuite(ITestContext context) throws Exception {
         logger.info("afterSuite");
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP")) {
+            WebDriver driver = DriverCache.get();
             driver.quit();
         }
         Class<?> clazz = findImplementClass(SuiteData.class);
@@ -81,6 +77,7 @@ public abstract class TestCaseBase {
     }
 
     private void getDriverObj() throws Exception {
+        WebDriver driver = null;
         if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
             if (hubURL != null) {
                 DesiredCapabilities capability = null;
@@ -97,8 +94,12 @@ public abstract class TestCaseBase {
             } else {
                 driver = DriverConfig.getDriverObject();
             }
-            DriverCache.set(driver);
         }
+        else
+        {
+            driver = DriverConfig.getDriverObject();
+        }
+        DriverCache.set(driver);
     }
 
     @Parameters({"browser", "hubURL"})
@@ -109,8 +110,8 @@ public abstract class TestCaseBase {
         this.hubURL = hubURL;
         if (ParallelModeCache.get().equalsIgnoreCase("classes") && !isUnitTest()) {
             getDriverObj();
+            initFields(this);
         }
-        initFields(this);
         beforeClass();
     }
 
@@ -125,8 +126,11 @@ public abstract class TestCaseBase {
     public void AfterClass() {
         logger.info("afterClass");
         if (!isUnitTest()) {
-            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-                driver.quit();
+            if (ParallelModeCache.get().equalsIgnoreCase("classes")) {
+                if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+                    WebDriver driver = DriverCache.get();
+                    driver.quit();
+                }
             }
         }
         afterClass();
@@ -148,9 +152,13 @@ public abstract class TestCaseBase {
         if (!isUnitTest()) {
             if (ParallelModeCache.get().equalsIgnoreCase("methods")) {
                 getDriverObj();
+                initFields(this);
             } else {
                 if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-                    driver.manage().deleteAllCookies();
+                    WebDriver driver = DriverCache.get();
+                    if(driver != null){
+                        driver.manage().deleteAllCookies();
+                    }
                 }
             }
 
@@ -163,6 +171,12 @@ public abstract class TestCaseBase {
 
     @AfterMethod(alwaysRun = true)
     public void AfterMethod(Method method, Object[] para) {
+        if (ParallelModeCache.get().equalsIgnoreCase("methods")) {
+            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+                WebDriver driver = DriverCache.get();
+                driver.quit();
+            }
+        }
         afterMethod(method, para);
     }
 

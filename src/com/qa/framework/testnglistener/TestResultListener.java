@@ -223,8 +223,7 @@ public class TestResultListener extends TestListenerAdapter {
     }
 
     private void printAlertInfo(ITestResult tr) {
-        TestCaseBase tb = (TestCaseBase) tr.getInstance();
-        WebDriver driver = tb.getDriver();
+        WebDriver driver = DriverCache.get();
         Action action = new Action(driver);
         List<String> messages = action.acceptAlert(5000);
         if (messages.size() > 0) {
