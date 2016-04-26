@@ -32,13 +32,20 @@ public class DBHelper {
 
     static {
         if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-            String webPath = PropConfig.getWebPath();
-            if (StringHelper.startsWithIgnoreCase(webPath, "http://")) {
-                if (webPath.contains("/")) {
-                    poolName = StringHelper.getTokensList(webPath.substring(7), "/").get(0);
-                } else {
-                    poolName = webPath.substring(7);
+            String dbPoolName = PropConfig.getDbPoolName();
+            if(dbPoolName == null) {
+                String webPath = PropConfig.getWebPath();
+                if (StringHelper.startsWithIgnoreCase(webPath, "http://")) {
+                    if (webPath.contains("/")) {
+                        poolName = StringHelper.getTokensList(webPath.substring(7), "/").get(0);
+                    } else {
+                        poolName = webPath.substring(7);
+                    }
                 }
+            }
+            else
+            {
+                poolName = dbPoolName;
             }
         } else {
             poolName = PropConfig.getDbPoolName();
