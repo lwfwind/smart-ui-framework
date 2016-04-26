@@ -5,9 +5,7 @@ import com.qa.framework.library.base.ClassHelper;
 import com.qa.framework.library.base.CollectionHelper;
 import com.qa.framework.library.base.StringHelper;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.*;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
@@ -183,6 +181,17 @@ public class DBHelper {
         return records.size() > 0;
     }
 
+    public long queryCount(String sql, Object... params) {
+        long result;
+        try {
+            result = queryRunner.query(sql, new ScalarHandler<Long>("count(*)"), params);
+        } catch (SQLException e) {
+            logger.error("查询出错！", e);
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
     /**
      * 执行更新语句（包括：update、insert、delete）
      */
@@ -285,22 +294,6 @@ public class DBHelper {
         return executeUpdate(sql, id) == 1;
     }
 
-    /**
-     * 执行 SQL 文件
-     */
-    public static void executeSqlFile(String filePath) {
-        InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        try {
-            String sql;
-            while ((sql = reader.readLine()) != null) {
-                executeUpdate(sql);
-            }
-        } catch (Exception e) {
-            logger.error("execute sql file failure", e);
-            throw new RuntimeException(e);
-        }
-    }
 
     private static String getTableName(Class<?> entityClass) {
         return entityClass.getSimpleName();
