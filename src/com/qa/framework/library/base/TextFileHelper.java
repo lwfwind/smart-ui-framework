@@ -23,12 +23,11 @@ public class TextFileHelper extends ArrayList<String> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Instantiates a new Text file helper.
+     * Read a file, split by any regular expression:
      *
      * @param fileName the file name
      * @param splitter the splitter
      */
-// Read a file, split by any regular expression:
     public TextFileHelper(String fileName, String splitter) {
         super(Arrays.asList(read(fileName).split(splitter)));
         // Regular expression split() often leaves an empty
@@ -40,22 +39,20 @@ public class TextFileHelper extends ArrayList<String> {
     }
 
     /**
-     * Instantiates a new Text file helper.
+     * Normally read by lines:
      *
      * @param fileName the file name
      */
-// Normally read by lines:
     public TextFileHelper(String fileName) {
         this(fileName, "\n");
     }
 
     /**
-     * Read string.
+     * Read a file as a single string:
      *
      * @param fileName the file name
      * @return the string
      */
-// Read a file as a single string:
     public static String read(String fileName) {
         StringBuilder sBuilder = new StringBuilder();
         try {
@@ -77,12 +74,11 @@ public class TextFileHelper extends ArrayList<String> {
     }
 
     /**
-     * Write.
+     * Write a single file in one method call:
      *
      * @param fileName the file name
      * @param text     the text
      */
-// Write a single file in one method call:
     public static void write(String fileName, String text) {
         try {
             PrintWriter out = new PrintWriter(

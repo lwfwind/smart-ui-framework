@@ -275,6 +275,18 @@ public class StringHelper {
     }
 
     /**
+     * Gets between string.
+     *
+     * @param origiString the origi string
+     * @param beforeStr   the before str
+     * @param afterStr    the after str
+     * @return the tokens list
+     */
+    public static String getBetweenString(String origiString, String beforeStr, String afterStr) {
+        return origiString.substring(origiString.indexOf(beforeStr)+beforeStr.length(),origiString.indexOf(afterStr));
+    }
+
+    /**
      * This method can be used to trim all the String values in the string
      * array. For input {" a1 ", "b1 ", " c1"}, the output will be {"a1", "b1",
      * "c1"} Method takes care of null values

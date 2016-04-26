@@ -5,6 +5,7 @@ import org.custommonkey.xmlunit.DetailedDiff;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.Difference;
 import org.dom4j.*;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
 import org.dom4j.io.XMLWriter;
 import org.xml.sax.SAXException;
@@ -90,8 +91,7 @@ public class XMLHelper {
      * @return Element element
      */
     public Element createDocumentRoot(String strRootName) {
-        Element root = getDocument().addElement(strRootName);
-        return root;
+        return getDocument().addElement(strRootName);
     }
 
     /**
@@ -164,17 +164,11 @@ public class XMLHelper {
      */
     public void saveTo(String strFileName) {
         try {
-            XMLWriter writer = new XMLWriter(new FileOutputStream(strFileName));
+            OutputFormat format = OutputFormat.createPrettyPrint();
+            format.setEncoding("utf-8");
+            XMLWriter writer = new XMLWriter(new FileOutputStream(strFileName), format);
             writer.write(getDocument());
             writer.close();
-
-            // OutputFormat format = OutputFormat.createPrettyPrint();
-            // format.setEncoding("utf-8");
-            // writer = new XMLWriter(System.out, format);
-            // writer.write(getDocument());
-
-        } catch (UnsupportedEncodingException e) {
-            logger.error(e.toString());
         } catch (IOException e) {
             logger.error(e.toString());
         }
