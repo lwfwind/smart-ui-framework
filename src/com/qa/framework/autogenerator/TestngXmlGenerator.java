@@ -3,7 +3,6 @@ package com.qa.framework.autogenerator;
 import com.qa.framework.library.base.IOHelper;
 import com.qa.framework.library.base.StringHelper;
 import com.qa.framework.library.base.XMLHelper;
-import org.apache.log4j.Logger;
 import org.dom4j.Element;
 
 import java.util.ArrayList;
@@ -11,25 +10,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by kcgw001 on 2016/4/26.
- */
 public class TestngXmlGenerator {
-    private final static Logger logger = Logger.getLogger(TestngXmlGenerator.class);
 
     private static List<Map<String, Object>> classListMap = new ArrayList<Map<String, Object>>();
     private static List<Map<String, Object>> methodListMap = new ArrayList<Map<String, Object>>();
 
     /**
-     * The entry point of application.
+     *
+            System.setProperty("browser","chrome");
+            System.setProperty("hubURL","http://192.168.20.196:4444/wd/hub");
+            autoGenerate("D:\\git\\web_ui_automation\\src","D:\\git\\web_ui_automation\\test-xml\\","1","classes");
+            autoGenerate("D:\\git\\web_ui_automation\\src","D:\\git\\web_ui_automation\\test-xml\\","11","classes");
+            autoGenerate("D:\\git\\web_ui_automation\\src","D:\\git\\web_ui_automation\\test-xml\\","11","methods");
      *
      * @param args the input arguments
-     * @throws Exception the exception
      */
     public static void main(String[] args) {
-        autoGenerate("D:\\git\\web_ui_automation\\src","D:\\git\\web_ui_automation\\test-xml\\","1","classes");
-        autoGenerate("D:\\git\\web_ui_automation\\src","D:\\git\\web_ui_automation\\test-xml\\","11","classes");
-        autoGenerate("D:\\git\\web_ui_automation\\src","D:\\git\\web_ui_automation\\test-xml\\","11","methods");
+        autoGenerate(args[0],args[1],args[2],args[3]);
     }
 
     public static void autoGenerate(String testCasePath,String outputPath,String threadCnt,String parallelType){
@@ -94,6 +91,16 @@ public class TestngXmlGenerator {
                 Element test = xml.addChildElement(root,"test");
                 xml.addAttribute(test,"name",classMap.get("className").toString());
                 xml.addAttribute(test,"timeout","600000");
+                if(System.getProperty("browser") != null){
+                    Element parameter = xml.addChildElement(test,"parameter");
+                    xml.addAttribute(parameter,"name","browser");
+                    xml.addAttribute(parameter,"value",System.getProperty("browser"));
+                }
+                if(System.getProperty("hubURL") != null){
+                    Element parameter = xml.addChildElement(test,"parameter");
+                    xml.addAttribute(parameter,"name","hubURL");
+                    xml.addAttribute(parameter,"value",System.getProperty("hubURL"));
+                }
                 Element classes = xml.addChildElement(test,"classes");
                 Element cls = xml.addChildElement(classes,"class");
                 xml.addAttribute(cls,"name",classMap.get("packageName").toString()+"."+classMap.get("className").toString());
@@ -105,6 +112,16 @@ public class TestngXmlGenerator {
                 Element test = xml.addChildElement(root,"test");
                 xml.addAttribute(test,"name",classMap.get("className").toString());
                 xml.addAttribute(test,"timeout","600000");
+                if(System.getProperty("browser") != null){
+                    Element parameter = xml.addChildElement(test,"parameter");
+                    xml.addAttribute(parameter,"name","browser");
+                    xml.addAttribute(parameter,"value",System.getProperty("browser"));
+                }
+                if(System.getProperty("hubURL") != null){
+                    Element parameter = xml.addChildElement(test,"parameter");
+                    xml.addAttribute(parameter,"name","hubURL");
+                    xml.addAttribute(parameter,"value",System.getProperty("hubURL"));
+                }
                 Element classes = xml.addChildElement(test,"classes");
                 Element cls = xml.addChildElement(classes,"class");
                 xml.addAttribute(cls,"name",classMap.get("packageName").toString()+"."+classMap.get("className").toString());
