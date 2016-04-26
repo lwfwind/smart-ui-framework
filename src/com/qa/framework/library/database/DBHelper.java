@@ -1,15 +1,18 @@
 package com.qa.framework.library.database;
 
 import com.qa.framework.config.PropConfig;
+import com.qa.framework.library.base.ClassHelper;
 import com.qa.framework.library.base.CollectionHelper;
 import com.qa.framework.library.base.StringHelper;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Connection;
@@ -26,7 +29,7 @@ public class DBHelper {
 
     private final static Logger logger = Logger.getLogger(DBHelper.class);
 
-    private static final ThreadLocal<Connection> connThreadLocal = new ThreadLocal<Connection>();
+    private static final ThreadLocal<Connection> connContainer = new ThreadLocal<Connection>();
     private static final QueryRunner queryRunner = new QueryRunner();
     private static String poolName;
 
@@ -56,7 +59,7 @@ public class DBHelper {
      * 获取数据库连接
      */
     public static Connection getConnection(String poolname) {
-        Connection conn = connThreadLocal.get();
+        Connection conn = connContainer.get();
         if (conn == null) {
             try {
                 conn = DBPoolFactory.getDbConnection(poolname);
@@ -64,7 +67,7 @@ public class DBHelper {
                 logger.error("get connection failure", e);
                 throw new RuntimeException(e);
             } finally {
-                connThreadLocal.set(conn);
+                connContainer.set(conn);
             }
         }
         return conn;
@@ -72,6 +75,75 @@ public class DBHelper {
 
     public static Connection getConnection() {
         return getConnection(poolName);
+    }
+
+    /**
+     * 开启事务
+     */
+    public static void beginTransaction() {
+        Connection conn = getConnection();
+        if (conn != null) {
+            try {
+                conn.setAutoCommit(false);
+            } catch (SQLException e) {
+                logger.error("开启事务出错！", e);
+                throw new RuntimeException(e);
+            } finally {
+                connContainer.set(conn);
+            }
+        }
+    }
+
+    /**
+     * 提交事务
+     */
+    public static void commitTransaction() {
+        Connection conn = getConnection();
+        if (conn != null) {
+            try {
+                conn.commit();
+                conn.close();
+            } catch (SQLException e) {
+                logger.error("提交事务出错！", e);
+                throw new RuntimeException(e);
+            } finally {
+                connContainer.remove();
+            }
+        }
+    }
+
+    /**
+     * 回滚事务
+     */
+    public static void rollbackTransaction() {
+        Connection conn = getConnection();
+        if (conn != null) {
+            try {
+                conn.rollback();
+                conn.close();
+            } catch (SQLException e) {
+                logger.error("回滚事务出错！", e);
+                throw new RuntimeException(e);
+            } finally {
+                connContainer.remove();
+            }
+        }
+    }
+
+    /**
+     * 初始化 SQL 脚本
+     */
+    public static void initSQL(String sqlPath) {
+        try {
+            File sqlFile = new File(ClassHelper.getClassPath() + sqlPath);
+            List<String> sqlList = FileUtils.readLines(sqlFile);
+            for (String sql : sqlList) {
+                executeUpdate(sql);
+            }
+        } catch (Exception e) {
+            logger.error("初始化 SQL 脚本出错！", e);
+            throw new RuntimeException(e);
+        }
     }
 
     /**
