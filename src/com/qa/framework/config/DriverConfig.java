@@ -56,6 +56,9 @@ public class DriverConfig {
         if (PropConfig.getHtmlUnitEmulationType() != null) {
             setHTMLUnitEmulation(PropConfig.getHtmlUnitEmulationType());
         }
+        else{
+            setHTMLUnitEmulation(htmlUnitEmulation.NONE);
+        }
     }
 
     /**

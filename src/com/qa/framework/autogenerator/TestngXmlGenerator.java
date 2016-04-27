@@ -51,25 +51,22 @@ public class TestngXmlGenerator {
                 }
             }
             if(isMatchedFile){
-                Map<String, Object> classMap = new HashMap<>();
-                Map<String, Object> methodMap = new HashMap<>();
                 int index = 0;
                 for (String line : noBlankLines) {
                     if (StringHelper.startsWithIgnoreCase(line.trim(), "package ")) {
                         packageName = StringHelper.getBetweenString(line,"package ",";").trim();
-                        classMap.put("className",className);
-                        classMap.put("packageName",packageName);
                     }
                     if (StringHelper.startsWithIgnoreCase(line.trim(), "@Test")) {
+                        Map<String, Object> methodMap = new HashMap<>();
                         methodMap.put("className",className);
                         methodMap.put("packageName",packageName);
                         String methodLine = noBlankLines.get(index+1);
                         String methodName = StringHelper.getBetweenString(methodLine,"void ","(").trim();
                         methodMap.put("methodName",methodName);
+                        methodListMap.add(methodMap);
                     }
                     index++;
                 }
-                methodListMap.add(methodMap);
             }
         }
 
