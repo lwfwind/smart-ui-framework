@@ -12,6 +12,7 @@ import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
+import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -40,6 +41,33 @@ public abstract class PageBase {
     }
 
     /**
+     * Open url or a page by its name. page is stored in test resources.
+     *
+     * @param resource String containing the name of your test html.
+     */
+    public void open(String resource) {
+        if(resource.startsWith("http")){
+            driver.get(resource);
+        }
+        else
+        {
+            URL formsHtmlUrl = PageBase.class.getClassLoader().getResource(resource);
+            if (formsHtmlUrl == null) {
+                throw new RuntimeException();
+            }
+            this.driver.get(formsHtmlUrl.toString());
+        }
+    }
+
+    public void initElements(Object page) {
+        PageFactory.initElements(driver, page);
+    }
+
+    public void maximize() {
+        driver.manage().window().maximize();
+    }
+
+    /**
      * Pause
      *
      * @param time in millisecond
@@ -60,6 +88,7 @@ public abstract class PageBase {
         try {
             action.acceptAlert();
         } catch (NoAlertPresentException e) {
+            e.printStackTrace();
         }
     }
 
@@ -72,21 +101,6 @@ public abstract class PageBase {
         }
         action.pause(1000);
         initElements(this);
-    }
-
-    public void initElements(Object page) {
-        PageFactory.initElements(driver, page);
-    }
-
-    public void maximize() {
-        driver.manage().window().maximize();
-    }
-
-    public void open(String url) {
-        try {
-            driver.get(url);
-        } catch (TimeoutException e) {
-        }
     }
 
     public String getPageTitle() {
