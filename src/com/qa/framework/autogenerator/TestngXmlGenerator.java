@@ -80,9 +80,9 @@ public class TestngXmlGenerator {
         Element listeners = xml.addChildElement(root,"listeners");
         Element listener = xml.addChildElement(listeners,"listener");
         xml.addAttribute(listener,"class-name","com.qa.framework.testnglistener.RetryListener");
-        for(Map<String, Object> classMap : methodListMap){
+        for(Map<String, Object> methodMap : methodListMap){
             Element test = xml.addChildElement(root,"test");
-            xml.addAttribute(test,"name",classMap.get("className").toString());
+            xml.addAttribute(test,"name",methodMap.get("className").toString()+"_"+methodMap.get("methodName").toString());
             xml.addAttribute(test,"timeout","600000");
             if(System.getProperty("browser") != null){
                 Element parameter = xml.addChildElement(test,"parameter");
@@ -96,10 +96,10 @@ public class TestngXmlGenerator {
             }
             Element classes = xml.addChildElement(test,"classes");
             Element cls = xml.addChildElement(classes,"class");
-            xml.addAttribute(cls,"name",classMap.get("packageName").toString()+"."+classMap.get("className").toString());
+            xml.addAttribute(cls,"name",methodMap.get("packageName").toString()+"."+methodMap.get("className").toString());
             Element methods = xml.addChildElement(cls,"methods");
             Element include = xml.addChildElement(methods,"include");
-            xml.addAttribute(include,"name",classMap.get("methodName").toString());
+            xml.addAttribute(include,"name",methodMap.get("methodName").toString());
         }
         xml.saveTo(outputPath+"xml_"+threadCnt+".xml");
     }
