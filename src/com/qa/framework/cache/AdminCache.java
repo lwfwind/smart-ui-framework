@@ -48,7 +48,7 @@ public class AdminCache {
     public static void recoverAdmin(){
         AdminAccount adminAccount = accountThreadLocal.get();
         if (adminAccount != null) {
-            logger.info("AdminCache use exist " + adminAccount.getName());
+            logger.info("AdminCache recover account " + adminAccount.getName());
             unUsedAdmin.offer(adminAccount);
         }
     }
