@@ -1,4 +1,4 @@
-package com.qa.framework.autogenerator;
+package com.qa.framework.generator;
 
 import com.qa.framework.library.base.IOHelper;
 import com.qa.framework.library.base.StringHelper;
