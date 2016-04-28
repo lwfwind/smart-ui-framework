@@ -30,9 +30,9 @@ public class AdminCache {
         }
     }
 
-    private static AdminAccount getUnUsedAdmin(){
-        for(AdminAccount adminAccount:allAdmin){
-            if(!currentUsingAdmin.contains(adminAccount)){
+    private static AdminAccount getUnUsedAdmin() {
+        for (AdminAccount adminAccount : allAdmin) {
+            if (!currentUsingAdmin.contains(adminAccount)) {
                 return adminAccount;
             }
         }
@@ -56,7 +56,7 @@ public class AdminCache {
         }
     }
 
-    public static void recoverAdmin(){
+    public static void recoverAdmin() {
         AdminAccount adminAccount = accountThreadLocal.get();
         if (adminAccount != null) {
             logger.info("AdminCache recover account " + adminAccount.getName());

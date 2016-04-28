@@ -9,7 +9,6 @@ import io.appium.java_client.remote.MobilePlatform;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 
 import java.net.URL;
@@ -46,11 +45,9 @@ public abstract class PageBase {
      * @param resource String containing the name of your test html.
      */
     public void open(String resource) {
-        if(resource.startsWith("http")){
+        if (resource.startsWith("http")) {
             driver.get(resource);
-        }
-        else
-        {
+        } else {
             URL formsHtmlUrl = PageBase.class.getClassLoader().getResource(resource);
             if (formsHtmlUrl == null) {
                 throw new RuntimeException();

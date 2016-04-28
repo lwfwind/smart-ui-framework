@@ -22,14 +22,7 @@ public class DBPoolFactory {
 
     private final static Logger logger = Logger
             .getLogger(DBPoolFactory.class);
-    /**
-     * The Connection pool map.
-     */
-    public static Map<String, ObjectPool> connectionPoolMap = null;
-    /**
-     * The Connection map.
-     */
-    public static Map<String, Connection> connectionMap = null;
+
     private static String dbJdbc = null;
     private static String dbUser = null;
     private static String dbPwd = null;
@@ -39,12 +32,7 @@ public class DBPoolFactory {
     @SuppressWarnings("rawtypes")
     private static Class driverClass = null;
     private static ObjectPool connectionPool = null;
-
-    /**
-     * Instantiates a new Db pool factory.
-     */
-    public DBPoolFactory() {
-    }
+    private static Map<String,Boolean> poolNameMap = new HashMap<>();
 
     /**
      * Initial DataSource
@@ -88,7 +76,6 @@ public class DBPoolFactory {
             PoolingDriver driver = (PoolingDriver) DriverManager
                     .getDriver("jdbc:apache:commons:dbcp:");
             driver.registerPool(poolname, connectionPool);
-            connectionPoolMap.put(poolname, connectionPool);
             logger.info("Create " + poolname
                     + " for Database Connection Succees.");
         } catch (Exception e) {
@@ -140,48 +127,15 @@ public class DBPoolFactory {
      *
      * @param poolname the poolname
      * @return Connection db connection
-     * @throws SQLException the sql exception
      */
-    public synchronized static Connection getDbConnection(String poolname)
-            throws SQLException {
-
-        Connection conn = null;
-        if (connectionMap == null) {
-            connectionMap = new HashMap<String, Connection>();
-            if (connectionPoolMap == null) {
-                connectionPoolMap = new HashMap<String, ObjectPool>();
-            }
-            if (connectionPoolMap.get(poolname) == null) {
-                init(poolname);// Initial pool
-                startPool(poolname, dbJdbc, dbUser, dbPwd, max, wait);
-            }
-            try {
-                conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:"
-                        + poolname);
-                connectionMap.put(poolname, conn);
-            } catch (SQLException e) {
-                logger.error(e.toString());
-            }
-        } else {
-            if (connectionMap.get(poolname) != null) {
-                return connectionMap.get(poolname);
-            } else {
-                if (connectionPoolMap.get(poolname) == null) {
-                    init(poolname);// Initial pool
-                    startPool(poolname, dbJdbc, dbUser, dbPwd, max, wait);
-                }
-                try {
-                    conn = DriverManager.getConnection("jdbc:apache:commons:dbcp:"
-                            + poolname);
-                    connectionMap.put(poolname, conn);
-                    return conn;
-                } catch (SQLException e) {
-                    logger.error(e.toString());
-                }
-            }
-
+    public synchronized static Connection getDbConnection(String poolname) throws SQLException {
+        if(poolNameMap.get(poolname) == null){
+            init(poolname);
+            startPool(poolname, dbJdbc, dbUser, dbPwd, max, wait);
+            poolNameMap.put(poolname,true);
         }
-        return conn;
+        return DriverManager.getConnection("jdbc:apache:commons:dbcp:"
+                + poolname);
     }
 
     /**

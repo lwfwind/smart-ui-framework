@@ -5,14 +5,14 @@ import com.qa.framework.library.base.ClassHelper;
 import com.qa.framework.library.base.CollectionHelper;
 import com.qa.framework.library.base.StringHelper;
 import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.handlers.*;
+import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
+import org.apache.commons.dbutils.handlers.ScalarHandler;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -34,7 +34,7 @@ public class DBHelper {
     static {
         if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
             String dbPoolName = PropConfig.getDbPoolName();
-            if(dbPoolName == null) {
+            if (dbPoolName == null) {
                 String webPath = PropConfig.getWebPath();
                 if (StringHelper.startsWithIgnoreCase(webPath, "http://")) {
                     if (webPath.contains("/")) {
@@ -43,9 +43,7 @@ public class DBHelper {
                         poolName = webPath.substring(7);
                     }
                 }
-            }
-            else
-            {
+            } else {
                 poolName = dbPoolName;
             }
         } else {
@@ -181,17 +179,6 @@ public class DBHelper {
         return records.size() > 0;
     }
 
-    public long queryCount(String sql, Object... params) {
-        long result;
-        try {
-            result = queryRunner.query(sql, new ScalarHandler<Long>("count(*)"), params);
-        } catch (SQLException e) {
-            logger.error("查询出错！", e);
-            throw new RuntimeException(e);
-        }
-        return result;
-    }
-
     /**
      * 执行更新语句（包括：update、insert、delete）
      */
@@ -294,9 +281,20 @@ public class DBHelper {
         return executeUpdate(sql, id) == 1;
     }
 
-
     private static String getTableName(Class<?> entityClass) {
         return entityClass.getSimpleName();
+    }
+
+    public long queryCount(String sql, Object... params) {
+        long result;
+        try {
+            Connection conn = getConnection();
+            result = queryRunner.query(conn, sql, new ScalarHandler<Long>("count(*)"), params);
+        } catch (SQLException e) {
+            logger.error("查询出错！", e);
+            throw new RuntimeException(e);
+        }
+        return result;
     }
 
 }

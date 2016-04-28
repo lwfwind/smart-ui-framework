@@ -283,7 +283,7 @@ public class StringHelper {
      * @return the tokens list
      */
     public static String getBetweenString(String origiString, String beforeStr, String afterStr) {
-        return origiString.substring(origiString.indexOf(beforeStr)+beforeStr.length(),origiString.indexOf(afterStr));
+        return origiString.substring(origiString.indexOf(beforeStr) + beforeStr.length(), origiString.indexOf(afterStr));
     }
 
     /**

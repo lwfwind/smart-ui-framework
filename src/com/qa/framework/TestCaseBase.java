@@ -94,9 +94,7 @@ public abstract class TestCaseBase {
             } else {
                 driver = DriverConfig.getDriverObject();
             }
-        }
-        else
-        {
+        } else {
             driver = DriverConfig.getDriverObject();
         }
         DriverCache.set(driver);
@@ -156,7 +154,7 @@ public abstract class TestCaseBase {
             } else {
                 if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
                     WebDriver driver = DriverCache.get();
-                    if(driver != null){
+                    if (driver != null) {
                         driver.manage().deleteAllCookies();
                     }
                 }
