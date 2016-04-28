@@ -5,11 +5,13 @@ import com.qa.framework.library.webdriver.Action;
 import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.web.Element;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 
 import java.net.URL;
 import java.util.Random;
@@ -120,6 +122,15 @@ public abstract class PageBase {
 
     public String getUrl() {
         return driver.getCurrentUrl();
+    }
+
+    public void hideKeyboard() {
+        AndroidDriver androidDriver=(AndroidDriver)driver;
+        try {
+            androidDriver.hideKeyboard();
+        } catch (WebDriverException ex) {
+            logger.info("<Keyboard>Soft keyboard not present, cannot hide keyboard!!!");
+        }
     }
 
     public void swipeToUp(WebDriver driver, int during) {
