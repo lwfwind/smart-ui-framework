@@ -4,21 +4,22 @@ import com.qa.framework.library.admin.AdminAccount;
 import com.qa.framework.library.admin.BaseAdminBean;
 import com.qa.framework.library.admin.XmlToBean;
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.util.ArrayQueue;
 
-import java.util.Queue;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminCache {
     protected static Logger logger = Logger.getLogger(AdminCache.class);
     private static ThreadLocal<AdminAccount> accountThreadLocal = new ThreadLocal<AdminAccount>();
-    private static Queue<AdminAccount> unUsedAdmin = new ArrayQueue<>();
+    private static List<AdminAccount> currentUsingAdmin = new ArrayList<>();
+    private static List<AdminAccount> allAdmin = new ArrayList<>();
 
     static {
         initList();
     }
 
     public static void initList(AdminAccount adminAccount) {
-        unUsedAdmin.offer(adminAccount);
+        allAdmin.add(adminAccount);
     }
 
     public static void initList() {
@@ -29,8 +30,17 @@ public class AdminCache {
         }
     }
 
+    private static AdminAccount getUnUsedAdmin(){
+        for(AdminAccount adminAccount:allAdmin){
+            if(!currentUsingAdmin.contains(adminAccount)){
+                return adminAccount;
+            }
+        }
+        throw new RuntimeException("对不起, 无可用的后台账号");
+    }
+
     public static AdminAccount getAdmin() {
-        if (unUsedAdmin.size() == 0) {
+        if (currentUsingAdmin.size() == allAdmin.size()) {
             throw new RuntimeException("对不起, 无可用的后台账号");
         }
         AdminAccount adminAccount = accountThreadLocal.get();
@@ -38,9 +48,10 @@ public class AdminCache {
             logger.info("AdminCache use exist " + adminAccount.getName());
             return adminAccount;
         } else {
-            adminAccount = unUsedAdmin.poll();
+            adminAccount = getUnUsedAdmin();
             logger.info("AdminCache use " + adminAccount.getName());
             accountThreadLocal.set(adminAccount);
+            currentUsingAdmin.add(adminAccount);
             return adminAccount;
         }
     }
@@ -49,7 +60,8 @@ public class AdminCache {
         AdminAccount adminAccount = accountThreadLocal.get();
         if (adminAccount != null) {
             logger.info("AdminCache recover account " + adminAccount.getName());
-            unUsedAdmin.offer(adminAccount);
+            accountThreadLocal.set(null);
+            currentUsingAdmin.remove(adminAccount);
         }
     }
 
