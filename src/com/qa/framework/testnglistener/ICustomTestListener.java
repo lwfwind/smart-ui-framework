@@ -5,7 +5,7 @@ import org.testng.ITestResult;
 /**
  * Created by kcgw001 on 2016/4/22.
  */
-public interface TestListener {
+public interface ICustomTestListener {
 
     void onTestFailure(ITestResult tr);
 

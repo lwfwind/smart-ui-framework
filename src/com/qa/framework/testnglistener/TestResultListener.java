@@ -40,11 +40,11 @@ public class TestResultListener extends TestListenerAdapter {
     @Override
     public void onTestFailure(ITestResult tr) {
         super.onTestFailure(tr);
-        Class<?> clazz = findImplementClass(TestListener.class);
+        Class<?> clazz = findImplementClass(ICustomTestListener.class);
         if (clazz != null) {
-            TestListener testListenerImp = null;
+            ICustomTestListener testListenerImp = null;
             try {
-                testListenerImp = (TestListener) clazz.newInstance();
+                testListenerImp = (ICustomTestListener) clazz.newInstance();
                 testListenerImp.onTestFailure(tr);
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
@@ -67,11 +67,11 @@ public class TestResultListener extends TestListenerAdapter {
     @Override
     public void onTestSkipped(ITestResult tr) {
         super.onTestSkipped(tr);
-        Class<?> clazz = findImplementClass(TestListener.class);
+        Class<?> clazz = findImplementClass(ICustomTestListener.class);
         if (clazz != null) {
-            TestListener testListenerImp = null;
+            ICustomTestListener testListenerImp = null;
             try {
-                testListenerImp = (TestListener) clazz.newInstance();
+                testListenerImp = (ICustomTestListener) clazz.newInstance();
                 testListenerImp.onTestSkipped(tr);
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
@@ -93,11 +93,11 @@ public class TestResultListener extends TestListenerAdapter {
     @Override
     public void onTestSuccess(ITestResult tr) {
         super.onTestSuccess(tr);
-        Class<?> clazz = findImplementClass(TestListener.class);
+        Class<?> clazz = findImplementClass(ICustomTestListener.class);
         if (clazz != null) {
-            TestListener testListenerImp = null;
+            ICustomTestListener testListenerImp = null;
             try {
-                testListenerImp = (TestListener) clazz.newInstance();
+                testListenerImp = (ICustomTestListener) clazz.newInstance();
                 testListenerImp.onTestSuccess(tr);
             } catch (InstantiationException | IllegalAccessException e) {
                 e.printStackTrace();
