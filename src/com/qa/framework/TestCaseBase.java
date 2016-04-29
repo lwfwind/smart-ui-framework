@@ -2,7 +2,6 @@ package com.qa.framework;
 
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
-import com.qa.framework.cache.ParallelModeCache;
 import com.qa.framework.config.DriverConfig;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.data.SuiteData;
@@ -24,9 +23,6 @@ import java.net.URL;
 import static com.qa.framework.ioc.AutoInjectHelper.initFields;
 import static com.qa.framework.ioc.IocHelper.findImplementClass;
 
-/**
- * Created by apple on 15/10/16.
- */
 @Listeners({TestResultListener.class, PowerEmailableReporter.class})
 public abstract class TestCaseBase {
     protected Logger logger = Logger.getLogger(this.getClass());
@@ -37,11 +33,6 @@ public abstract class TestCaseBase {
     @BeforeSuite(alwaysRun = true)
     public void BeforeSuite(ITestContext context) throws Exception {
         logger.info("beforeSuite");
-        if (context.getSuite().getXmlSuite().getParallel().equalsIgnoreCase("methods")) {
-            ParallelModeCache.set("methods");
-        } else {
-            ParallelModeCache.set("classes");
-        }
         HelperLoader.init();
         Class<?> clazz = findImplementClass(SuiteData.class);
         if (clazz != null) {
@@ -49,8 +40,7 @@ public abstract class TestCaseBase {
             suiteData.setup();
         }
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP")) {
-            WebDriver driver = DriverConfig.getDriverObject();
-            DriverCache.set(driver);
+            getDriverObj();
         }
         beforeSuite();
     }
@@ -106,10 +96,6 @@ public abstract class TestCaseBase {
         logger.info("beforeClass");
         this.browser = browser;
         this.hubURL = hubURL;
-        if (ParallelModeCache.get().equalsIgnoreCase("classes") && !isUnitTest()) {
-            getDriverObj();
-            initFields(this);
-        }
         beforeClass();
     }
 
@@ -123,14 +109,6 @@ public abstract class TestCaseBase {
     @AfterClass(alwaysRun = true)
     public void AfterClass() {
         logger.info("afterClass");
-        if (!isUnitTest()) {
-            if (ParallelModeCache.get().equalsIgnoreCase("classes")) {
-                if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-                    WebDriver driver = DriverCache.get();
-                    driver.quit();
-                }
-            }
-        }
         afterClass();
     }
 
@@ -148,18 +126,10 @@ public abstract class TestCaseBase {
         MethodCache.set(StringHelper.removeSpecialChar(currentMethodName));
 
         if (!isUnitTest()) {
-            if (ParallelModeCache.get().equalsIgnoreCase("methods")) {
+            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
                 getDriverObj();
                 initFields(this);
-            } else {
-                if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-                    WebDriver driver = DriverCache.get();
-                    if (driver != null) {
-                        driver.manage().deleteAllCookies();
-                    }
-                }
             }
-
         }
         beforeMethod(method, para);
     }
@@ -169,11 +139,9 @@ public abstract class TestCaseBase {
 
     @AfterMethod(alwaysRun = true)
     public void AfterMethod(Method method, Object[] para) {
-        if (ParallelModeCache.get().equalsIgnoreCase("methods")) {
-            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-                WebDriver driver = DriverCache.get();
-                driver.quit();
-            }
+        if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+            WebDriver driver = DriverCache.get();
+            driver.quit();
         }
         afterMethod(method, para);
     }
