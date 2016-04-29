@@ -41,6 +41,7 @@ public abstract class TestCaseBase {
         }
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP")) {
             getDriverObj();
+            initFields(this);
         }
         beforeSuite();
     }
