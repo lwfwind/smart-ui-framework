@@ -1,6 +1,7 @@
 package com.qa.framework.ioc;
 
 import com.qa.framework.InstanceFactory;
+import com.qa.framework.config.PropConfig;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
@@ -13,12 +14,22 @@ public class ClassFinder {
     /**
      * 获取基础包名
      */
-    private static final String basePackage = "com.qa";
+    private static String basePackage = "";
 
     /**
      * 获取 ClassScanner
      */
     private static final ClassScanner classScanner = InstanceFactory.getClassScanner();
+
+    static{
+        if(PropConfig.getBasePackage() == null){
+            basePackage = "com.qa";
+        }
+        else{
+            basePackage = PropConfig.getBasePackage();
+        }
+
+    }
 
     /**
      * 获取基础包名中的所有类

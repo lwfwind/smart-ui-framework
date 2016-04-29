@@ -32,6 +32,9 @@ public class PropConfig {
     private static String htmlUnitEmulationType;
     private static String htmlUnitProxy;
 
+    //base package name
+    private static String basePackage;
+
     //Android
     private static String appBin;
     private static String appiumServerUrl;
@@ -67,6 +70,14 @@ public class PropConfig {
                 e.printStackTrace();
             }
         }
+    }
+
+    public static String getBasePackage() {
+        return basePackage;
+    }
+
+    public static void setBasePackage(String basePackage) {
+        PropConfig.basePackage = basePackage;
     }
 
     /**
