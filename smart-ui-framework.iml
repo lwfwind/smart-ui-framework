@@ -113,5 +113,8 @@
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.5" level="project" />
     <orderEntry type="library" name="Maven: net.sf.ezmorph:ezmorph:1.0.6" level="project" />
+    <orderEntry type="library" name="Maven: com.google.android.tools:ddmlib:r13" level="project" />
+    <orderEntry type="library" name="Maven: com.android.tools:common:25.1.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.android.tools:annotations:25.1.0" level="project" />
   </component>
 </module>

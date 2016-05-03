@@ -178,6 +178,18 @@
             <classifier>jdk15</classifier>
         </dependency>
 
+        <dependency>
+            <groupId>com.google.android.tools</groupId>
+            <artifactId>ddmlib</artifactId>
+            <version>r13</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.android.tools</groupId>
+            <artifactId>common</artifactId>
+            <version>25.1.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

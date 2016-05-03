@@ -1,4 +1,4 @@
-package com.qa.framework.library.mobile;
+package com.qa.framework.library.android;
 
 import com.qa.framework.library.base.OSHelper;
 import com.qa.framework.library.base.ProcessHelper;

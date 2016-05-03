@@ -1,6 +1,7 @@
 package com.qa.framework.library.webdriver;
 
 import com.qa.framework.config.PropConfig;
+import com.qa.framework.library.android.uiautomator.UiAutomatorHelper;
 import com.qa.framework.library.base.IOHelper;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -79,6 +80,24 @@ public class ScreenShot {
             try {
                 File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(sourceFile, new File(screenShotPath));
+            } catch (Exception e) {
+                logger.error("captureAction exception:" + e.toString());
+            }
+            return screenShotPath;
+        }
+        return "dir not existed";
+    }
+
+    public static String captureAction(String currentMethodName, String fileName) {
+        String t = new SimpleDateFormat("MM-dd-HH-mm-ss").format(new Date());
+        String allActions = dir + File.separator + "Actions" + File.separator + time + File.separator + currentMethodName;
+        File f = new File(allActions);
+        if (f.exists() && f.isDirectory()) {
+            String screenShotPath = allActions + File.separator + t + "-" + fileName + ".jpg";
+            try {
+                BufferedImage bufferedImage = UiAutomatorHelper.takeSnapshot();
+                File outputfile = new File(screenShotPath);
+                ImageIO.write(bufferedImage, "jpg", outputfile);
             } catch (Exception e) {
                 logger.error("captureAction exception:" + e.toString());
             }
