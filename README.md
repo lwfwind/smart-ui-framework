@@ -16,17 +16,14 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 
 ## Example
 
-#### 1. Create Page level Class, which extends PageBase Class
+##### 1. Create Page level Class, which extends PageBase Class
 
 ```java
 package test.page;
 
 import com.qa.framework.PageBase;
-
 import org.openqa.selenium.WebElement;
-
 import org.openqa.selenium.support.FindBy;
-
 
 public class SearchPage Level extends PageBase {
 
@@ -42,7 +39,7 @@ public class SearchPage Level extends PageBase {
 
 ```
 
-#### 2. Create Service Level Class, which extends ServiceBase Class (Notes: The Sevice Level is not necessary if the automation project is not complex )
+##### 2. Create Service Level Class, which extends ServiceBase Class (Notes: The Sevice Level is not necessary if the automation project is not complex )
 
 ```java
 package test.service;
@@ -63,11 +60,10 @@ public class SearchService extends ServiceBase {
 
 ```
 
-#### 3. Create TestCase Level Class, which extends TestCaseBase Class
+##### 3. Create TestCase Level Class, which extends TestCaseBase Class
 
 ```java
 package test.testcase;
-
 
 import com.qa.framework.TestCaseBase;
 import com.qa.framework.ioc.annotation.AutoInject;
@@ -83,6 +79,31 @@ public class SearchWithServiceTest extends TestCaseBase {
     public void pageFactoryTest(String content) {
         searchService.search(content);
     }
+}
+
+##### 4. Create test listener Class to add business log on success/fail/skip, which implement ICustomTestListener Class
+
+```java
+package test.testnglistener;
+
+import com.qa.framework.testnglistener.ICustomTestListener;
+import org.apache.log4j.Logger;
+import org.testng.ITestResult;
+
+public class TestListener implements ICustomTestListener {
+
+    public void onTestFailure(ITestResult tr) {
+        // TODO
+    }
+
+    public void onTestSkipped(ITestResult tr){
+        // TODO
+    }
+
+    public void onTestSuccess(ITestResult tr){
+        // TODO
+    }
+
 }
 
 ```
