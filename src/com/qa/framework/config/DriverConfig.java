@@ -56,7 +56,7 @@ public class DriverConfig {
         if (PropConfig.getHtmlUnitEmulationType() != null) {
             setHTMLUnitEmulation(PropConfig.getHtmlUnitEmulationType());
         } else {
-            setHTMLUnitEmulation(htmlUnitEmulation.NONE);
+            setHTMLUnitEmulation(htmlUnitEmulation.FIREFOX);
         }
     }
 
@@ -99,7 +99,7 @@ public class DriverConfig {
                 return;
             }
         }
-        setHTMLUnitEmulation(htmlUnitEmulation.NONE);
+        setHTMLUnitEmulation(htmlUnitEmulation.FIREFOX);
         logger.error("'" + value + UNKNOWN_BROWSER_TYPE);
     }
 
