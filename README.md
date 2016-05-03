@@ -36,7 +36,6 @@ public class SearchPage Level extends PageBase {
         searchTestBox.submit();
     }
 }
-
 ```
 
 ##### 2. Create Service Level Class, which extends ServiceBase Class (Notes: The Sevice Level is not necessary if the automation project is not complex )
@@ -57,7 +56,6 @@ public class SearchService extends ServiceBase {
         searchPage.verifyResult();
     }
 }
-
 ```
 
 ##### 3. Create TestCase Level Class, which extends TestCaseBase Class
@@ -80,6 +78,7 @@ public class SearchWithServiceTest extends TestCaseBase {
         searchService.search(content);
     }
 }
+```
 
 ##### 4. Create test listener Class to add business log on success/fail/skip, which implement ICustomTestListener Class
 
@@ -105,8 +104,8 @@ public class TestListener implements ICustomTestListener {
     }
 
 }
-
 ```
+
 Detail please refer to [smart-ui-automation-example](https://github.com/lwfwind/smart-ui-automation-example)
 
 
