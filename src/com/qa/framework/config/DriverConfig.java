@@ -241,6 +241,8 @@ public class DriverConfig {
                     capabilities = new DesiredCapabilities();
                     capabilities.setCapability("deviceName", adb.getDeviceName());
                     capabilities.setCapability("app", app.getAbsolutePath());
+                    capabilities.setCapability("unicodeKeyboard",true);
+                    capabilities.setCapability("resetKeyboard",true);
                     driverObject = new AndroidDriver<>(new URL(appiumServerUrl), capabilities);
                     logger.info("Using Android Driver...");
                     break;
