@@ -1,31 +1,17 @@
-/*
- * Copyright (C) 2012 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.qa.framework.library.android.uiautomator;
 
-import com.android.ddmlib.*;
+import com.android.ddmlib.IDevice;
+import com.android.ddmlib.NullOutputReceiver;
+import com.android.ddmlib.RawImage;
+import com.android.ddmlib.SyncService;
 import com.qa.framework.library.android.uiautomator.tree.BasicTreeNode;
 import org.apache.log4j.Logger;
 
+import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 public class UiAutomatorHelper {
     public static final int UIAUTOMATOR_MIN_API_LEVEL = 16;
@@ -36,10 +22,19 @@ public class UiAutomatorHelper {
     private static final int XML_CAPTURE_TIMEOUT_SEC = 40;
     private static Logger logger = Logger.getLogger(UiAutomatorHelper.class);
 
-    public static void main(String[] args) throws UiAutomatorException, IOException {
+    public static void main(String[] args) {
         DebugBridge.init();
         try {
             logger.info(searchUiHierarchyContent("登录"));
+            logger.info(searchUiHierarchyContent("登录11"));
+            logger.info(searchUiHierarchyContent("登录"));
+
+            logger.info("start screenshot");
+            BufferedImage bufferedImage = UiAutomatorHelper.takeSnapshot();
+            File outputfile = new File("test.png");
+            ImageIO.write(bufferedImage, "png", outputfile);
+            logger.info("end screenshot");
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -60,7 +55,7 @@ public class UiAutomatorHelper {
     }
 
     @SuppressWarnings("deprecation")
-	private static void getUiHierarchyFile(IDevice device, File dst, boolean compressed) {
+    private static void getUiHierarchyFile(IDevice device, File dst, boolean compressed) {
 
         String command = "rm " + UIDUMP_DEVICE_PATH;
 
@@ -71,10 +66,10 @@ public class UiAutomatorHelper {
             // ignore exceptions while deleting stale files
         }
 
-        if (compressed){
+        if (compressed) {
             command = String.format("%s %s --compressed %s", UIAUTOMATOR,
-                UIAUTOMATOR_DUMP_COMMAND,
-                UIDUMP_DEVICE_PATH);
+                    UIAUTOMATOR_DUMP_COMMAND,
+                    UIDUMP_DEVICE_PATH);
         } else {
             command = String.format("%s %s %s", UIAUTOMATOR,
                     UIAUTOMATOR_DUMP_COMMAND,
@@ -96,14 +91,14 @@ public class UiAutomatorHelper {
     //to maintain a backward compatible api, use non-compressed as default snapshot type
     public static BufferedImage takeSnapshot()
             throws UiAutomatorException, IOException {
-        IDevice device = DebugBridge.pickDevice();
+        IDevice device = DebugBridge.getDevice();
         return takeSnapshot(device);
     }
 
     public static BufferedImage takeSnapshot(IDevice device) throws UiAutomatorException {
         if (!supportsUiAutomator(device)) {
             String msg = "UI Automator requires a device with API Level "
-                                + UIAUTOMATOR_MIN_API_LEVEL;
+                    + UIAUTOMATOR_MIN_API_LEVEL;
             throw new UiAutomatorException(msg, null);
         }
 
@@ -120,8 +115,8 @@ public class UiAutomatorHelper {
 
         int index = 0;
         int IndexInc = rawImage.bpp >> 3;
-        for (int y = 0 ; y < rawImage.height ; y++) {
-            for (int x = 0 ; x < rawImage.width ; x++) {
+        for (int y = 0; y < rawImage.height; y++) {
+            for (int x = 0; x < rawImage.width; x++) {
                 int value = rawImage.getARGB(index);
                 index += IndexInc;
                 image.setRGB(x, y, value);
@@ -132,11 +127,11 @@ public class UiAutomatorHelper {
     }
 
     public static boolean searchUiHierarchyContent(String tofind) throws UiAutomatorException, IOException {
-        IDevice device = DebugBridge.pickDevice();
+        IDevice device = DebugBridge.getDevice();
         return searchUiHierarchyContent(device, tofind);
     }
 
-    public static boolean searchUiHierarchyContent(IDevice device,String tofind) throws UiAutomatorException {
+    public static boolean searchUiHierarchyContent(IDevice device, String tofind) throws UiAutomatorException {
         if (!supportsUiAutomator(device)) {
             String msg = "UI Automator requires a device with API Level "
                     + UIAUTOMATOR_MIN_API_LEVEL;

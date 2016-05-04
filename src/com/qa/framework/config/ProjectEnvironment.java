@@ -71,69 +71,6 @@ public class ProjectEnvironment {
     }
 
     /**
-     * Data files path string.
-     *
-     * @return the string
-     */
-    public static String dataFilesPath() {
-        return basePath + "dataFiles" + File.separator;
-    }
-
-    /**
-     * Test suites path string.
-     *
-     * @return the string
-     */
-    public static String testSuitesPath() {
-        return dataFilesPath() + "testSuites" + File.separator;
-    }
-
-    /**
-     * Test cases path string.
-     *
-     * @return the string
-     */
-    public static String testCasesPath() {
-        return dataFilesPath() + "testCases" + File.separator;
-    }
-
-    /**
-     * Reports path string.
-     *
-     * @return the string
-     */
-    public static String reportsPath() {
-        return basePath + "reports" + File.separator;
-    }
-
-    /**
-     * Ui objects map path string.
-     *
-     * @return the string
-     */
-    public static String uiObjectsMapPath() {
-        return basePath + "uimaps" + File.separator;
-    }
-
-    /**
-     * Reports link to file path string.
-     *
-     * @return the string
-     */
-    public static String reportsLinkToFilePath() {
-        return reportsPath() + "_filepath" + File.separator;
-    }
-
-    /**
-     * Reports screenshot path string.
-     *
-     * @return the string
-     */
-    public static String reportsScreenshotPath() {
-        return reportsPath() + "_Screenshots" + File.separator;
-    }
-
-    /**
      * Auto it x file string.
      *
      * @return the string

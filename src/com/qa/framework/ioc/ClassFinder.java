@@ -12,20 +12,18 @@ import java.util.List;
 public class ClassFinder {
 
     /**
+     * 获取 ClassScanner
+     */
+    private static final ClassScanner classScanner = InstanceFactory.getClassScanner();
+    /**
      * 获取基础包名
      */
     private static String basePackage = "";
 
-    /**
-     * 获取 ClassScanner
-     */
-    private static final ClassScanner classScanner = InstanceFactory.getClassScanner();
-
-    static{
-        if(PropConfig.getBasePackage() == null){
+    static {
+        if (PropConfig.getBasePackage() == null) {
             basePackage = "com.qa";
-        }
-        else{
+        } else {
             basePackage = PropConfig.getBasePackage();
         }
 

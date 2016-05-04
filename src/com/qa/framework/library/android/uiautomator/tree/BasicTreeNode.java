@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2012 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.qa.framework.library.android.uiautomator.tree;
 
 import java.util.ArrayList;
@@ -22,14 +6,10 @@ import java.util.List;
 
 public class BasicTreeNode {
 
-    private static final BasicTreeNode[] CHILDREN_TEMPLATE = new BasicTreeNode[] {};
-
-    protected BasicTreeNode mParent;
-
+    private static final BasicTreeNode[] CHILDREN_TEMPLATE = new BasicTreeNode[]{};
     protected final List<BasicTreeNode> mChildren = new ArrayList<BasicTreeNode>();
-
     public int x, y, width, height;
-
+    protected BasicTreeNode mParent;
     // whether the boundary fields are applicable for the node or not
     // RootWindowNode has no bounds, but UiNodes should
     protected boolean mHasBounds = false;
@@ -73,9 +53,8 @@ public class BasicTreeNode {
     }
 
     /**
-     *
      * Find nodes in the tree containing the coordinate
-     *
+     * <p/>
      * The found node should have bounds covering the coordinate, and none of its children's
      * bounds covers it. Depending on the layout, some app may have multiple nodes matching it,
      * the caller must provide a {@link IFindNodeListener} to receive all found nodes
@@ -104,9 +83,11 @@ public class BasicTreeNode {
         }
     }
 
-    public Object[] getAttributesArray () {
+    public Object[] getAttributesArray() {
         return null;
-    };
+    }
+
+    ;
 
     public static interface IFindNodeListener {
         void onFoundNode(BasicTreeNode node);

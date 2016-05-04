@@ -5,6 +5,7 @@ import com.qa.framework.cache.MethodCache;
 import com.qa.framework.config.DriverConfig;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.data.SuiteData;
+import com.qa.framework.library.android.uiautomator.DebugBridge;
 import com.qa.framework.library.base.StringHelper;
 import com.qa.framework.testnglistener.PowerEmailableReporter;
 import com.qa.framework.testnglistener.TestResultListener;
@@ -33,6 +34,9 @@ public abstract class TestCaseBase {
     @BeforeSuite(alwaysRun = true)
     public void BeforeSuite(ITestContext context) throws Exception {
         logger.info("beforeSuite");
+        if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
+            DebugBridge.init();
+        }
         HelperLoader.init();
         Class<?> clazz = findImplementClass(SuiteData.class);
         if (clazz != null) {
@@ -65,6 +69,9 @@ public abstract class TestCaseBase {
     }
 
     public void afterSuite() {
+        if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
+            DebugBridge.terminate();
+        }
     }
 
     private void getDriverObj() throws Exception {

@@ -1,19 +1,3 @@
-/*
- * Copyright (C) 2012 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.qa.framework.library.android.uiautomator;
 
 import com.android.SdkConstants;
@@ -29,8 +13,12 @@ public class DebugBridge {
     private static AndroidDebugBridge sDebugBridge;
 
     @SuppressWarnings("unused")
-	private static String getAdbLocation() {
+    private static String getAdbLocation() throws Exception {
         String sdkDir = System.getenv("ANDROID_HOME");
+        if (sdkDir == null || sdkDir.equalsIgnoreCase("")) {
+            throw new Exception("ENV Variables ANDROID_HOME IS NOT SETTED");
+        }
+
         String toolsDir = sdkDir + File.separator + "tools";
         File sdk = new File(toolsDir).getParentFile();
 
@@ -61,11 +49,16 @@ public class DebugBridge {
     }
 
     public static void init() {
-        String adbLocation = getAdbLocation();
+        String adbLocation = null;
+        try {
+            adbLocation = getAdbLocation();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (adbLocation != null) {
             AndroidDebugBridge.init(false);
             sDebugBridge = AndroidDebugBridge.createBridge(adbLocation, false);
-            waitDevicesList(sDebugBridge);
+            waitDeviceList(sDebugBridge);
         }
     }
 
@@ -76,21 +69,17 @@ public class DebugBridge {
         }
     }
 
-    public static boolean isInitialized() {
-        return sDebugBridge != null;
-    }
-
     public static List<IDevice> getDevices() {
         return Arrays.asList(sDebugBridge.getDevices());
     }
 
-    private static void waitDevicesList(AndroidDebugBridge bridge) {
+    private static void waitDeviceList(AndroidDebugBridge bridge) {
         int count = 0;
-        while (bridge.hasInitialDeviceList() == false) {
+        while (!bridge.hasInitialDeviceList()) {
             try {
                 Thread.sleep(500);
                 count++;
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
             if (count > 60) {
                 System.err.print("等待获取设备超时");
@@ -99,13 +88,22 @@ public class DebugBridge {
         }
     }
 
-    public static IDevice pickDevice() throws IOException {
+    public static IDevice getDevice() throws IOException {
         List<IDevice> devices = getDevices();
-
         if (devices.size() == 0) {
             throw new IOException("No Android devices were detected by adb.");
         } else if (devices.size() >= 1) {
             return devices.get(0);
+        }
+        return null;
+    }
+
+    public static IDevice getDevice(int index) throws IOException {
+        List<IDevice> devices = getDevices();
+        if (devices.size() == 0) {
+            throw new IOException("No Android devices were detected by adb.");
+        } else if (devices.size() >= 1) {
+            return devices.get(index);
         }
         return null;
     }

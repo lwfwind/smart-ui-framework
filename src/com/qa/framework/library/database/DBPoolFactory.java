@@ -32,7 +32,7 @@ public class DBPoolFactory {
     @SuppressWarnings("rawtypes")
     private static Class driverClass = null;
     private static ObjectPool connectionPool = null;
-    private static Map<String,Boolean> poolNameMap = new HashMap<>();
+    private static Map<String, Boolean> poolNameMap = new HashMap<>();
 
     /**
      * Initial DataSource
@@ -129,10 +129,10 @@ public class DBPoolFactory {
      * @return Connection db connection
      */
     public synchronized static Connection getDbConnection(String poolname) throws SQLException {
-        if(poolNameMap.get(poolname) == null){
+        if (poolNameMap.get(poolname) == null) {
             init(poolname);
             startPool(poolname, dbJdbc, dbUser, dbPwd, max, wait);
-            poolNameMap.put(poolname,true);
+            poolNameMap.put(poolname, true);
         }
         return DriverManager.getConnection("jdbc:apache:commons:dbcp:"
                 + poolname);

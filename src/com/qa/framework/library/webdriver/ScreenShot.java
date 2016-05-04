@@ -93,11 +93,11 @@ public class ScreenShot {
         String allActions = dir + File.separator + "Actions" + File.separator + time + File.separator + currentMethodName;
         File f = new File(allActions);
         if (f.exists() && f.isDirectory()) {
-            String screenShotPath = allActions + File.separator + t + "-" + fileName + ".jpg";
+            String screenShotPath = allActions + File.separator + t + "-" + fileName + ".png";
             try {
                 BufferedImage bufferedImage = UiAutomatorHelper.takeSnapshot();
                 File outputfile = new File(screenShotPath);
-                ImageIO.write(bufferedImage, "jpg", outputfile);
+                ImageIO.write(bufferedImage, "png", outputfile);
             } catch (Exception e) {
                 logger.error("captureAction exception:" + e.toString());
             }

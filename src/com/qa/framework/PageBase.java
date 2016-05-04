@@ -125,7 +125,7 @@ public abstract class PageBase {
     }
 
     public void hideKeyboard() {
-        AndroidDriver androidDriver=(AndroidDriver)driver;
+        AndroidDriver androidDriver = (AndroidDriver) driver;
         try {
             androidDriver.hideKeyboard();
         } catch (WebDriverException ex) {
