@@ -20,7 +20,7 @@ public class UiAutomatorModel {
     private boolean mExploreMode = true;
     private boolean mShowNafNodes = false;
     private List<BasicTreeNode> mNodelist;
-    private Set<String> mSearchKeySet = new HashSet();
+    private Set<String> mSearchKeySet = new HashSet<String>();
 
     public UiAutomatorModel(File xmlDumpFile) {
         this.mSearchKeySet.add("text");
@@ -88,7 +88,7 @@ public class UiAutomatorModel {
     }
 
     public List<BasicTreeNode> searchNode(String tofind) {
-        List<BasicTreeNode> result = new LinkedList();
+        List<BasicTreeNode> result = new LinkedList<BasicTreeNode>();
         for (BasicTreeNode node : this.mNodelist) {
             Object[] attrs = node.getAttributesArray();
             for (Object attr : attrs) {

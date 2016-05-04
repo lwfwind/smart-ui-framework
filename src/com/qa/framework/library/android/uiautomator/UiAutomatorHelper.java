@@ -25,9 +25,8 @@ public class UiAutomatorHelper {
     public static void main(String[] args) {
         DebugBridge.init();
         try {
-            logger.info(searchUiHierarchyContent("登录"));
-            logger.info(searchUiHierarchyContent("登录11"));
-            logger.info(searchUiHierarchyContent("登录"));
+            logger.info(searchUiHierarchyContent(""));
+            logger.info(searchUiHierarchyContent("QQ"));
 
             logger.info("start screenshot");
             BufferedImage bufferedImage = UiAutomatorHelper.takeSnapshot();

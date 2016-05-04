@@ -21,8 +21,8 @@ public class UiHierarchyXmlLoader {
 
     public BasicTreeNode parseXml(String xmlPath) {
         this.mRootNode = null;
-        this.mNafNodes = new ArrayList();
-        this.mNodeList = new ArrayList();
+        this.mNafNodes = new ArrayList<Rectangle>();
+        this.mNodeList = new ArrayList<BasicTreeNode>();
 
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = null;
@@ -50,7 +50,7 @@ public class UiHierarchyXmlLoader {
                         if ("rotation".equals(attributes.getQName(i))) {
                             try {
                                 rotation = Integer.parseInt(attributes.getValue(i));
-                            } catch (NumberFormatException nfe) {
+                            } catch (NumberFormatException ignored) {
                             }
                         }
                     }
