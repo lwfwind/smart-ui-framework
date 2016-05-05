@@ -12,6 +12,9 @@
     <orderEntry type="library" name="Maven: com.google.android.tools:ddmlib:r13" level="project" />
     <orderEntry type="library" name="Maven: com.android.tools:common:25.1.0" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: com.android.tools:annotations:25.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.android.tools:ddmlib:r13" level="project" />
+    <orderEntry type="library" name="Maven: com.android.tools:common:25.1.0" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.android.tools:annotations:25.1.0" level="project" />
     <orderEntry type="library" name="Maven: net.sourceforge.jexcelapi:jxl:2.6.12" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
     <orderEntry type="library" name="Maven: org.jclouds:jclouds-antcontrib:1.5.4" level="project" />
