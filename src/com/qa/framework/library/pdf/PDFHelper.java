@@ -14,17 +14,16 @@ import java.util.ArrayList;
 /**
  * The type Pdf util.
  */
-public class PDFUtil {
+public class PDFHelper {
 
     private final static Logger logger = Logger
-            .getLogger(PDFUtil.class);
+            .getLogger(PDFHelper.class);
 
     /**
      * Parses a PDF to a plain text file.
      *
      * @param pdf the original PDF
      * @param txt the resulting text
-     * @throws IOException
      */
     public static void parsePDF(String pdf, String txt) {
         try {
@@ -39,8 +38,6 @@ public class PDFUtil {
             }
             out.flush();
             out.close();
-        } catch (FileNotFoundException e) {
-            logger.error(e.toString());
         } catch (IOException e) {
             logger.error(e.toString());
         }
@@ -79,8 +76,6 @@ public class PDFUtil {
     public static void copyPDF(int fromPage, int toPage, String strSource,
                                String strDes) {
         try {
-            int begin = fromPage;
-            int end = toPage;
             FileInputStream strSourceFile = new FileInputStream(strSource);
             Document document = new Document();
             PdfCopy copy = new PdfCopy(document, new FileOutputStream(strDes));
@@ -91,10 +86,10 @@ public class PDFUtil {
                 PdfReader pdfr = new PdfReader(new PdfReader(b));
                 int num = pdfr.getNumberOfPages();
                 logger.info("Total page is:" + num);
-                if (num < end || begin < 1 || begin > end) {
+                if (num < toPage || fromPage < 1 || fromPage > toPage) {
                     logger.error("incorrect page setup!");
                 } else {
-                    for (int i = begin; i <= end; i++) {
+                    for (int i = fromPage; i <= toPage; i++) {
                         document.newPage();
                         PdfImportedPage page = copy.getImportedPage(pdfr, i);
                         copy.addPage(page);
@@ -104,13 +99,7 @@ public class PDFUtil {
             document.close();
             strSourceFile.close();
             copy.close();
-        } catch (BadPdfFormatException e) {
-            logger.error(e.toString());
-        } catch (FileNotFoundException e) {
-            logger.error(e.toString());
-        } catch (DocumentException e) {
-            logger.error(e.toString());
-        } catch (IOException e) {
+        } catch (IOException | DocumentException e) {
             logger.error(e.toString());
         }
     }
@@ -143,13 +132,7 @@ public class PDFUtil {
             document.close();
             strSourceFile.close();
             copy.close();
-        } catch (BadPdfFormatException e) {
-            logger.error(e.toString());
-        } catch (FileNotFoundException e) {
-            logger.error(e.toString());
-        } catch (DocumentException e) {
-            logger.error(e.toString());
-        } catch (IOException e) {
+        }  catch (IOException | DocumentException e) {
             logger.error(e.toString());
         }
     }
@@ -168,8 +151,8 @@ public class PDFUtil {
             int num;
             PdfCopy copy = new PdfCopy(document, new FileOutputStream(strDes));
             document.open();
-            for (int i = 0; i < arr_strSource.length; ++i) {
-                strSourceFile = new FileInputStream(arr_strSource[i]);
+            for (String anArr_strSource : arr_strSource) {
+                strSourceFile = new FileInputStream(anArr_strSource);
                 b = new byte[strSourceFile.available()];
                 while (strSourceFile.read(b) > 0) {
                     strSourceFile.read(b, 0, b.length);
@@ -186,13 +169,7 @@ public class PDFUtil {
             }
             document.close();
             copy.close();
-        } catch (BadPdfFormatException e) {
-            logger.error(e.toString());
-        } catch (FileNotFoundException e) {
-            logger.error(e.toString());
-        } catch (DocumentException e) {
-            logger.error(e.toString());
-        } catch (IOException e) {
+        }  catch (IOException | DocumentException e) {
             logger.error(e.toString());
         }
     }
@@ -212,9 +189,8 @@ public class PDFUtil {
             int num;
             PdfCopy copy = new PdfCopy(document, new FileOutputStream(strDes));
             document.open();
-            for (int i = 0; i < arrList_strSource.size(); ++i) {
-                strSourceFile = new FileInputStream(arrList_strSource.get(i)
-                        .toString());
+            for (String anArrList_strSource : arrList_strSource) {
+                strSourceFile = new FileInputStream(anArrList_strSource);
                 b = new byte[strSourceFile.available()];
                 while (strSourceFile.read(b) > 0) {
                     strSourceFile.read(b, 0, b.length);
@@ -231,13 +207,7 @@ public class PDFUtil {
             }
             document.close();
             copy.close();
-        } catch (BadPdfFormatException e) {
-            logger.error(e.toString());
-        } catch (FileNotFoundException e) {
-            logger.error(e.toString());
-        } catch (DocumentException e) {
-            logger.error(e.toString());
-        } catch (IOException e) {
+        }  catch (IOException | DocumentException e) {
             logger.error(e.toString());
         }
     }

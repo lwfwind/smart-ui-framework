@@ -41,8 +41,8 @@ public class ElementHandler implements InvocationHandler {
     /**
      * Generates a handler to retrieve the WebElement from a locator for a given WebElement interface descendant.
      *
-     * @param interfaceType Interface wrapping this class. It contains a reference the the implementation.
-     * @param locator       Element locator that finds the element on a page.
+     * @param interfaceType the interface type
+     * @param locator       the locator
      * @param field         the field
      */
     public <T> ElementHandler(Class<T> interfaceType, ElementLocator locator, Field field) {

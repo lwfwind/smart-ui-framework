@@ -15,16 +15,11 @@ import java.util.*;
 
 /**
  * General convenience methods for working with excel 2003/2007
- * <p/>
- * Note: Writing twice to a .xlsx file throws
- * https://issues.apache.org/bugzilla/show_bug.cgi?id=49940
- *
- * @author lwfwind          <p/>         Aug 6, 2011
  */
-public class ExcelUtil {
+public class ExcelHelper {
 
     private final static Logger logger = Logger
-            .getLogger(ExcelUtil.class);
+            .getLogger(ExcelHelper.class);
 
     /**
      * The WorkBook path created in LoadFile
@@ -49,9 +44,9 @@ public class ExcelUtil {
      *
      * @param sWorkBook  Path to the Excel WorkBook
      * @param iWorkSheet Number of the WorkSheet
-     * @return ExcelUtil  <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return ExcelUtil excel util
      */
-    public ExcelUtil loadFile(String sWorkBook, int iWorkSheet) {
+    public ExcelHelper loadFile(String sWorkBook, int iWorkSheet) {
         try {
             sWorkBookPath = sWorkBook;
             InputStream fis = new FileInputStream(sWorkBookPath);
@@ -63,8 +58,6 @@ public class ExcelUtil {
 
             // setHssfsheet(getHssfworkbook().getSheetAt(iWorkSheet));
             sheet = getWorkbook().getSheetAt(iWorkSheet);
-        } catch (FileNotFoundException e) {
-            logger.error(e.toString());
         } catch (IOException e) {
             logger.error(e.toString());
         }
@@ -74,7 +67,7 @@ public class ExcelUtil {
     /**
      * Finds the number of used rows in the Excel WorkSheet
      *
-     * @return The number of used rows <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return The number of used rows
      */
     public int getUsedRowsCount() {
         return (getSheet().getLastRowNum() + 1);
@@ -83,7 +76,7 @@ public class ExcelUtil {
     /**
      * Finds the number of used columns in the Excel WorkSheet
      *
-     * @return The number of used columns <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return The number of used columns
      */
     public int getUsedColumnsCount() {
         int MaxColumnsCount = 0;
@@ -103,7 +96,7 @@ public class ExcelUtil {
      *
      * @param iRow    Row Number
      * @param iColumn Column Number
-     * @return Object  <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return Object cell value
      */
     public String getCellValue(int iRow, int iColumn) {
         String cellValue = null;
@@ -212,7 +205,7 @@ public class ExcelUtil {
     /**
      * Returns a 2D array from the WorkSheet
      *
-     * @return 2D array <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return 2D array
      */
     public String[][] get2DArrayFromSheet() {
         String[][] Array2DFromSheet = new String[getUsedRowsCount()][getUsedColumnsCount()];
@@ -223,8 +216,7 @@ public class ExcelUtil {
                     for (int j = 0; j < getUsedColumnsCount(); j++) {
                         Cell cell = row.getCell(j);
                         if (cell != null) {
-                            Array2DFromSheet[i][j] = getCellValue(cell)
-                                    .toString();
+                            Array2DFromSheet[i][j] = getCellValue(cell);
                         } else {
                             Array2DFromSheet[i][j] = "";
                         }
@@ -248,7 +240,7 @@ public class ExcelUtil {
      *
      * @param MaxRows    The specific max rows
      * @param MaxColumns The specific max columns
-     * @return String[][]  <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return String[][] string [ ] [ ]
      */
     public String[][] get2DArrayFromSheetBySpecificRowsColumns(int MaxRows,
                                                                int MaxColumns) {
@@ -260,8 +252,7 @@ public class ExcelUtil {
                     for (int j = 0; j < MaxColumns; j++) {
                         Cell cell = row.getCell(j);
                         if (cell != null) {
-                            Array2DFromSheet[i][j] = getCellValue(cell)
-                                    .toString();
+                            Array2DFromSheet[i][j] = getCellValue(cell);
                         } else {
                             Array2DFromSheet[i][j] = "";
                         }
@@ -283,7 +274,7 @@ public class ExcelUtil {
     /**
      * Returns a 2D data from the WorkSheet
      *
-     * @return List<List String>> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>Jun 28, 2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return the 2 d data from sheet
      */
     public List<List<String>> get2DDataFromSheet() {
         List<List<String>> data2DFromSheet = new ArrayList<List<String>>();
@@ -295,7 +286,7 @@ public class ExcelUtil {
                     for (int j = 0; j < getUsedColumnsCount(); j++) {
                         Cell cell = row.getCell(j);
                         if (cell != null) {
-                            rowData.add(getCellValue(cell).toString());
+                            rowData.add(getCellValue(cell));
                         } else {
                             rowData.add("");
                         }
@@ -319,16 +310,16 @@ public class ExcelUtil {
      * Get the column data by the specified column.
      *
      * @param iColumn the column
-     * @return List<String>  <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>Jun 28, 2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return the column data
      */
     public List<String> getColumnData(int iColumn) {
         List<String> columnData = new ArrayList<String>();
         String[][] data = get2DArrayFromSheet();
-        for (int i = 0; i < data.length; i++) {
-            for (int j = 0; j < data[i].length; j++) {
+        for (String[] aData : data) {
+            for (int j = 0; j < aData.length; j++) {
                 if (j == iColumn) {
-                    if (!data[i][j].isEmpty()) {
-                        columnData.add(data[i][j]);
+                    if (!aData[j].isEmpty()) {
+                        columnData.add(aData[j]);
                     }
                 }
             }
@@ -340,7 +331,7 @@ public class ExcelUtil {
      * Set the foreground fill color for specify cell
      *
      * @param iRow    Row Number
-     * @param iColumn Column Number                <table border=1 CELLPADDING="3" CELLSPACING="0">                <tr BGCOLOR="#CCCCFF">                <td>Date</td>                <td>Author</td>                <td>Details</td>                </tr>                <tr>                <td>04/12/2012</td>                <td>Weifeng Lu</td>                <td>Initial Version</td>                </tr>                <br>                </table>
+     * @param iColumn Column Number
      */
     public void setForegroundColor(int iRow, int iColumn) {
         Row row = sheet.getRow(iRow);
@@ -360,7 +351,7 @@ public class ExcelUtil {
      * Set the foreground fill color to white(default color) for specify cell
      *
      * @param iRow    Row Number
-     * @param iColumn Column Number                <p/>                <table border=1 CELLPADDING="3" CELLSPACING="0">                <tr BGCOLOR="#CCCCFF">                <td>Date</td>                <td>Author</td>                <td>Details</td>                </tr>                <tr>                <td>04/12/2012</td>                <td>Weifeng Lu</td>                <td>Initial Version</td>                </tr>                <br>                </table>
+     * @param iColumn Column Number
      */
     public void setToDefaultForegroundColor(int iRow, int iColumn) {
         Row row = sheet.getRow(iRow);
@@ -382,7 +373,7 @@ public class ExcelUtil {
      *
      * @param iRow    the row
      * @param iColumn the column
-     * @return <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return cell foreground color
      */
     public int getCellForegroundColor(int iRow, int iColumn) {
         Row row = sheet.getRow(iRow);
@@ -395,7 +386,7 @@ public class ExcelUtil {
      *
      * @param iRow    Row Number
      * @param iColumn Column Number
-     * @param color   <table border=1 CELLPADDING="3" CELLSPACING="0">                <tr BGCOLOR="#CCCCFF">                <td>Date</td>                <td>Author</td>                <td>Details</td>                </tr>                <tr>                <td>04/12/2012</td>                <td>Weifeng Lu</td>                <td>Initial Version</td>                </tr>                <br>                </table>
+     * @param color   the color
      */
     public void setFontColor(int iRow, int iColumn, long color) {
         Row row = sheet.getRow(iRow);
@@ -416,7 +407,7 @@ public class ExcelUtil {
      * Set the font fill color to red for specify cell
      *
      * @param iRow    Row Number
-     * @param iColumn Column Number                <p/>                <table border=1 CELLPADDING="3" CELLSPACING="0">                <tr BGCOLOR="#CCCCFF">                <td>Date</td>                <td>Author</td>                <td>Details</td>                </tr>                <tr>                <td>04/12/2012</td>                <td>Weifeng Lu</td>                <td>Initial Version</td>                </tr>                <br>                </table>
+     * @param iColumn Column Number
      */
     public void setFontColorToRed(int iRow, int iColumn) {
         Row row = sheet.getRow(iRow);
@@ -437,7 +428,7 @@ public class ExcelUtil {
      * Set the font fill color for specify cell
      *
      * @param iRow    Row Number
-     * @param iColumn Column Number                <p/>                <table border=1 CELLPADDING="3" CELLSPACING="0">                <tr BGCOLOR="#CCCCFF">                <td>Date</td>                <td>Author</td>                <td>Details</td>                </tr>                <tr>                <td>04/12/2012</td>                <td>Weifeng Lu</td>                <td>Initial Version</td>                </tr>                <br>                </table>
+     * @param iColumn Column Number
      */
     public void setToDefaultFontColor(int iRow, int iColumn) {
         Row row = sheet.getRow(iRow);
@@ -459,7 +450,7 @@ public class ExcelUtil {
      *
      * @param iRow    the row
      * @param iColumn the column
-     * @return <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return the cell font color
      */
     public int getCellFontColor(int iRow, int iColumn) {
         Row row = sheet.getRow(iRow);
@@ -474,7 +465,7 @@ public class ExcelUtil {
      *
      * @param iRow    Row Number
      * @param iColumn Column Number
-     * @param value   value to be write                <p/>                <table border=1 CELLPADDING="3" CELLSPACING="0">                <tr BGCOLOR="#CCCCFF">                <td>Date</td>                <td>Author</td>                <td>Details</td>                </tr>                <tr>                <td>04/12/2012</td>                <td>Weifeng Lu</td>                <td>Initial Version</td>                </tr>                <br>                </table>
+     * @param value   value to be write
      */
     public void setCellValue(int iRow, int iColumn, String value) {
         Row row = sheet.getRow(iRow);
@@ -496,20 +487,6 @@ public class ExcelUtil {
      * Save the workbook Sometimes writing twice to a .xlsx file throws
      * org.apache.xmlbeans.impl.values.XmlValueDisconnectedException
      * https://issues.apache.org/bugzilla/show_bug.cgi?id=49940
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public void saveWorkbook() {
         // Write the output to a file
@@ -517,19 +494,16 @@ public class ExcelUtil {
             FileOutputStream fileOut = new FileOutputStream(sWorkBookPath);
             workbook.write(fileOut);
             fileOut.close();
-        } catch (FileNotFoundException e) {
-            logger.error(e.toString());
         } catch (IOException e) {
             logger.error(e.toString());
         }
-
     }
 
     /**
      * Set the cell type to numeric for specify cell
      *
      * @param iRow    Row Number
-     * @param iColumn Column Number                <p/>                <table border=1 CELLPADDING="3" CELLSPACING="0">                <tr BGCOLOR="#CCCCFF">                <td>Date</td>                <td>Author</td>                <td>Details</td>                </tr>                <tr>                <td>04/12/2012</td>                <td>Weifeng Lu</td>                <td>Initial Version</td>                </tr>                <br>                </table>
+     * @param iColumn Column Number
      */
     public void setCellTypeToDate(int iRow, int iColumn) {
         Row row = sheet.getRow(iRow);
@@ -544,15 +518,14 @@ public class ExcelUtil {
      * Find a cell by the text
      *
      * @param text the text
-     * @return <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return cell cell
      */
     public Cell findCell(String text) {
         for (Row row : sheet) {
             if (row != null) {
                 for (Cell cell : row) {
                     if (cell != null
-                            && text.equalsIgnoreCase(getCellValue((Cell) cell)
-                            .toString().trim())) {
+                            && text.equalsIgnoreCase(getCellValue((Cell) cell).trim())) {
                         return cell;
                     }
                 }
@@ -586,15 +559,14 @@ public class ExcelUtil {
      *
      * @param iColumn the column
      * @param text    the text
-     * @return <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return the cell
      */
     public Cell findCellByColumn(int iColumn, String text) {
         for (Row row : sheet) {
             if (row != null) {
                 Cell cell = (Cell) row.getCell(iColumn);
                 if (cell != null
-                        && text.equalsIgnoreCase(getCellValue((Cell) cell)
-                        .toString().trim())) {
+                        && text.equalsIgnoreCase(getCellValue((Cell) cell).trim())) {
                     return cell;
                 }
             }
@@ -608,14 +580,14 @@ public class ExcelUtil {
      *
      * @param iRow the row
      * @param text the text
-     * @return <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>Jun 28, 2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return cell cell
      */
     public Cell findCellByRow(int iRow, String text) {
         Row row = sheet.getRow(iRow);
         if (row != null) {
             for (Cell cell : row) {
                 if (cell != null
-                        && text.equalsIgnoreCase(getCellValue((Cell) cell).toString().trim())) {
+                        && text.equalsIgnoreCase(getCellValue((Cell) cell).trim())) {
                     return cell;
                 }
             }
@@ -628,17 +600,17 @@ public class ExcelUtil {
      *
      * @param iHeadingRow the heading row
      * @param iRow        the row
-     * @return <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return hash map
      */
     public HashMap<String, String> buildRowHeadingDictionary(int iHeadingRow,
                                                              int iRow) {
         HashMap<String, String> hashMap = new HashMap<String, String>();
         for (int iCol = 0; iCol < getUsedColumnsCount(); iCol++) {
             if (getCellValue(iRow, iCol) != null) {
-                hashMap.put(getCellValue(iHeadingRow, iCol).toString(),
-                        getCellValue(iRow, iCol).toString());
+                hashMap.put(getCellValue(iHeadingRow, iCol),
+                        getCellValue(iRow, iCol));
             } else {
-                hashMap.put(getCellValue(iHeadingRow, iCol).toString(), "");
+                hashMap.put(getCellValue(iHeadingRow, iCol), "");
             }
 
         }
@@ -649,7 +621,7 @@ public class ExcelUtil {
      * Build a dictionary list with header
      *
      * @param iHeadingRow the heading row
-     * @return <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>Jun 28, 2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return list list
      */
     public List<Map<String, String>> rowHeadingDictList(int iHeadingRow) {
         List<Map<String, String>> rowHeadingDictionaryList = new ArrayList<Map<String, String>>();
@@ -664,7 +636,7 @@ public class ExcelUtil {
      *
      * @param iHeadingRow       the heading row
      * @param strUniquecolValue the str uniquecol value
-     * @return <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return hash map
      */
     public HashMap<String, String> buildRowHeadingDictionary(int iHeadingRow,
                                                              String strUniquecolValue) {
@@ -678,7 +650,7 @@ public class ExcelUtil {
      * @param iHeadingRow       the heading row
      * @param iColumn           the column
      * @param strUniquecolValue the str uniquecol value
-     * @return <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return hash map
      */
     public HashMap<String, String> buildRowHeadingDictionary(int iHeadingRow,
                                                              int iColumn, String strUniquecolValue) {
@@ -698,7 +670,7 @@ public class ExcelUtil {
      * must be executed first to set the WorkBook and WorkSheet.
      *
      * @param outputFile the output file
-     * @param sheetName  <table border=1 CELLPADDING="3" CELLSPACING="0">                   <tr BGCOLOR="#CCCCFF">                   <td>Date</td>                   <td>Author</td>                   <td>Details</td>                   </tr>                   <tr>                   <td>04/12/2012</td>                   <td>Weifeng Lu</td>                   <td>Initial Version</td>                   </tr>                   <br>                   </table>
+     * @param sheetName  the sheet name
      */
     public void createExcel(String outputFile, String sheetName) {
         sWorkBookPath = outputFile;
@@ -715,7 +687,7 @@ public class ExcelUtil {
      * Create the cells for the worksheet
      *
      * @param rowsCount    the rows count
-     * @param columnsCount <table border=1 CELLPADDING="3" CELLSPACING="0">                     <tr BGCOLOR="#CCCCFF">                     <td>Date</td>                     <td>Author</td>                     <td>Details</td>                     </tr>                     <tr>                     <td>04/12/2012</td>                     <td>Weifeng Lu</td>                     <td>Initial Version</td>                     </tr>                     <br>                     </table>
+     * @param columnsCount the columns count
      */
     public void createCells(int rowsCount, int columnsCount) {
         for (int i = 0; i < rowsCount; i++) {
@@ -800,7 +772,7 @@ public class ExcelUtil {
      * insert row into the sheet, the style of cell is the same as startRow
      *
      * @param startRow the start row
-     * @param rows     <table border=1 CELLPADDING="3" CELLSPACING="0">                 <tr BGCOLOR="#CCCCFF">                 <td>Date</td>                 <td>Author</td>                 <td>Details</td>                 </tr>                 <tr>                 <td>May 17, 2012</td>                 <td>Weifeng Lu</td>                 <td>Initial Version</td>                 </tr>                 <br>                 </table>
+     * @param rows     the rows
      */
     public void insertRow(int startRow, int rows) {
         int startRowIndex = startRow;
@@ -822,7 +794,7 @@ public class ExcelUtil {
     /**
      * Remove a row by its index
      *
-     * @param rowIndex <table border=1 CELLPADDING="3" CELLSPACING="0">                 <tr BGCOLOR="#CCCCFF">                 <td>Date</td>                 <td>Author</td>                 <td>Details</td>                 </tr>                 <tr>                 <td>May 17, 2012</td>                 <td>Weifeng Lu</td>                 <td>Initial Version</td>                 </tr>                 <br>                 </table>
+     * @param rowIndex the row index
      */
     public void removeRow(int rowIndex) {
         int lastRowNum = sheet.getLastRowNum();
@@ -839,11 +811,11 @@ public class ExcelUtil {
     }
 
     /**
-     * Export the List<Map<String, String>> to excel with header row
+     * Export the ListMap to excel with header row
      *
      * @param listMap    the list map
      * @param outputFile the output file
-     * @param sheetName  <table border=1 CELLPADDING="3" CELLSPACING="0">                   <tr BGCOLOR="#CCCCFF">                   <td>Date</td>                   <td>Author</td>                   <td>Details</td>                   </tr>                   <tr>                   <td>04/14/2012</td>                   <td>Weifeng Lu</td>                   <td>Initial Version</td>                   </tr>                   <br>                   </table>
+     * @param sheetName  the sheet name
      */
     public void exportListMapToExcel(List<Map<String, String>> listMap,
                                      String outputFile, String sheetName) {

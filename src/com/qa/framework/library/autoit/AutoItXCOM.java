@@ -65,9 +65,9 @@ public class AutoItXCOM implements IAutoItX {
     public final static int SW_SHOWNORMAL = 1;
     /**
      * Sets the way coords are used in the caret functions, either absolute
-     * coords or coords relative to the current active window: <br/>
-     * 0 = relative coords to the active window, <br/>
-     * 1 = absolute screen coordinates (default), <br/>
+     * coords or coords relative to the current active window:
+     * 0 = relative coords to the active window,
+     * 1 = absolute screen coordinates (default),
      * 2 = relative coords to the client area of the active window.
      */
     public final static String OPT_CARET_COORD_MODE = "CaretCoordMode";
@@ -88,25 +88,25 @@ public class AutoItXCOM implements IAutoItX {
     public final static String OPT_MOUSE_CLICK_DRAG_DELAY = "MouseClickDragDelay";
     /**
      * Sets the way coords are used in the mouse functions, either absolute
-     * coords or coords relative to the current active window: <br/>
-     * 0 = relative coords to the active window <br/>
-     * 1 = absolute screen coordinates (default) <br/>
+     * coords or coords relative to the current active window:
+     * 0 = relative coords to the active window
+     * 1 = absolute screen coordinates (default)
      * 2 = relative coords to the client area of the active window
      */
     public final static String OPT_MOUSE_COORD_MODE = "MouseCoordMode";
     /**
      * Sets the way coords are used in the mouse functions, either absolute
-     * coords or coords relative to the current active window: <br/>
-     * 0 = relative coords to the active window <br/>
-     * 1 = absolute screen coordinates (default) <br/>
+     * coords or coords relative to the current active window:
+     * 0 = relative coords to the active window
+     * 1 = absolute screen coordinates (default)
      * 2 = relative coords to the client area of the active window
      */
     public final static String OPT_PIXEL_COORD_MODE = "PixelCoordMode";
     /**
      * Sets the way coords are used in the pixel functions, either absolute
-     * coords or coords relative to the current active window: <br/>
-     * 0 = relative coords to the active window <br/>
-     * 1 = absolute screen coordinates (default) <br/>
+     * coords or coords relative to the current active window:
+     * 0 = relative coords to the active window
+     * 1 = absolute screen coordinates (default)
      * 2 = relative coords to the client area of the active window
      */
     public final static String OPT_SEND_ATTACH_MODE = "SendAttachMode";
@@ -116,15 +116,15 @@ public class AutoItXCOM implements IAutoItX {
      * capslock/scrolllock and numlock can be unreliable under NT4. However,
      * when you specify attach mode=1 the Send("{... down/up}") syntax will not
      * work and there may be problems with sending keys to "hung" windows.
-     * ControlSend() ALWAYS attaches and is not affected by this mode. <br/>
-     * 0 = don't attach (default) <br/>
+     * ControlSend() ALWAYS attaches and is not affected by this mode.
+     * 0 = don't attach (default)
      * 1 = attach
      */
     public final static String OPT_SEND_CAPSLOCK_MODE = "SendCapslockMode";
     /**
      * Specifies if AutoIt should store the state of capslock before a Send
-     * function and restore it afterwards. <br/>
-     * 0 = don't store/restore <br/>
+     * function and restore it afterwards.
+     * 0 = don't store/restore
      * 1 = store and restore (default)
      */
     public final static String OPT_SEND_KEY_DELAY = "SendKeyDelay";
@@ -137,22 +137,22 @@ public class AutoItXCOM implements IAutoItX {
     public final static String OPT_SEND_KEY_DOWN_DELAY = "SendKeyDownDelay";
     /**
      * Specifies if hidden window text can be "seen" by the window matching
-     * functions. <br/>
-     * 0 = Do not detect hidden text (default) <br/>
+     * functions.
+     * 0 = Do not detect hidden text (default)
      * 1 = Detect hidden text
      */
     public final static String OPT_WIN_DETECT_HIDDEN_TEXT = "WinDetectHiddenText";
     /**
      * Allows the window search routines to search child windows as well as
-     * top-level windows. <br/>
-     * 0 = Only search top-level windows (default) <br/>
+     * top-level windows.
+     * 0 = Only search top-level windows (default)
      * 1 = Search top-level and child windows
      */
     public final static String OPT_WIN_SEARCH_CHILDREN = "WinSearchChildren";
     /**
      * Alters the method that is used to match window text during search
-     * operations. <br/>
-     * 1 = Complete / Slow mode (default) <br/>
+     * operations.
+     * 1 = Complete / Slow mode (default)
      * 2 = Quick mode In quick mode AutoIt can usually only "see" dialog text,
      * button text and the captions of some controls. In the default mode much
      * more text can be seen (for instance the contents of the Notepad window).
@@ -162,11 +162,11 @@ public class AutoItXCOM implements IAutoItX {
     public final static String OPT_WIN_TEXT_MATCH_MODE = "WinTextMatchMode";
     /**
      * Alters the method that is used to match window titles during search
-     * operations. <br/>
-     * 1 = Match the title from the start (default) <br/>
-     * 2 = Match any substring in the title <br/>
-     * 3 = Exact title match <br/>
-     * 4 = Advanced mode, see Window Titles & Text (Advanced)
+     * operations.
+     * 1 = Match the title from the start (default)
+     * 2 = Match any substring in the title
+     * 3 = Exact title match
+     * 4 = Advanced mode
      */
     public final static String OPT_WIN_TITLE_MATCH_MODE = "WinTitleMatchMode";
     /**
@@ -516,7 +516,7 @@ public class AutoItXCOM implements IAutoItX {
     /**
      * Returns a cursor ID Number of the current Mouse Cursor.
      *
-     * @return 0 = UNKNOWN (this includes pointing and grabbing hand icons) <br/> 1 = APPSTARTING <br/> 2 = ARROW <br/> 3 = CROSS <br/> 4 = HELP <br/> 5 = IBEAM <br/> 6 = ICON <br/> 7 = NO <br/> 8 = SIZE <br/> 9 = SIZEALL <br/> 10 = SIZENESW <br/> 11 = SIZENS <br/> 12 = SIZENWSE <br/> 13 = SIZEWE <br/> 14 = UPARROW <br/> 15 = WAIT
+     * @return 0 = UNKNOWN (this includes pointing and grabbing hand icons)  1 = APPSTARTING  2 = ARROW  3 = CROSS  4 = HELP  5 = IBEAM  6 = ICON  7 = NO  8 = SIZE  9 = SIZEALL  10 = SIZENESW  11 = SIZENS  12 = SIZENWSE  13 = SIZEWE  14 = UPARROW  15 = WAIT
      */
     public int mouseGetCursor() {
         return autoItX.invoke("MouseGetCursor").getInt();
@@ -621,7 +621,7 @@ public class AutoItXCOM implements IAutoItX {
      * Changes the priority of a process
      *
      * @param process  The name or PID of the process to check.
-     * @param priority A flag which determines what priority to set <br/>                 0 - Idle/Low <br/>                 1 - Below Normal (Not supported on Windows 95/98/ME) <br/>                 2 - Normal <br/>                 3 - Above Normal (Not supported on Windows 95/98/ME) <br/>                 4 - High <br/>                 5 - Realtime (Use with caution, may make the system unstable)
+     * @param priority A flag which determines what priority to set                  0 - Idle/Low                  1 - Below Normal (Not supported on Windows 95/98/ME)                  2 - Normal                  3 - Above Normal (Not supported on Windows 95/98/ME)                  4 - High                  5 - Realtime (Use with caution, may make the system unstable)
      * @return True if success, false otherwise.
      */
     public boolean processSetPriority(String process, int priority) {
@@ -724,8 +724,8 @@ public class AutoItXCOM implements IAutoItX {
      *
      * @param filename         The name of the executable (EXE, BAT, COM, PIF) to run.
      * @param workingDirectory The working directory.
-     * @param flag             The "show" flag of the executed program: <br/>                         SW_HIDE = Hidden window <br/>                         SW_MINIMIZE = Minimized window <br/>                         SW_MAXIMIZE = Maximized window
-     * @return Returns the exit code of the program that was run. The error property is set to 1 as an indication of failure. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @param flag             The "show" flag of the executed program:                          SW_HIDE = Hidden window                          SW_MINIMIZE = Minimized window                          SW_MAXIMIZE = Maximized window
+     * @return Returns the exit code of the program that was run. The error property is set to 1 as an indication of failure.
      */
     public int runWait(String filename, String workingDirectory, int flag) {
         Variant vFilename = new Variant(filename);
@@ -741,7 +741,7 @@ public class AutoItXCOM implements IAutoItX {
      *
      * @param filename         The name of the executable (EXE, BAT, COM, PIF) to run.
      * @param workingDirectory The working directory.
-     * @return Returns the exit code of the program that was run. The error property is set to 1 as an indication of failure. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return Returns the exit code of the program that was run. The error property is set to 1 as an indication of failure.
      */
     public int runWait(String filename, String workingDirectory) {
         Variant vFilename = new Variant(filename);
@@ -755,7 +755,7 @@ public class AutoItXCOM implements IAutoItX {
      * finishes.
      *
      * @param filename The name of the executable (EXE, BAT, COM, PIF) to run.
-     * @return Returns the exit code of the program that was run. The error property is set to 1 as an indication of failure. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return Returns the exit code of the program that was run. The error property is set to 1 as an indication of failure.
      */
     public int runWait(String filename) {
         return autoItX.invoke("RunWait", filename).getInt();
@@ -764,8 +764,8 @@ public class AutoItXCOM implements IAutoItX {
     /**
      * Shuts down the system.
      *
-     * @param code The shutdown code is a combination of the following values: <br/>             0 = Logoff <br/>             1 = Shutdown <br/>             2 = Reboot <br/>             4 = Force <br/>             8 = Power down Add the required values together. To shutdown             and power down, for example, the code would be 9 (shutdown +             power down = 1 + 8 = 9).
-     * @return True if success, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @param code The shutdown code is a combination of the following values:              0 = Logoff              1 = Shutdown              2 = Reboot              4 = Force              8 = Power down Add the required values together. To shutdown             and power down, for example, the code would be 9 (shutdown +             power down = 1 + 8 = 9).
+     * @return True if success, false otherwise.
      */
     public boolean shutdown(int code) {
         return oneToTrue(autoItX.invoke("Shutdown", new Variant(code)).getInt());
@@ -774,7 +774,7 @@ public class AutoItXCOM implements IAutoItX {
     /**
      * Pause script execution.
      *
-     * @param delay Amount of time to pause (in milliseconds).              <p/>              <table border=1 CELLPADDING="3" CELLSPACING="0">              <tr BGCOLOR="#CCCCFF">              <td>Date</td>              <td>Author</td>              <td>Details</td>              </tr>              <tr>              <td>04/12/2012</td>              <td>Weifeng Lu</td>              <td>Initial Version</td>              </tr>              <br>              </table>
+     * @param delay Amount of time to pause (in milliseconds).
      */
     public void sleep(int delay) {
         autoItX.invoke("sleep", delay);
@@ -792,20 +792,6 @@ public class AutoItXCOM implements IAutoItX {
      * @param x         The x position to click within the control. Default is center.
      * @param y         The y position to click within the control. Default is center.
      * @return True if success, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean controlClick(String title, String text, String controlID,
                                 String button, int clicks, int x, int y) {
@@ -2243,9 +2229,7 @@ public class AutoItXCOM implements IAutoItX {
      * Wait a specified window exists
      *
      * @param title   The title of the window to activate.
-     * @param timeout
      * @return True if window exists, false otherwise.
-     * @throws InterruptedException
      */
     public boolean waitWinExists(String title, long timeout)
             throws InterruptedException {
@@ -2510,7 +2494,7 @@ public class AutoItXCOM implements IAutoItX {
      * Retrieves the state of a given window.
      *
      * @param title The title of the window to read.
-     * @return Returns a value indicating the state of the window. Multiple values are added together so use BitAND() to examine the part you are interested in: <br/> 1 = Window exists <br/> 2 = Window is visible <br/> 4 = Windows is enabled <br/> 8 = Window is active <br/> 16 = Window is minimized <br/> otherwise returns 0 and sets oAutoIt.error to 1 if the window is not found.
+     * @return Returns a value indicating the state of the window. Multiple values are added together so use BitAND() to examine the part you are interested in:  1 = Window exists  2 = Window is visible  4 = Windows is enabled  8 = Window is active  16 = Window is minimized  otherwise returns 0 and sets oAutoIt.error to 1 if the window is not found.
      */
     public int winGetState(String title) {
         Variant result = winVariant(title, "WinGetState");
@@ -2808,7 +2792,7 @@ public class AutoItXCOM implements IAutoItX {
      *
      * @param title The title of the window to affect.
      * @param text  The text of the window to affect.
-     * @param flag  The "show" flag of the executed program: <br/>              SW_HIDE = Hide window, <br/>              SW_SHOW = Shows a previously hidden window, <br/>              SW_MINIMIZE = Minimize window, <br/>              SW_MAXIMIZE = Maximize window, <br/>              SW_RESTORE = Undoes a window minimization or maximization.
+     * @param flag  The "show" flag of the executed program:               SW_HIDE = Hide window,               SW_SHOW = Shows a previously hidden window,               SW_MINIMIZE = Minimize window,               SW_MAXIMIZE = Maximize window,               SW_RESTORE = Undoes a window minimization or maximization.
      */
     public void winSetState(String title, String text, int flag) {
         Variant vTitle = new Variant(title);

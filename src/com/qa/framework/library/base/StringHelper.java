@@ -16,13 +16,15 @@ import java.util.regex.PatternSyntaxException;
 /**
  * General convenience methods for working with Strings
  *
- * @author lwfwind          <p/>         Aug 6, 2011
  */
 public class StringHelper {
     private final static Logger logger = Logger.getLogger(StringHelper.class);
 
     /**
      * 判断字符串是否为空
+     *
+     * @param str the str
+     * @return the boolean
      */
     public static boolean isEmpty(String str) {
         if (str != null) {
@@ -33,6 +35,9 @@ public class StringHelper {
 
     /**
      * 判断字符串是否非空
+     *
+     * @param str the str
+     * @return the boolean
      */
     public static boolean isNotEmpty(String str) {
         return !isEmpty(str);
@@ -76,7 +81,7 @@ public class StringHelper {
      * Check if the string is a number or not
      *
      * @param str String to be checked
-     * @return boolean
+     * @return boolean boolean
      */
     public static boolean isNumber(String str) {
 
@@ -108,6 +113,12 @@ public class StringHelper {
         return null;
     }
 
+    /**
+     * Url decode string.
+     *
+     * @param str the str
+     * @return the string
+     */
     public static String urlDecode(String str) {
         //logger.info("转码前:" + str);
         try {
@@ -120,6 +131,12 @@ public class StringHelper {
         return null;
     }
 
+    /**
+     * Change string 2 boolean boolean.
+     *
+     * @param string the string
+     * @return the boolean
+     */
     public static boolean changeString2boolean(String string) {
         return !"false".equalsIgnoreCase(string);
     }
@@ -214,7 +231,7 @@ public class StringHelper {
      *
      * @param arr       the arr
      * @param separator Put the 'separator' string between each element.
-     * @return string
+     * @return string string
      */
     public static String arrayToString(String[] arr, String separator) {
         StringBuilder result = new StringBuilder();
@@ -265,7 +282,7 @@ public class StringHelper {
      *
      * @param str       The string that needs to be broken
      * @param delimeter The delimiter used to break the string
-     * @return a instance of java.util.List<String> with each token as one item in list
+     * @return a instance of java.util.List with each token as one item in list
      */
     public static List<String> getTokensList(String str, String delimeter) {
         if (str != null) {
@@ -313,8 +330,8 @@ public class StringHelper {
      */
     public static List<String> trimList(final List<String> values) {
         List<String> newValues = new ArrayList<String>();
-        for (int i = 0, length = values.size(); i < length; i++) {
-            String v = (String) values.get(i);
+        for (String value : values) {
+            String v = (String) value;
             if (v != null) {
                 v = v.trim();
             }
@@ -356,7 +373,6 @@ public class StringHelper {
     /**
      * Concatenate the given String arrays into one, with overlapping array
      * elements included twice.
-     * <p/>
      * The order of elements in the original arrays is preserved.
      *
      * @param array1 the first array (can be <code>null</code>)

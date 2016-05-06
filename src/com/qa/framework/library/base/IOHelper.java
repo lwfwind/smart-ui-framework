@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * A generic IO Utility based on Apache Commons-IO library
  *
- * @author lwfwind          <p/>         Sep 25, 2011
  */
 public class IOHelper {
 
@@ -36,7 +35,6 @@ public class IOHelper {
      * Cleans a directory without deleting it.
      *
      * @param strDirPath the str dir path
-     * @throws IOException
      */
     public static void cleanDirectory(String strDirPath) {
         File dir = new File(strDirPath);
@@ -52,8 +50,7 @@ public class IOHelper {
      *
      * @param strSourcePath the str source path
      * @param strDirPath    the str dir path
-     * @return boolean
-     * @throws IOException
+     * @return boolean boolean
      */
     public static boolean contentEquals(String strSourcePath, String strDirPath) {
         File Source = new File(strSourcePath);
@@ -71,7 +68,6 @@ public class IOHelper {
      *
      * @param strSrcFilePath  the str src file path
      * @param strDestFilePath the str dest file path
-     * @throws IOException
      */
     public static void copyFile(String strSrcFilePath, String strDestFilePath) {
         File src = new File(strSrcFilePath);
@@ -88,7 +84,6 @@ public class IOHelper {
      *
      * @param src  the src
      * @param dest the dest
-     * @throws IOException
      */
     public static void copyFile(File src, File dest) {
         try {
@@ -103,7 +98,6 @@ public class IOHelper {
      *
      * @param strSrcFilePath the str src file path
      * @param strDestDirPath the str dest dir path
-     * @throws IOException
      */
     public static void copyFileToDirectory(String strSrcFilePath,
                                            String strDestDirPath) {
@@ -121,7 +115,6 @@ public class IOHelper {
      *
      * @param strSrcDirPath  the str src dir path
      * @param strDestDirPath the str dest dir path
-     * @throws IOException
      */
     public static void copyDirectory(String strSrcDirPath, String strDestDirPath) {
         File src = new File(strSrcDirPath);
@@ -138,7 +131,6 @@ public class IOHelper {
      *
      * @param strSrcDirPath  the str src dir path
      * @param strDestDirPath the str dest dir path
-     * @throws IOException
      */
     public static void copyDirectoryUnderDirectory(String strSrcDirPath,
                                                    String strDestDirPath) {
@@ -156,7 +148,6 @@ public class IOHelper {
      *
      * @param url the url
      * @return source from url
-     * @throws IOException
      */
     public static String getSourceFromUrl(String url) {
         InputStream in = null;
@@ -176,7 +167,6 @@ public class IOHelper {
      *
      * @param strURL      the str url
      * @param strFilePath the str file path
-     * @throws IOException
      */
     public static void downSourceFromUrl(String strURL, String strFilePath) {
 
@@ -195,7 +185,6 @@ public class IOHelper {
      *
      * @param url              the url
      * @param strLocalFilePath the str local file path
-     * @throws IOException
      */
     public static void downFileFromUrl(String url, String strLocalFilePath) {
 
@@ -217,7 +206,6 @@ public class IOHelper {
      * Deletes a directory recursively.
      *
      * @param strDirPath the str dir path
-     * @throws IOException
      */
     public static void deleteDirectory(String strDirPath) {
         File dir = new File(strDirPath);
@@ -300,7 +288,7 @@ public class IOHelper {
 
     /**
      * Gets the base name, minus the full path and extension, from a full
-     * filename. C:\dev\project\file.txt -> file
+     * filename. C:\dev\project\file.txt - file
      *
      * @param strFileName the str file name
      * @return base name
@@ -310,10 +298,10 @@ public class IOHelper {
     }
 
     /**
-     * Gets the extension of a filename. C:\dev\project\file.txt -> txt
+     * Gets the extension of a filename. C:\dev\project\file.txt - txt
      *
      * @param strFileName the str file name
-     * @return extension
+     * @return extension extension
      */
     public static String getExtension(String strFileName) {
         return FilenameUtils.getExtension(strFileName);
@@ -321,7 +309,7 @@ public class IOHelper {
 
     /**
      * Gets the full path from a full filename, which is the prefix + path.
-     * C:\dev\project\file.txt -> C:\dev\project\
+     * C:\dev\project\file.txt - C:\dev\project\
      *
      * @param strFileName the str file name
      * @return full path
@@ -332,7 +320,7 @@ public class IOHelper {
 
     /**
      * Gets the full path from a full filename, which is the prefix + path, and
-     * also excluding the final directory separator. C:\dev\project\file.txt ->
+     * also excluding the final directory separator. C:\dev\project\file.txt -
      * C:\dev\project
      *
      * @param strFileName the str file name
@@ -344,10 +332,10 @@ public class IOHelper {
 
     /**
      * Gets the name minus the path from a full filename.
-     * C:\dev\project\file.txt -> file.txt
+     * C:\dev\project\file.txt - file.txt
      *
      * @param strFileName the str file name
-     * @return name
+     * @return name name
      */
     public static String getName(String strFileName) {
         return FilenameUtils.getName(strFileName);
@@ -355,10 +343,10 @@ public class IOHelper {
 
     /**
      * Gets the path from a full filename, which excludes the prefix.
-     * C:\dev\project\file.txt -> dev\project\
+     * C:\dev\project\file.txt - dev\project\
      *
      * @param strFileName the str file name
-     * @return path
+     * @return path path
      */
     public static String getPath(String strFileName) {
         return FilenameUtils.getPath(strFileName);
@@ -366,8 +354,7 @@ public class IOHelper {
 
     /**
      * Gets the path from a full filename, which excludes the prefix, and also
-     * excluding the final directory separator. C:\dev\project\file.txt ->
-     * dev\project
+     * excluding the final directory separator. C:\dev\project\file.txt - dev\project
      *
      * @param strFileName the str file name
      * @return path no end separator
@@ -377,10 +364,10 @@ public class IOHelper {
     }
 
     /**
-     * Gets the prefix from a full filename C:\dev\project\file.txt -> C:\
+     * Gets the prefix from a full filename C:\dev\project\file.txt - C:\
      *
      * @param strFileName the str file name
-     * @return prefix
+     * @return prefix prefix
      */
     public static String getPrefix(String strFileName) {
         return FilenameUtils.getPrefix(strFileName);
@@ -393,7 +380,7 @@ public class IOHelper {
      * @param filename        - the filename to match on
      * @param wildcardMatcher - the wildcard string to match against
      * @param caseSensitivity - what case sensitivity rule to use, null means case-sensitive
-     * @return boolean
+     * @return boolean boolean
      */
     public static boolean wildcardMatch(String filename,
                                         String wildcardMatcher, IOCase caseSensitivity) {
@@ -407,7 +394,7 @@ public class IOHelper {
      *
      * @param filename        - the filename to match on
      * @param wildcardMatcher - the wildcard string to match against
-     * @return boolean
+     * @return boolean boolean
      */
     public static boolean wildcardMatch(String filename, String wildcardMatcher) {
         return FilenameUtils.wildcardMatch(filename, wildcardMatcher);
@@ -440,7 +427,7 @@ public class IOHelper {
      * Get the free space on a drive
      *
      * @param strDrivePath the str drive path
-     * @return free space
+     * @return free spacethe io exception
      * @throws IOException the io exception
      */
     public static long getFreeSpace(String strDrivePath) throws IOException {
@@ -461,7 +448,7 @@ public class IOHelper {
      * Finds files within a given directory.
      *
      * @param strdirpath the strdirpath
-     * @return list
+     * @return list list
      */
     public static List<String> listFilesInDirectory(String strdirpath) {
         File directory = new File(strdirpath);
@@ -480,7 +467,7 @@ public class IOHelper {
      *
      * @param strdirpath         the strdirpath
      * @param WildcardFileFilter filter to apply when finding files. such as "*.*"
-     * @return list
+     * @return list list
      */
     public static List<String> listFilesInDirectory(String strdirpath,
                                                     String WildcardFileFilter) {
@@ -499,7 +486,7 @@ public class IOHelper {
      *
      * @param strdirpath the strdirpath
      * @param extensions an array of extensions.such as new String[]{"java","xml"}
-     * @return list
+     * @return list list
      */
     public static List<String> listFilesInDirectory(String strdirpath,
                                                     String[] extensions) {
@@ -517,7 +504,7 @@ public class IOHelper {
      * Finds files within a given directory (and its subdirectories).
      *
      * @param strdirpath the strdirpath
-     * @return list
+     * @return list list
      */
     public static List<String> listFilesInDirectoryRecursive(String strdirpath) {
         File directory = new File(strdirpath);
@@ -536,7 +523,7 @@ public class IOHelper {
      *
      * @param strdirpath         the strdirpath
      * @param WildcardFileFilter filter to apply when finding files. such as "*.*"
-     * @return list
+     * @return list list
      */
     public static List<String> listFilesInDirectoryRecursive(String strdirpath,
                                                              String WildcardFileFilter) {
@@ -557,7 +544,7 @@ public class IOHelper {
      *
      * @param strdirpath         the strdirpath
      * @param WildcardFileFilter filter to apply when finding files. such as "*.*"
-     * @return list
+     * @return list list
      */
     public static List<String> listFileNamesInDirectoryRecursive(
             String strdirpath, String WildcardFileFilter) {
@@ -578,7 +565,7 @@ public class IOHelper {
      *
      * @param strdirpath the strdirpath
      * @param extensions an array of extensions.such as new String[]{"java","xml"}
-     * @return list
+     * @return list list
      */
     public static List<String> listFilesInDirectoryRecursive(String strdirpath,
                                                              String[] extensions) {
@@ -599,7 +586,7 @@ public class IOHelper {
      * @param strdirpath         the strdirpath
      * @param WildcardFileFilter filter to apply when finding files. such as "*.*"
      * @param WildcardDirFilter  filter to apply when finding directory. such as "*"
-     * @return list
+     * @return list list
      */
     public static List<String> listFilesInDirectoryRecursive(String strdirpath,
                                                              String WildcardFileFilter, String WildcardDirFilter) {
@@ -619,7 +606,6 @@ public class IOHelper {
      *
      * @param strSrcFilePath  the str src file path
      * @param strDestFilePath the str dest file path
-     * @throws IOException
      */
     public static void moveFile(String strSrcFilePath, String strDestFilePath) {
         File src = new File(strSrcFilePath);
@@ -636,7 +622,6 @@ public class IOHelper {
      *
      * @param strSrcFilePath the str src file path
      * @param strDestDirPath the str dest dir path
-     * @throws IOException
      */
     public static void moveFileToDirectory(String strSrcFilePath,
                                            String strDestDirPath) {
@@ -654,7 +639,6 @@ public class IOHelper {
      *
      * @param strSrcDirPath  the str src dir path
      * @param strDestDirPath the str dest dir path
-     * @throws IOException
      */
     public static void moveDirectoryUnderDirectory(String strSrcDirPath,
                                                    String strDestDirPath) {
@@ -671,8 +655,7 @@ public class IOHelper {
      * Reads the contents of a file line by line to a List of Strings
      *
      * @param strfilepath the strfilepath
-     * @return list
-     * @throws IOException
+     * @return list list
      */
     public static List<String> readLinesToList(String strfilepath) {
 
@@ -690,8 +673,7 @@ public class IOHelper {
      * Reads the contents of a file into a String
      *
      * @param strFilePath the str file path
-     * @return string
-     * @throws IOException
+     * @return string string
      */
     public static String readFileToString(String strFilePath) {
         File file = new File(strFilePath);
@@ -708,7 +690,6 @@ public class IOHelper {
      *
      * @param strfilepath the strfilepath
      * @param lines       the lines
-     * @throws IOException
      */
     public static void writeLinesToFile(String strfilepath, List<String> lines) {
 
@@ -725,7 +706,6 @@ public class IOHelper {
      *
      * @param str         the str
      * @param strFilePath the str file path
-     * @throws IOException
      */
     public static void writeStringToFile(String str, String strFilePath) {
         File file = new File(strFilePath);

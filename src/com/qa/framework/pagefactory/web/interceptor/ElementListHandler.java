@@ -40,8 +40,8 @@ public class ElementListHandler implements InvocationHandler {
     /**
      * Given an interface and a locator, apply a wrapper over a list of elements.
      *
-     * @param interfaceType interface type we're trying to wrap around the element.
-     * @param locator       locator on the page for the elements.
+     * @param interfaceType the interface type
+     * @param locator       the locator
      * @param field         the field
      */
     public <T> ElementListHandler(Class<T> interfaceType, ElementLocator locator, Field field) {

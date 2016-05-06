@@ -59,7 +59,7 @@ public class PMDHelper {
     /**
      * Uses to avoid PMD violation
      *
-     * @return {@link Map<String, Object>}
+     * @return the map
      */
     public static Map<String, Object> newMapObj() {
         return new HashMap<String, Object>();
@@ -68,7 +68,7 @@ public class PMDHelper {
     /**
      * Uses to avoid PMD violation
      *
-     * @return {@link Map<String, String>}
+     * @return the map
      */
     public static Map<String, String> newHashMap() {
         return new HashMap<String, String>();
@@ -77,7 +77,7 @@ public class PMDHelper {
     /**
      * Uses to avoid PMD violation
      *
-     * @return {@link newIntStrMap}
+     * @return the map
      */
     public static Map<Integer, String> newIntStrMap() {
         return new HashMap<Integer, String>();
@@ -87,7 +87,7 @@ public class PMDHelper {
      * Uses to avoid PMD violation
      *
      * @param bytes the bytes
-     * @return {@link newString}
+     * @return the string
      */
     public static String newString(byte[] bytes) {
         return new String(bytes);
@@ -96,7 +96,7 @@ public class PMDHelper {
     /**
      * Uses to avoid PMD violation
      *
-     * @return {@link newStringList}
+     * @return the list
      */
     public static List<String> newStringList() {
         return new ArrayList<String>();
@@ -105,7 +105,7 @@ public class PMDHelper {
     /**
      * Uses to avoid PMD violation
      *
-     * @return {@link newLinkedStringList}
+     * @return the linked list
      */
     public static LinkedList<String> newLinkedStringList() {
         return new LinkedList<String>();

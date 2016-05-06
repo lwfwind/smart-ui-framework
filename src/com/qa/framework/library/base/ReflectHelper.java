@@ -181,6 +181,10 @@ public class ReflectHelper {
 
     /**
      * 通过反射创建实例
+     *
+     * @param <T>       the type parameter
+     * @param className the class name
+     * @return the t
      */
     @SuppressWarnings("unchecked")
     public static <T> T newInstance(String className) {

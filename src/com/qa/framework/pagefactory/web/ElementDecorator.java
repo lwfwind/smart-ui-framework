@@ -18,7 +18,6 @@ import java.util.List;
 
 /**
  * WrappedElementDecorator recognizes a few things that DefaultFieldDecorator does not.
- * <p/>
  * It is designed to support and return concrete implementations of wrappers for a variety of common html elements.
  */
 public class ElementDecorator implements FieldDecorator {

@@ -17,7 +17,7 @@ public interface IAutoItX {
      * @param clicks    The number of times to click the mouse. Default is center.
      * @param x         The x position to click within the control. Default is center.
      * @param y         The y position to click within the control. Default is center.
-     * @return True if success, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if success, false otherwise.
      */
     public boolean controlClick(String title, String text, String controlID,
                                 String button, int clicks, int x, int y);
@@ -30,7 +30,7 @@ public interface IAutoItX {
      * @param controlID The control to interact with.
      * @param button    The button to click, "left", "right" or "middle". Default is                  the left button.
      * @param clicks    The number of times to click the mouse. Default is center.
-     * @return True if success, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if success, false otherwise.
      */
     public boolean controlClick(String title, String text, String controlID,
                                 String button, int clicks);
@@ -42,7 +42,7 @@ public interface IAutoItX {
      * @param text      The text of the window to access.
      * @param controlID The control to interact with.
      * @param button    The button to click, "left", "right" or "middle". Default is                  the left button.
-     * @return True if success, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if success, false otherwise.
      */
     public boolean controlClick(String title, String text, String controlID,
                                 String button);
@@ -53,7 +53,7 @@ public interface IAutoItX {
      * @param title     The title of the window to access.
      * @param text      The text of the window to access.
      * @param controlID The control to interact with.
-     * @return True if success, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if success, false otherwise.
      */
     public boolean controlClick(String title, String text, String controlID);
 
@@ -61,14 +61,14 @@ public interface IAutoItX {
      * Activates (gives focus to) a window.
      *
      * @param title The title of the window to activate.
-     * @param text  The text of the window to activate.              <p/>              <table border=1 CELLPADDING="3" CELLSPACING="0">              <tr BGCOLOR="#CCCCFF">              <td>Date</td>              <td>Author</td>              <td>Details</td>              </tr>              <tr>              <td>04/12/2012</td>              <td>Weifeng Lu</td>              <td>Initial Version</td>              </tr>              <br>              </table>
+     * @param text  The text of the window to activate.
      */
     public void winActivate(String title, String text);
 
     /**
      * Activates (gives focus to) a window.
      *
-     * @param title The title of the window to activate.              <p/>              <table border=1 CELLPADDING="3" CELLSPACING="0">              <tr BGCOLOR="#CCCCFF">              <td>Date</td>              <td>Author</td>              <td>Details</td>              </tr>              <tr>              <td>04/12/2012</td>              <td>Weifeng Lu</td>              <td>Initial Version</td>              </tr>              <br>              </table>
+     * @param title The title of the window to activate.
      */
     public void winActivate(String title);
 
@@ -78,7 +78,7 @@ public interface IAutoItX {
      * @param title   The title of the window to check.
      * @param text    The text of the window to check.
      * @param timeout The timeout in seconds.
-     * @return True if success, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if success, false otherwise.
      */
     public boolean winWaitActive(String title, String text, int timeout);
 
@@ -87,7 +87,7 @@ public interface IAutoItX {
      *
      * @param title The title of the window to check.
      * @param text  The text of the window to check.
-     * @return True if success, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if success, false otherwise.
      */
     public boolean winWaitActive(String title, String text);
 
@@ -95,7 +95,7 @@ public interface IAutoItX {
      * Pauses execution of the script until the requested window is active.
      *
      * @param title The title of the window to check.
-     * @return True if success, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if success, false otherwise.
      */
     public boolean winWaitActive(String title);
 
@@ -104,7 +104,7 @@ public interface IAutoItX {
      *
      * @param title The title of the window to activate.
      * @param text  The text of the window to activate.
-     * @return True if window exists, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if window exists, false otherwise.
      */
     public boolean winExists(String title, String text);
 
@@ -112,7 +112,7 @@ public interface IAutoItX {
      * Checks to see if a specified window exists.
      *
      * @param title The title of the window to activate.
-     * @return True if window exists, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if window exists, false otherwise.
      */
     public boolean winExists(String title);
 
@@ -121,7 +121,7 @@ public interface IAutoItX {
      *
      * @param title   The title of the window to activate.
      * @param timeout the timeout
-     * @return True if window exists, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if window exists, false otherwise.
      * @throws InterruptedException the interrupted exception
      */
     public boolean waitWinExists(String title, long timeout)
@@ -133,14 +133,14 @@ public interface IAutoItX {
      * @param title   The title of the window to access.
      * @param text    The text of the window to access.
      * @param control The control to interact with.
-     * @return True if success, false otherwise. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return True if success, false otherwise.
      */
     public boolean controlFocus(String title, String text, String control);
 
     /**
      * Sends simulated keystrokes to the active window.
      *
-     * @param keys The sequence of keys to send.             <p/>             <table border=1 CELLPADDING="3" CELLSPACING="0">             <tr BGCOLOR="#CCCCFF">             <td>Date</td>             <td>Author</td>             <td>Details</td>             </tr>             <tr>             <td>04/12/2012</td>             <td>Weifeng Lu</td>             <td>Initial Version</td>             </tr>             <br>             </table>
+     * @param keys The sequence of keys to send.
      */
     public void send(String keys);
 
@@ -148,14 +148,14 @@ public interface IAutoItX {
      * Closes a window.
      *
      * @param title The title of the window to activate.
-     * @param text  The text of the window to activate.              <p/>              <table border=1 CELLPADDING="3" CELLSPACING="0">              <tr BGCOLOR="#CCCCFF">              <td>Date</td>              <td>Author</td>              <td>Details</td>              </tr>              <tr>              <td>04/12/2012</td>              <td>Weifeng Lu</td>              <td>Initial Version</td>              </tr>              <br>              </table>
+     * @param text  The text of the window to activate.
      */
     public void winClose(String title, String text);
 
     /**
      * Closes a window.
      *
-     * @param title The title of the window to activate.              <p/>              <table border=1 CELLPADDING="3" CELLSPACING="0">              <tr BGCOLOR="#CCCCFF">              <td>Date</td>              <td>Author</td>              <td>Details</td>              </tr>              <tr>              <td>04/12/2012</td>              <td>Weifeng Lu</td>              <td>Initial Version</td>              </tr>              <br>              </table>
+     * @param title The title of the window to activate.
      */
     public void winClose(String title);
 

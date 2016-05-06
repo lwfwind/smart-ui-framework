@@ -4,16 +4,45 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The type Basic tree node.
+ */
 public class BasicTreeNode {
 
     private static final BasicTreeNode[] CHILDREN_TEMPLATE = new BasicTreeNode[]{};
+    /**
+     * The M children.
+     */
     protected final List<BasicTreeNode> mChildren = new ArrayList<BasicTreeNode>();
-    public int x, y, width, height;
+    /**
+     * The X.
+     */
+    public int x, /**
+     * The Y.
+     */
+    y, /**
+     * The Width.
+     */
+    width, /**
+     * The Height.
+     */
+    height;
+    /**
+     * The M parent.
+     */
     protected BasicTreeNode mParent;
-    // whether the boundary fields are applicable for the node or not
+    /**
+     * The M has bounds.
+     */
+// whether the boundary fields are applicable for the node or not
     // RootWindowNode has no bounds, but UiNodes should
     protected boolean mHasBounds = false;
 
+    /**
+     * Add child.
+     *
+     * @param child the child
+     */
     public void addChild(BasicTreeNode child) {
         if (child == null) {
             throw new NullPointerException("Cannot add null child");
@@ -25,26 +54,54 @@ public class BasicTreeNode {
         child.mParent = this;
     }
 
+    /**
+     * Gets children list.
+     *
+     * @return the children list
+     */
     public List<BasicTreeNode> getChildrenList() {
         return Collections.unmodifiableList(mChildren);
     }
 
+    /**
+     * Get children basic tree node [ ].
+     *
+     * @return the basic tree node [ ]
+     */
     public BasicTreeNode[] getChildren() {
         return mChildren.toArray(CHILDREN_TEMPLATE);
     }
 
+    /**
+     * Gets parent.
+     *
+     * @return the parent
+     */
     public BasicTreeNode getParent() {
         return mParent;
     }
 
+    /**
+     * Has child boolean.
+     *
+     * @return the boolean
+     */
     public boolean hasChild() {
         return mChildren.size() != 0;
     }
 
+    /**
+     * Gets child count.
+     *
+     * @return the child count
+     */
     public int getChildCount() {
         return mChildren.size();
     }
 
+    /**
+     * Clear all children.
+     */
     public void clearAllChildren() {
         for (BasicTreeNode child : mChildren) {
             child.clearAllChildren();
@@ -54,14 +111,14 @@ public class BasicTreeNode {
 
     /**
      * Find nodes in the tree containing the coordinate
-     * <p/>
      * The found node should have bounds covering the coordinate, and none of its children's
      * bounds covers it. Depending on the layout, some app may have multiple nodes matching it,
      * the caller must provide a {@link IFindNodeListener} to receive all found nodes
      *
-     * @param px
-     * @param py
-     * @return
+     * @param px       the px
+     * @param py       the py
+     * @param listener the listener
+     * @return the boolean
      */
     public boolean findLeafMostNodesAtPoint(int px, int py, IFindNodeListener listener) {
         boolean foundInChild = false;
@@ -83,13 +140,26 @@ public class BasicTreeNode {
         }
     }
 
+    /**
+     * Get attributes array object [ ].
+     *
+     * @return the object [ ]
+     */
     public Object[] getAttributesArray() {
         return null;
     }
 
     ;
 
+    /**
+     * The interface Find node listener.
+     */
     public static interface IFindNodeListener {
+        /**
+         * On found node.
+         *
+         * @param node the node
+         */
         void onFoundNode(BasicTreeNode node);
     }
 }

@@ -11,7 +11,6 @@ import java.util.Date;
 /**
  * General convenience methods for working with date time
  *
- * @author lwfwind          <p/>         Aug 7, 2011
  */
 public class DateTimeHelper {
 

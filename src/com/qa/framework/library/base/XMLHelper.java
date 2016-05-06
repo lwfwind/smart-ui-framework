@@ -21,7 +21,6 @@ import java.util.List;
 /**
  * General convenience methods for working with XML
  *
- * @author lwfwind          <p/>         Aug 14, 2011
  */
 public class XMLHelper {
 
@@ -250,7 +249,7 @@ public class XMLHelper {
      *
      * @param element          the element
      * @param strAttributeNmae the str attribute nmae
-     * @return attribute
+     * @return attribute attribute
      */
     public Attribute getAttribute(Element element, String strAttributeNmae) {
         return element.attribute(strAttributeNmae);
@@ -273,7 +272,6 @@ public class XMLHelper {
      * @param element           the element
      * @param strAttributeNmae  the str attribute nmae
      * @param strAttributeValue the str attribute value
-     * @return
      */
     public void setAttributeText(Element element, String strAttributeNmae,
                                  String strAttributeValue) {
@@ -287,8 +285,7 @@ public class XMLHelper {
      * @return Element element
      */
     public Element findElementByXPath(String xpath) {
-        Element element = (Element) getDocument().selectSingleNode(xpath);
-        return element;
+        return (Element) getDocument().selectSingleNode(xpath);
     }
 
     /**
@@ -311,8 +308,7 @@ public class XMLHelper {
      * @return Attribute attribute
      */
     public Attribute findAttributeByXPath(String xpath) {
-        Attribute attribute = (Attribute) getDocument().selectSingleNode(xpath);
-        return attribute;
+        return (Attribute) getDocument().selectSingleNode(xpath);
     }
 
     /**
@@ -320,7 +316,7 @@ public class XMLHelper {
      * name and element text into HashMap
      *
      * @param xpath the xpath
-     * @param hm    HashMap<element_name, element_text>
+     * @param hm    the hm
      */
     public void iterateElements(String xpath, HashMap<String, String> hm) {
         int num = -1;
@@ -355,16 +351,9 @@ public class XMLHelper {
             Result result = new StreamResult(new FileOutputStream(
                     strOutHTMLFileName));
             xformer.transform(source, result);
-        } catch (TransformerConfigurationException e) {
-            logger.error(e.toString());
-        } catch (FileNotFoundException e) {
-            logger.error(e.toString());
-        } catch (TransformerFactoryConfigurationError e) {
-            logger.error(e.toString());
-        } catch (TransformerException e) {
+        } catch (FileNotFoundException | TransformerFactoryConfigurationError | TransformerException e) {
             logger.error(e.toString());
         }
-
     }
 
     /**
@@ -373,7 +362,7 @@ public class XMLHelper {
      *
      * @param xml1 the xml 1
      * @param xml2 the xml 2
-     * @return boolean
+     * @return boolean boolean
      */
     public boolean isSimilar(String xml1, String xml2) {
         Diff diff = null;
@@ -382,7 +371,7 @@ public class XMLHelper {
         } catch (Exception e) {
             logger.error(e.toString());
         }
-        return diff.similar();
+        return diff != null && diff.similar();
     }
 
     /**
@@ -391,7 +380,7 @@ public class XMLHelper {
      *
      * @param xml1 the xml 1
      * @param xml2 the xml 2
-     * @return boolean
+     * @return boolean boolean
      */
     public boolean isIdentical(String xml1, String xml2) {
         Diff diff = null;
@@ -400,7 +389,7 @@ public class XMLHelper {
         } catch (Exception e) {
             logger.error(e.toString());
         }
-        return diff.identical();
+        return diff != null && diff.identical();
     }
 
     /**
@@ -416,8 +405,7 @@ public class XMLHelper {
         DetailedDiff myDiff = new DetailedDiff(new Diff(xml1, xml2));
         @SuppressWarnings("unchecked")
         List<Difference> allDifferences = myDiff.getAllDifferences();
-        for (Iterator<Difference> i = allDifferences.iterator(); i.hasNext(); ) {
-            Difference d = (Difference) i.next();
+        for (Difference d : allDifferences) {
             logger.error(d.toString());
         }
     }

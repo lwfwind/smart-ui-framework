@@ -267,7 +267,7 @@ public abstract class PageBase {
     /**
      * Refresh ui hierarchy for android PopupWindow.
      */
-    public void refreshUiHierarchy(){
+    public void refreshUiHierarchy() {
         try {
             UiAutomatorHelper.searchUiHierarchyContent("");
         } catch (UiAutomatorHelper.UiAutomatorException | IOException e) {

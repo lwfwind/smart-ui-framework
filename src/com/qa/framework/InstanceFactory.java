@@ -25,12 +25,22 @@ public class InstanceFactory {
 
     /**
      * 获取 ClassScanner
+     *
+     * @return the class scanner
      */
     public static ClassScanner getClassScanner() {
         return getInstance(CLASS_SCANNER, DefaultClassScanner.class);
     }
 
 
+    /**
+     * Gets instance.
+     *
+     * @param <T>              the type parameter
+     * @param cacheKey         the cache key
+     * @param defaultImplClass the default impl class
+     * @return the instance
+     */
     @SuppressWarnings("unchecked")
     public static <T> T getInstance(String cacheKey, Class<T> defaultImplClass) {
         // 若缓存中存在对应的实例，则返回该实例

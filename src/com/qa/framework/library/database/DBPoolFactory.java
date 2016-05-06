@@ -127,6 +127,7 @@ public class DBPoolFactory {
      *
      * @param poolname the poolname
      * @return Connection db connection
+     * @throws SQLException the sql exception
      */
     public synchronized static Connection getDbConnection(String poolname) throws SQLException {
         if (poolNameMap.get(poolname) == null) {

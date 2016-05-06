@@ -36,20 +36,6 @@ public class AutoItDLL implements IAutoItX {
      * @param x         The x position to click within the control. Default is center.
      * @param y         The y position to click within the control. Default is center.
      * @return True if success, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean controlClick(String title, String text, String controlID,
                                 String button, int clicks, int x, int y) {
@@ -72,20 +58,6 @@ public class AutoItDLL implements IAutoItX {
      *                  the left button.
      * @param clicks    The number of times to click the mouse. Default is center.
      * @return True if success, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean controlClick(String title, String text, String controlID,
                                 String button, int clicks) {
@@ -108,20 +80,6 @@ public class AutoItDLL implements IAutoItX {
      * @param button    The button to click, "left", "right" or "middle". Default is
      *                  the left button.
      * @return True if success, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean controlClick(String title, String text, String controlID,
                                 String button) {
@@ -142,20 +100,6 @@ public class AutoItDLL implements IAutoItX {
      * @param text      The text of the window to access.
      * @param controlID The control to interact with.
      * @return True if success, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean controlClick(String title, String text, String controlID) {
         WString Wtitle = new WString(title);
@@ -173,20 +117,6 @@ public class AutoItDLL implements IAutoItX {
      *
      * @param title The title of the window to activate.
      * @param text  The text of the window to activate.
-     *              <p/>
-     *              <table border=1 CELLPADDING="3" CELLSPACING="0">
-     *              <tr BGCOLOR="#CCCCFF">
-     *              <td>Date</td>
-     *              <td>Author</td>
-     *              <td>Details</td>
-     *              </tr>
-     *              <tr>
-     *              <td>04/12/2012</td>
-     *              <td>Weifeng Lu</td>
-     *              <td>Initial Version</td>
-     *              </tr>
-     *              <br>
-     *              </table>
      */
     public void winActivate(String title, String text) {
         WString Wtitle = new WString(title);
@@ -198,20 +128,6 @@ public class AutoItDLL implements IAutoItX {
      * Activates (gives focus to) a window.
      *
      * @param title The title of the window to activate.
-     *              <p/>
-     *              <table border=1 CELLPADDING="3" CELLSPACING="0">
-     *              <tr BGCOLOR="#CCCCFF">
-     *              <td>Date</td>
-     *              <td>Author</td>
-     *              <td>Details</td>
-     *              </tr>
-     *              <tr>
-     *              <td>04/12/2012</td>
-     *              <td>Weifeng Lu</td>
-     *              <td>Initial Version</td>
-     *              </tr>
-     *              <br>
-     *              </table>
      */
     public void winActivate(String title) {
         WString Wtitle = new WString(title);
@@ -226,20 +142,6 @@ public class AutoItDLL implements IAutoItX {
      * @param text    The text of the window to check.
      * @param timeout The timeout in seconds.
      * @return True if success, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean winWaitActive(String title, String text, int timeout) {
         WString Wtitle = new WString(title);
@@ -254,20 +156,6 @@ public class AutoItDLL implements IAutoItX {
      * @param title The title of the window to check.
      * @param text  The text of the window to check.
      * @return True if success, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean winWaitActive(String title, String text) {
         WString Wtitle = new WString(title);
@@ -281,20 +169,6 @@ public class AutoItDLL implements IAutoItX {
      *
      * @param title The title of the window to check.
      * @return True if success, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean winWaitActive(String title) {
         WString Wtitle = new WString(title);
@@ -309,20 +183,6 @@ public class AutoItDLL implements IAutoItX {
      * @param title The title of the window to activate.
      * @param text  The text of the window to activate.
      * @return True if window exists, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean winExists(String title, String text) {
         WString Wtitle = new WString(title);
@@ -336,20 +196,6 @@ public class AutoItDLL implements IAutoItX {
      *
      * @param title The title of the window to activate.
      * @return True if window exists, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean winExists(String title) {
         WString Wtitle = new WString(title);
@@ -362,22 +208,7 @@ public class AutoItDLL implements IAutoItX {
      * Wait a specified window exists
      *
      * @param title   The title of the window to activate.
-     * @param timeout
      * @return True if window exists, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      * @throws InterruptedException
      */
     public boolean waitWinExists(String title, long timeout)
@@ -403,20 +234,6 @@ public class AutoItDLL implements IAutoItX {
      * @param text    The text of the window to access.
      * @param control The control to interact with.
      * @return True if success, false otherwise.
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
      */
     public boolean controlFocus(String title, String text, String control) {
         WString Wtitle = new WString(title);
@@ -430,20 +247,6 @@ public class AutoItDLL implements IAutoItX {
      * Sends simulated keystrokes to the active window.
      *
      * @param keys The sequence of keys to send.
-     *             <p/>
-     *             <table border=1 CELLPADDING="3" CELLSPACING="0">
-     *             <tr BGCOLOR="#CCCCFF">
-     *             <td>Date</td>
-     *             <td>Author</td>
-     *             <td>Details</td>
-     *             </tr>
-     *             <tr>
-     *             <td>04/12/2012</td>
-     *             <td>Weifeng Lu</td>
-     *             <td>Initial Version</td>
-     *             </tr>
-     *             <br>
-     *             </table>
      */
     public void send(String keys) {
         WString Wkeys = new WString(keys);
@@ -454,7 +257,7 @@ public class AutoItDLL implements IAutoItX {
      * Sends simulated keystrokes to the active window.
      *
      * @param keys  The sequence of keys to send.
-     * @param isRaw Changes how "keys" is processed: true - Text contains special              characters like + and ! to indicate SHIFT and ALT key presses.              false, keys are sent raw.              <p/>              <table border=1 CELLPADDING="3" CELLSPACING="0">              <tr BGCOLOR="#CCCCFF">              <td>Date</td>              <td>Author</td>              <td>Details</td>              </tr>              <tr>              <td>04/12/2012</td>              <td>Weifeng Lu</td>              <td>Initial Version</td>              </tr>              <br>              </table>
+     * @param isRaw Changes how "keys" is processed: true - Text contains special               characters like + and ! to indicate SHIFT and ALT key presses. false, keys are sent raw.
      */
     public void send(String keys, boolean isRaw) {
         WString Wkeys = new WString(keys);
@@ -466,20 +269,6 @@ public class AutoItDLL implements IAutoItX {
      *
      * @param title The title of the window to activate.
      * @param text  The text of the window to activate.
-     *              <p/>
-     *              <table border=1 CELLPADDING="3" CELLSPACING="0">
-     *              <tr BGCOLOR="#CCCCFF">
-     *              <td>Date</td>
-     *              <td>Author</td>
-     *              <td>Details</td>
-     *              </tr>
-     *              <tr>
-     *              <td>04/12/2012</td>
-     *              <td>Weifeng Lu</td>
-     *              <td>Initial Version</td>
-     *              </tr>
-     *              <br>
-     *              </table>
      */
     public void winClose(String title, String text) {
         WString Wtitle = new WString(title);
@@ -491,20 +280,6 @@ public class AutoItDLL implements IAutoItX {
      * Closes a window.
      *
      * @param title The title of the window to activate.
-     *              <p/>
-     *              <table border=1 CELLPADDING="3" CELLSPACING="0">
-     *              <tr BGCOLOR="#CCCCFF">
-     *              <td>Date</td>
-     *              <td>Author</td>
-     *              <td>Details</td>
-     *              </tr>
-     *              <tr>
-     *              <td>04/12/2012</td>
-     *              <td>Weifeng Lu</td>
-     *              <td>Initial Version</td>
-     *              </tr>
-     *              <br>
-     *              </table>
      */
     public void winClose(String title) {
         WString Wtitle = new WString(title);
@@ -516,29 +291,14 @@ public class AutoItDLL implements IAutoItX {
      * Converts the value 1 to true, anything else to false.
      *
      * @param i The value to convert to true/false
-     * @return 1 = true, anything else = false. <p/> <table border=1 CELLPADDING="3" CELLSPACING="0"> <tr BGCOLOR="#CCCCFF"> <td>Date</td> <td>Author</td> <td>Details</td> </tr> <tr> <td>04/12/2012</td> <td>Weifeng Lu</td> <td>Initial Version</td> </tr> <br> </table>
+     * @return 1 = true, anything else = false.
      */
     protected boolean oneToTrue(int i) {
-        return (i == 1) ? true : false;
+        return (i == 1);
     }
 
     /**
      * Wait for half A second
-     * <p/>
-     * <table border=1 CELLPADDING="3" CELLSPACING="0">
-     * <tr BGCOLOR="#CCCCFF">
-     * <td>Date</td>
-     * <td>Author</td>
-     * <td>Details</td>
-     * </tr>
-     * <tr>
-     * <td>04/12/2012</td>
-     * <td>Weifeng Lu</td>
-     * <td>Initial Version</td>
-     * </tr>
-     * <br>
-     * </table>
-     *
      * @throws InterruptedException
      */
     private void waitHalfASecond() throws InterruptedException {

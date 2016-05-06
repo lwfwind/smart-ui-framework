@@ -53,6 +53,9 @@ public class DBHelper {
 
     /**
      * 获取数据库连接
+     *
+     * @param poolname the poolname
+     * @return the connection
      */
     public static Connection getConnection(String poolname) {
         Connection conn = connContainer.get();
@@ -69,6 +72,11 @@ public class DBHelper {
         return conn;
     }
 
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     */
     public static Connection getConnection() {
         return getConnection(poolName);
     }
@@ -128,6 +136,8 @@ public class DBHelper {
 
     /**
      * 初始化 SQL 脚本
+     *
+     * @param sqlPath the sql path
      */
     public static void initSQL(String sqlPath) {
         try {
@@ -144,6 +154,10 @@ public class DBHelper {
 
     /**
      * 执行查询语句
+     *
+     * @param sql    the sql
+     * @param params the params
+     * @return the list
      */
     public static List<Map<String, Object>> queryRows(String sql, Object... params) {
         List<Map<String, Object>> result;
@@ -157,6 +171,13 @@ public class DBHelper {
         return result;
     }
 
+    /**
+     * Query one row map.
+     *
+     * @param sql    the sql
+     * @param params the params
+     * @return the map
+     */
     public static Map<String, Object> queryOneRow(String sql, Object... params) {
         List<Map<String, Object>> records = queryRows(sql, params);
         if (records == null || records.size() == 0) {
@@ -166,6 +187,14 @@ public class DBHelper {
         return records.get(random.nextInt(records.size()));
     }
 
+    /**
+     * Query field string.
+     *
+     * @param sql        the sql
+     * @param columnName the column name
+     * @param params     the params
+     * @return the string
+     */
     public static String queryField(String sql, String columnName, Object... params) {
         Map<String, Object> recordInfo = queryOneRow(sql, params);
         if (recordInfo != null) {
@@ -174,6 +203,13 @@ public class DBHelper {
         return null;
     }
 
+    /**
+     * Has record boolean.
+     *
+     * @param sql    the sql
+     * @param params the params
+     * @return the boolean
+     */
     public static boolean hasRecord(String sql, Object... params) {
         List<Map<String, Object>> records = queryRows(sql, params);
         return records.size() > 0;
@@ -181,6 +217,10 @@ public class DBHelper {
 
     /**
      * 执行更新语句（包括：update、insert、delete）
+     *
+     * @param sql    the sql
+     * @param params the params
+     * @return the int
      */
     public static int executeUpdate(String sql, Object... params) {
         int rows = 0;
@@ -196,6 +236,12 @@ public class DBHelper {
 
     /**
      * 查询实体列表
+     *
+     * @param <T>         the type parameter
+     * @param entityClass the entity class
+     * @param sql         the sql
+     * @param params      the params
+     * @return the list
      */
     public static <T> List<T> queryEntityList(Class<T> entityClass, String sql, Object... params) {
         List<T> entityList;
@@ -211,6 +257,12 @@ public class DBHelper {
 
     /**
      * 查询实体
+     *
+     * @param <T>         the type parameter
+     * @param entityClass the entity class
+     * @param sql         the sql
+     * @param params      the params
+     * @return the t
      */
     public static <T> T queryEntity(Class<T> entityClass, String sql, Object... params) {
         T entity;
@@ -226,6 +278,11 @@ public class DBHelper {
 
     /**
      * 插入实体
+     *
+     * @param <T>         the type parameter
+     * @param entityClass the entity class
+     * @param fieldMap    the field map
+     * @return the boolean
      */
     public static <T> boolean insertEntity(Class<T> entityClass, Map<String, Object> fieldMap) {
         if (CollectionHelper.isEmpty(fieldMap)) {
@@ -251,6 +308,12 @@ public class DBHelper {
 
     /**
      * 更新实体
+     *
+     * @param <T>         the type parameter
+     * @param entityClass the entity class
+     * @param id          the id
+     * @param fieldMap    the field map
+     * @return the boolean
      */
     public static <T> boolean updateEntity(Class<T> entityClass, long id, Map<String, Object> fieldMap) {
         if (CollectionHelper.isEmpty(fieldMap)) {
@@ -275,6 +338,11 @@ public class DBHelper {
 
     /**
      * 删除实体
+     *
+     * @param <T>         the type parameter
+     * @param entityClass the entity class
+     * @param id          the id
+     * @return the boolean
      */
     public static <T> boolean deleteEntity(Class<T> entityClass, long id) {
         String sql = "DELETE FROM " + getTableName(entityClass) + " WHERE id = ?";
@@ -285,6 +353,13 @@ public class DBHelper {
         return entityClass.getSimpleName();
     }
 
+    /**
+     * Query count long.
+     *
+     * @param sql    the sql
+     * @param params the params
+     * @return the long
+     */
     public long queryCount(String sql, Object... params) {
         long result;
         try {

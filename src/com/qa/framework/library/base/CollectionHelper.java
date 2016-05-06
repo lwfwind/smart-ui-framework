@@ -12,6 +12,9 @@ import java.util.Map;
 public class CollectionHelper {
     /**
      * 判断 Collection 是否为空
+     *
+     * @param collection the collection
+     * @return the boolean
      */
     public static boolean isEmpty(Collection<?> collection) {
         return CollectionUtils.isEmpty(collection);
@@ -19,6 +22,9 @@ public class CollectionHelper {
 
     /**
      * 判断 Collection 是否非空
+     *
+     * @param collection the collection
+     * @return the boolean
      */
     public static boolean isNotEmpty(Collection<?> collection) {
         return !isEmpty(collection);
@@ -26,6 +32,9 @@ public class CollectionHelper {
 
     /**
      * 判断 Map 是否为空
+     *
+     * @param map the map
+     * @return the boolean
      */
     public static boolean isEmpty(Map<?, ?> map) {
         return MapUtils.isEmpty(map);
@@ -33,6 +42,9 @@ public class CollectionHelper {
 
     /**
      * 判断 Map 是否非空
+     *
+     * @param map the map
+     * @return the boolean
      */
     public static boolean isNotEmpty(Map<?, ?> map) {
         return !isEmpty(map);
