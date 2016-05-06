@@ -6,6 +6,38 @@
     <artifactId>smart-ui-framework</artifactId>
     <version>2.0</version>
     <packaging>jar</packaging>
+    <description>Support web and moblie automaton based on selenium and appium</description>
+    <url>https://github.com/lwfwind/smart-ui-framework</url>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>3</version>
+    </parent>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/lwfwind/smart-ui-framework</url>
+        <connection>scm:git:ssh://git@github.com/lwfwind/smart-ui-framework.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/lwfwind/smart-ui-framework.git</developerConnection>
+        <tag>2.0.0</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <email>lwfwind@gmail.com</email>
+            <name>卢伟锋</name>
+            <url>https://github.com/lwfwind</url>
+            <id>lwfwind</id>
+        </developer>
+    </developers>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -204,6 +236,47 @@
             </resource>
         </resources>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-jgit</artifactId>
+                        <version>1.9.4</version>
+                    </dependency>
+                </dependencies>
+                <configuration>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <!--mvn compile-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
