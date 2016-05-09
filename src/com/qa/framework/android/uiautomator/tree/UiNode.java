@@ -1,4 +1,4 @@
-package com.qa.framework.library.android.uiautomator.tree;
+package com.qa.framework.android.uiautomator.tree;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;

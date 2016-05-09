@@ -1,7 +1,7 @@
 package com.qa.framework.library.webdriver;
 
 import com.qa.framework.config.PropConfig;
-import com.qa.framework.library.android.uiautomator.UiAutomatorHelper;
+import com.qa.framework.android.uiautomator.UiAutomatorHelper;
 import com.qa.framework.library.base.IOHelper;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;

@@ -297,27 +297,6 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-            <!--mvn clean && mvn package -Dmaven.test.skip=true-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <appendAssemblyId>false</appendAssemblyId>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <!--mvn source:jar-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

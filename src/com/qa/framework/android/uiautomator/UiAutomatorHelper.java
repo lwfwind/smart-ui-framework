@@ -1,10 +1,10 @@
-package com.qa.framework.library.android.uiautomator;
+package com.qa.framework.android.uiautomator;
 
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.NullOutputReceiver;
 import com.android.ddmlib.RawImage;
 import com.android.ddmlib.SyncService;
-import com.qa.framework.library.android.uiautomator.tree.BasicTreeNode;
+import com.qa.framework.android.uiautomator.tree.BasicTreeNode;
 import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;

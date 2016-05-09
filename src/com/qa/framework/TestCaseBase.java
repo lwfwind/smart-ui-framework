@@ -5,7 +5,7 @@ import com.qa.framework.cache.MethodCache;
 import com.qa.framework.config.DriverConfig;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.data.SuiteData;
-import com.qa.framework.library.android.uiautomator.DebugBridge;
+import com.qa.framework.android.uiautomator.DebugBridge;
 import com.qa.framework.library.base.StringHelper;
 import com.qa.framework.testnglistener.PowerEmailableReporter;
 import com.qa.framework.testnglistener.TestResultListener;

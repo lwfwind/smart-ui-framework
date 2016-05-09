@@ -1,4 +1,4 @@
-package com.qa.framework.library.android;
+package com.qa.framework.android;
 
 import com.qa.framework.config.ProjectEnvironment;
 import com.qa.framework.library.base.IOHelper;

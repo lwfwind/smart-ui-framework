@@ -1,9 +1,9 @@
-package com.qa.framework.library.android.uiautomator;
+package com.qa.framework.android.uiautomator;
 
-import com.qa.framework.library.android.uiautomator.tree.AttributePair;
-import com.qa.framework.library.android.uiautomator.tree.BasicTreeNode;
-import com.qa.framework.library.android.uiautomator.tree.UiHierarchyXmlLoader;
-import com.qa.framework.library.android.uiautomator.tree.UiNode;
+import com.qa.framework.android.uiautomator.tree.AttributePair;
+import com.qa.framework.android.uiautomator.tree.BasicTreeNode;
+import com.qa.framework.android.uiautomator.tree.UiHierarchyXmlLoader;
+import com.qa.framework.android.uiautomator.tree.UiNode;
 
 import java.awt.*;
 import java.io.File;

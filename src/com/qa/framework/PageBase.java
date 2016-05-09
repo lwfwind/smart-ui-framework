@@ -1,7 +1,7 @@
 package com.qa.framework;
 
 import com.qa.framework.cache.DriverCache;
-import com.qa.framework.library.android.uiautomator.UiAutomatorHelper;
+import com.qa.framework.android.uiautomator.UiAutomatorHelper;
 import com.qa.framework.library.webdriver.Action;
 import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.web.Element;

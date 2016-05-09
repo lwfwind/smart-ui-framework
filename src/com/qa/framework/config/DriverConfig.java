@@ -1,8 +1,8 @@
 package com.qa.framework.config;
 
 import com.opera.core.systems.OperaDriver;
-import com.qa.framework.library.android.Adb;
-import com.qa.framework.library.android.AppiumServer;
+import com.qa.framework.android.Adb;
+import com.qa.framework.android.AppiumServer;
 import com.qa.framework.library.base.IOHelper;
 import com.qa.framework.library.base.ProcessHelper;
 import com.qa.framework.library.base.StringHelper;

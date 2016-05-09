@@ -1,4 +1,4 @@
-package com.qa.framework.library.android.uiautomator.tree;
+package com.qa.framework.android.uiautomator.tree;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
