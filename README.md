@@ -16,7 +16,17 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 
 ## Example
 
-##### 1. Create Page level Class, which extends PageBase Class
+
+##### 1. Add maven dependency
+```xml
+<dependency>
+    <groupId>com.github.lwfwind.automation</groupId>
+    <artifactId>smart-ui-framework</artifactId>
+    <version>[版本号]</version>
+</dependency>
+```
+
+##### 2. Create Page level Class, which extends PageBase Class
 
 ```java
 package test.page;
@@ -38,7 +48,7 @@ public class SearchPage Level extends PageBase {
 }
 ```
 
-##### 2. Create Service Level Class, which extends ServiceBase Class (Notes: The Sevice Level is not necessary if the automation project is not complex )
+##### 3. Create Service Level Class, which extends ServiceBase Class (Notes: The Sevice Level is not necessary if the automation project is not complex )
 
 ```java
 package test.service;
@@ -58,7 +68,7 @@ public class SearchService extends ServiceBase {
 }
 ```
 
-##### 3. Create TestCase Level Class, which extends TestCaseBase Class
+##### 4. Create TestCase Level Class, which extends TestCaseBase Class
 
 ```java
 package test.testcase;
@@ -80,7 +90,7 @@ public class SearchWithServiceTest extends TestCaseBase {
 }
 ```
 
-##### 4. Create test listener Class to add business log on success/fail/skip, which implement ICustomTestListener Class
+##### 5. Create test listener Class to add business log on success/fail/skip, which implement ICustomTestListener Class
 
 ```java
 package test.testnglistener;
