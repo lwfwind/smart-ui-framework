@@ -1,4 +1,4 @@
-package com.qa.framework.android.uiautomator;
+package com.qa.framework.android;
 
 import com.android.SdkConstants;
 import com.android.ddmlib.AndroidDebugBridge;

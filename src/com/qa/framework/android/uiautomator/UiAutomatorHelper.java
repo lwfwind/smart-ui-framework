@@ -4,6 +4,7 @@ import com.android.ddmlib.IDevice;
 import com.android.ddmlib.NullOutputReceiver;
 import com.android.ddmlib.RawImage;
 import com.android.ddmlib.SyncService;
+import com.qa.framework.android.DebugBridge;
 import com.qa.framework.android.uiautomator.tree.BasicTreeNode;
 import org.apache.log4j.Logger;
 
