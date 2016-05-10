@@ -15,7 +15,6 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * General convenience methods for working with Strings
- *
  */
 public class StringHelper {
     private final static Logger logger = Logger.getLogger(StringHelper.class);

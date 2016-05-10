@@ -20,7 +20,6 @@ import java.util.List;
 
 /**
  * General convenience methods for working with XML
- *
  */
 public class XMLHelper {
 

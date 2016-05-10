@@ -1,7 +1,8 @@
 package com.qa.framework;
 
-import com.qa.framework.cache.DriverCache;
+import com.qa.framework.android.event.AccessibilityEventMonitor;
 import com.qa.framework.android.uiautomator.UiAutomatorHelper;
+import com.qa.framework.cache.DriverCache;
 import com.qa.framework.library.webdriver.Action;
 import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.web.Element;
@@ -273,6 +274,13 @@ public abstract class PageBase {
         } catch (UiAutomatorHelper.UiAutomatorException | IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Get last toast text
+     */
+    public String getLastToast() {
+        return AccessibilityEventMonitor.getLastToast();
     }
 
 

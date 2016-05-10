@@ -207,7 +207,7 @@ public class AutoItDLL implements IAutoItX {
     /**
      * Wait a specified window exists
      *
-     * @param title   The title of the window to activate.
+     * @param title The title of the window to activate.
      * @return True if window exists, false otherwise.
      * @throws InterruptedException
      */
@@ -299,6 +299,7 @@ public class AutoItDLL implements IAutoItX {
 
     /**
      * Wait for half A second
+     *
      * @throws InterruptedException
      */
     private void waitHalfASecond() throws InterruptedException {

@@ -2228,7 +2228,7 @@ public class AutoItXCOM implements IAutoItX {
     /**
      * Wait a specified window exists
      *
-     * @param title   The title of the window to activate.
+     * @param title The title of the window to activate.
      * @return True if window exists, false otherwise.
      */
     public boolean waitWinExists(String title, long timeout)

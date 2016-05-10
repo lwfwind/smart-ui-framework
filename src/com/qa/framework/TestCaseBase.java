@@ -1,11 +1,12 @@
 package com.qa.framework;
 
+import com.qa.framework.android.DebugBridge;
+import com.qa.framework.android.event.AccessibilityEventMonitor;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
 import com.qa.framework.config.DriverConfig;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.data.SuiteData;
-import com.qa.framework.android.DebugBridge;
 import com.qa.framework.library.base.StringHelper;
 import com.qa.framework.testnglistener.PowerEmailableReporter;
 import com.qa.framework.testnglistener.TestResultListener;
@@ -36,6 +37,7 @@ public abstract class TestCaseBase {
         logger.info("beforeSuite");
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             DebugBridge.init();
+            AccessibilityEventMonitor.start();
         }
         HelperLoader.init();
         Class<?> clazz = findImplementClass(SuiteData.class);
@@ -66,6 +68,10 @@ public abstract class TestCaseBase {
             suiteData.teardown();
         }
         afterSuite();
+        if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
+            AccessibilityEventMonitor.stop();
+            DebugBridge.terminate();
+        }
     }
 
     public void afterSuite() {

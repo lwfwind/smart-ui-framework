@@ -10,7 +10,6 @@ import java.util.Date;
 
 /**
  * General convenience methods for working with date time
- *
  */
 public class DateTimeHelper {
 

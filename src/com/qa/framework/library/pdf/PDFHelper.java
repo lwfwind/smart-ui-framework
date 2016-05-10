@@ -2,13 +2,19 @@ package com.qa.framework.library.pdf;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.*;
+import com.itextpdf.text.pdf.PRTokeniser;
+import com.itextpdf.text.pdf.PdfCopy;
+import com.itextpdf.text.pdf.PdfImportedPage;
+import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 import org.apache.log4j.Logger;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -132,7 +138,7 @@ public class PDFHelper {
             document.close();
             strSourceFile.close();
             copy.close();
-        }  catch (IOException | DocumentException e) {
+        } catch (IOException | DocumentException e) {
             logger.error(e.toString());
         }
     }
@@ -169,7 +175,7 @@ public class PDFHelper {
             }
             document.close();
             copy.close();
-        }  catch (IOException | DocumentException e) {
+        } catch (IOException | DocumentException e) {
             logger.error(e.toString());
         }
     }
@@ -207,7 +213,7 @@ public class PDFHelper {
             }
             document.close();
             copy.close();
-        }  catch (IOException | DocumentException e) {
+        } catch (IOException | DocumentException e) {
             logger.error(e.toString());
         }
     }
