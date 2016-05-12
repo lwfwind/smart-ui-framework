@@ -37,7 +37,7 @@ public abstract class TestCaseBase {
         logger.info("beforeSuite");
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             DebugBridge.init();
-            AccessibilityEventMonitor.start();
+            //AccessibilityEventMonitor.start();
         }
         HelperLoader.init();
         Class<?> clazz = findImplementClass(SuiteData.class);
@@ -69,7 +69,7 @@ public abstract class TestCaseBase {
         }
         afterSuite();
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
-            AccessibilityEventMonitor.stop();
+            //AccessibilityEventMonitor.stop();
             DebugBridge.terminate();
         }
     }

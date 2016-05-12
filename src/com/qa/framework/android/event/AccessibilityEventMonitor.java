@@ -31,10 +31,40 @@ public class AccessibilityEventMonitor {
     }
 
     public static String getLastToast() {
+        readEventLog();
         if (toastEventLogs.size() > 0) {
             return toastEventLogs.get(toastEventLogs.size() - 1);
         }
         return "No Toast Message";
+    }
+
+    public static void readEventLog(){
+        try {
+            IDevice device = DebugBridge.getDevice();
+            if (device != null) {
+                MultiLineReceiver receiver = new MultiLineReceiver() {
+                    @Override
+                    public void processNewLines(String[] lines) {
+                        for (String line : lines) {
+                            if (line.contains("com.abc360.tool")) {
+                                toastEventLogs.add(StringHelper.getBetweenString(line, "Message: ", "[Source"));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public boolean isCancelled() {
+                        return false;
+                    }
+                };
+                device.executeShellCommand(
+                        "cat /sdcard/event.log",
+                        receiver,
+                        5000);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) throws InterruptedException {
