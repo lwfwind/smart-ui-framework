@@ -8,11 +8,9 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 
 * Easy to learn
 * Support page object design pattern and extend page factory support highlight element, log action, screenshot action automatically and so on
-* Support multi-thread testing with selenium grid2
-* Re-run failed test cases
-* Capture screenshot automatically when testcase fails
+* Support multi webdriver testing
+* Re-run failed test cases and capture screenshot automatically when testcase fails
 * Support dependency injection
-* Provide Element class extend for WebElement for web
 
 ## Example
 
@@ -35,7 +33,7 @@ import com.qa.framework.PageBase;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class SearchPage Level extends PageBase {
+public class SearchPage extends PageBase {
 
     @FindBy(id = "kw")
     private WebElement searchTestBox;
