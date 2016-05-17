@@ -35,19 +35,9 @@ public abstract class HierarchyViewerHelper {
     public static void main(String[] args) {
         DebugBridge.init();
         try {
-            Rectangle rectangle = getNodeLocationByText("菲律宾老师");
+            Rectangle rectangle = getElementLocationByText("15:40",2);
             if (rectangle != null) {
-                logger.info(rectangle.x);
-                logger.info(rectangle.y);
-                logger.info(rectangle.width);
-                logger.info(rectangle.height);
-            }
-            rectangle = getNodeLocationByText("欧美老师");
-            if (rectangle != null) {
-                logger.info(rectangle.x);
-                logger.info(rectangle.y);
-                logger.info(rectangle.width);
-                logger.info(rectangle.height);
+                logger.info("result left:" + rectangle.x + " top:" + rectangle.y + " width:" + rectangle.width + " height:" + rectangle.height);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,8 +46,8 @@ public abstract class HierarchyViewerHelper {
         }
     }
 
-    public static Point getNodeCenterByText(String text){
-        Rectangle rectangle = getNodeLocationByText(text);
+    public static Point getElementCenterByText(String text, int... index){
+        Rectangle rectangle = getElementLocationByText(text,index);
         if (rectangle != null) {
             return new Point(rectangle.x+rectangle.width/2,rectangle.y+rectangle.height/2);
         }
@@ -65,7 +55,7 @@ public abstract class HierarchyViewerHelper {
     }
 
 
-    public static Rectangle getNodeLocationByText(String text){
+    public static Rectangle getElementLocationByText(String text, int... index){
         IDevice device = null;
         try {
             device = DebugBridge.getDevice();
@@ -84,9 +74,9 @@ public abstract class HierarchyViewerHelper {
                 ViewNode viewNode = DeviceBridge.loadWindowData(window);
                 if (viewNode != null) {
                     ArrayList<Rectangle> resultRectangles = new ArrayList<Rectangle>();
-                    searchNodeRecursion(viewNode,text,resultRectangles);
+                    searchElementRecursion(viewNode,text,resultRectangles);
                     if(resultRectangles.size() > 0) {
-                        return resultRectangles.get(0);
+                        return resultRectangles.get(index[0]);
                     }
                 }
             }
@@ -94,50 +84,41 @@ public abstract class HierarchyViewerHelper {
         return null;
     }
 
-    private static void searchNodeRecursion(ViewNode viewNode, String text, ArrayList<Rectangle> resultRectangles){
+    private static void searchElementRecursion(ViewNode viewNode, String text, ArrayList<Rectangle> resultRectangles){
         if(viewNode.children.size() > 0) {
             //logger.info(viewNode.name);
             for (int i = 0; i < viewNode.children.size(); i++) {
                 ViewNode node = viewNode.children.get(i);
                 ViewNode.Property property = node.namedProperties.get("text:mText");
                 if(property == null){
-                    searchNodeRecursion(node,text,resultRectangles);
+                    searchElementRecursion(node,text,resultRectangles);
                 }
                 else {
-                    logger.info(property.value);
                     if (!property.value.contains(text)) {
-                        searchNodeRecursion(node, text,resultRectangles);
+                        searchElementRecursion(node, text,resultRectangles);
                     } else {
                         ViewNode.Property mLeftProperty = node.namedProperties.get("layout:mLeft");
                         ViewNode.Property mTopProperty = node.namedProperties.get("layout:mTop");
-                        if(mLeftProperty.value.equals("0") && mTopProperty.value.equals("0")){
-                            Point point = getValidLeftTopPoint(node);
-                            resultRectangles.add(new Rectangle(point.x,point.y,node.width,node.height));
-                        }
-                        else
-                        {
-                            resultRectangles.add(new Rectangle(Integer.parseInt(mLeftProperty.value),Integer.parseInt(mTopProperty.value),node.width,node.height));
-                        }
+                        Point point = new Point(Integer.parseInt(mLeftProperty.value),Integer.parseInt(mTopProperty.value));
+                        getValidLeftTopPoint(node,point);
+                        logger.info(property.value + " left:" + point.x + " top:" + point.y + " width:" + node.width + " height:" + node.height);
+                        resultRectangles.add(new Rectangle(point.x,point.y,node.width,node.height));
                     }
                 }
             }
         }
     }
 
-    private static Point getValidLeftTopPoint(ViewNode viewNode){
+    private static void getValidLeftTopPoint(ViewNode viewNode, Point point){
         if(viewNode.parent == null){
-            return new Point(0,0);
+            return;
         }
         ViewNode parentNode = viewNode.parent;
         ViewNode.Property mLeftProperty = parentNode.namedProperties.get("layout:mLeft");
         ViewNode.Property mTopProperty = parentNode.namedProperties.get("layout:mTop");
-        if(mLeftProperty.value.equals("0") && mTopProperty.value.equals("0")){
-            return getValidLeftTopPoint(parentNode);
-        }
-        else
-        {
-            return new Point(Integer.parseInt(mLeftProperty.value),Integer.parseInt(mTopProperty.value));
-        }
+        point.x = point.x + Integer.parseInt(mLeftProperty.value);
+        point.y = point.y + Integer.parseInt(mTopProperty.value);
+        getValidLeftTopPoint(parentNode,point);
     }
 
 
