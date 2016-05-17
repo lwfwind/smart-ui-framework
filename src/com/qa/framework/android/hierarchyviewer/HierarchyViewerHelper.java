@@ -35,17 +35,19 @@ public abstract class HierarchyViewerHelper {
     public static void main(String[] args) {
         DebugBridge.init();
         try {
-            Rectangle rectangle = getNodeLocationByText("ViewServer");
+            Rectangle rectangle = getNodeLocationByText("菲律宾老师");
             if (rectangle != null) {
                 logger.info(rectangle.x);
                 logger.info(rectangle.y);
                 logger.info(rectangle.width);
                 logger.info(rectangle.height);
             }
-            Point point = getNodeCenterByText("ViewServer");
-            if (point != null) {
-                logger.info(point.x);
-                logger.info(point.y);
+            rectangle = getNodeLocationByText("欧美老师");
+            if (rectangle != null) {
+                logger.info(rectangle.x);
+                logger.info(rectangle.y);
+                logger.info(rectangle.width);
+                logger.info(rectangle.height);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +57,7 @@ public abstract class HierarchyViewerHelper {
     }
 
     public static Point getNodeCenterByText(String text){
-        Rectangle rectangle = getNodeLocationByText("ViewServer");
+        Rectangle rectangle = getNodeLocationByText(text);
         if (rectangle != null) {
             return new Point(rectangle.x+rectangle.width/2,rectangle.y+rectangle.height/2);
         }
@@ -83,7 +85,9 @@ public abstract class HierarchyViewerHelper {
                 if (viewNode != null) {
                     ArrayList<Rectangle> resultRectangles = new ArrayList<Rectangle>();
                     searchNodeRecursion(viewNode,text,resultRectangles);
-                    return resultRectangles.get(0);
+                    if(resultRectangles.size() > 0) {
+                        return resultRectangles.get(0);
+                    }
                 }
             }
         }
@@ -100,16 +104,15 @@ public abstract class HierarchyViewerHelper {
                     searchNodeRecursion(node,text,resultRectangles);
                 }
                 else {
+                    logger.info(property.value);
                     if (!property.value.contains(text)) {
                         searchNodeRecursion(node, text,resultRectangles);
                     } else {
                         ViewNode.Property mLeftProperty = node.namedProperties.get("layout:mLeft");
                         ViewNode.Property mTopProperty = node.namedProperties.get("layout:mTop");
                         if(mLeftProperty.value.equals("0") && mTopProperty.value.equals("0")){
-                            ViewNode parentNode = node.parent;
-                            mLeftProperty = parentNode.namedProperties.get("layout:mLeft");
-                            mTopProperty = parentNode.namedProperties.get("layout:mTop");
-                            resultRectangles.add(new Rectangle(Integer.parseInt(mLeftProperty.value),Integer.parseInt(mTopProperty.value),node.width,node.height));
+                            Point point = getValidLeftTopPoint(node);
+                            resultRectangles.add(new Rectangle(point.x,point.y,node.width,node.height));
                         }
                         else
                         {
@@ -118,6 +121,22 @@ public abstract class HierarchyViewerHelper {
                     }
                 }
             }
+        }
+    }
+
+    private static Point getValidLeftTopPoint(ViewNode viewNode){
+        if(viewNode.parent == null){
+            return new Point(0,0);
+        }
+        ViewNode parentNode = viewNode.parent;
+        ViewNode.Property mLeftProperty = parentNode.namedProperties.get("layout:mLeft");
+        ViewNode.Property mTopProperty = parentNode.namedProperties.get("layout:mTop");
+        if(mLeftProperty.value.equals("0") && mTopProperty.value.equals("0")){
+            return getValidLeftTopPoint(parentNode);
+        }
+        else
+        {
+            return new Point(Integer.parseInt(mLeftProperty.value),Integer.parseInt(mTopProperty.value));
         }
     }
 
