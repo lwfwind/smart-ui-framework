@@ -45,10 +45,6 @@ public abstract class TestCaseBase {
             suiteData = (SuiteData) clazz.newInstance();
             suiteData.setup();
         }
-        if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP")) {
-            getDriverObj();
-            initFields(this);
-        }
         beforeSuite();
     }
 
@@ -58,26 +54,19 @@ public abstract class TestCaseBase {
     @AfterSuite(alwaysRun = true)
     public void AfterSuite(ITestContext context) throws Exception {
         logger.info("afterSuite");
-        if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP")) {
-            WebDriver driver = DriverCache.get();
-            driver.quit();
-        }
         Class<?> clazz = findImplementClass(SuiteData.class);
         if (clazz != null) {
             suiteData = (SuiteData) clazz.newInstance();
             suiteData.teardown();
         }
-        afterSuite();
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             //AccessibilityEventMonitor.stop();
             DebugBridge.terminate();
         }
+        afterSuite();
     }
 
     public void afterSuite() {
-        if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
-            DebugBridge.terminate();
-        }
     }
 
     private void getDriverObj() throws Exception {
@@ -138,13 +127,8 @@ public abstract class TestCaseBase {
             currentMethodName = method.getName();
         }
         MethodCache.set(StringHelper.removeSpecialChar(currentMethodName));
-
-        if (!isUnitTest()) {
-            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-                getDriverObj();
-                initFields(this);
-            }
-        }
+        getDriverObj();
+        initFields(this);
         beforeMethod(method, para);
     }
 
@@ -153,10 +137,8 @@ public abstract class TestCaseBase {
 
     @AfterMethod(alwaysRun = true)
     public void AfterMethod(Method method, Object[] para) {
-        if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-            WebDriver driver = DriverCache.get();
-            driver.quit();
-        }
+        WebDriver driver = DriverCache.get();
+        driver.quit();
         afterMethod(method, para);
     }
 
