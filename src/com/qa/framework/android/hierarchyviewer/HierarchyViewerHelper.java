@@ -35,7 +35,7 @@ public abstract class HierarchyViewerHelper {
     public static void main(String[] args) {
         DebugBridge.init();
         try {
-            Rectangle rectangle = getElementLocationByText("15:40",2);
+            Rectangle rectangle = getElementLocationByText("15:20",2);
             if (rectangle != null) {
                 logger.info("result left:" + rectangle.x + " top:" + rectangle.y + " width:" + rectangle.width + " height:" + rectangle.height);
             }
@@ -76,6 +76,9 @@ public abstract class HierarchyViewerHelper {
                     ArrayList<Rectangle> resultRectangles = new ArrayList<Rectangle>();
                     searchElementRecursion(viewNode,text,resultRectangles);
                     if(resultRectangles.size() > 0) {
+                        if(index == null || index.length == 0){
+                            return resultRectangles.get(0);
+                        }
                         return resultRectangles.get(index[0]);
                     }
                 }
