@@ -35,6 +35,7 @@ public abstract class TestCaseBase {
     @BeforeSuite(alwaysRun = true)
     public void BeforeSuite(ITestContext context) throws Exception {
         logger.info("beforeSuite");
+        beforeSuite();
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             DebugBridge.init();
             //AccessibilityEventMonitor.start();
@@ -45,7 +46,6 @@ public abstract class TestCaseBase {
             suiteData = (SuiteData) clazz.newInstance();
             suiteData.setup();
         }
-        beforeSuite();
     }
 
     public void beforeSuite() {
@@ -54,6 +54,7 @@ public abstract class TestCaseBase {
     @AfterSuite(alwaysRun = true)
     public void AfterSuite(ITestContext context) throws Exception {
         logger.info("afterSuite");
+        afterSuite();
         Class<?> clazz = findImplementClass(SuiteData.class);
         if (clazz != null) {
             suiteData = (SuiteData) clazz.newInstance();
@@ -63,7 +64,6 @@ public abstract class TestCaseBase {
             //AccessibilityEventMonitor.stop();
             DebugBridge.terminate();
         }
-        afterSuite();
     }
 
     public void afterSuite() {
@@ -120,6 +120,8 @@ public abstract class TestCaseBase {
 
     @BeforeMethod(alwaysRun = true)
     public void BeforeMethod(Method method, Object[] para) throws Exception {
+        beforeMethod(method, para);
+        beforeMethod();
         String currentMethodName;
         if (para != null && para.length > 0 && para[0] != null) {
             currentMethodName = method.getName() + "_" + para[0].toString().trim();
@@ -129,8 +131,6 @@ public abstract class TestCaseBase {
         MethodCache.set(StringHelper.removeSpecialChar(currentMethodName));
         getDriverObj();
         initFields(this);
-        beforeMethod(method, para);
-        beforeMethod();
     }
 
     public void beforeMethod(Method method, Object[] para) {
@@ -141,10 +141,10 @@ public abstract class TestCaseBase {
 
     @AfterMethod(alwaysRun = true)
     public void AfterMethod(Method method, Object[] para) {
-        WebDriver driver = DriverCache.get();
-        driver.quit();
         afterMethod(method, para);
         afterMethod();
+        WebDriver driver = DriverCache.get();
+        driver.quit();
     }
 
     public void afterMethod(Method method, Object[] para) {
