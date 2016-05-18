@@ -8,6 +8,7 @@ import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.web.Element;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
@@ -36,6 +37,9 @@ public abstract class PageBase {
      * The Driver.
      */
     public WebDriver driver;
+
+    public AndroidDriver androidDriver;
+    public IOSDriver iosDriver;
     /**
      * The Action.
      */
@@ -53,6 +57,20 @@ public abstract class PageBase {
             }
             initElements(this);
         }
+    }
+
+    public AndroidDriver getAndroidDriver(){
+        if(getPlatform(driver).equals(MobilePlatform.ANDROID)) {
+            androidDriver = (AndroidDriver) driver;
+        }
+        return androidDriver;
+    }
+
+    public IOSDriver getIOSDriver(){
+        if(getPlatform(driver).equals(MobilePlatform.IOS)) {
+            iosDriver = (IOSDriver) driver;
+        }
+        return iosDriver;
     }
 
     /**

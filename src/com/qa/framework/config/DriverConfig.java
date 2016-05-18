@@ -43,6 +43,8 @@ public class DriverConfig {
     private transient static selectedBrowser browserType;
     private transient static htmlUnitEmulation emulationType;
     private static boolean isFirstLaunch = true;
+    private static boolean isDownloaded = false;
+    private static String appBinName = "";
 
     static {
         if (PropConfig.getCoreType().contains(",")) {
@@ -176,9 +178,9 @@ public class DriverConfig {
                         }
                     }
                     File app = null;
-                    if (PropConfig.getAppBin().contains("http")) {
+                    if (PropConfig.getAppBin().contains("http") && !isDownloaded) {
                         if (PropConfig.getAppBin().endsWith("apk") || PropConfig.getAppBin().endsWith("ipa")) {
-                            String appBinName = IOHelper.getName(PropConfig.getAppBin());
+                            appBinName = IOHelper.getName(PropConfig.getAppBin());
                             IOHelper.downFileFromUrl(PropConfig.getAppBin(), ProjectEnvironment.resourcePath() + appBinName);
                             app = new File(ProjectEnvironment.resourcePath(), appBinName);
                         } else {
@@ -186,7 +188,6 @@ public class DriverConfig {
                             List<String> lines = StringHelper.getTokensList(source, "\n");
                             Collections.reverse(lines);
                             String matchedNumber = "";
-                            String appBinName = "";
                             for (String line : lines) {
                                 Pattern r = Pattern.compile("\\d\\d-\\d\\d-\\d\\d-\\d\\d-\\d\\d");
                                 Matcher m = r.matcher(line);
@@ -225,9 +226,15 @@ public class DriverConfig {
                             logger.info("download file:" + fullUrl);
                             IOHelper.downFileFromUrl(fullUrl, ProjectEnvironment.resourcePath() + appBinName);
                             app = new File(ProjectEnvironment.resourcePath(), appBinName);
+                            isDownloaded = true;
                         }
                     } else {
-                        app = new File(ProjectEnvironment.resourcePath(), PropConfig.getAppBin());
+                        if(PropConfig.getAppBin().contains("http")){
+                            app = new File(ProjectEnvironment.resourcePath(), appBinName);
+                        }
+                        else {
+                            app = new File(ProjectEnvironment.resourcePath(), PropConfig.getAppBin());
+                        }
                     }
 
                     Adb adb;
