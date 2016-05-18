@@ -130,9 +130,13 @@ public abstract class TestCaseBase {
         getDriverObj();
         initFields(this);
         beforeMethod(method, para);
+        beforeMethod();
     }
 
     public void beforeMethod(Method method, Object[] para) {
+    }
+
+    public void beforeMethod() {
     }
 
     @AfterMethod(alwaysRun = true)
@@ -140,9 +144,13 @@ public abstract class TestCaseBase {
         WebDriver driver = DriverCache.get();
         driver.quit();
         afterMethod(method, para);
+        afterMethod();
     }
 
     public void afterMethod(Method method, Object[] para) {
+    }
+
+    public void afterMethod() {
     }
 
 }

@@ -1,4 +1,4 @@
-package com.qa.framework.library.webdriver;
+package com.qa.framework.common;
 
 import com.qa.framework.library.base.StringHelper;
 import org.apache.log4j.Logger;

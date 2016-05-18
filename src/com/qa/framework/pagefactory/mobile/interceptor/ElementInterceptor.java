@@ -16,7 +16,9 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.qa.framework.library.webdriver.Action;
+import com.qa.framework.cache.MethodCache;
+import com.qa.framework.common.Action;
+import com.qa.framework.common.ScreenShot;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
 import io.appium.java_client.MobileElement;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -107,13 +109,13 @@ public class ElementInterceptor implements MethodInterceptor {
 
 /*        if (getCurrentContentType(this.driver).equals(ContentType.HTML_OR_DEFAULT)) {
 
-        }
+        }*/
 
         if (method.getName().equals("click")) {
             String currMethodName = MethodCache.getCurrentMethodName();
             ScreenShot.captureAction(driver, currMethodName, this.field.getName());
             this.action.pause(500);
-        }*/
+        }
 
         if (args != null && args.length > 0) {
             logger.info(this.field.getName() + " " + method.getName() + " " + Arrays.deepToString(args));

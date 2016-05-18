@@ -16,7 +16,7 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.qa.framework.library.webdriver.Action;
+import com.qa.framework.common.Action;
 import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.mobile.AppiumFieldDecorator;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;

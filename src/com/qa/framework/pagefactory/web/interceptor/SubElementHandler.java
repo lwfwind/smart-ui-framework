@@ -2,8 +2,8 @@ package com.qa.framework.pagefactory.web.interceptor;
 
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
-import com.qa.framework.library.webdriver.Action;
-import com.qa.framework.library.webdriver.ScreenShot;
+import com.qa.framework.common.Action;
+import com.qa.framework.common.ScreenShot;
 import com.qa.framework.pagefactory.web.Element;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;

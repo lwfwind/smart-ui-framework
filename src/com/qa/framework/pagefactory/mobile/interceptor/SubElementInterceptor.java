@@ -16,7 +16,7 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.qa.framework.library.webdriver.Action;
+import com.qa.framework.common.Action;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
 import io.appium.java_client.MobileElement;
 import net.sf.cglib.proxy.MethodInterceptor;
