@@ -265,36 +265,6 @@ public abstract class PageBase {
     }
 
     /**
-     * Tap eelment by coord.
-     *
-     * @param element   the element
-     * @param distanceX the distance x
-     * @param distanceY the distance y
-     */
-    public void tapEelmentByCoord(WebElement element, int distanceX, int distanceY) {
-        int startX = element.getLocation().getX();
-        int startY = element.getLocation().getY();
-        int endX = element.getSize().getWidth() + startX;
-        int endY = element.getSize().getHeight() + startY;
-        int aimY = endY + distanceY;
-        int aimX = endX + distanceX;
-        AndroidDriver androidDriver = (AndroidDriver) driver;
-        androidDriver.tap(1, aimX, aimY, 100);
-        logger.info("点击的坐标为:(" + aimX + "," + aimY + ")");
-    }
-
-    /**
-     * Refresh ui hierarchy for android PopupWindow.
-     */
-    public void refreshUiHierarchy() {
-        try {
-            UiAutomatorHelper.searchUiHierarchyContent("");
-        } catch (UiAutomatorHelper.UiAutomatorException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
      * Get last toast text
      */
     public String getLastToast() {
