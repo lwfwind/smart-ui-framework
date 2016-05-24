@@ -82,9 +82,6 @@ public class TestResultListener extends TestListenerAdapter {
         setResultCache(tr, "skip");
         TestCaseBase tb = (TestCaseBase) tr.getInstance();
         if (!tb.isUnitTest()) {
-            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
-                printAlertInfo(tr);
-            }
             printBrowserInfo();
             printStackTrace(tr);
         }
