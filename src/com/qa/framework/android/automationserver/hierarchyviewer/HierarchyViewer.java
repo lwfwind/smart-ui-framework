@@ -1,66 +1,26 @@
-/*
- * Copyright (C) 2010 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
-package com.qa.framework.android.hierarchyviewer;
+package com.qa.framework.android.automationserver.hierarchyviewer;
 
 import com.android.ddmlib.IDevice;
 import com.qa.framework.android.DebugBridge;
-import com.qa.framework.android.hierarchyviewer.device.DeviceBridge;
-import com.qa.framework.android.hierarchyviewer.device.DeviceBridge.ViewServerInfo;
-import com.qa.framework.android.hierarchyviewer.device.ViewNode;
-import com.qa.framework.android.hierarchyviewer.device.Window;
+import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceBridge;
+import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceBridge.ViewServerInfo;
+import com.qa.framework.android.automationserver.hierarchyviewer.device.ViewNode;
+import com.qa.framework.android.automationserver.hierarchyviewer.device.Window;
 import org.apache.log4j.Logger;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public abstract class HierarchyViewerHelper {
+public class HierarchyViewer{
     private static final String TAG = "hierarchyviewer";
-    private static Logger logger = Logger.getLogger(HierarchyViewerHelper.class);
+    private static Logger logger = Logger.getLogger(HierarchyViewer.class);
     private static IDevice device = null;
 
     static {
-        DebugBridge.init();
         try {
             device = DebugBridge.getDevice();
-            if (device != null && device.isOnline()) {
-                DeviceBridge.setupDeviceForward(device);
-                ViewServerInfo viewServerInfo = DeviceBridge.loadViewServerInfo(device);
-                if (viewServerInfo == null) {
-                    throw new Exception("viewServerInfo is not correct!");
-                }
-            }
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) {
-
-        try {
-            Rectangle rectangle = getElementLocationByText("15:20",2);
-            if (rectangle != null) {
-                logger.info("result left:" + rectangle.x + " top:" + rectangle.y + " width:" + rectangle.width + " height:" + rectangle.height);
-            }
-
-            logger.info(getElementTextById("id/editUsername"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            DebugBridge.terminate();
         }
     }
 

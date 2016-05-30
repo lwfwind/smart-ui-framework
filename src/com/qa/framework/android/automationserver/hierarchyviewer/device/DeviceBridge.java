@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.qa.framework.android.hierarchyviewer.device;
+package com.qa.framework.android.automationserver.hierarchyviewer.device;
 
 import com.android.ddmlib.AdbCommandRejectedException;
 import com.android.ddmlib.AndroidDebugBridge;
