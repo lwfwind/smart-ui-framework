@@ -14,17 +14,14 @@ import java.util.ArrayList;
 public class HierarchyViewer{
     private static final String TAG = "hierarchyviewer";
     private static Logger logger = Logger.getLogger(HierarchyViewer.class);
-    private static IDevice device = null;
+    private IDevice device = null;
 
-    static {
-        try {
-            device = DebugBridge.getDevice();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+    public HierarchyViewer(IDevice device){
+        this.device = device;
     }
 
-    public static Point getElementCenterByText(String text, int index) {
+    public Point getElementCenterByText(String text, int index) {
         Rectangle rectangle = getElementLocationByText(text, index);
         if (rectangle != null) {
             return new Point(rectangle.x + rectangle.width / 2, rectangle.y + rectangle.height / 2);
@@ -32,7 +29,7 @@ public class HierarchyViewer{
         return null;
     }
 
-    public static Point getElementCenterByText(String text) {
+    public Point getElementCenterByText(String text) {
         Rectangle rectangle = getElementLocationByText(text, 0);
         if (rectangle != null) {
             return new Point(rectangle.x + rectangle.width / 2, rectangle.y + rectangle.height / 2);
@@ -40,7 +37,7 @@ public class HierarchyViewer{
         return null;
     }
 
-    public static String getElementTextById(String id) {
+    public String getElementTextById(String id) {
         Window[] windows = DeviceBridge.loadWindows(device);
         for (Window window : windows) {
             ViewNode viewNode = DeviceBridge.loadWindowData(window);
@@ -57,7 +54,7 @@ public class HierarchyViewer{
     }
 
 
-    public static Rectangle getElementLocationByText(String text, int index) {
+    public Rectangle getElementLocationByText(String text, int index) {
         Window[] windows = DeviceBridge.loadWindows(device);
         for (Window window : windows) {
             ViewNode viewNode = DeviceBridge.loadWindowData(window);
@@ -78,7 +75,7 @@ public class HierarchyViewer{
         return null;
     }
 
-    private static void searchElementRecursionByText(ViewNode viewNode, String text, ArrayList<ViewNode> resultNodes, int index) {
+    private void searchElementRecursionByText(ViewNode viewNode, String text, ArrayList<ViewNode> resultNodes, int index) {
         if (viewNode.children.size() > 0) {
             for (int i = 0; i < viewNode.children.size(); i++) {
                 ViewNode node = viewNode.children.get(i);
@@ -99,7 +96,7 @@ public class HierarchyViewer{
         }
     }
 
-    private static void searchElementRecursionById(ViewNode viewNode, String id, ArrayList<ViewNode> resultNodes) {
+    private void searchElementRecursionById(ViewNode viewNode, String id, ArrayList<ViewNode> resultNodes) {
         if (viewNode.children.size() > 0) {
             for (int i = 0; i < viewNode.children.size(); i++) {
                 ViewNode node = viewNode.children.get(i);
@@ -118,7 +115,7 @@ public class HierarchyViewer{
         }
     }
 
-    private static void getValidLeftTopPoint(ViewNode viewNode, Point point) {
+    private void getValidLeftTopPoint(ViewNode viewNode, Point point) {
         if (viewNode.parent == null) {
             return;
         }

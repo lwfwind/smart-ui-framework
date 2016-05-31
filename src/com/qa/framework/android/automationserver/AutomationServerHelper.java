@@ -14,6 +14,7 @@ public class AutomationServerHelper {
     private static Logger logger = Logger.getLogger(AutomationServerHelper.class);
     public static final String TAG = "AndroidAutomationHelper";
     private static IDevice device = null;
+    private static HierarchyViewer hierarchyViewer = null;
 
     static {
         DebugBridge.init();
@@ -25,6 +26,7 @@ public class AutomationServerHelper {
                 if (viewServerInfo == null) {
                     throw new Exception("viewServerInfo is not correct!");
                 }
+                hierarchyViewer = new HierarchyViewer(device);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,11 +37,12 @@ public class AutomationServerHelper {
         try {
             logger.info("isMusicActive:" + (isMusicActive() ? "true" : "false"));
             logger.info(getLastToast());
-            Rectangle rectangle = HierarchyViewer.getElementLocationByText("15:20",2);
+
+            Rectangle rectangle = getElementLocationByText("15:20",2);
             if (rectangle != null) {
                 logger.info("result left:" + rectangle.x + " top:" + rectangle.y + " width:" + rectangle.width + " height:" + rectangle.height);
             }
-            logger.info(HierarchyViewer.getElementTextById("id/editUsername"));
+            logger.info(getElementTextById("id/editUsername"));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -87,5 +90,13 @@ public class AutomationServerHelper {
         }
 
         return returnValue;
+    }
+
+    public static Rectangle getElementLocationByText(String text, int index) {
+        return hierarchyViewer.getElementLocationByText(text,index);
+    }
+
+    public static String getElementTextById(String id) {
+        return hierarchyViewer.getElementTextById(id);
     }
 }
