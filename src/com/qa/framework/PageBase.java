@@ -200,6 +200,16 @@ public abstract class PageBase {
         return driver.getCurrentUrl();
     }
 
+    public String getPageSource(){
+        if(getPlatform(driver).equals(MobilePlatform.ANDROID)) {
+            return UiAutomatorHelper.getUiHierarchyContent();
+        }
+        else if(getPlatform(driver).equals(MobilePlatform.IOS)) {
+            //
+        }
+        return driver.getPageSource();
+    }
+
     /**
      * Hide keyboard.
      */
@@ -262,13 +272,6 @@ public abstract class PageBase {
         int height = driver.manage().window().getSize().height;
         ((AppiumDriver) driver).swipe(width / 8, height / 2, width * 7 / 8, height / 2, during);
         pause(3000);
-    }
-
-    /**
-     * Get last toast text
-     */
-    public String getLastToast() {
-        return AccessibilityEventMonitor.getLastToast();
     }
 
 

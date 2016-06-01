@@ -5,7 +5,9 @@ import com.android.ddmlib.NullOutputReceiver;
 import com.android.ddmlib.RawImage;
 import com.android.ddmlib.SyncService;
 import com.qa.framework.android.DebugBridge;
+import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceBridge;
 import com.qa.framework.android.uiautomator.tree.BasicTreeNode;
+import com.qa.framework.library.base.IOHelper;
 import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;
@@ -21,12 +23,23 @@ public class UiAutomatorHelper {
     private static final String UIAUTOMATOR_DUMP_COMMAND = "dump";          //$NON-NLS-1$
     private static final String UIDUMP_DEVICE_PATH = "/data/local/tmp/uidump.xml";  //$NON-NLS-1$
     private static final int XML_CAPTURE_TIMEOUT_SEC = 40;
+    private static IDevice device = null;
     private static Logger logger = Logger.getLogger(UiAutomatorHelper.class);
 
-    public static void main(String[] args) {
+    static {
         DebugBridge.init();
         try {
-            logger.info(searchUiHierarchyContent(""));
+            device = DebugBridge.getDevice();
+            if (device != null && device.isOnline()) {
+                DeviceBridge.setupDeviceForward(device);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static void main(String[] args) {
+        try {
+            logger.info(getUiHierarchyContent());
             logger.info(searchUiHierarchyContent("QQ"));
 
             logger.info("start screenshot");
@@ -52,6 +65,56 @@ public class UiAutomatorHelper {
         }
 
         return apiLevel >= UIAUTOMATOR_MIN_API_LEVEL;
+    }
+
+    //to maintain a backward compatible api, use non-compressed as default snapshot type
+    public static BufferedImage takeSnapshot()
+            throws UiAutomatorException, IOException {
+        return takeSnapshot(device);
+    }
+
+    public static BufferedImage takeSnapshot(IDevice device) throws UiAutomatorException {
+        if (!supportsUiAutomator(device)) {
+            String msg = "UI Automator requires a device with API Level "
+                    + UIAUTOMATOR_MIN_API_LEVEL;
+            throw new UiAutomatorException(msg, null);
+        }
+
+        RawImage rawImage;
+        try {
+            rawImage = device.getScreenshot();
+        } catch (Exception e) {
+            String msg = "Error taking device screenshot: " + e.getMessage();
+            throw new UiAutomatorException(msg, e);
+        }
+
+        BufferedImage image = new BufferedImage(rawImage.width, rawImage.height,
+                BufferedImage.TYPE_INT_ARGB);
+
+        int index = 0;
+        int IndexInc = rawImage.bpp >> 3;
+        for (int y = 0; y < rawImage.height; y++) {
+            for (int x = 0; x < rawImage.width; x++) {
+                int value = rawImage.getARGB(index);
+                index += IndexInc;
+                image.setRGB(x, y, value);
+            }
+        }
+
+        return image;
+    }
+
+    public static String getUiHierarchyContent() {
+        try {
+            return getUiHierarchyContent(device);
+        } catch (UiAutomatorException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean searchUiHierarchyContent(String tofind) throws UiAutomatorException, IOException {
+        return searchUiHierarchyContent(device, tofind);
     }
 
     @SuppressWarnings("deprecation")
@@ -88,50 +151,7 @@ public class UiAutomatorHelper {
         }
     }
 
-    //to maintain a backward compatible api, use non-compressed as default snapshot type
-    public static BufferedImage takeSnapshot()
-            throws UiAutomatorException, IOException {
-        IDevice device = DebugBridge.getDevice();
-        return takeSnapshot(device);
-    }
-
-    public static BufferedImage takeSnapshot(IDevice device) throws UiAutomatorException {
-        if (!supportsUiAutomator(device)) {
-            String msg = "UI Automator requires a device with API Level "
-                    + UIAUTOMATOR_MIN_API_LEVEL;
-            throw new UiAutomatorException(msg, null);
-        }
-
-        RawImage rawImage;
-        try {
-            rawImage = device.getScreenshot();
-        } catch (Exception e) {
-            String msg = "Error taking device screenshot: " + e.getMessage();
-            throw new UiAutomatorException(msg, e);
-        }
-
-        BufferedImage image = new BufferedImage(rawImage.width, rawImage.height,
-                BufferedImage.TYPE_INT_ARGB);
-
-        int index = 0;
-        int IndexInc = rawImage.bpp >> 3;
-        for (int y = 0; y < rawImage.height; y++) {
-            for (int x = 0; x < rawImage.width; x++) {
-                int value = rawImage.getARGB(index);
-                index += IndexInc;
-                image.setRGB(x, y, value);
-            }
-        }
-
-        return image;
-    }
-
-    public static boolean searchUiHierarchyContent(String tofind) throws UiAutomatorException, IOException {
-        IDevice device = DebugBridge.getDevice();
-        return searchUiHierarchyContent(device, tofind);
-    }
-
-    public static boolean searchUiHierarchyContent(IDevice device, String tofind) throws UiAutomatorException {
+    private static boolean searchUiHierarchyContent(IDevice device, String tofind) throws UiAutomatorException {
         if (!supportsUiAutomator(device)) {
             String msg = "UI Automator requires a device with API Level "
                     + UIAUTOMATOR_MIN_API_LEVEL;
@@ -172,6 +192,40 @@ public class UiAutomatorHelper {
         }
         List<BasicTreeNode> lists = model.searchNode(tofind);
         return lists.size() > 0;
+    }
+
+    private static String getUiHierarchyContent(IDevice device) throws UiAutomatorException {
+        if (!supportsUiAutomator(device)) {
+            String msg = "UI Automator requires a device with API Level "
+                    + UIAUTOMATOR_MIN_API_LEVEL;
+            throw new UiAutomatorException(msg, null);
+        }
+
+        File tmpDir = null;
+        File xmlDumpFile = null;
+
+        try {
+            tmpDir = File.createTempFile("uiautomatorviewer_", "");
+            tmpDir.delete();
+            if (!tmpDir.mkdirs())
+                throw new IOException("Failed to mkdir");
+            xmlDumpFile = File.createTempFile("dump_", ".uix", tmpDir);
+        } catch (Exception e) {
+            String msg = "Error while creating temporary file to save snapshot: "
+                    + e.getMessage();
+            throw new UiAutomatorException(msg, e);
+        }
+
+        tmpDir.deleteOnExit();
+        xmlDumpFile.deleteOnExit();
+
+        try {
+            UiAutomatorHelper.getUiHierarchyFile(device, xmlDumpFile, false);
+        } catch (Exception e) {
+            String msg = "Error while obtaining UI hierarchy XML file: " + e.getMessage();
+            throw new UiAutomatorException(msg, e);
+        }
+        return IOHelper.readFileToString(xmlDumpFile.getAbsolutePath());
     }
 
     @SuppressWarnings("serial")

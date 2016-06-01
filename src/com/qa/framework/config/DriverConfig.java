@@ -1,12 +1,15 @@
 package com.qa.framework.config;
 
+import com.android.ddmlib.IDevice;
 import com.opera.core.systems.OperaDriver;
-import com.qa.framework.android.Adb;
+import com.qa.framework.android.Emulator;
 import com.qa.framework.android.AppiumServer;
+import com.qa.framework.android.DebugBridge;
 import com.qa.framework.library.base.IOHelper;
 import com.qa.framework.library.base.ProcessHelper;
 import com.qa.framework.library.base.StringHelper;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -115,6 +118,8 @@ public class DriverConfig {
      */
     public static synchronized WebDriver getDriverObject(selectedBrowser browserType) throws Exception {
         try {
+            String appiumServerUrl;
+            File app;
             DesiredCapabilities capabilities = null;
             switch (browserType) {
                 case FIREFOX:
@@ -165,93 +170,36 @@ public class DriverConfig {
                     logger.info("Using Opera Driver...");
                     break;
                 case ANDROIDAPP:
-                    String appiumServerUrl = PropConfig.getAppiumServerUrl();
-                    if (appiumServerUrl == null) {
-                        AppiumServer.start("127.0.0.1", 4723);
-                        appiumServerUrl = "http://127.0.0.1:4723/wd/hub";
-                    } else {
-                        String url = StringHelper.getTokensList(appiumServerUrl.substring(7), "/").get(0);
-                        String address = StringHelper.getTokensList(url, ":").get(0);
-                        int port = Integer.parseInt(StringHelper.getTokensList(url, ":").get(1));
-                        if ((address.equalsIgnoreCase("127.0.0.1") || address.equalsIgnoreCase("localhost")) && !ProcessHelper.portIsUsed(port)) {
-                            AppiumServer.start("127.0.0.1", port);
-                        }
-                    }
-                    File app = null;
-                    if (PropConfig.getAppBin().contains("http") && !isDownloaded) {
-                        if (PropConfig.getAppBin().endsWith("apk") || PropConfig.getAppBin().endsWith("ipa")) {
-                            appBinName = IOHelper.getName(PropConfig.getAppBin());
-                            IOHelper.downFileFromUrl(PropConfig.getAppBin(), ProjectEnvironment.resourcePath() + appBinName);
-                            app = new File(ProjectEnvironment.resourcePath(), appBinName);
-                        } else {
-                            String source = IOHelper.getSourceFromUrl(PropConfig.getAppBin());
-                            List<String> lines = StringHelper.getTokensList(source, "\n");
-                            Collections.reverse(lines);
-                            String matchedNumber = "";
-                            for (String line : lines) {
-                                Pattern r = Pattern.compile("\\d\\d-\\d\\d-\\d\\d-\\d\\d-\\d\\d");
-                                Matcher m = r.matcher(line);
-                                if (m.find()) {
-                                    matchedNumber = m.group(0);
-                                    String nextSource;
-                                    if (PropConfig.getAppBin().endsWith("/")) {
-                                        nextSource = IOHelper.getSourceFromUrl(PropConfig.getAppBin() + matchedNumber);
-                                    } else {
-                                        nextSource = IOHelper.getSourceFromUrl(PropConfig.getAppBin() + "/" + matchedNumber);
-                                    }
-                                    if (nextSource.contains(".apk")) {
-                                        Pattern r1 = Pattern.compile("href=\"(.*\\.apk)");
-                                        Matcher m1 = r1.matcher(nextSource);
-                                        if (m1.find()) {
-                                            appBinName = m1.group(1);
-                                            break;
-                                        }
-                                    }
-                                    if (nextSource.contains(".ipa")) {
-                                        Pattern r1 = Pattern.compile("href=\"(.*\\.ipa)");
-                                        Matcher m1 = r1.matcher(nextSource);
-                                        if (m1.find()) {
-                                            appBinName = m1.group(1);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                            String fullUrl;
-                            if (PropConfig.getAppBin().endsWith("/")) {
-                                fullUrl = PropConfig.getAppBin() + matchedNumber + "/" + appBinName;
-                            } else {
-                                fullUrl = PropConfig.getAppBin() + "/" + matchedNumber + "/" + appBinName;
-                            }
-                            logger.info("download file:" + fullUrl);
-                            IOHelper.downFileFromUrl(fullUrl, ProjectEnvironment.resourcePath() + appBinName);
-                            app = new File(ProjectEnvironment.resourcePath(), appBinName);
-                            isDownloaded = true;
-                        }
-                    } else {
-                        if(PropConfig.getAppBin().contains("http")){
-                            app = new File(ProjectEnvironment.resourcePath(), appBinName);
-                        }
-                        else {
-                            app = new File(ProjectEnvironment.resourcePath(), PropConfig.getAppBin());
-                        }
-                    }
-
-                    Adb adb;
+                    appiumServerUrl = getAppiumServerUrl();
+                    app = getAppBin();
+                    capabilities = new DesiredCapabilities();
                     if (PropConfig.getDeviceName() != null && isFirstLaunch) {
-                        adb = new Adb(PropConfig.getDeviceName());
-                        adb.restartEmulator();
+                        Emulator emulator = new Emulator(PropConfig.getDeviceName());
+                        emulator.restartEmulator();
+                        capabilities.setCapability("deviceName", emulator.getDeviceName());
                         isFirstLaunch = false;
                     } else {
-                        adb = new Adb();
+                        IDevice device = DebugBridge.getDevice();
+                        if(device != null) {
+                            capabilities.setCapability("deviceName", device.getSerialNumber());
+                        }
                     }
-                    capabilities = new DesiredCapabilities();
-                    capabilities.setCapability("deviceName", adb.getDeviceName());
                     capabilities.setCapability("app", app.getAbsolutePath());
                     capabilities.setCapability("unicodeKeyboard", true);
                     capabilities.setCapability("resetKeyboard", true);
                     driverObject = new AndroidDriver<>(new URL(appiumServerUrl), capabilities);
                     logger.info("Using Android Driver...");
+                    break;
+                case IOSAPP:
+                    appiumServerUrl = getAppiumServerUrl();
+                    app = getAppBin();
+                    capabilities = new DesiredCapabilities();
+                    capabilities.setCapability("deviceName", PropConfig.getDeviceName());
+                    capabilities.setCapability("app", app.getAbsolutePath());
+                    capabilities.setCapability("unicodeKeyboard", true);
+                    capabilities.setCapability("resetKeyboard", true);
+                    driverObject = new IOSDriver<>(new URL(appiumServerUrl), capabilities);
+                    logger.info("Using IOS Driver...");
                     break;
                 default:
                     logger.error("'" + browserType + UNKNOWN_BROWSER_TYPE);
@@ -264,6 +212,93 @@ public class DriverConfig {
             throw new Exception("Error in getDriverObject{}" + x.getMessage());
         }
         return driverObject;
+    }
+
+    private static File getAppBin(){
+        File app = null;
+        if (PropConfig.getAppBin().contains("http") && !isDownloaded) {
+            if (PropConfig.getAppBin().endsWith("apk") || PropConfig.getAppBin().endsWith("ipa") || PropConfig.getAppBin().endsWith("app")) {
+                appBinName = IOHelper.getName(PropConfig.getAppBin());
+                IOHelper.downFileFromUrl(PropConfig.getAppBin(), ProjectEnvironment.resourcePath() + appBinName);
+                app = new File(ProjectEnvironment.resourcePath(), appBinName);
+            } else {
+                String source = IOHelper.getSourceFromUrl(PropConfig.getAppBin());
+                List<String> lines = StringHelper.getTokensList(source, "\n");
+                Collections.reverse(lines);
+                String matchedNumber = "";
+                for (String line : lines) {
+                    Pattern r = Pattern.compile("\\d\\d-\\d\\d-\\d\\d-\\d\\d-\\d\\d");
+                    Matcher m = r.matcher(line);
+                    if (m.find()) {
+                        matchedNumber = m.group(0);
+                        String nextSource;
+                        if (PropConfig.getAppBin().endsWith("/")) {
+                            nextSource = IOHelper.getSourceFromUrl(PropConfig.getAppBin() + matchedNumber);
+                        } else {
+                            nextSource = IOHelper.getSourceFromUrl(PropConfig.getAppBin() + "/" + matchedNumber);
+                        }
+                        if (nextSource.contains(".apk")) {
+                            Pattern r1 = Pattern.compile("href=\"(.*\\.apk)");
+                            Matcher m1 = r1.matcher(nextSource);
+                            if (m1.find()) {
+                                appBinName = m1.group(1);
+                                break;
+                            }
+                        }
+                        if (nextSource.contains(".ipa")) {
+                            Pattern r1 = Pattern.compile("href=\"(.*\\.ipa)");
+                            Matcher m1 = r1.matcher(nextSource);
+                            if (m1.find()) {
+                                appBinName = m1.group(1);
+                                break;
+                            }
+                        }
+                        if (nextSource.contains(".app")) {
+                            Pattern r1 = Pattern.compile("href=\"(.*\\.app)");
+                            Matcher m1 = r1.matcher(nextSource);
+                            if (m1.find()) {
+                                appBinName = m1.group(1);
+                                break;
+                            }
+                        }
+                    }
+                }
+                String fullUrl;
+                if (PropConfig.getAppBin().endsWith("/")) {
+                    fullUrl = PropConfig.getAppBin() + matchedNumber + "/" + appBinName;
+                } else {
+                    fullUrl = PropConfig.getAppBin() + "/" + matchedNumber + "/" + appBinName;
+                }
+                logger.info("download file:" + fullUrl);
+                IOHelper.downFileFromUrl(fullUrl, ProjectEnvironment.resourcePath() + appBinName);
+                app = new File(ProjectEnvironment.resourcePath(), appBinName);
+                isDownloaded = true;
+            }
+        } else {
+            if(PropConfig.getAppBin().contains("http")){
+                app = new File(ProjectEnvironment.resourcePath(), appBinName);
+            }
+            else {
+                app = new File(ProjectEnvironment.resourcePath(), PropConfig.getAppBin());
+            }
+        }
+        return app;
+    }
+
+    public static String getAppiumServerUrl(){
+        String appiumServerUrl = PropConfig.getAppiumServerUrl();
+        if (appiumServerUrl == null) {
+            AppiumServer.start("127.0.0.1", 4723);
+            appiumServerUrl = "http://127.0.0.1:4723/wd/hub";
+        } else {
+            String url = StringHelper.getTokensList(appiumServerUrl.substring(7), "/").get(0);
+            String address = StringHelper.getTokensList(url, ":").get(0);
+            int port = Integer.parseInt(StringHelper.getTokensList(url, ":").get(1));
+            if ((address.equalsIgnoreCase("127.0.0.1") || address.equalsIgnoreCase("localhost")) && !ProcessHelper.portIsUsed(port)) {
+                AppiumServer.start("127.0.0.1", port);
+            }
+        }
+        return appiumServerUrl;
     }
 
     /**
