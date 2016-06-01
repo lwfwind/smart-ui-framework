@@ -11,31 +11,12 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: net.sourceforge.jexcelapi:jxl:2.6.12" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.16" level="project" />
-    <orderEntry type="library" name="Maven: org.jclouds:jclouds-antcontrib:1.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.jclouds:jclouds-scriptbuilder:1.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.jclouds:jclouds-core:1.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.bouncycastle:bcprov-jdk16:1.46" level="project" />
-    <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
-    <orderEntry type="library" name="Maven: com.sun.jersey:jersey-core:1.12" level="project" />
-    <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-assistedinject:3.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.inject:guice:3.0" level="project" />
-    <orderEntry type="library" name="Maven: org.99soft.guice:rocoto:6.1" level="project" />
-    <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
-    <orderEntry type="library" name="Maven: javax.annotation:jsr250-api:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.jclouds:jclouds-compute:1.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.ant:ant-jsch:1.7.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.ant:ant:1.7.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.ant:ant-launcher:1.7.1" level="project" />
-    <orderEntry type="library" name="Maven: org.jclouds.driver:jclouds-jsch:1.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.jclouds.driver:jclouds-slf4j:1.5.4" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.4" level="project" />
-    <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
-    <orderEntry type="library" name="Maven: com.jcraft:jsch:0.1.48" level="project" />
     <orderEntry type="library" name="Maven: io.appium:java-client:3.4.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.2.4" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-java:2.52.0" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-chrome-driver:2.52.0" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-edge-driver:2.52.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
     <orderEntry type="library" name="Maven: org.seleniumhq.selenium:selenium-htmlunit-driver:2.52.0" level="project" />
     <orderEntry type="library" name="Maven: net.sourceforge.htmlunit:htmlunit:2.18" level="project" />
     <orderEntry type="library" name="Maven: xalan:xalan:2.7.2" level="project" />

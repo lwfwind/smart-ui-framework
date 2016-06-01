@@ -62,16 +62,11 @@
             <artifactId>jxl</artifactId>
             <version>2.6.12</version>
         </dependency>
+
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <version>1.2.16</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jclouds</groupId>
-            <artifactId>jclouds-antcontrib</artifactId>
-            <version>1.5.4</version>
         </dependency>
 
         <dependency>
@@ -109,11 +104,13 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.8</version>
         </dependency>
+
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-scratchpad</artifactId>
             <version>3.8</version>
         </dependency>
+
         <dependency>
             <groupId>commons-dbutils</groupId>
             <artifactId>commons-dbutils</artifactId>
@@ -149,6 +146,7 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
         </dependency>
+
         <dependency>
             <groupId>net.sf.jacob-project</groupId>
             <artifactId>jacob</artifactId>
