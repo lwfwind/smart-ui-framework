@@ -29,14 +29,6 @@ public class HierarchyViewer{
         return null;
     }
 
-    public Point getElementCenterByText(String text) {
-        Rectangle rectangle = getElementLocationByText(text, 0);
-        if (rectangle != null) {
-            return new Point(rectangle.x + rectangle.width / 2, rectangle.y + rectangle.height / 2);
-        }
-        return null;
-    }
-
     public String getElementTextById(String id) {
         Window[] windows = DeviceBridge.loadWindows(device);
         for (Window window : windows) {

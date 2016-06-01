@@ -96,6 +96,14 @@ public class AutomationServerHelper {
         return hierarchyViewer.getElementLocationByText(text,index);
     }
 
+    public static Point getElementCenterByText(String text, int index) {
+        return hierarchyViewer.getElementCenterByText(text,index);
+    }
+
+    public static Point getElementCenterByText(String text) {
+        return hierarchyViewer.getElementCenterByText(text,0);
+    }
+
     public static String getElementTextById(String id) {
         return hierarchyViewer.getElementTextById(id);
     }
