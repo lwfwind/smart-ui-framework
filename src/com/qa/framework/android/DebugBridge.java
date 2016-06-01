@@ -49,16 +49,18 @@ public class DebugBridge {
     }
 
     public static void init() {
-        String adbLocation = null;
-        try {
-            adbLocation = getAdbLocation();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if (adbLocation != null) {
-            AndroidDebugBridge.init(false);
-            sDebugBridge = AndroidDebugBridge.createBridge(adbLocation, false);
-            waitDeviceList(sDebugBridge);
+        if (sDebugBridge == null) {
+            String adbLocation = null;
+            try {
+                adbLocation = getAdbLocation();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (adbLocation != null) {
+                AndroidDebugBridge.init(false);
+                sDebugBridge = AndroidDebugBridge.createBridge(adbLocation, false);
+                waitDeviceList(sDebugBridge);
+            }
         }
     }
 
