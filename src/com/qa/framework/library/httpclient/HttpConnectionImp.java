@@ -1,6 +1,7 @@
 package com.qa.framework.library.httpclient;
 
 
+import org.apache.commons.io.input.BOMInputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -11,7 +12,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
+import java.io.*;
 
 /**
  * Created by apple on 15/11/20.
@@ -77,6 +78,24 @@ public class HttpConnectionImp {
                 //logger.error(e.getMessage());
             }
         }
-        return responseBody;
+        return removeBOM(responseBody);
     }
+
+    public static String removeBOM(String responseBody) {
+        BufferedReader reader = null;
+        // convert String into InputStream
+        InputStream is = new ByteArrayInputStream(responseBody.getBytes());
+
+        // read it with BufferedReader
+        reader = new BufferedReader(new InputStreamReader(new BOMInputStream(is)));
+        String line=null;
+        try {
+            line = reader.readLine();
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return line;
+    }
+
 }
