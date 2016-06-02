@@ -81,7 +81,7 @@ public class HttpConnectionImp {
         return removeBOM(responseBody);
     }
 
-    public static String removeBOM(String responseBody) {
+    public String removeBOM(String responseBody) {
         BufferedReader reader = null;
         // convert String into InputStream
         InputStream is = new ByteArrayInputStream(responseBody.getBytes());
