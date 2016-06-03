@@ -55,7 +55,7 @@ public class TestngXmlGenerator {
                     if (StringHelper.startsWithIgnoreCase(line.trim(), "package ")) {
                         packageName = StringHelper.getBetweenString(line, "package ", ";").trim();
                     }
-                    if (StringHelper.startsWithIgnoreCase(line.trim(), "@Test")) {
+                    if (StringHelper.startsWithIgnoreCase(line.trim(), "@Test") && !line.trim().contains("enabled = false")) {
                         Map<String, Object> methodMap = new HashMap<>();
                         methodMap.put("className", className);
                         methodMap.put("packageName", packageName);
