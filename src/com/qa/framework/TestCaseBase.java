@@ -27,7 +27,7 @@ import static com.qa.framework.ioc.IocHelper.findImplementClass;
 
 @Listeners({TestResultListener.class, PowerEmailableReporter.class})
 public abstract class TestCaseBase {
-    protected Logger logger = Logger.getLogger(this.getClass());
+    protected static Logger logger = Logger.getLogger(TestCaseBase.class);
     private SuiteData suiteData = null;
     private String browser = null;
     private String hubURL = null;

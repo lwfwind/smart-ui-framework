@@ -28,7 +28,7 @@ public abstract class PageBase {
     /**
      * The Logger.
      */
-    protected final Logger logger = Logger.getLogger(this.getClass());
+    protected static Logger logger = Logger.getLogger(PageBase.class);
     /**
      * The Random.
      */
