@@ -62,6 +62,7 @@ public class ElementHandler implements InvocationHandler {
         Element wapperElement = null;
         List<WebElement> elements = null;
         WebElement element = null;
+        int previousWindowsCount = driver.getWindowHandles().size();
         int timeout = getTimeOutOfFind(field);
         long end = System.currentTimeMillis() + timeout;
         while (System.currentTimeMillis() < end) {
@@ -101,16 +102,11 @@ public class ElementHandler implements InvocationHandler {
             if (method.getName().equals("click")) {
                 String currMethodName = MethodCache.getCurrentMethodName();
                 ScreenShot.captureAction(driver, currMethodName, logicElementName);
-                boolean isOpenNewWindow = false;
-                String html = wapperElement.getAttribute("outerHTML");
-                if (html.contains("target=\"_blank\"") || html.contains("target=\"__blank\"")) {
-                    isOpenNewWindow = true;
-                }
                 ret = method.invoke(obj, paras);
                 ElementCache.set(element);
                 logger.info(logicElementName + " click");
                 this.action.pause(500);
-                if (isOpenNewWindow) {
+                if (driver.getWindowHandles().size() > previousWindowsCount) {
                     this.action.selectLastOpenedWindow();
                 }
             } else {

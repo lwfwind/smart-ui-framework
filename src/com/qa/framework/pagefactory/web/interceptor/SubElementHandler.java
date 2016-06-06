@@ -52,6 +52,7 @@ public class SubElementHandler implements InvocationHandler {
         if ("getWrappedElement".equals(method.getName())) {
             return element;
         }
+        int previousWindowsCount = driver.getWindowHandles().size();
         Element wapperElement = (Element) element;
         try {
             if (method.getName().equals("click") || method.getName().equals("sendKeys")) {
@@ -67,6 +68,9 @@ public class SubElementHandler implements InvocationHandler {
                 Object ret = method.invoke(element, paras);
                 logger.info(logicParentElementName + "_" + num + " click");
                 this.action.pause(500);
+                if (driver.getWindowHandles().size() > previousWindowsCount) {
+                    this.action.selectLastOpenedWindow();
+                }
                 return ret;
             }
             if (paras != null) {
