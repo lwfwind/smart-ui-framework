@@ -112,12 +112,6 @@ public abstract class PageBase {
         PageFactory.initElements(driver, page);
     }
 
-    /**
-     * Maximize.
-     */
-    public void maximize() {
-        driver.manage().window().maximize();
-    }
 
     /**
      * Pause
