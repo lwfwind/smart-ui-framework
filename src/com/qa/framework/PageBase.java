@@ -89,17 +89,17 @@ public abstract class PageBase {
      */
     public void open(String resource) {
         if (resource.startsWith("http")) {
-            driver.get(resource);
             driver.manage().window().maximize();
             driver.manage().deleteAllCookies();
+            driver.get(resource);
         } else {
             URL formsHtmlUrl = PageBase.class.getClassLoader().getResource(resource);
             if (formsHtmlUrl == null) {
                 throw new RuntimeException();
             }
-            this.driver.get(formsHtmlUrl.toString());
             driver.manage().window().maximize();
             driver.manage().deleteAllCookies();
+            this.driver.get(formsHtmlUrl.toString());
         }
     }
 
