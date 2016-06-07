@@ -73,6 +73,10 @@ public abstract class PageBase {
         return iosDriver;
     }
 
+    public AppiumDriver getAppiumDriver(){
+        return (AppiumDriver)driver;
+    }
+
     /**
      * Is mobile plat boolean.
      *
@@ -223,52 +227,44 @@ public abstract class PageBase {
     /**
      * Swipe to up.
      *
-     * @param driver the driver
-     * @param during the during
      */
-    public void swipeToUp(WebDriver driver, int during) {
+    public void swipeToUp() {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
-        ((AppiumDriver) driver).swipe(width / 2, height * 3 / 4, width / 2, height / 4, during);
+        ((AppiumDriver) driver).swipe(width / 2, height * 3 / 4, width / 2, height / 4, 1000);
         pause(3000);
     }
 
     /**
      * Swipe to down.
      *
-     * @param driver the driver
-     * @param during the during
      */
-    public void swipeToDown(WebDriver driver, int during) {
+    public void swipeToDown() {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
-        ((AppiumDriver) driver).swipe(width / 2, height / 4, width / 2, height * 3 / 4, during);
+        ((AppiumDriver) driver).swipe(width / 2, height / 4, width / 2, height * 3 / 4, 1000);
         pause(3000);
     }
 
     /**
      * Swipe to left.
      *
-     * @param driver the driver
-     * @param during the during
      */
-    public void swipeToLeft(WebDriver driver, int during) {
+    public void swipeToLeft() {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
-        ((AppiumDriver) driver).swipe(width * 7 / 8, height / 2, width / 8, height / 2, during);
+        ((AppiumDriver) driver).swipe(width * 7 / 8, height / 2, width / 8, height / 2, 1000);
         pause(3000);
     }
 
     /**
      * Swipe to right.
      *
-     * @param driver the driver
-     * @param during the during
      */
-    public void swipeToRight(WebDriver driver, int during) {
+    public void swipeToRight() {
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
-        ((AppiumDriver) driver).swipe(width / 8, height / 2, width * 7 / 8, height / 2, during);
+        ((AppiumDriver) driver).swipe(width / 8, height / 2, width * 7 / 8, height / 2, 1000);
         pause(3000);
     }
 
