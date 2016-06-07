@@ -80,7 +80,7 @@ public class AppiumServer {
                         logger.info("cmd==" + cmd);
                         process = Runtime.getRuntime().exec(cmd);
                         ProcessHelper.getStreamResult(process);
-                        if (available(port)) {
+                        if (!available(port)) {
                             return true;
                         }
                     } catch (IOException | InterruptedException | ExecutionException e) {
