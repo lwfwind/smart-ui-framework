@@ -2,11 +2,10 @@ package com.qa.framework.config;
 
 import com.android.ddmlib.IDevice;
 import com.opera.core.systems.OperaDriver;
-import com.qa.framework.android.Emulator;
 import com.qa.framework.android.AppiumServer;
 import com.qa.framework.android.DebugBridge;
+import com.qa.framework.android.Emulator;
 import com.qa.framework.library.base.IOHelper;
-import com.qa.framework.library.base.ProcessHelper;
 import com.qa.framework.library.base.StringHelper;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
@@ -180,7 +179,7 @@ public class DriverConfig {
                         isFirstLaunch = false;
                     } else {
                         IDevice device = DebugBridge.getDevice();
-                        if(device != null) {
+                        if (device != null) {
                             capabilities.setCapability("deviceName", device.getSerialNumber());
                         }
                     }
@@ -214,7 +213,7 @@ public class DriverConfig {
         return driverObject;
     }
 
-    private static File getAppBin(){
+    private static File getAppBin() {
         File app = null;
         if (PropConfig.getAppBin().contains("http") && !isDownloaded) {
             if (PropConfig.getAppBin().endsWith("apk") || PropConfig.getAppBin().endsWith("ipa") || PropConfig.getAppBin().endsWith("app")) {
@@ -275,17 +274,16 @@ public class DriverConfig {
                 isDownloaded = true;
             }
         } else {
-            if(PropConfig.getAppBin().contains("http")){
+            if (PropConfig.getAppBin().contains("http")) {
                 app = new File(ProjectEnvironment.resourcePath(), appBinName);
-            }
-            else {
+            } else {
                 app = new File(ProjectEnvironment.resourcePath(), PropConfig.getAppBin());
             }
         }
         return app;
     }
 
-    public static String getAppiumServerUrl(){
+    public static String getAppiumServerUrl() {
         String appiumServerUrl = PropConfig.getAppiumServerUrl();
         if (appiumServerUrl == null) {
             AppiumServer.start("127.0.0.1", 4723);
@@ -294,7 +292,7 @@ public class DriverConfig {
             String url = StringHelper.getTokensList(appiumServerUrl.substring(7), "/").get(0);
             String address = StringHelper.getTokensList(url, ":").get(0);
             int port = Integer.parseInt(StringHelper.getTokensList(url, ":").get(1));
-            if ((address.equalsIgnoreCase("127.0.0.1") || address.equalsIgnoreCase("localhost")) && !ProcessHelper.portIsUsed(port)) {
+            if ((address.equalsIgnoreCase("127.0.0.1") || address.equalsIgnoreCase("localhost")) && AppiumServer.available(port)) {
                 AppiumServer.start("127.0.0.1", port);
             }
         }

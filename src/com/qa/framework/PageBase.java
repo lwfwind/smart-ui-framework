@@ -1,6 +1,5 @@
 package com.qa.framework;
 
-import com.qa.framework.android.event.AccessibilityEventMonitor;
 import com.qa.framework.android.uiautomator.UiAutomatorHelper;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.common.Action;
@@ -11,9 +10,11 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.*;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -59,22 +60,22 @@ public abstract class PageBase {
         }
     }
 
-    public AndroidDriver getAndroidDriver(){
-        if(getPlatform(driver).equals(MobilePlatform.ANDROID)) {
+    public AndroidDriver getAndroidDriver() {
+        if (getPlatform(driver).equals(MobilePlatform.ANDROID)) {
             androidDriver = (AndroidDriver) driver;
         }
         return androidDriver;
     }
 
-    public IOSDriver getIOSDriver(){
-        if(getPlatform(driver).equals(MobilePlatform.IOS)) {
+    public IOSDriver getIOSDriver() {
+        if (getPlatform(driver).equals(MobilePlatform.IOS)) {
             iosDriver = (IOSDriver) driver;
         }
         return iosDriver;
     }
 
-    public AppiumDriver getAppiumDriver(){
-        return (AppiumDriver)driver;
+    public AppiumDriver getAppiumDriver() {
+        return (AppiumDriver) driver;
     }
 
     /**
@@ -202,11 +203,10 @@ public abstract class PageBase {
         return driver.getCurrentUrl();
     }
 
-    public String getPageSource(){
-        if(getPlatform(driver).equals(MobilePlatform.ANDROID)) {
+    public String getPageSource() {
+        if (getPlatform(driver).equals(MobilePlatform.ANDROID)) {
             return UiAutomatorHelper.getUiHierarchyContent();
-        }
-        else if(getPlatform(driver).equals(MobilePlatform.IOS)) {
+        } else if (getPlatform(driver).equals(MobilePlatform.IOS)) {
             //
         }
         return driver.getPageSource();
@@ -226,7 +226,6 @@ public abstract class PageBase {
 
     /**
      * Swipe to up.
-     *
      */
     public void swipeToUp() {
         int width = driver.manage().window().getSize().width;
@@ -237,7 +236,6 @@ public abstract class PageBase {
 
     /**
      * Swipe to down.
-     *
      */
     public void swipeToDown() {
         int width = driver.manage().window().getSize().width;
@@ -248,7 +246,6 @@ public abstract class PageBase {
 
     /**
      * Swipe to left.
-     *
      */
     public void swipeToLeft() {
         int width = driver.manage().window().getSize().width;
@@ -259,7 +256,6 @@ public abstract class PageBase {
 
     /**
      * Swipe to right.
-     *
      */
     public void swipeToRight() {
         int width = driver.manage().window().getSize().width;

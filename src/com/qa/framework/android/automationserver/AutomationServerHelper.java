@@ -7,12 +7,13 @@ import com.qa.framework.android.automationserver.hierarchyviewer.HierarchyViewer
 import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceBridge;
 import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceConnection;
 import org.apache.log4j.Logger;
+
 import java.awt.*;
 
 
 public class AutomationServerHelper {
-    private static Logger logger = Logger.getLogger(AutomationServerHelper.class);
     public static final String TAG = "AndroidAutomationHelper";
+    private static Logger logger = Logger.getLogger(AutomationServerHelper.class);
     private static IDevice device = null;
     private static HierarchyViewer hierarchyViewer = null;
 
@@ -38,7 +39,7 @@ public class AutomationServerHelper {
             logger.info("isMusicActive:" + (isMusicActive() ? "true" : "false"));
             logger.info(getLastToast());
 
-            Rectangle rectangle = getElementLocationByText("15:20",2);
+            Rectangle rectangle = getElementLocationByText("15:20", 2);
             if (rectangle != null) {
                 logger.info("result left:" + rectangle.x + " top:" + rectangle.y + " width:" + rectangle.width + " height:" + rectangle.height);
             }
@@ -93,15 +94,15 @@ public class AutomationServerHelper {
     }
 
     public static Rectangle getElementLocationByText(String text, int index) {
-        return hierarchyViewer.getElementLocationByText(text,index);
+        return hierarchyViewer.getElementLocationByText(text, index);
     }
 
     public static Point getElementCenterByText(String text, int index) {
-        return hierarchyViewer.getElementCenterByText(text,index);
+        return hierarchyViewer.getElementCenterByText(text, index);
     }
 
     public static Point getElementCenterByText(String text) {
-        return hierarchyViewer.getElementCenterByText(text,0);
+        return hierarchyViewer.getElementCenterByText(text, 0);
     }
 
     public static String getElementTextById(String id) {

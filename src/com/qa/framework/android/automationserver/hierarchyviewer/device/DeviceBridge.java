@@ -16,13 +16,7 @@
 
 package com.qa.framework.android.automationserver.hierarchyviewer.device;
 
-import com.android.ddmlib.AdbCommandRejectedException;
-import com.android.ddmlib.AndroidDebugBridge;
-import com.android.ddmlib.IDevice;
-import com.android.ddmlib.Log;
-import com.android.ddmlib.MultiLineReceiver;
-import com.android.ddmlib.ShellCommandUnresponsiveException;
-import com.android.ddmlib.TimeoutException;
+import com.android.ddmlib.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,26 +41,11 @@ public class DeviceBridge {
     private static final int SERVICE_CODE_STOP_SERVER = 2;
 
     private static final int SERVICE_CODE_IS_SERVER_RUNNING = 3;
-
-    private static AndroidDebugBridge bridge;
-
     private static final HashMap<IDevice, Integer> devicePortMap = new HashMap<IDevice, Integer>();
-
     private static final HashMap<IDevice, ViewServerInfo> viewServerInfo =
             new HashMap<IDevice, ViewServerInfo>();
-
+    private static AndroidDebugBridge bridge;
     private static int nextLocalPort = DEFAULT_SERVER_PORT;
-
-    public static class ViewServerInfo {
-        public final int protocolVersion;
-
-        public final int serverVersion;
-
-        ViewServerInfo(int serverVersion, int protocolVersion) {
-            this.protocolVersion = protocolVersion;
-            this.serverVersion = serverVersion;
-        }
-    }
 
     public static void initDebugBridge(String adbLocation) {
         if (bridge == null) {
@@ -99,10 +78,10 @@ public class DeviceBridge {
 
     /**
      * Sets up a just-connected device to work with the view server.
-     * <p/>
+     * <p>
      * This starts a port forwarding between a local port and a port on the
      * device.
-     * 
+     *
      * @param device
      */
     public static void setupDeviceForward(IDevice device) {
@@ -229,31 +208,6 @@ public class DeviceBridge {
 
     private static String buildIsServerRunningShellCommand() {
         return String.format("service call window %d", SERVICE_CODE_IS_SERVER_RUNNING);
-    }
-
-    private static class BooleanResultReader extends MultiLineReceiver {
-        private final boolean[] mResult;
-
-        public BooleanResultReader(boolean[] result) {
-            mResult = result;
-        }
-
-        @Override
-        public void processNewLines(String[] strings) {
-            if (strings.length > 0) {
-                Pattern pattern = Pattern.compile(".*?\\([0-9]{8} ([0-9]{8}).*");
-                Matcher matcher = pattern.matcher(strings[0]);
-                if (matcher.matches()) {
-                    if (Integer.parseInt(matcher.group(1)) == 1) {
-                        mResult[0] = true;
-                    }
-                }
-            }
-        }
-
-        public boolean isCancelled() {
-            return false;
-        }
     }
 
     public static ViewServerInfo loadViewServerInfo(IDevice device) {
@@ -517,6 +471,42 @@ public class DeviceBridge {
                     + viewNode.window + " on device " + viewNode.window.getDevice());
         } finally {
             connection.close();
+        }
+    }
+
+    public static class ViewServerInfo {
+        public final int protocolVersion;
+
+        public final int serverVersion;
+
+        ViewServerInfo(int serverVersion, int protocolVersion) {
+            this.protocolVersion = protocolVersion;
+            this.serverVersion = serverVersion;
+        }
+    }
+
+    private static class BooleanResultReader extends MultiLineReceiver {
+        private final boolean[] mResult;
+
+        public BooleanResultReader(boolean[] result) {
+            mResult = result;
+        }
+
+        @Override
+        public void processNewLines(String[] strings) {
+            if (strings.length > 0) {
+                Pattern pattern = Pattern.compile(".*?\\([0-9]{8} ([0-9]{8}).*");
+                Matcher matcher = pattern.matcher(strings[0]);
+                if (matcher.matches()) {
+                    if (Integer.parseInt(matcher.group(1)) == 1) {
+                        mResult[0] = true;
+                    }
+                }
+            }
+        }
+
+        public boolean isCancelled() {
+            return false;
         }
     }
 

@@ -5,6 +5,8 @@ import com.qa.framework.library.base.ProcessHelper;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.net.DatagramSocket;
+import java.net.ServerSocket;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -24,8 +26,40 @@ public class AppiumServer {
      */
     public static void main(String[] args)
             throws Exception {
-        logger.info(ProcessHelper.portIsUsed(4723));
+        logger.info(available(4723));
         logger.info(start("127.0.0.1", 4723));
+    }
+
+    /**
+     * Checks to see if a specific port is available.
+     *
+     * @param port the port to check for availability
+     */
+    public static boolean available(int port) {
+        ServerSocket ss = null;
+        DatagramSocket ds = null;
+        try {
+            ss = new ServerSocket(port);
+            ss.setReuseAddress(true);
+            ds = new DatagramSocket(port);
+            ds.setReuseAddress(true);
+            return true;
+        } catch (IOException ignored) {
+        } finally {
+            if (ds != null) {
+                ds.close();
+            }
+
+            if (ss != null) {
+                try {
+                    ss.close();
+                } catch (IOException e) {
+                /* should not be thrown */
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -46,7 +80,7 @@ public class AppiumServer {
                         logger.info("cmd==" + cmd);
                         process = Runtime.getRuntime().exec(cmd);
                         ProcessHelper.getStreamResult(process);
-                        if (ProcessHelper.portIsUsed(port)) {
+                        if (available(port)) {
                             return true;
                         }
                     } catch (IOException | InterruptedException | ExecutionException e) {

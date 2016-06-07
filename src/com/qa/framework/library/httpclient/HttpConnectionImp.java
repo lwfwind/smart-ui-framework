@@ -88,7 +88,7 @@ public class HttpConnectionImp {
 
         // read it with BufferedReader
         reader = new BufferedReader(new InputStreamReader(new BOMInputStream(is)));
-        String line=null;
+        String line = null;
         try {
             line = reader.readLine();
             reader.close();

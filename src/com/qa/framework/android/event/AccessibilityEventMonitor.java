@@ -38,7 +38,7 @@ public class AccessibilityEventMonitor {
         return "No Toast Message";
     }
 
-    public static void readEventLog(){
+    public static void readEventLog() {
         try {
             IDevice device = DebugBridge.getDevice();
             if (device != null) {

@@ -1,9 +1,7 @@
 package com.qa.framework.android.automationserver.hierarchyviewer;
 
 import com.android.ddmlib.IDevice;
-import com.qa.framework.android.DebugBridge;
 import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceBridge;
-import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceBridge.ViewServerInfo;
 import com.qa.framework.android.automationserver.hierarchyviewer.device.ViewNode;
 import com.qa.framework.android.automationserver.hierarchyviewer.device.Window;
 import org.apache.log4j.Logger;
@@ -11,13 +9,13 @@ import org.apache.log4j.Logger;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class HierarchyViewer{
+public class HierarchyViewer {
     private static final String TAG = "hierarchyviewer";
     private static Logger logger = Logger.getLogger(HierarchyViewer.class);
     private IDevice device = null;
 
 
-    public HierarchyViewer(IDevice device){
+    public HierarchyViewer(IDevice device) {
         this.device = device;
     }
 

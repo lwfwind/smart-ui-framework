@@ -36,6 +36,10 @@ public class Window {
         this.hashCode = hashCode;
     }
 
+    public static Window getFocusedWindow(IDevice device) {
+        return new Window(device, "<Focused Window>", -1);
+    }
+
     public String getTitle() {
         return title;
     }
@@ -55,10 +59,6 @@ public class Window {
 
     public IDevice getDevice() {
         return device;
-    }
-
-    public static Window getFocusedWindow(IDevice device) {
-        return new Window(device, "<Focused Window>", -1);
     }
 
     /*

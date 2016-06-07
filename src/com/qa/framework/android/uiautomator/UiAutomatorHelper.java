@@ -37,6 +37,7 @@ public class UiAutomatorHelper {
             e.printStackTrace();
         }
     }
+
     public static void main(String[] args) {
         try {
             logger.info(getUiHierarchyContent());

@@ -23,30 +23,6 @@ public class ProcessHelper {
     public static String okResult;
     private static Logger logger = Logger.getLogger(ProcessHelper.class);
 
-
-    /**
-     * Port is used boolean.
-     *
-     * @param port the port
-     * @return the boolean
-     */
-    public static boolean portIsUsed(int port) {
-        if (OSHelper.isWindows()) {
-            try {
-                String cmd = "cmd.exe /C netstat -ano|findstr " + port;
-                logger.info("cmd==" + cmd);
-                Process process = Runtime.getRuntime().exec(cmd);
-                ProcessHelper.getStreamResult(process);
-                if (ProcessHelper.okResult.contains("LISTENING")) {
-                    return true;
-                }
-            } catch (IOException | InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }
-
     /**
      * Close pids by name.
      *

@@ -1,7 +1,6 @@
 package com.qa.framework;
 
 import com.qa.framework.android.DebugBridge;
-import com.qa.framework.android.event.AccessibilityEventMonitor;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
 import com.qa.framework.config.DriverConfig;

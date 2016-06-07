@@ -16,101 +16,53 @@
 
 package com.qa.framework.android.automationserver.hierarchyviewer.device;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class ViewNode {
 
-    public static enum ProfileRating {
-        RED, YELLOW, GREEN, NONE
-    };
+    public static final String MISCELLANIOUS = "miscellaneous";
 
+    ;
     private static final double RED_THRESHOLD = 0.8;
 
     private static final double YELLOW_THRESHOLD = 0.5;
-
-    public static final String MISCELLANIOUS = "miscellaneous";
-
     public String id;
-
     public String name;
-
     public String hashCode;
-
     public List<Property> properties = new ArrayList<Property>();
-
     public Map<String, Property> namedProperties = new HashMap<String, Property>();
-
     public ViewNode parent;
-
     public List<ViewNode> children = new ArrayList<ViewNode>();
-
     public int left;
-
     public int top;
-
     public int width;
-
     public int height;
-
     public int scrollX;
-
     public int scrollY;
-
     public int paddingLeft;
-
     public int paddingRight;
-
     public int paddingTop;
-
     public int paddingBottom;
-
     public int marginLeft;
-
     public int marginRight;
-
     public int marginTop;
-
     public int marginBottom;
-
     public int baseline;
-
     public boolean willNotDraw;
-
     public boolean hasMargins;
-
     public boolean hasFocus;
-
     public int index;
-
     public double measureTime;
-
     public double layoutTime;
-
     public double drawTime;
-
     public ProfileRating measureRating = ProfileRating.NONE;
-
     public ProfileRating layoutRating = ProfileRating.NONE;
-
     public ProfileRating drawRating = ProfileRating.NONE;
-
     public Set<String> categories = new TreeSet<String>();
-
     public Window window;
-
     public int imageReferences = 1;
-
     public int viewCount;
-
     public boolean filtered;
-
     public int protocolVersion;
 
     public ViewNode(Window window, ViewNode parent, String data) {
@@ -135,7 +87,6 @@ public class ViewNode {
     public void referenceImage() {
         imageReferences++;
     }
-
 
     private void loadProperties(String data) {
         int start = 0;
@@ -291,7 +242,7 @@ public class ViewNode {
         filtered =
                 !text.equals("")
                         && (shortName.toLowerCase().contains(text.toLowerCase()) || (!id
-                                .equals("NO_ID") && id.toLowerCase().contains(text.toLowerCase())));
+                        .equals("NO_ID") && id.toLowerCase().contains(text.toLowerCase())));
         final int N = children.size();
         for (int i = 0; i < N; i++) {
             children.get(i).filter(text);
@@ -325,6 +276,10 @@ public class ViewNode {
     @Override
     public String toString() {
         return name + "@" + hashCode;
+    }
+
+    public static enum ProfileRating {
+        RED, YELLOW, GREEN, NONE
     }
 
     public static class Property {

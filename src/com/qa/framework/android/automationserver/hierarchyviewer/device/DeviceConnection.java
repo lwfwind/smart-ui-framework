@@ -18,11 +18,7 @@ package com.qa.framework.android.automationserver.hierarchyviewer.device;
 
 import com.android.ddmlib.IDevice;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.channels.SocketChannel;

@@ -34,12 +34,6 @@ public class WindowUpdater {
 
     private static HashMap<IDevice, Thread> listeningThreads = new HashMap<IDevice, Thread>();
 
-    public static interface IWindowChangeListener {
-        public void windowsChanged(IDevice device);
-
-        public void focusChanged(IDevice device);
-    }
-
     public static void terminate() {
         synchronized (listeningThreads) {
             for (IDevice device : listeningThreads.keySet()) {
@@ -119,6 +113,12 @@ public class WindowUpdater {
                 listeners[i].focusChanged(device);
             }
         }
+    }
+
+    public static interface IWindowChangeListener {
+        public void windowsChanged(IDevice device);
+
+        public void focusChanged(IDevice device);
     }
 
     private static class WindowChangeMonitor implements Runnable {
