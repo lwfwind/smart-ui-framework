@@ -10,6 +10,9 @@ import com.qa.framework.library.base.ClassHelper;
  */
 public final class HelperLoader {
 
+    /**
+     * Init.
+     */
     public static void init() {
         // 定义需要加载的 Helper 类
         Class<?>[] classList = {

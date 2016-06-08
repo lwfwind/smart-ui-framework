@@ -24,13 +24,25 @@ import java.net.URL;
 import static com.qa.framework.ioc.AutoInjectHelper.initFields;
 import static com.qa.framework.ioc.IocHelper.findImplementClass;
 
+/**
+ * The type Test case base.
+ */
 @Listeners({TestResultListener.class, PowerEmailableReporter.class})
 public abstract class TestCaseBase {
+    /**
+     * The constant logger.
+     */
     protected static Logger logger = Logger.getLogger(TestCaseBase.class);
     private SuiteData suiteData = null;
     private String browser = null;
     private String hubURL = null;
 
+    /**
+     * Before suite.
+     *
+     * @param context the context
+     * @throws Exception the exception
+     */
     @BeforeSuite(alwaysRun = true)
     public void BeforeSuite(ITestContext context) throws Exception {
         logger.info("beforeSuite");
@@ -47,9 +59,18 @@ public abstract class TestCaseBase {
         }
     }
 
+    /**
+     * Before suite.
+     */
     public void beforeSuite() {
     }
 
+    /**
+     * After suite.
+     *
+     * @param context the context
+     * @throws Exception the exception
+     */
     @AfterSuite(alwaysRun = true)
     public void AfterSuite(ITestContext context) throws Exception {
         logger.info("afterSuite");
@@ -65,6 +86,9 @@ public abstract class TestCaseBase {
         }
     }
 
+    /**
+     * After suite.
+     */
     public void afterSuite() {
     }
 
@@ -92,6 +116,13 @@ public abstract class TestCaseBase {
         DriverCache.set(driver);
     }
 
+    /**
+     * Before class.
+     *
+     * @param browser the browser
+     * @param hubURL  the hub url
+     * @throws Exception the exception
+     */
     @Parameters({"browser", "hubURL"})
     @org.testng.annotations.BeforeClass(alwaysRun = true)
     public void BeforeClass(@Optional String browser, @Optional String hubURL) throws Exception {
@@ -101,22 +132,43 @@ public abstract class TestCaseBase {
         beforeClass();
     }
 
+    /**
+     * Before class.
+     */
     public void beforeClass() {
     }
 
+    /**
+     * Is unit test boolean.
+     *
+     * @return the boolean
+     */
     public boolean isUnitTest() {
         return false;
     }
 
+    /**
+     * After class.
+     */
     @AfterClass(alwaysRun = true)
     public void AfterClass() {
         logger.info("afterClass");
         afterClass();
     }
 
+    /**
+     * After class.
+     */
     public void afterClass() {
     }
 
+    /**
+     * Before method.
+     *
+     * @param method the method
+     * @param para   the para
+     * @throws Exception the exception
+     */
     @BeforeMethod(alwaysRun = true)
     public void BeforeMethod(Method method, Object[] para) throws Exception {
         beforeMethod(method, para);
@@ -132,12 +184,27 @@ public abstract class TestCaseBase {
         initFields(this);
     }
 
+    /**
+     * Before method.
+     *
+     * @param method the method
+     * @param para   the para
+     */
     public void beforeMethod(Method method, Object[] para) {
     }
 
+    /**
+     * Before method.
+     */
     public void beforeMethod() {
     }
 
+    /**
+     * After method.
+     *
+     * @param method the method
+     * @param para   the para
+     */
     @AfterMethod(alwaysRun = true)
     public void AfterMethod(Method method, Object[] para) {
         afterMethod(method, para);
@@ -146,9 +213,18 @@ public abstract class TestCaseBase {
         driver.quit();
     }
 
+    /**
+     * After method.
+     *
+     * @param method the method
+     * @param para   the para
+     */
     public void afterMethod(Method method, Object[] para) {
     }
 
+    /**
+     * After method.
+     */
     public void afterMethod() {
     }
 

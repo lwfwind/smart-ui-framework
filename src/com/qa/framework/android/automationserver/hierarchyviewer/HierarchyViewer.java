@@ -9,16 +9,31 @@ import org.apache.log4j.Logger;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * The type Hierarchy viewer.
+ */
 public class HierarchyViewer {
     private static final String TAG = "hierarchyviewer";
     private static Logger logger = Logger.getLogger(HierarchyViewer.class);
     private IDevice device = null;
 
 
+    /**
+     * Instantiates a new Hierarchy viewer.
+     *
+     * @param device the device
+     */
     public HierarchyViewer(IDevice device) {
         this.device = device;
     }
 
+    /**
+     * Gets element center by text.
+     *
+     * @param text  the text
+     * @param index the index
+     * @return the element center by text
+     */
     public Point getElementCenterByText(String text, int index) {
         Rectangle rectangle = getElementLocationByText(text, index);
         if (rectangle != null) {
@@ -27,6 +42,12 @@ public class HierarchyViewer {
         return null;
     }
 
+    /**
+     * Gets element text by id.
+     *
+     * @param id the id
+     * @return the element text by id
+     */
     public String getElementTextById(String id) {
         Window[] windows = DeviceBridge.loadWindows(device);
         for (Window window : windows) {
@@ -44,6 +65,13 @@ public class HierarchyViewer {
     }
 
 
+    /**
+     * Gets element location by text.
+     *
+     * @param text  the text
+     * @param index the index
+     * @return the element location by text
+     */
     public Rectangle getElementLocationByText(String text, int index) {
         Window[] windows = DeviceBridge.loadWindows(device);
         for (Window window : windows) {

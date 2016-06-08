@@ -72,10 +72,20 @@ public class PropConfig {
         }
     }
 
+    /**
+     * Gets base package.
+     *
+     * @return the base package
+     */
     public static String getBasePackage() {
         return basePackage;
     }
 
+    /**
+     * Sets base package.
+     *
+     * @param basePackage the base package
+     */
     public static void setBasePackage(String basePackage) {
         PropConfig.basePackage = basePackage;
     }

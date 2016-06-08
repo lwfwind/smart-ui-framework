@@ -34,6 +34,9 @@ public class WindowUpdater {
 
     private static HashMap<IDevice, Thread> listeningThreads = new HashMap<IDevice, Thread>();
 
+    /**
+     * Terminate.
+     */
     public static void terminate() {
         synchronized (listeningThreads) {
             for (IDevice device : listeningThreads.keySet()) {
@@ -43,6 +46,12 @@ public class WindowUpdater {
         }
     }
 
+    /**
+     * Start listen for window changes.
+     *
+     * @param listener the listener
+     * @param device   the device
+     */
     public static void startListenForWindowChanges(IWindowChangeListener listener, IDevice device) {
         synchronized (windowChangeListeners) {
             // In this case, a listening thread already exists, so we don't need
@@ -63,6 +72,12 @@ public class WindowUpdater {
         listeningThread.start();
     }
 
+    /**
+     * Stop listen for window changes.
+     *
+     * @param listener the listener
+     * @param device   the device
+     */
     public static void stopListenForWindowChanges(IWindowChangeListener listener, IDevice device) {
         synchronized (windowChangeListeners) {
             ArrayList<IWindowChangeListener> listeners = windowChangeListeners.get(device);
@@ -97,6 +112,11 @@ public class WindowUpdater {
         return listeners;
     }
 
+    /**
+     * Notify windows changed.
+     *
+     * @param device the device
+     */
     public static void notifyWindowsChanged(IDevice device) {
         IWindowChangeListener[] listeners = getWindowChangeListenersAsArray(device);
         if (listeners != null) {
@@ -106,6 +126,11 @@ public class WindowUpdater {
         }
     }
 
+    /**
+     * Notify focus changed.
+     *
+     * @param device the device
+     */
     public static void notifyFocusChanged(IDevice device) {
         IWindowChangeListener[] listeners = getWindowChangeListenersAsArray(device);
         if (listeners != null) {
@@ -115,15 +140,33 @@ public class WindowUpdater {
         }
     }
 
+    /**
+     * The interface Window change listener.
+     */
     public static interface IWindowChangeListener {
+        /**
+         * Windows changed.
+         *
+         * @param device the device
+         */
         public void windowsChanged(IDevice device);
 
+        /**
+         * Focus changed.
+         *
+         * @param device the device
+         */
         public void focusChanged(IDevice device);
     }
 
     private static class WindowChangeMonitor implements Runnable {
         private IDevice device;
 
+        /**
+         * Instantiates a new Window change monitor.
+         *
+         * @param device the device
+         */
         public WindowChangeMonitor(IDevice device) {
             this.device = device;
         }

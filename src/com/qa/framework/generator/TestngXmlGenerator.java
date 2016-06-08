@@ -10,6 +10,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The type Testng xml generator.
+ */
 public class TestngXmlGenerator {
 
     private static List<Map<String, Object>> methodListMap = new ArrayList<Map<String, Object>>();
@@ -27,6 +30,13 @@ public class TestngXmlGenerator {
         autoGenerate(args[0], args[1], args[2]);
     }
 
+    /**
+     * Auto generate.
+     *
+     * @param testCasePath the test case path
+     * @param outputPath   the output path
+     * @param threadCnt    the thread cnt
+     */
     public static void autoGenerate(String testCasePath, String outputPath, String threadCnt) {
         methodListMap.clear();
         List<String> files = IOHelper.listFilesInDirectoryRecursive(testCasePath, "*.java");

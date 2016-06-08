@@ -4,7 +4,7 @@
 
     <groupId>com.github.lwfwind.automation</groupId>
     <artifactId>smart-ui-framework</artifactId>
-    <version>2.1</version>
+    <version>3.0</version>
     <packaging>jar</packaging>
     <description>Support web and moblie automaton based on selenium and appium</description>
     <url>https://github.com/lwfwind/smart-ui-framework</url>
@@ -27,7 +27,7 @@
         <url>https://github.com/lwfwind/smart-ui-framework</url>
         <connection>scm:git:ssh://git@github.com/lwfwind/smart-ui-framework.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/lwfwind/smart-ui-framework.git</developerConnection>
-        <tag>2.0.0</tag>
+        <tag>3.0.0</tag>
     </scm>
 
     <developers>

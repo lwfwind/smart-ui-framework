@@ -136,7 +136,7 @@ public class FTPHelper {
      * @param remotePath the remote path
      * @param fileName   the file name
      * @param localPath  the local path
-     * @return boolean
+     * @return boolean boolean
      */
     public boolean download(String remotePath, String fileName, String localPath) {
         IOHelper.createNestDirectory(localPath);

@@ -36,6 +36,12 @@ public class DeviceConnection {
 
     private BufferedWriter out;
 
+    /**
+     * Instantiates a new Device connection.
+     *
+     * @param device the device
+     * @throws IOException the io exception
+     */
     public DeviceConnection(IDevice device) throws IOException {
         socketChannel = SocketChannel.open();
         int port = DeviceBridge.getDeviceLocalPort(device);
@@ -48,6 +54,12 @@ public class DeviceConnection {
         socketChannel.socket().setSoTimeout(120000);
     }
 
+    /**
+     * Gets input stream.
+     *
+     * @return the input stream
+     * @throws IOException the io exception
+     */
     public BufferedReader getInputStream() throws IOException {
         if (in == null) {
             in = new BufferedReader(new InputStreamReader(socketChannel.socket().getInputStream()));
@@ -55,6 +67,12 @@ public class DeviceConnection {
         return in;
     }
 
+    /**
+     * Gets output stream.
+     *
+     * @return the output stream
+     * @throws IOException the io exception
+     */
     public BufferedWriter getOutputStream() throws IOException {
         if (out == null) {
             out =
@@ -64,10 +82,21 @@ public class DeviceConnection {
         return out;
     }
 
+    /**
+     * Gets socket.
+     *
+     * @return the socket
+     */
     public Socket getSocket() {
         return socketChannel.socket();
     }
 
+    /**
+     * Send command.
+     *
+     * @param command the command
+     * @throws IOException the io exception
+     */
     public void sendCommand(String command) throws IOException {
         BufferedWriter out = getOutputStream();
         out.write(command);
@@ -75,6 +104,9 @@ public class DeviceConnection {
         out.flush();
     }
 
+    /**
+     * Close.
+     */
     public void close() {
         try {
             if (in != null) {

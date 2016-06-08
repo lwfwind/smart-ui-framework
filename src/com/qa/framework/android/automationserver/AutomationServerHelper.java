@@ -11,6 +11,9 @@ import org.apache.log4j.Logger;
 import java.awt.*;
 
 
+/**
+ * The type Automation server helper.
+ */
 public class AutomationServerHelper {
     private static Logger logger = Logger.getLogger(AutomationServerHelper.class);
     private static IDevice device = null;
@@ -33,6 +36,11 @@ public class AutomationServerHelper {
         }
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         try {
             logger.info("isMusicActive:" + (isMusicActive() ? "true" : "false"));
@@ -51,6 +59,11 @@ public class AutomationServerHelper {
     }
 
 
+    /**
+     * Is music active boolean.
+     *
+     * @return the boolean
+     */
     public static boolean isMusicActive() {
         boolean returnValue = false;
         DeviceConnection connection = null;
@@ -71,6 +84,12 @@ public class AutomationServerHelper {
         return returnValue;
     }
 
+    /**
+     * Is music active boolean.
+     *
+     * @param timeout the timeout
+     * @return the boolean
+     */
     public static boolean isMusicActive(long timeout) {
         long currentTime = System.currentTimeMillis();
         long maxTime = currentTime + timeout;
@@ -89,7 +108,11 @@ public class AutomationServerHelper {
     }
 
 
-
+    /**
+     * Gets last toast.
+     *
+     * @return the last toast
+     */
     public static String getLastToast() {
         String returnValue = "";
         DeviceConnection connection = null;
@@ -111,18 +134,44 @@ public class AutomationServerHelper {
         return returnValue;
     }
 
+    /**
+     * Gets element location by text.
+     *
+     * @param text  the text
+     * @param index the index
+     * @return the element location by text
+     */
     public static Rectangle getElementLocationByText(String text, int index) {
         return hierarchyViewer.getElementLocationByText(text, index);
     }
 
+    /**
+     * Gets element center by text.
+     *
+     * @param text  the text
+     * @param index the index
+     * @return the element center by text
+     */
     public static Point getElementCenterByText(String text, int index) {
         return hierarchyViewer.getElementCenterByText(text, index);
     }
 
+    /**
+     * Gets element center by text.
+     *
+     * @param text the text
+     * @return the element center by text
+     */
     public static Point getElementCenterByText(String text) {
         return hierarchyViewer.getElementCenterByText(text, 0);
     }
 
+    /**
+     * Gets element text by id.
+     *
+     * @param id the id
+     * @return the element text by id
+     */
     public static String getElementTextById(String id) {
         return hierarchyViewer.getElementTextById(id);
     }

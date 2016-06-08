@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The type Ui node.
+ */
 public class UiNode extends BasicTreeNode {
     private static final Pattern BOUNDS_PATTERN = Pattern
             .compile("\\[-?(\\d+),-?(\\d+)\\]\\[-?(\\d+),-?(\\d+)\\]");
@@ -14,6 +17,12 @@ public class UiNode extends BasicTreeNode {
     private String mDisplayName = "ShouldNotSeeMe";
     private Object[] mCachedAttributesArray;
 
+    /**
+     * Add atrribute.
+     *
+     * @param key   the key
+     * @param value the value
+     */
     public void addAtrribute(String key, String value) {
         mAttributes.put(key, value);
         updateDisplayName();
@@ -22,6 +31,11 @@ public class UiNode extends BasicTreeNode {
         }
     }
 
+    /**
+     * Gets attributes.
+     *
+     * @return the attributes
+     */
     public Map<String, String> getAttributes() {
         return Collections.unmodifiableMap(mAttributes);
     }
@@ -87,6 +101,12 @@ public class UiNode extends BasicTreeNode {
         return mDisplayName;
     }
 
+    /**
+     * Gets attribute.
+     *
+     * @param key the key
+     * @return the attribute
+     */
     public String getAttribute(String key) {
         return mAttributes.get(key);
     }
@@ -109,6 +129,11 @@ public class UiNode extends BasicTreeNode {
         return mCachedAttributesArray;
     }
 
+    /**
+     * Gets xpath.
+     *
+     * @return the xpath
+     */
     public String getXpath() {
         /*String className = getNodeClassAttribute();
         String xpath = "//" + className;
@@ -157,6 +182,11 @@ public class UiNode extends BasicTreeNode {
         return xpath;
     }
 
+    /**
+     * Gets xpath 2.
+     *
+     * @return the xpath 2
+     */
     public String getXpath2() {
 		/*String className = getNodeClassAttribute();
 		String xpath = "//" + className;

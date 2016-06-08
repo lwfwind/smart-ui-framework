@@ -283,6 +283,11 @@ public class DriverConfig {
         return app;
     }
 
+    /**
+     * Gets appium server url.
+     *
+     * @return the appium server url
+     */
     public static String getAppiumServerUrl() {
         String appiumServerUrl = PropConfig.getAppiumServerUrl();
         if (appiumServerUrl == null) {

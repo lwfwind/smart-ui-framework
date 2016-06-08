@@ -18,53 +18,180 @@ package com.qa.framework.android.automationserver.hierarchyviewer.device;
 
 import java.util.*;
 
+/**
+ * The type View node.
+ */
 public class ViewNode {
 
+    /**
+     * The constant MISCELLANIOUS.
+     */
     public static final String MISCELLANIOUS = "miscellaneous";
 
     ;
     private static final double RED_THRESHOLD = 0.8;
 
     private static final double YELLOW_THRESHOLD = 0.5;
+    /**
+     * The Id.
+     */
     public String id;
+    /**
+     * The Name.
+     */
     public String name;
+    /**
+     * The Hash code.
+     */
     public String hashCode;
+    /**
+     * The Properties.
+     */
     public List<Property> properties = new ArrayList<Property>();
+    /**
+     * The Named properties.
+     */
     public Map<String, Property> namedProperties = new HashMap<String, Property>();
+    /**
+     * The Parent.
+     */
     public ViewNode parent;
+    /**
+     * The Children.
+     */
     public List<ViewNode> children = new ArrayList<ViewNode>();
+    /**
+     * The Left.
+     */
     public int left;
+    /**
+     * The Top.
+     */
     public int top;
+    /**
+     * The Width.
+     */
     public int width;
+    /**
+     * The Height.
+     */
     public int height;
+    /**
+     * The Scroll x.
+     */
     public int scrollX;
+    /**
+     * The Scroll y.
+     */
     public int scrollY;
+    /**
+     * The Padding left.
+     */
     public int paddingLeft;
+    /**
+     * The Padding right.
+     */
     public int paddingRight;
+    /**
+     * The Padding top.
+     */
     public int paddingTop;
+    /**
+     * The Padding bottom.
+     */
     public int paddingBottom;
+    /**
+     * The Margin left.
+     */
     public int marginLeft;
+    /**
+     * The Margin right.
+     */
     public int marginRight;
+    /**
+     * The Margin top.
+     */
     public int marginTop;
+    /**
+     * The Margin bottom.
+     */
     public int marginBottom;
+    /**
+     * The Baseline.
+     */
     public int baseline;
+    /**
+     * The Will not draw.
+     */
     public boolean willNotDraw;
+    /**
+     * The Has margins.
+     */
     public boolean hasMargins;
+    /**
+     * The Has focus.
+     */
     public boolean hasFocus;
+    /**
+     * The Index.
+     */
     public int index;
+    /**
+     * The Measure time.
+     */
     public double measureTime;
+    /**
+     * The Layout time.
+     */
     public double layoutTime;
+    /**
+     * The Draw time.
+     */
     public double drawTime;
+    /**
+     * The Measure rating.
+     */
     public ProfileRating measureRating = ProfileRating.NONE;
+    /**
+     * The Layout rating.
+     */
     public ProfileRating layoutRating = ProfileRating.NONE;
+    /**
+     * The Draw rating.
+     */
     public ProfileRating drawRating = ProfileRating.NONE;
+    /**
+     * The Categories.
+     */
     public Set<String> categories = new TreeSet<String>();
+    /**
+     * The Window.
+     */
     public Window window;
+    /**
+     * The Image references.
+     */
     public int imageReferences = 1;
+    /**
+     * The View count.
+     */
     public int viewCount;
+    /**
+     * The Filtered.
+     */
     public boolean filtered;
+    /**
+     * The Protocol version.
+     */
     public int protocolVersion;
 
+    /**
+     * Instantiates a new View node.
+     *
+     * @param window the window
+     * @param parent the parent
+     * @param data   the data
+     */
     public ViewNode(Window window, ViewNode parent, String data) {
         this.window = window;
         this.parent = parent;
@@ -84,6 +211,9 @@ public class ViewNode {
         drawTime = -1;
     }
 
+    /**
+     * Reference image.
+     */
     public void referenceImage() {
         imageReferences++;
     }
@@ -184,6 +314,9 @@ public class ViewNode {
         }
     }
 
+    /**
+     * Sets profile ratings.
+     */
     public void setProfileRatings() {
         final int N = children.size();
         if (N > 1) {
@@ -226,6 +359,9 @@ public class ViewNode {
         }
     }
 
+    /**
+     * Sets view count.
+     */
     public void setViewCount() {
         viewCount = 1;
         final int N = children.size();
@@ -236,6 +372,11 @@ public class ViewNode {
         }
     }
 
+    /**
+     * Filter.
+     *
+     * @param text the text
+     */
     public void filter(String text) {
         int dotIndex = name.lastIndexOf('.');
         String shortName = (dotIndex == -1) ? name : name.substring(dotIndex + 1);
@@ -278,13 +419,37 @@ public class ViewNode {
         return name + "@" + hashCode;
     }
 
+    /**
+     * The enum Profile rating.
+     */
     public static enum ProfileRating {
-        RED, YELLOW, GREEN, NONE
+        /**
+         * Red profile rating.
+         */
+        RED, /**
+         * Yellow profile rating.
+         */
+        YELLOW, /**
+         * Green profile rating.
+         */
+        GREEN, /**
+         * None profile rating.
+         */
+        NONE
     }
 
+    /**
+     * The type Property.
+     */
     public static class Property {
+        /**
+         * The Name.
+         */
         public String name;
 
+        /**
+         * The Value.
+         */
         public String value;
 
         @Override

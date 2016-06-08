@@ -30,6 +30,9 @@ import java.util.regex.Pattern;
  */
 public class DeviceBridge {
 
+    /**
+     * The constant TAG.
+     */
     public static final String TAG = "hierarchyviewer";
 
     private static final int DEFAULT_SERVER_PORT = 4939;
@@ -47,6 +50,11 @@ public class DeviceBridge {
     private static AndroidDebugBridge bridge;
     private static int nextLocalPort = DEFAULT_SERVER_PORT;
 
+    /**
+     * Init debug bridge.
+     *
+     * @param adbLocation the adb location
+     */
     public static void initDebugBridge(String adbLocation) {
         if (bridge == null) {
             AndroidDebugBridge.init(false /* debugger support */);
@@ -56,15 +64,28 @@ public class DeviceBridge {
         }
     }
 
+    /**
+     * Terminate.
+     */
     public static void terminate() {
         AndroidDebugBridge.terminate();
     }
 
+    /**
+     * Get devices device [ ].
+     *
+     * @return the device [ ]
+     */
     public static IDevice[] getDevices() {
         return bridge.getDevices();
     }
 
-    /*
+    /**
+     * Start listen for devices.
+     *
+     * @param listener the listener
+     */
+/*
      * This adds a listener to the debug bridge. The listener is notified of
      * connecting/disconnecting devices, devices coming online, etc.
      */
@@ -72,17 +93,22 @@ public class DeviceBridge {
         AndroidDebugBridge.addDeviceChangeListener(listener);
     }
 
+    /**
+     * Stop listen for devices.
+     *
+     * @param listener the listener
+     */
     public static void stopListenForDevices(AndroidDebugBridge.IDeviceChangeListener listener) {
         AndroidDebugBridge.removeDeviceChangeListener(listener);
     }
 
     /**
      * Sets up a just-connected device to work with the view server.
-     * <p>
+     * <p/>
      * This starts a port forwarding between a local port and a port on the
      * device.
      *
-     * @param device
+     * @param device the device
      */
     public static void setupDeviceForward(IDevice device) {
         synchronized (devicePortMap) {
@@ -104,6 +130,11 @@ public class DeviceBridge {
         }
     }
 
+    /**
+     * Remove device forward.
+     *
+     * @param device the device
+     */
     public static void removeDeviceForward(IDevice device) {
         synchronized (devicePortMap) {
             final Integer localPort = devicePortMap.get(device);
@@ -123,6 +154,12 @@ public class DeviceBridge {
         }
     }
 
+    /**
+     * Gets device local port.
+     *
+     * @param device the device
+     * @return the device local port
+     */
     public static int getDeviceLocalPort(IDevice device) {
         synchronized (devicePortMap) {
             Integer port = devicePortMap.get(device);
@@ -136,6 +173,12 @@ public class DeviceBridge {
 
     }
 
+    /**
+     * Is view server running boolean.
+     *
+     * @param device the device
+     * @return the boolean
+     */
     public static boolean isViewServerRunning(IDevice device) {
         final boolean[] result = new boolean[1];
         try {
@@ -156,10 +199,23 @@ public class DeviceBridge {
         return result[0];
     }
 
+    /**
+     * Start view server boolean.
+     *
+     * @param device the device
+     * @return the boolean
+     */
     public static boolean startViewServer(IDevice device) {
         return startViewServer(device, DEFAULT_SERVER_PORT);
     }
 
+    /**
+     * Start view server boolean.
+     *
+     * @param device the device
+     * @param port   the port
+     * @return the boolean
+     */
     public static boolean startViewServer(IDevice device, int port) {
         final boolean[] result = new boolean[1];
         try {
@@ -179,6 +235,12 @@ public class DeviceBridge {
         return result[0];
     }
 
+    /**
+     * Stop view server boolean.
+     *
+     * @param device the device
+     * @return the boolean
+     */
     public static boolean stopViewServer(IDevice device) {
         final boolean[] result = new boolean[1];
         try {
@@ -210,6 +272,12 @@ public class DeviceBridge {
         return String.format("service call window %d", SERVICE_CODE_IS_SERVER_RUNNING);
     }
 
+    /**
+     * Load view server info view server info.
+     *
+     * @param device the device
+     * @return the view server info
+     */
     public static ViewServerInfo loadViewServerInfo(IDevice device) {
         int server = -1;
         int protocol = -1;
@@ -253,19 +321,36 @@ public class DeviceBridge {
         return returnValue;
     }
 
+    /**
+     * Gets view server info.
+     *
+     * @param device the device
+     * @return the view server info
+     */
     public static ViewServerInfo getViewServerInfo(IDevice device) {
         synchronized (viewServerInfo) {
             return viewServerInfo.get(device);
         }
     }
 
+    /**
+     * Remove view server info.
+     *
+     * @param device the device
+     */
     public static void removeViewServerInfo(IDevice device) {
         synchronized (viewServerInfo) {
             viewServerInfo.remove(device);
         }
     }
 
-    /*
+    /**
+     * Load windows window [ ].
+     *
+     * @param device the device
+     * @return the window [ ]
+     */
+/*
      * This loads the list of windows from the specified device. The format is:
      * hashCode1 title1 hashCode2 title2 ... hashCodeN titleN DONE.
      */
@@ -322,7 +407,13 @@ public class DeviceBridge {
         return returnValue;
     }
 
-    /*
+    /**
+     * Gets focused window.
+     *
+     * @param device the device
+     * @return the focused window
+     */
+/*
      * This gets the hash code of the window that has focus. Only works with
      * protocol version 3 and above.
      */
@@ -346,6 +437,12 @@ public class DeviceBridge {
         return -1;
     }
 
+    /**
+     * Load window data view node.
+     *
+     * @param window the window
+     * @return the view node
+     */
     public static ViewNode loadWindowData(Window window) {
         DeviceConnection connection = null;
         try {
@@ -392,6 +489,13 @@ public class DeviceBridge {
         return null;
     }
 
+    /**
+     * Load profile data boolean.
+     *
+     * @param window   the window
+     * @param viewNode the view node
+     * @return the boolean
+     */
     public static boolean loadProfileData(Window window, ViewNode viewNode) {
         DeviceConnection connection = null;
         try {
@@ -448,6 +552,11 @@ public class DeviceBridge {
         return true;
     }
 
+    /**
+     * Invalidate view.
+     *
+     * @param viewNode the view node
+     */
     public static void invalidateView(ViewNode viewNode) {
         DeviceConnection connection = null;
         try {
@@ -461,6 +570,11 @@ public class DeviceBridge {
         }
     }
 
+    /**
+     * Request layout.
+     *
+     * @param viewNode the view node
+     */
     public static void requestLayout(ViewNode viewNode) {
         DeviceConnection connection = null;
         try {
@@ -474,11 +588,26 @@ public class DeviceBridge {
         }
     }
 
+    /**
+     * The type View server info.
+     */
     public static class ViewServerInfo {
+        /**
+         * The Protocol version.
+         */
         public final int protocolVersion;
 
+        /**
+         * The Server version.
+         */
         public final int serverVersion;
 
+        /**
+         * Instantiates a new View server info.
+         *
+         * @param serverVersion   the server version
+         * @param protocolVersion the protocol version
+         */
         ViewServerInfo(int serverVersion, int protocolVersion) {
             this.protocolVersion = protocolVersion;
             this.serverVersion = serverVersion;
@@ -488,6 +617,11 @@ public class DeviceBridge {
     private static class BooleanResultReader extends MultiLineReceiver {
         private final boolean[] mResult;
 
+        /**
+         * Instantiates a new Boolean result reader.
+         *
+         * @param result the result
+         */
         public BooleanResultReader(boolean[] result) {
             mResult = result;
         }

@@ -16,7 +16,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The type Ui automator helper.
+ */
 public class UiAutomatorHelper {
+    /**
+     * The constant UIAUTOMATOR_MIN_API_LEVEL.
+     */
     public static final int UIAUTOMATOR_MIN_API_LEVEL = 16;
 
     private static final String UIAUTOMATOR = "/system/bin/uiautomator";    //$NON-NLS-1$
@@ -38,6 +44,11 @@ public class UiAutomatorHelper {
         }
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     */
     public static void main(String[] args) {
         try {
             logger.info(getUiHierarchyContent());
@@ -68,12 +79,26 @@ public class UiAutomatorHelper {
         return apiLevel >= UIAUTOMATOR_MIN_API_LEVEL;
     }
 
-    //to maintain a backward compatible api, use non-compressed as default snapshot type
+    /**
+     * Take snapshot buffered image.
+     *
+     * @return the buffered image
+     * @throws UiAutomatorException the ui automator exception
+     * @throws IOException          the io exception
+     */
+//to maintain a backward compatible api, use non-compressed as default snapshot type
     public static BufferedImage takeSnapshot()
             throws UiAutomatorException, IOException {
         return takeSnapshot(device);
     }
 
+    /**
+     * Take snapshot buffered image.
+     *
+     * @param device the device
+     * @return the buffered image
+     * @throws UiAutomatorException the ui automator exception
+     */
     public static BufferedImage takeSnapshot(IDevice device) throws UiAutomatorException {
         if (!supportsUiAutomator(device)) {
             String msg = "UI Automator requires a device with API Level "
@@ -105,6 +130,11 @@ public class UiAutomatorHelper {
         return image;
     }
 
+    /**
+     * Gets ui hierarchy content.
+     *
+     * @return the ui hierarchy content
+     */
     public static String getUiHierarchyContent() {
         try {
             return getUiHierarchyContent(device);
@@ -114,6 +144,14 @@ public class UiAutomatorHelper {
         return null;
     }
 
+    /**
+     * Search ui hierarchy content boolean.
+     *
+     * @param tofind the tofind
+     * @return the boolean
+     * @throws UiAutomatorException the ui automator exception
+     * @throws IOException          the io exception
+     */
     public static boolean searchUiHierarchyContent(String tofind) throws UiAutomatorException, IOException {
         return searchUiHierarchyContent(device, tofind);
     }
@@ -229,8 +267,17 @@ public class UiAutomatorHelper {
         return IOHelper.readFileToString(xmlDumpFile.getAbsolutePath());
     }
 
+    /**
+     * The type Ui automator exception.
+     */
     @SuppressWarnings("serial")
     public static class UiAutomatorException extends Exception {
+        /**
+         * Instantiates a new Ui automator exception.
+         *
+         * @param msg the msg
+         * @param t   the t
+         */
         public UiAutomatorException(String msg, Throwable t) {
             super(msg, t);
         }

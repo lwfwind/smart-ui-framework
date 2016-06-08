@@ -179,6 +179,12 @@ public class ScreenShot {
             logger.info("injectJQuery done");
         }
 
+        /**
+         * Create image from bytes buffered image.
+         *
+         * @param imageData the image data
+         * @return the buffered image
+         */
         public BufferedImage createImageFromBytes(byte[] imageData) {
 
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(imageData);

@@ -8,7 +8,13 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The type Admin cache.
+ */
 public class AdminCache {
+    /**
+     * The constant logger.
+     */
     protected static Logger logger = Logger.getLogger(AdminCache.class);
     private static ThreadLocal<AdminAccount> accountThreadLocal = new ThreadLocal<AdminAccount>();
     private static List<AdminAccount> currentUsingAdmin = new ArrayList<>();
@@ -18,10 +24,18 @@ public class AdminCache {
         initList();
     }
 
+    /**
+     * Init list.
+     *
+     * @param adminAccount the admin account
+     */
     public static void initList(AdminAccount adminAccount) {
         allAdmin.add(adminAccount);
     }
 
+    /**
+     * Init list.
+     */
     public static void initList() {
         BaseAdminBean baseAdminBean = XmlToBean.getBaseAdminBean();
         for (int i = 0; i < baseAdminBean.getAdminList().size(); i++) {
@@ -39,6 +53,11 @@ public class AdminCache {
         throw new RuntimeException("对不起, 无可用的后台账号");
     }
 
+    /**
+     * Gets admin.
+     *
+     * @return the admin
+     */
     public static AdminAccount getAdmin() {
         if (currentUsingAdmin.size() == allAdmin.size()) {
             throw new RuntimeException("对不起, 无可用的后台账号");
@@ -56,6 +75,9 @@ public class AdminCache {
         }
     }
 
+    /**
+     * Recover admin.
+     */
     public static void recoverAdmin() {
         AdminAccount adminAccount = accountThreadLocal.get();
         if (adminAccount != null) {

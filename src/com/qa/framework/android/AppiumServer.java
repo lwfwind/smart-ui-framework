@@ -34,6 +34,7 @@ public class AppiumServer {
      * Checks to see if a specific port is available.
      *
      * @param port the port to check for availability
+     * @return the boolean
      */
     public static boolean available(int port) {
         ServerSocket ss = null;
@@ -94,6 +95,9 @@ public class AppiumServer {
         }
     }
 
+    /**
+     * Stop.
+     */
     public static void stop() {
         lock.lock();
         try {

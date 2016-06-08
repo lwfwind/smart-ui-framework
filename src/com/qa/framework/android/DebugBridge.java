@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The type Debug bridge.
+ */
 public class DebugBridge {
     private static AndroidDebugBridge sDebugBridge;
 
@@ -48,6 +51,9 @@ public class DebugBridge {
         return null;
     }
 
+    /**
+     * Init.
+     */
     public static void init() {
         if (sDebugBridge == null) {
             String adbLocation = null;
@@ -64,6 +70,9 @@ public class DebugBridge {
         }
     }
 
+    /**
+     * Terminate.
+     */
     public static void terminate() {
         if (sDebugBridge != null) {
             sDebugBridge = null;
@@ -71,6 +80,11 @@ public class DebugBridge {
         }
     }
 
+    /**
+     * Gets devices.
+     *
+     * @return the devices
+     */
     public static List<IDevice> getDevices() {
         return Arrays.asList(sDebugBridge.getDevices());
     }
@@ -90,6 +104,12 @@ public class DebugBridge {
         }
     }
 
+    /**
+     * Gets device.
+     *
+     * @return the device
+     * @throws IOException the io exception
+     */
     public static IDevice getDevice() throws IOException {
         List<IDevice> devices = getDevices();
         if (devices.size() == 0) {
@@ -100,6 +120,13 @@ public class DebugBridge {
         return null;
     }
 
+    /**
+     * Gets device.
+     *
+     * @param index the index
+     * @return the device
+     * @throws IOException the io exception
+     */
     public static IDevice getDevice(int index) throws IOException {
         List<IDevice> devices = getDevices();
         if (devices.size() == 0) {

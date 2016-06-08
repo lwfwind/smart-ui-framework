@@ -12,24 +12,38 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
+/**
+ * The type Accessibility event monitor.
+ */
 public class AccessibilityEventMonitor {
     private static Logger logger = Logger.getLogger(AccessibilityEventMonitor.class);
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
     private static List<String> toastEventLogs = new ArrayList<String>();
     private static boolean isCancelMonitored = false;
 
+    /**
+     * Start.
+     */
     public static void start() {
         Thread thread = new AccessibilityEventThread();
         thread.setDaemon(true);
         executorService.execute(thread);
     }
 
+    /**
+     * Stop.
+     */
     public static void stop() {
         isCancelMonitored = true;
         executorService.shutdown();
         executorService.shutdownNow();
     }
 
+    /**
+     * Gets last toast.
+     *
+     * @return the last toast
+     */
     public static String getLastToast() {
         readEventLog();
         if (toastEventLogs.size() > 0) {
@@ -38,6 +52,9 @@ public class AccessibilityEventMonitor {
         return "No Toast Message";
     }
 
+    /**
+     * Read event log.
+     */
     public static void readEventLog() {
         try {
             IDevice device = DebugBridge.getDevice();
@@ -67,6 +84,12 @@ public class AccessibilityEventMonitor {
         }
     }
 
+    /**
+     * The entry point of application.
+     *
+     * @param args the input arguments
+     * @throws InterruptedException the interrupted exception
+     */
     public static void main(String[] args) throws InterruptedException {
         DebugBridge.init();
         logger.info("executorService started");
@@ -79,6 +102,9 @@ public class AccessibilityEventMonitor {
         logger.info("DebugBridge terminated");
     }
 
+    /**
+     * The type Accessibility event thread.
+     */
     static class AccessibilityEventThread extends Thread {
         @Override
         public void run() {

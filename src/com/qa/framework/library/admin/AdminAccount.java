@@ -7,6 +7,12 @@ public class AdminAccount {
     private String name;
     private String pwd;
 
+    /**
+     * Instantiates a new Admin account.
+     *
+     * @param name the name
+     * @param pwd  the pwd
+     */
     public AdminAccount(String name, String pwd) {
         this.name = name;
         this.pwd = pwd;
@@ -31,18 +37,38 @@ public class AdminAccount {
         return result;
     }
 
+    /**
+     * Gets name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets name.
+     *
+     * @param name the name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets pwd.
+     *
+     * @return the pwd
+     */
     public String getPwd() {
         return pwd;
     }
 
+    /**
+     * Sets pwd.
+     *
+     * @param pwd the pwd
+     */
     public void setPwd(String pwd) {
         this.pwd = pwd;
     }

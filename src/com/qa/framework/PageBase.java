@@ -39,7 +39,13 @@ public abstract class PageBase {
      */
     public WebDriver driver;
 
+    /**
+     * The Android driver.
+     */
     public AndroidDriver androidDriver;
+    /**
+     * The Ios driver.
+     */
     public IOSDriver iosDriver;
     /**
      * The Action.
@@ -60,6 +66,11 @@ public abstract class PageBase {
         }
     }
 
+    /**
+     * Gets android driver.
+     *
+     * @return the android driver
+     */
     public AndroidDriver getAndroidDriver() {
         if (getPlatform(driver).equals(MobilePlatform.ANDROID)) {
             androidDriver = (AndroidDriver) driver;
@@ -67,6 +78,11 @@ public abstract class PageBase {
         return androidDriver;
     }
 
+    /**
+     * Gets ios driver.
+     *
+     * @return the ios driver
+     */
     public IOSDriver getIOSDriver() {
         if (getPlatform(driver).equals(MobilePlatform.IOS)) {
             iosDriver = (IOSDriver) driver;
@@ -74,6 +90,11 @@ public abstract class PageBase {
         return iosDriver;
     }
 
+    /**
+     * Gets appium driver.
+     *
+     * @return the appium driver
+     */
     public AppiumDriver getAppiumDriver() {
         return (AppiumDriver) driver;
     }
@@ -203,6 +224,11 @@ public abstract class PageBase {
         return driver.getCurrentUrl();
     }
 
+    /**
+     * Gets page source.
+     *
+     * @return the page source
+     */
     public String getPageSource() {
         if (getPlatform(driver).equals(MobilePlatform.ANDROID)) {
             return UiAutomatorHelper.getUiHierarchyContent();

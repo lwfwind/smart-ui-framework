@@ -30,24 +30,52 @@ public class Window {
 
     private IDevice device;
 
+    /**
+     * Instantiates a new Window.
+     *
+     * @param device   the device
+     * @param title    the title
+     * @param hashCode the hash code
+     */
     public Window(IDevice device, String title, int hashCode) {
         this.device = device;
         this.title = title;
         this.hashCode = hashCode;
     }
 
+    /**
+     * Gets focused window.
+     *
+     * @param device the device
+     * @return the focused window
+     */
     public static Window getFocusedWindow(IDevice device) {
         return new Window(device, "<Focused Window>", -1);
     }
 
+    /**
+     * Gets title.
+     *
+     * @return the title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Gets hash code.
+     *
+     * @return the hash code
+     */
     public int getHashCode() {
         return hashCode;
     }
 
+    /**
+     * Encode string.
+     *
+     * @return the string
+     */
     public String encode() {
         return Integer.toHexString(hashCode);
     }
@@ -57,6 +85,11 @@ public class Window {
         return title;
     }
 
+    /**
+     * Gets device.
+     *
+     * @return the device
+     */
     public IDevice getDevice() {
         return device;
     }

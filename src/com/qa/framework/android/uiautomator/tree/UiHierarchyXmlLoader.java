@@ -14,11 +14,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * The type Ui hierarchy xml loader.
+ */
 public class UiHierarchyXmlLoader {
     private BasicTreeNode mRootNode;
     private List<Rectangle> mNafNodes;
     private List<BasicTreeNode> mNodeList;
 
+    /**
+     * Parse xml basic tree node.
+     *
+     * @param xmlPath the xml path
+     * @return the basic tree node
+     */
     public BasicTreeNode parseXml(String xmlPath) {
         this.mRootNode = null;
         this.mNafNodes = new ArrayList<Rectangle>();
@@ -100,10 +109,20 @@ public class UiHierarchyXmlLoader {
         return this.mRootNode;
     }
 
+    /**
+     * Gets naf nodes.
+     *
+     * @return the naf nodes
+     */
     public List<Rectangle> getNafNodes() {
         return Collections.unmodifiableList(this.mNafNodes);
     }
 
+    /**
+     * Gets all nodes.
+     *
+     * @return the all nodes
+     */
     public List<BasicTreeNode> getAllNodes() {
         return this.mNodeList;
     }

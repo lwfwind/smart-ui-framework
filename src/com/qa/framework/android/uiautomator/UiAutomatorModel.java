@@ -12,6 +12,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The type Ui automator model.
+ */
 public class UiAutomatorModel {
     private BasicTreeNode mRootNode;
     private BasicTreeNode mSelectedNode;
@@ -22,6 +25,11 @@ public class UiAutomatorModel {
     private List<BasicTreeNode> mNodelist;
     private Set<String> mSearchKeySet = new HashSet<String>();
 
+    /**
+     * Instantiates a new Ui automator model.
+     *
+     * @param xmlDumpFile the xml dump file
+     */
     public UiAutomatorModel(File xmlDumpFile) {
         this.mSearchKeySet.add("text");
         this.mSearchKeySet.add("content-desc");
@@ -41,14 +49,29 @@ public class UiAutomatorModel {
         this.mNodelist = loader.getAllNodes();
     }
 
+    /**
+     * Gets xml root node.
+     *
+     * @return the xml root node
+     */
     public BasicTreeNode getXmlRootNode() {
         return this.mRootNode;
     }
 
+    /**
+     * Gets selected node.
+     *
+     * @return the selected node
+     */
     public BasicTreeNode getSelectedNode() {
         return this.mSelectedNode;
     }
 
+    /**
+     * Sets selected node.
+     *
+     * @param node the node
+     */
     public void setSelectedNode(BasicTreeNode node) {
         this.mSelectedNode = node;
         if ((this.mSelectedNode instanceof UiNode)) {
@@ -59,34 +82,71 @@ public class UiAutomatorModel {
         }
     }
 
+    /**
+     * Gets current drawing rect.
+     *
+     * @return the current drawing rect
+     */
     public Rectangle getCurrentDrawingRect() {
         return this.mCurrentDrawingRect;
     }
 
+    /**
+     * Is explore mode boolean.
+     *
+     * @return the boolean
+     */
     public boolean isExploreMode() {
         return this.mExploreMode;
     }
 
+    /**
+     * Sets explore mode.
+     *
+     * @param exploreMode the explore mode
+     */
     public void setExploreMode(boolean exploreMode) {
         this.mExploreMode = exploreMode;
     }
 
+    /**
+     * Toggle explore mode.
+     */
     public void toggleExploreMode() {
         this.mExploreMode = (!this.mExploreMode);
     }
 
+    /**
+     * Gets naf nodes.
+     *
+     * @return the naf nodes
+     */
     public List<Rectangle> getNafNodes() {
         return this.mNafNodes;
     }
 
+    /**
+     * Toggle show naf.
+     */
     public void toggleShowNaf() {
         this.mShowNafNodes = (!this.mShowNafNodes);
     }
 
+    /**
+     * Should show naf nodes boolean.
+     *
+     * @return the boolean
+     */
     public boolean shouldShowNafNodes() {
         return this.mShowNafNodes;
     }
 
+    /**
+     * Search node list.
+     *
+     * @param tofind the tofind
+     * @return the list
+     */
     public List<BasicTreeNode> searchNode(String tofind) {
         List<BasicTreeNode> result = new LinkedList<BasicTreeNode>();
         for (BasicTreeNode node : this.mNodelist) {
@@ -105,6 +165,9 @@ public class UiAutomatorModel {
 
     private static class MinAreaFindNodeListener
             implements BasicTreeNode.IFindNodeListener {
+        /**
+         * The M node.
+         */
         BasicTreeNode mNode = null;
 
         public void onFoundNode(BasicTreeNode node) {

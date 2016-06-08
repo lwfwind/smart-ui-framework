@@ -81,6 +81,12 @@ public class HttpConnectionImp {
         return removeBOM(responseBody);
     }
 
+    /**
+     * Remove bom string.
+     *
+     * @param responseBody the response body
+     * @return the string
+     */
     public String removeBOM(String responseBody) {
         BufferedReader reader = null;
         // convert String into InputStream
