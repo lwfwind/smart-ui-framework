@@ -20,7 +20,7 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 <dependency>
     <groupId>com.github.lwfwind.automation</groupId>
     <artifactId>smart-ui-framework</artifactId>
-    <version>2.1</version>
+    <version>3.0</version>
 </dependency>
 ```
 

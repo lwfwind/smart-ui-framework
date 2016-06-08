@@ -104,7 +104,6 @@ public class DeviceBridge {
 
     /**
      * Sets up a just-connected device to work with the view server.
-     * <p/>
      * This starts a port forwarding between a local port and a port on the
      * device.
      *
