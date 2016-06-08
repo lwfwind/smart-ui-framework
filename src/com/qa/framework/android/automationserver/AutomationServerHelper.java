@@ -12,7 +12,6 @@ import java.awt.*;
 
 
 public class AutomationServerHelper {
-    public static final String TAG = "AndroidAutomationHelper";
     private static Logger logger = Logger.getLogger(AutomationServerHelper.class);
     private static IDevice device = null;
     private static HierarchyViewer hierarchyViewer = null;
@@ -63,7 +62,7 @@ public class AutomationServerHelper {
                 returnValue = Boolean.valueOf(line);
             }
         } catch (Exception e) {
-            Log.e(TAG, "Unable to get automation server info from device " + device);
+            logger.error("Unable to get automation server info from device " + device);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -71,6 +70,25 @@ public class AutomationServerHelper {
         }
         return returnValue;
     }
+
+    public static boolean isMusicActive(long timeout) {
+        long currentTime = System.currentTimeMillis();
+        long maxTime = currentTime + timeout;
+        while (currentTime < maxTime) {
+            if(isMusicActive()){
+                return true;
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            currentTime = System.currentTimeMillis();
+        }
+        return false;
+    }
+
+
 
     public static String getLastToast() {
         String returnValue = "";
@@ -83,7 +101,7 @@ public class AutomationServerHelper {
                 returnValue = line;
             }
         } catch (Exception e) {
-            Log.e(TAG, "Unable to get toast from device " + device);
+            logger.error("Unable to get toast from device " + device);
         } finally {
             if (connection != null) {
                 connection.close();
