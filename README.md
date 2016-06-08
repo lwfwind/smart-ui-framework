@@ -39,7 +39,7 @@ public class SearchPage extends PageBase {
     private WebElement searchTestBox;
 
     public void searchFor(String text) {
-        driver.get("http://www.baidu.com/");
+        open("http://www.baidu.com/");
         searchTestBox.sendKeys(text);
         searchTestBox.submit();
     }
