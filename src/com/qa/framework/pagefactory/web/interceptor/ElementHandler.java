@@ -6,7 +6,9 @@ import com.qa.framework.cache.MethodCache;
 import com.qa.framework.common.Action;
 import com.qa.framework.common.ScreenShot;
 import com.qa.framework.pagefactory.web.Element;
+import io.appium.java_client.pagefactory.WithTimeout;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
@@ -63,23 +65,35 @@ public class ElementHandler implements InvocationHandler {
         List<WebElement> elements = null;
         WebElement element = null;
         int previousWindowsCount = driver.getWindowHandles().size();
-        int timeout = getTimeOutOfFind(field);
-        long end = System.currentTimeMillis() + timeout;
-        while (System.currentTimeMillis() < end) {
-            elements = locator.findElements();
-            if (elements != null && elements.size() > 0) {
-                element = elements.get(0);
-                if (element != null && element.isDisplayed()) {
-                    break;
+        if(field.isAnnotationPresent(WithTimeout.class)){
+            try {
+                element = locator.findElement();
+            } catch (NoSuchElementException e) {
+                if ("toString".equals(method.getName())) {
+                    return "Proxy element for: " + locator.toString();
                 }
+                else throw e;
             }
-            this.action.pause(500);
         }
-        if (element == null) {
-            logger.error("the " + logicElementName
-                    + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
-            throw new RuntimeException("the " + logicElementName
-                    + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+        else {
+            int timeout = getTimeOutOfFind(field);
+            long end = System.currentTimeMillis() + timeout;
+            while (System.currentTimeMillis() < end) {
+                elements = locator.findElements();
+                if (elements != null && elements.size() > 0) {
+                    element = elements.get(0);
+                    if (element != null && element.isDisplayed()) {
+                        break;
+                    }
+                }
+                this.action.pause(500);
+            }
+            if (element == null) {
+                logger.error("the " + logicElementName
+                        + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+                throw new RuntimeException("the " + logicElementName
+                        + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+            }
         }
 
         if ("getWrappedElement".equals(method.getName())) {

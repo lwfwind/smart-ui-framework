@@ -3,6 +3,7 @@ package com.qa.framework.pagefactory.web.interceptor;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.common.Action;
 import com.qa.framework.pagefactory.web.Element;
+import io.appium.java_client.pagefactory.WithTimeout;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +14,7 @@ import org.openqa.selenium.support.pagefactory.ElementLocator;
 import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.qa.framework.pagefactory.TimeOutOfFindProcessor.getTimeOutOfFind;
 import static com.qa.framework.pagefactory.web.ImplementedByProcessor.getImplementClass;
@@ -72,14 +74,32 @@ public class ElementListHandler implements InvocationHandler {
         List<Object> wrappedElements = new ArrayList<Object>();
         Constructor<?> cons = implementtingType.getConstructor(WebDriver.class, WebElement.class);
         List<WebElement> elements = null;
-        int timeout = getTimeOutOfFind(field);
-        long end = System.currentTimeMillis() + timeout;
-        while (System.currentTimeMillis() < end) {
+        int timeout;
+        if(field.isAnnotationPresent(WithTimeout.class)){
             elements = locator.findElements();
-            if (elements != null && elements.size() > 0) {
-                break;
+            WithTimeout withTimeout = field.getAnnotation(WithTimeout.class);
+            int unit = 1;
+            if(withTimeout.unit() == TimeUnit.SECONDS){
+                unit = 1;
             }
-            this.action.pause(500);
+            else if(withTimeout.unit() == TimeUnit.HOURS){
+                unit = 3600;
+            }
+            else if(withTimeout.unit() == TimeUnit.MINUTES){
+                unit = 60;
+            }
+            timeout = (int) withTimeout.time() * unit;
+        }
+        else {
+            timeout = getTimeOutOfFind(field);
+            long end = System.currentTimeMillis() + timeout;
+            while (System.currentTimeMillis() < end) {
+                elements = locator.findElements();
+                if (elements != null && elements.size() > 0) {
+                    break;
+                }
+                this.action.pause(500);
+            }
         }
         if (elements == null) {
             logger.error("the " + logicParentElementName

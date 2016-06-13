@@ -21,9 +21,11 @@ import com.qa.framework.common.Action;
 import com.qa.framework.common.ScreenShot;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.pagefactory.WithTimeout;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.WrapsDriver;
@@ -88,23 +90,35 @@ public class ElementInterceptor implements MethodInterceptor {
 
         WebElement realElement = null;
         List<WebElement> elements = null;
-        int timeout = getTimeOutOfFind(field);
-        long end = System.currentTimeMillis() + timeout;
-        while (System.currentTimeMillis() < end) {
-            elements = locator.findElements();
-            if (elements != null && elements.size() > 0) {
-                realElement = elements.get(0);
-                if (realElement != null && realElement.isDisplayed()) {
-                    break;
+        if(field.isAnnotationPresent(WithTimeout.class)){
+            try {
+                realElement = locator.findElement();
+            } catch (NoSuchElementException e) {
+                if ("toString".equals(method.getName())) {
+                    return "Proxy element for: " + locator.toString();
                 }
+                else throw e;
             }
-            this.action.pause(500);
         }
-        if (realElement == null) {
-            logger.error("the " + this.field.getName()
-                    + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
-            throw new RuntimeException("the " + this.field.getName()
-                    + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+        else {
+            int timeout = getTimeOutOfFind(field);
+            long end = System.currentTimeMillis() + timeout;
+            while (System.currentTimeMillis() < end) {
+                elements = locator.findElements();
+                if (elements != null && elements.size() > 0) {
+                    realElement = elements.get(0);
+                    if (realElement != null && realElement.isDisplayed()) {
+                        break;
+                    }
+                }
+                this.action.pause(500);
+            }
+            if (realElement == null) {
+                logger.error("the " + this.field.getName()
+                        + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+                throw new RuntimeException("the " + this.field.getName()
+                        + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+            }
         }
 
 /*        if (getCurrentContentType(this.driver).equals(ContentType.HTML_OR_DEFAULT)) {

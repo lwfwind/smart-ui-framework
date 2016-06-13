@@ -20,6 +20,7 @@ import com.qa.framework.common.Action;
 import com.qa.framework.pagefactory.mobile.ProxyUtil;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
 import io.appium.java_client.MobileElement;
+import io.appium.java_client.pagefactory.WithTimeout;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
 import org.apache.log4j.Logger;
@@ -31,6 +32,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.qa.framework.pagefactory.TimeOutOfFindProcessor.getTimeOutOfFind;
 import static io.appium.java_client.pagefactory.utils.ProxyFactory.getEnhancedProxy;
@@ -82,14 +84,33 @@ public class ElementListInterceptor implements MethodInterceptor {
         }
 
         List<WebElement> realElements = null;
-        int timeout = getTimeOutOfFind(field);
-        long end = System.currentTimeMillis() + timeout;
-        while (System.currentTimeMillis() < end) {
+        int timeout;
+        if(field.isAnnotationPresent(WithTimeout.class)){
             realElements = locator.findElements();
-            if (realElements != null && realElements.size() > 0) {
-                break;
+            WithTimeout withTimeout = field.getAnnotation(WithTimeout.class);
+            int unit = 1;
+            if(withTimeout.unit() == TimeUnit.SECONDS){
+                unit = 1;
             }
-            this.action.pause(500);
+            else if(withTimeout.unit() == TimeUnit.HOURS){
+                unit = 3600;
+            }
+            else if(withTimeout.unit() == TimeUnit.MINUTES){
+                unit = 60;
+            }
+            timeout = (int) withTimeout.time() * unit;
+        }
+        else {
+            timeout = getTimeOutOfFind(field);
+            long end = System.currentTimeMillis() + timeout;
+            while (System.currentTimeMillis() < end) {
+                realElements = locator.findElements();
+                if (realElements != null && realElements.size() > 0) {
+                    break;
+                }
+                this.action.pause(500);
+            }
+
         }
         if (realElements == null) {
             logger.error("the " + this.field.getName()
