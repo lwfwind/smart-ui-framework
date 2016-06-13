@@ -76,7 +76,7 @@ public class ElementHandler implements InvocationHandler {
             }
         }
         else {
-            int timeout = getTimeOutOfFind(field);
+            int timeout = getTimeOutOfFind(field,1);
             long end = System.currentTimeMillis() + timeout;
             while (System.currentTimeMillis() < end) {
                 elements = locator.findElements();

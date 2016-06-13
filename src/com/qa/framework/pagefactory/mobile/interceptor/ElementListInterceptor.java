@@ -101,7 +101,7 @@ public class ElementListInterceptor implements MethodInterceptor {
             timeout = (int) withTimeout.time() * unit;
         }
         else {
-            timeout = getTimeOutOfFind(field);
+            timeout = getTimeOutOfFind(field,2);
             long end = System.currentTimeMillis() + timeout;
             while (System.currentTimeMillis() < end) {
                 realElements = locator.findElements();
