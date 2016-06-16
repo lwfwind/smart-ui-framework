@@ -5,6 +5,7 @@ import com.qa.framework.library.base.StringHelper;
 import com.qa.framework.library.base.XMLHelper;
 import org.dom4j.Element;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -110,7 +111,15 @@ public class TestngXmlGenerator {
             Element include = xml.addChildElement(methods, "include");
             xml.addAttribute(include, "name", methodMap.get("methodName").toString());
         }
-        xml.saveTo(outputPath + "xml_" + threadCnt + ".xml");
+        IOHelper.deleteDirectory(outputPath);
+        IOHelper.createNestDirectory(outputPath);
+        if(outputPath.endsWith("/")) {
+            xml.saveTo(outputPath + "xml_" + threadCnt + ".xml");
+        }
+        else
+        {
+            xml.saveTo(outputPath + File.separator + "xml_" + threadCnt + ".xml");
+        }
     }
 
 
