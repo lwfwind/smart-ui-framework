@@ -19,7 +19,15 @@ public class PropertiesSetting {
     }
 
     public static void autoSetting(String[] args) {
-        final File propsFile = new File(System.getProperty("user.dir") + File.separator, "config.properties");
+        String path = null;
+        if(args.length > 0){
+            path = args[0];
+        }
+        else
+        {
+            path = System.getProperty("user.dir");
+        }
+        final File propsFile = new File(path + File.separator, "config.properties");
         Properties props = new Properties();
         try {
             props.load(new FileInputStream(propsFile));
