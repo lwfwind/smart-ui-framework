@@ -20,8 +20,8 @@ public class PropertiesSetting {
 
     public static void autoSetting(String[] args) {
         String path = null;
-        if(System.getProperty("browser") != null){
-            path = System.getProperty("browser");
+        if(System.getProperty("basedir") != null){
+            path = System.getProperty("basedir");
         }
         else
         {
