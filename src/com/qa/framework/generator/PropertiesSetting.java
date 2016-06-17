@@ -32,8 +32,10 @@ public class PropertiesSetting {
         try {
             props.load(new FileInputStream(propsFile));
             for (String arg : args) {
-                List<String> argList = StringHelper.getTokensList(arg, "=");
-                props.put(argList.get(0), argList.get(1));
+                if(arg.contains("=")) {
+                    List<String> argList = StringHelper.getTokensList(arg, "=");
+                    props.put(argList.get(0), argList.get(1));
+                }
             }
             props.store(new FileOutputStream(propsFile), "");
         } catch (IOException e) {
