@@ -188,7 +188,7 @@ public class UiNode extends BasicTreeNode {
      * @return the xpath 2
      */
     public String getXpath2() {
-		/*String className = getNodeClassAttribute();
+        /*String className = getNodeClassAttribute();
 		String xpath = "//" + className;
 		String text = getAttribute("text");
 		if (text != null && !text.equals("")) {

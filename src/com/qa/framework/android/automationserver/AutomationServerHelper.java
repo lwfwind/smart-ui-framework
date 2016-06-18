@@ -1,7 +1,6 @@
 package com.qa.framework.android.automationserver;
 
 import com.android.ddmlib.IDevice;
-import com.android.ddmlib.Log;
 import com.qa.framework.android.DebugBridge;
 import com.qa.framework.android.automationserver.hierarchyviewer.HierarchyViewer;
 import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceBridge;
@@ -94,7 +93,7 @@ public class AutomationServerHelper {
         long currentTime = System.currentTimeMillis();
         long maxTime = currentTime + timeout;
         while (currentTime < maxTime) {
-            if(isMusicActive()){
+            if (isMusicActive()) {
                 return true;
             }
             try {

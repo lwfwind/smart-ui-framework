@@ -100,23 +100,20 @@ public class WidgetListInterceptor implements MethodInterceptor {
 
         List<WebElement> realElements = null;
         int timeout;
-        if(field.isAnnotationPresent(WithTimeout.class)){
+        if (field.isAnnotationPresent(WithTimeout.class)) {
             realElements = locator.findElements();
             WithTimeout withTimeout = field.getAnnotation(WithTimeout.class);
             int unit = 1;
-            if(withTimeout.unit() == TimeUnit.SECONDS){
+            if (withTimeout.unit() == TimeUnit.SECONDS) {
                 unit = 1;
-            }
-            else if(withTimeout.unit() == TimeUnit.HOURS){
+            } else if (withTimeout.unit() == TimeUnit.HOURS) {
                 unit = 3600;
-            }
-            else if(withTimeout.unit() == TimeUnit.MINUTES){
+            } else if (withTimeout.unit() == TimeUnit.MINUTES) {
                 unit = 60;
             }
             timeout = (int) withTimeout.time() * unit;
-        }
-        else {
-            timeout = getTimeOutOfFind(field,2);
+        } else {
+            timeout = getTimeOutOfFind(field, 2);
             long end = System.currentTimeMillis() + timeout;
             while (System.currentTimeMillis() < end) {
                 realElements = locator.findElements();

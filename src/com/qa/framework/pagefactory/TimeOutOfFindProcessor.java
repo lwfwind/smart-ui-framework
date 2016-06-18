@@ -16,16 +16,14 @@ public final class TimeOutOfFindProcessor {
      * @param type  the type
      * @return the time out of find
      */
-    public static int getTimeOutOfFind(Field field,int type) {
+    public static int getTimeOutOfFind(Field field, int type) {
         if (field.isAnnotationPresent(TimeOutOfFind.class)) {
             TimeOutOfFind annotation = field.getAnnotation(TimeOutOfFind.class);
             return annotation.value();
         }
-        if(type == 1){
+        if (type == 1) {
             return 10000;
-        }
-        else
-        {
+        } else {
             return 20000;
         }
     }

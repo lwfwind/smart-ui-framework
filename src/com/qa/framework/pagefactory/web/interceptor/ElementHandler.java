@@ -65,18 +65,16 @@ public class ElementHandler implements InvocationHandler {
         List<WebElement> elements = null;
         WebElement element = null;
         int previousWindowsCount = driver.getWindowHandles().size();
-        if(field.isAnnotationPresent(WithTimeout.class)){
+        if (field.isAnnotationPresent(WithTimeout.class)) {
             try {
                 element = locator.findElement();
             } catch (NoSuchElementException e) {
                 if ("toString".equals(method.getName())) {
                     return "Proxy element for: " + locator.toString();
-                }
-                else throw e;
+                } else throw e;
             }
-        }
-        else {
-            int timeout = getTimeOutOfFind(field,1);
+        } else {
+            int timeout = getTimeOutOfFind(field, 1);
             long end = System.currentTimeMillis() + timeout;
             while (System.currentTimeMillis() < end) {
                 elements = locator.findElements();

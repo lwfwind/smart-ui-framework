@@ -3,6 +3,7 @@ package com.qa.framework;
 import com.qa.framework.android.DebugBridge;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
+import com.qa.framework.cache.PackageCache;
 import com.qa.framework.config.DriverConfig;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.data.SuiteData;
@@ -180,6 +181,8 @@ public abstract class TestCaseBase {
             currentMethodName = method.getName();
         }
         MethodCache.set(StringHelper.removeSpecialChar(currentMethodName));
+        String packageName = method.getDeclaringClass().getPackage().getName();
+        PackageCache.set(packageName.substring(0, packageName.indexOf(".")));
         getDriverObj();
         initFields(this);
     }

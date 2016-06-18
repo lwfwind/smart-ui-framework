@@ -135,18 +135,16 @@ public class WidgetInterceptor implements MethodInterceptor {
 
             WebElement realElement = null;
             List<WebElement> elements = null;
-            if(field.isAnnotationPresent(WithTimeout.class)){
+            if (field.isAnnotationPresent(WithTimeout.class)) {
                 try {
                     realElement = locator.findElement();
                 } catch (NoSuchElementException e) {
                     if ("toString".equals(method.getName())) {
                         return "Proxy element for: " + locator.toString();
-                    }
-                    else throw e;
+                    } else throw e;
                 }
-            }
-            else {
-                int timeout = getTimeOutOfFind(field,2);
+            } else {
+                int timeout = getTimeOutOfFind(field, 2);
                 long end = System.currentTimeMillis() + timeout;
                 while (System.currentTimeMillis() < end) {
                     elements = locator.findElements();

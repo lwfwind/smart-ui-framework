@@ -20,11 +20,9 @@ public class PropertiesSetting {
 
     public static void autoSetting(String[] args) {
         String path = null;
-        if(System.getProperty("basedir") != null){
+        if (System.getProperty("basedir") != null) {
             path = System.getProperty("basedir");
-        }
-        else
-        {
+        } else {
             path = System.getProperty("user.dir");
         }
         final File propsFile = new File(path + File.separator, "config.properties");
@@ -32,7 +30,7 @@ public class PropertiesSetting {
         try {
             props.load(new FileInputStream(propsFile));
             for (String arg : args) {
-                if(arg.contains("=")) {
+                if (arg.contains("=")) {
                     List<String> argList = StringHelper.getTokensList(arg, "=");
                     props.put(argList.get(0), argList.get(1));
                 }
