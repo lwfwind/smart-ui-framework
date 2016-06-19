@@ -31,7 +31,17 @@ public class ScreenShot {
     /**
      * The constant dir.
      */
-    public static String dir = "screenshots";
+    public static String dir =  null;
+
+    static{
+        if(System.getProperty("screenshotBaseURL") != null){
+            dir =  System.getProperty("screenshotBaseURL") + File.separator + "screenshots";
+        }
+        else
+        {
+            dir =  System.getProperty("user.dir") + File.separator + "screenshots";
+        }
+    }
 
     /**
      * Capture fail string.
@@ -48,7 +58,7 @@ public class ScreenShot {
         String screenShotPath = fail + File.separator + t + "-" + fileName + ".jpg";
 
         try {
-            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+            if (PropConfig.getCoreType().equalsIgnoreCase("GOOGLECHROME")) {
                 FullScreen fullScreen = new FullScreen(driver);
                 fullScreen.take(screenShotPath);
             } else {

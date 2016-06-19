@@ -17,6 +17,7 @@ import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.Reporter;
 import org.testng.TestListenerAdapter;
 
 import java.io.File;
@@ -165,14 +166,11 @@ public class TestResultListener extends TestListenerAdapter {
     private void saveScreenShot(ITestResult tr) {
         WebDriver driver = DriverCache.get();
         String name = MethodCache.getCurrentMethodName();
-        String screenShotPath = ScreenShot.captureFail(driver, name, tr.getName());
-        File f = new File(screenShotPath);
-        if (f.exists()) {
-/*            Reporter.setCurrentTestResult(tr);
-            Reporter.logger(screenShotPath);
-            //把截图写入到Html报告中方便查看
-            Reporter.logger("<img src=\"../" + screenShotPath + "\"/>");*/
-        }
+        String screenShotPath =ScreenShot.captureFail(driver, name, tr.getName());
+        Reporter.setCurrentTestResult(tr);
+        //把截图写入到Html报告中方便查看
+        Reporter.log("<img src=\"" + screenShotPath + "\"/>");
+
     }
 
     private void printStackTrace(ITestResult tr) {
