@@ -52,6 +52,8 @@ public abstract class TestCaseBase {
             DebugBridge.init();
             //AccessibilityEventMonitor.start();
         }
+        String packageName=context.getCurrentXmlTest().getClasses().get(0).getName();
+        PackageCache.set(packageName.substring(0, packageName.indexOf(".")));
         HelperLoader.init();
         Class<?> clazz = findImplementClass(SuiteData.class);
         if (clazz != null) {
@@ -181,8 +183,8 @@ public abstract class TestCaseBase {
             currentMethodName = method.getName();
         }
         MethodCache.set(StringHelper.removeSpecialChar(currentMethodName));
-        String packageName = method.getDeclaringClass().getPackage().getName();
-        PackageCache.set(packageName.substring(0, packageName.indexOf(".")));
+/*        String packageName = method.getDeclaringClass().getPackage().getName();
+        PackageCache.set(packageName.substring(0, packageName.indexOf(".")));*/
         getDriverObj();
         initFields(this);
     }
