@@ -31,17 +31,8 @@ public class ScreenShot {
     /**
      * The constant dir.
      */
-    public static String dir =  null;
+    public static String dir =  "screenshots";
 
-    static{
-        if(System.getProperty("screenshotBaseURL") != null){
-            dir =  System.getProperty("screenshotBaseURL") + File.separator + "screenshots";
-        }
-        else
-        {
-            dir =  System.getProperty("user.dir") + File.separator + "screenshots";
-        }
-    }
 
     /**
      * Capture fail string.
@@ -68,8 +59,13 @@ public class ScreenShot {
         } catch (Exception e) {
             logger.error("captureFail exception:" + e.toString());
         }
-        // Convert '\' into '/' for web image browsing.
-        return screenShotPath;
+        if(System.getProperty("screenshotBaseURL") != null){
+            return System.getProperty("screenshotBaseURL") + File.separator + screenShotPath;
+        }
+        else
+        {
+            return screenShotPath;
+        }
     }
 
     /**
