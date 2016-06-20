@@ -167,10 +167,11 @@ public class TestResultListener extends TestListenerAdapter {
         WebDriver driver = DriverCache.get();
         String name = MethodCache.getCurrentMethodName();
         String screenShotPath =ScreenShot.captureFail(driver, name, tr.getName());
-        Reporter.setCurrentTestResult(tr);
-        //把截图写入到Html报告中方便查看
-        Reporter.log("<img src=\"" + screenShotPath + "\"/>");
-
+        if(System.getProperty("screenshotBaseURL") != null){
+            Reporter.setCurrentTestResult(tr);
+            //把截图写入到Html报告中方便查看
+            Reporter.log("<img src=\"" + screenShotPath + "\"/>");
+        }
     }
 
     private void printStackTrace(ITestResult tr) {

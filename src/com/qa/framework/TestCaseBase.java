@@ -183,8 +183,6 @@ public abstract class TestCaseBase {
             currentMethodName = method.getName();
         }
         MethodCache.set(StringHelper.removeSpecialChar(currentMethodName));
-/*        String packageName = method.getDeclaringClass().getPackage().getName();
-        PackageCache.set(packageName.substring(0, packageName.indexOf(".")));*/
         getDriverObj();
         initFields(this);
     }
