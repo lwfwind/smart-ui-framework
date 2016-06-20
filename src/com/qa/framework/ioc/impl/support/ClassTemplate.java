@@ -58,7 +58,7 @@ public abstract class ClassTemplate {
                         addClass(classList, packagePath, packageName);
                     } else if (protocol.equals("jar")) {
                         // 若在 jar 包中，则解析 jar 包中的 entry
-                        JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
+                       /* JarURLConnection jarURLConnection = (JarURLConnection) url.openConnection();
                         JarFile jarFile = jarURLConnection.getJarFile();
                         Enumeration<JarEntry> jarEntries = jarFile.entries();
                         while (jarEntries.hasMoreElements()) {
@@ -72,7 +72,7 @@ public abstract class ClassTemplate {
                                 // 执行添加类操作
                                 doAddClass(classList, className);
                             }
-                        }
+                        }*/
                     }
                 }
             }
