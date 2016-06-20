@@ -254,40 +254,44 @@ public abstract class PageBase {
      * Swipe to up.
      */
     public void swipeToUp() {
+        pause(3000);
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         ((AppiumDriver) driver).swipe(width / 2, height * 3 / 4, width / 2, height / 4, 1000);
-        pause(3000);
+        pause(1000);
     }
 
     /**
      * Swipe to down.
      */
     public void swipeToDown() {
+        pause(3000);
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         ((AppiumDriver) driver).swipe(width / 2, height / 4, width / 2, height * 3 / 4, 1000);
-        pause(3000);
+        pause(1000);
     }
 
     /**
      * Swipe to left.
      */
     public void swipeToLeft() {
+        pause(3000);
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         ((AppiumDriver) driver).swipe(width * 7 / 8, height / 2, width / 8, height / 2, 1000);
-        pause(3000);
+        pause(1000);
     }
 
     /**
      * Swipe to right.
      */
     public void swipeToRight() {
+        pause(3000);
         int width = driver.manage().window().getSize().width;
         int height = driver.manage().window().getSize().height;
         ((AppiumDriver) driver).swipe(width / 8, height / 2, width * 7 / 8, height / 2, 1000);
-        pause(3000);
+        pause(1000);
     }
 
 
