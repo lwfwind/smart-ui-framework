@@ -4,6 +4,7 @@ import com.qa.framework.config.PropConfig;
 import com.qa.framework.library.base.ClassHelper;
 import com.qa.framework.library.base.CollectionHelper;
 import com.qa.framework.library.base.StringHelper;
+import com.qa.framework.library.httpclient.HttpMethod;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -48,7 +49,18 @@ public class DBHelper {
             }
         } else {
             poolName = PropConfig.getDbPoolName();
+            if (StringHelper.startsWithIgnoreCase(poolName, "http://")) {
+                String ret=HttpMethod.get(poolName,2);
+                if(ret.contains(",")){
+                    poolName = StringHelper.getTokensList(ret,",").get(0);
+                }
+                else
+                {
+                    poolName = ret;
+                }
+            }
         }
+        logger.info("database pool name:"+poolName);
     }
 
     /**

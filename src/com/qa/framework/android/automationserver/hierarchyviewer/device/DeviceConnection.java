@@ -75,8 +75,7 @@ public class DeviceConnection {
      */
     public BufferedWriter getOutputStream() throws IOException {
         if (out == null) {
-            out =
-                    new BufferedWriter(new OutputStreamWriter(socketChannel.socket()
+            out = new BufferedWriter(new OutputStreamWriter(socketChannel.socket()
                             .getOutputStream()));
         }
         return out;

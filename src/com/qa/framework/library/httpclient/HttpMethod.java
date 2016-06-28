@@ -141,6 +141,41 @@ public class HttpMethod {
     }
 
     /**
+     * Use get method string.
+     *
+     * @param url         the url
+     * @param trytimes    the trytimes
+     * @return the string
+     */
+    public static String get(String url, int trytimes) {
+        HttpGet get = new HttpGet(url);
+        if (useProxy) {
+            HttpHost proxy = new HttpHost(localhost, localport, "http");
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).setProxy(proxy).build();
+            get.setConfig(requestConfig);
+        }
+        HttpConnectionImp imp = new HttpConnectionImp(get);
+        String returnResult = imp.getResponseResult(false, false);
+        if (returnResult != null) {
+            logger.info("actual result:" + returnResult);
+            return returnResult;
+        } else {
+            int count = 0;
+            while (count < trytimes && returnResult == null) {
+                returnResult = imp.getResponseResult(false, false);
+                count++;
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        logger.info("actual result:" + returnResult);
+        return returnResult;
+    }
+
+    /**
      * Use post method string.
      *
      * @param url         the url
