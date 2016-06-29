@@ -78,7 +78,13 @@ public class HttpConnectionImp {
                 //logger.error(e.getMessage());
             }
         }
-        return removeBOM(responseBody);
+        if(responseBody != null) {
+            return removeBOM(responseBody);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
@@ -89,13 +95,12 @@ public class HttpConnectionImp {
      */
     public String removeBOM(String responseBody) {
         BufferedReader reader = null;
-        // convert String into InputStream
-        InputStream is = new ByteArrayInputStream(responseBody.getBytes());
-
-        // read it with BufferedReader
-        reader = new BufferedReader(new InputStreamReader(new BOMInputStream(is)));
         String line = null;
         try {
+            // convert String into InputStream
+            InputStream is = new ByteArrayInputStream(responseBody.getBytes("utf-8"));
+            // read it with BufferedReader
+            reader = new BufferedReader(new InputStreamReader(new BOMInputStream(is),"utf-8"));
             line = reader.readLine();
             reader.close();
         } catch (IOException e) {

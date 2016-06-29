@@ -47,38 +47,8 @@ public class DeviceBridge {
     private static final HashMap<IDevice, Integer> devicePortMap = new HashMap<IDevice, Integer>();
     private static final HashMap<IDevice, ViewServerInfo> viewServerInfo =
             new HashMap<IDevice, ViewServerInfo>();
-    private static AndroidDebugBridge bridge;
     private static int nextLocalPort = DEFAULT_SERVER_PORT;
 
-    /**
-     * Init debug bridge.
-     *
-     * @param adbLocation the adb location
-     */
-    public static void initDebugBridge(String adbLocation) {
-        if (bridge == null) {
-            AndroidDebugBridge.init(false /* debugger support */);
-        }
-        if (bridge == null || !bridge.isConnected()) {
-            bridge = AndroidDebugBridge.createBridge(adbLocation, true);
-        }
-    }
-
-    /**
-     * Terminate.
-     */
-    public static void terminate() {
-        AndroidDebugBridge.terminate();
-    }
-
-    /**
-     * Get devices device [ ].
-     *
-     * @return the device [ ]
-     */
-    public static IDevice[] getDevices() {
-        return bridge.getDevices();
-    }
 
     /**
      * Start listen for devices.
@@ -289,7 +259,7 @@ public class DeviceBridge {
                 server = Integer.parseInt(line);
             }
         } catch (Exception e) {
-            Log.e(TAG, "Unable to get view server version from device " + device);
+            Log.e(TAG, "Unable to get view server version from device " + device + e.getMessage());
         } finally {
             if (connection != null) {
                 connection.close();
@@ -390,7 +360,7 @@ public class DeviceBridge {
                 windows.add(Window.getFocusedWindow(device));
             }
         } catch (Exception e) {
-            Log.e(TAG, "Unable to load the window list from device " + device);
+            Log.e(TAG, "Unable to load the window list from device " + device + e.getMessage());
         } finally {
             if (connection != null) {
                 connection.close();
@@ -488,43 +458,6 @@ public class DeviceBridge {
         return null;
     }
 
-    /**
-     * Load profile data boolean.
-     *
-     * @param window   the window
-     * @param viewNode the view node
-     * @return the boolean
-     */
-    public static boolean loadProfileData(Window window, ViewNode viewNode) {
-        DeviceConnection connection = null;
-        try {
-            connection = new DeviceConnection(window.getDevice());
-            connection.sendCommand("PROFILE " + window.encode() + " " + viewNode.toString());
-            BufferedReader in = connection.getInputStream();
-            int protocol;
-            synchronized (viewServerInfo) {
-                protocol = viewServerInfo.get(window.getDevice()).protocolVersion;
-            }
-            if (protocol < 3) {
-                return loadProfileData(viewNode, in);
-            } else {
-                boolean ret = loadProfileDataRecursive(viewNode, in);
-                if (ret) {
-                    viewNode.setProfileRatings();
-                }
-                return ret;
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Unable to load profiling data for window " + window.getTitle()
-                    + " on device " + window.getDevice());
-        } finally {
-            if (connection != null) {
-                connection.close();
-            }
-        }
-        return false;
-    }
-
     private static boolean loadProfileData(ViewNode node, BufferedReader in) throws IOException {
         String line;
         if ((line = in.readLine()) == null || line.equalsIgnoreCase("-1 -1 -1")
@@ -565,6 +498,7 @@ public class DeviceBridge {
             Log.e(TAG, "Unable to invalidate view " + viewNode + " in window " + viewNode.window
                     + " on device " + viewNode.window.getDevice());
         } finally {
+            if(connection !=null)
             connection.close();
         }
     }
@@ -583,6 +517,7 @@ public class DeviceBridge {
             Log.e(TAG, "Unable to request layout for node " + viewNode + " in window "
                     + viewNode.window + " on device " + viewNode.window.getDevice());
         } finally {
+            if(connection !=null)
             connection.close();
         }
     }

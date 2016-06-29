@@ -135,7 +135,7 @@ public class Emulator {
             throws IOException, InterruptedException, ExecutionException {
         logger.info("Beginning Create emulator.");
         String cmd = this.cmdShell + "android create avd --name " + this.avdName + " --target " + this.sdkTarget + " --force --sdcard 100M";
-        if (ProcessHelper.errorResult.contains("This platform has more than one ABI. Please specify one using --abi")) {
+        if (ProcessHelper.getErrorResult().contains("This platform has more than one ABI. Please specify one using --abi")) {
             logger.info("enter abi configuration");
             cmd = cmd + " --abi armeabi-v7a";
             logger.info("cmd = " + cmd);
@@ -152,8 +152,8 @@ public class Emulator {
             ProcessHelper.getStreamResult(process);
         } catch (IOException e) {
             logger.info(e.getClass().getName());
-            logger.info(ProcessHelper.errorResult);
-            if (ProcessHelper.errorResult.contains("This platform has more than one ABI. Please specify one using --abi")) {
+            logger.info(ProcessHelper.getErrorResult());
+            if (ProcessHelper.getErrorResult().contains("This platform has more than one ABI. Please specify one using --abi")) {
                 logger.info(e.getClass().getName());
                 createEmulator();
             } else {

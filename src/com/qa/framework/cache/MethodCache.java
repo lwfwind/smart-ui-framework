@@ -16,7 +16,7 @@ public class MethodCache {
      *
      * @param methodName the method name
      */
-    public static void set(String methodName) {
+    public static synchronized void set(String methodName) {
         String convMethodName = "";
         if (caches.contains(methodName)) {
             convMethodName = methodName + "_" + getCounter(methodName);
@@ -33,9 +33,9 @@ public class MethodCache {
      * @param methodName the method name
      * @return the counter
      */
-    public static int getCounter(String methodName) {
-        if (counter.get(methodName) == null) {
-            counter.put(methodName, 1);
+    public static synchronized int getCounter(String methodName) {
+        if (!counter.containsKey(methodName)) {
+            counter.putIfAbsent(methodName, 1);
             return 1;
         } else {
             int count = counter.get(methodName) + 1;

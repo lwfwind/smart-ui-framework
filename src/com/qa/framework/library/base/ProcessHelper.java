@@ -16,12 +16,16 @@ public class ProcessHelper {
     /**
      * The constant errorResult.
      */
-    public static String errorResult;
+    private static String errorResult;
     /**
      * The constant okResult.
      */
-    public static String okResult;
+    protected static String okResult;
     private static Logger logger = Logger.getLogger(ProcessHelper.class);
+
+    public static String getErrorResult(){
+        return errorResult;
+    }
 
     /**
      * Close pids by name.
@@ -173,17 +177,18 @@ public class ProcessHelper {
         }
 
         public String call() {
-            String threadResult = "";
+            StringBuffer buf = new StringBuffer();
             try {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(this.ins, StandardCharsets.UTF_8));
                 String line = null;
                 while ((line = reader.readLine()) != null) {
-                    threadResult = threadResult + line + "\r\n";
+                    buf.append(line);
+                    buf.append("\r\n");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return threadResult;
+            return buf.toString();
         }
     }
 }

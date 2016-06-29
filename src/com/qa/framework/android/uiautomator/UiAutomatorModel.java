@@ -41,9 +41,6 @@ public class UiAutomatorModel {
             throw new IllegalArgumentException("Invalid ui automator hierarchy file.");
         }
         this.mNafNodes = loader.getNafNodes();
-        if (this.mRootNode != null) {
-            this.mRootNode.clearAllChildren();
-        }
         this.mRootNode = rootNode;
         this.mExploreMode = true;
         this.mNodelist = loader.getAllNodes();

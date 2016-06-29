@@ -83,8 +83,7 @@ public class ImageCompare {
      * @throws Exception the exception
      */
     public static boolean compareImages(String benchmarkImageName, String actualImageName) throws Exception {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd-HHmmss");
-        String time = sdf.format(new Date());
+        boolean isMatched = true;
         BufferedImage benchmark = null, actual = null, difference = null;
         try {
             benchmark = ImageIO.read(new File(PropConfig.getBenchmarkImagePath() + File.separator + benchmarkImageName));
@@ -92,37 +91,39 @@ public class ImageCompare {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Integer width = benchmark.getWidth();
-        Integer height = benchmark.getHeight();
-        difference = new BufferedImage(benchmark.getWidth(), benchmark.getHeight(), BufferedImage.TYPE_INT_RGB);
-        boolean isMatched = true;
-        for (int y = 0; y < height; ++y) {
-            for (int x = 0; x < width; ++x) {
-                int expRGB = benchmark.getRGB(x, y);
-                int actRGB = actual.getRGB(x, y);
-                int newRGB = actRGB;
-                if (expRGB != actRGB) {
-                    double deltaE = getDelta(xyz2lab(rgb2xyz(expRGB)), xyz2lab(rgb2xyz(actRGB)));
-                    if (deltaE > PropConfig.getMaxColorThreshold()) {
-                        newRGB = 0xff0000;// set red in difference place
+        if(benchmark != null) {
+            Integer width = benchmark.getWidth();
+            Integer height = benchmark.getHeight();
+            difference = new BufferedImage(benchmark.getWidth(), benchmark.getHeight(), BufferedImage.TYPE_INT_RGB);
+            for (int y = 0; y < height; ++y) {
+                for (int x = 0; x < width; ++x) {
+                    int expRGB = benchmark.getRGB(x, y);
+                    int actRGB = actual.getRGB(x, y);
+                    int newRGB = actRGB;
+                    if (expRGB != actRGB) {
+                        double deltaE = getDelta(xyz2lab(rgb2xyz(expRGB)), xyz2lab(rgb2xyz(actRGB)));
+                        if (deltaE > PropConfig.getMaxColorThreshold()) {
+                            newRGB = 0xff0000;// set red in difference place
+                        }
+                        isMatched = false;
                     }
-                    isMatched = false;
+                    difference.setRGB(x, y, newRGB);
                 }
-                difference.setRGB(x, y, newRGB);
             }
-        }
-        FileOutputStream out = null;
-        if (!isMatched) {
-            try {
-                String baseName = IOHelper.getBaseName(actualImageName);
-                String diffImagePath = PropConfig.getDiffImagePath();
-                IOHelper.createNestDirectory(diffImagePath);
-                out = new FileOutputStream(diffImagePath + File.separator + baseName + ".png");
-                ImageIO.write(difference, "png", out);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                out.close();
+            FileOutputStream out = null;
+            if (!isMatched) {
+                try {
+                    String baseName = IOHelper.getBaseName(actualImageName);
+                    String diffImagePath = PropConfig.getDiffImagePath();
+                    IOHelper.createNestDirectory(diffImagePath);
+                    out = new FileOutputStream(diffImagePath + File.separator + baseName + ".png");
+                    ImageIO.write(difference, "png", out);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } finally {
+                    if (out != null)
+                        out.close();
+                }
             }
         }
         return isMatched;
