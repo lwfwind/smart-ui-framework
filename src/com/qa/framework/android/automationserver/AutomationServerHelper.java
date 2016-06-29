@@ -117,7 +117,7 @@ public class AutomationServerHelper {
         DeviceConnection connection = null;
         try {
             connection = new DeviceConnection(device);
-            connection.sendCommand("toast");
+            connection.sendCommand("toast 20000");
             String line = connection.getInputStream().readLine();
             if (line != null) {
                 returnValue = line;
