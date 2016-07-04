@@ -124,9 +124,6 @@ public class ProcessHelper {
             timeOutEexception = e.toString();
             logger.warn("[" + invokeMethod + "]" + "getInputStreamException==" + e.toString());
         }
-        if ((!okResult.contains("android.util.AndroidException")) || ((!"".equals(okResult)) && (!"resign".equals(invokeMethod)))) {
-            logger.info("[" + invokeMethod + "]" + "getInputStream==" + okResult);
-        }
         InputStream errorStream = null;
         if (runGetErrorStream) {
             errorStream = process.getErrorStream();
