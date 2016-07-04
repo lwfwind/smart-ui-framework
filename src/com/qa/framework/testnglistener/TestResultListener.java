@@ -147,6 +147,7 @@ public class TestResultListener extends TestListenerAdapter {
                             if (entry.getValue().getHashCode() == getId(testResult)) {
                                 logger.info("Remove fail but retry pass test: " + entry.getValue().getName());
                                 iterator.remove();
+                                break;
                             }
                         }
                     }
@@ -214,7 +215,7 @@ public class TestResultListener extends TestListenerAdapter {
         if (map == null) {
             map = new HashMap<Integer, Method>();
         }
-        map.put(id, method);
+        map.put(id + 1, method);
         ResultCache.set(map);
     }
 
