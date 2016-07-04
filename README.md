@@ -8,7 +8,7 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 
 * Easy to learn
 * Support page object design pattern and extend page factory support highlight element, log action, screenshot action automatically and so on
-* Support concurrent testing with multi webdriver
+* Good support concurrent testing with multi webdriver
 * Re-run failed test cases and capture screenshot automatically when testcase fails
 * Support dependency injection
 
