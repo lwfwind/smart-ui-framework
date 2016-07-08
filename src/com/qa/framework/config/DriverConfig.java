@@ -215,7 +215,7 @@ public class DriverConfig {
 
     private static File getAppBin() {
         File app = null;
-        if (PropConfig.getAppBin().contains("http") && !isDownloaded) {
+        if (PropConfig.getAppBin().contains("http") && !isDownloaded)
             if (PropConfig.getAppBin().endsWith("apk") || PropConfig.getAppBin().endsWith("ipa") || PropConfig.getAppBin().endsWith("app")) {
                 appBinName = IOHelper.getName(PropConfig.getAppBin());
                 IOHelper.downFileFromUrl(PropConfig.getAppBin(), ProjectEnvironment.resourcePath() + appBinName);
@@ -260,20 +260,44 @@ public class DriverConfig {
                                 break;
                             }
                         }
+                    } else {
+                        Pattern pattern = null;
+                        if (line.contains(".apk")) {
+                            pattern = Pattern.compile("href=\"(.*\\.apk)");
+                        } else if (line.contains(".ipa")) {
+                            pattern = Pattern.compile("href=\"(.*\\.ipa)");
+                        } else if (line.contains(".app")) {
+                            pattern = Pattern.compile("href=\"(.*\\.app)");
+                        }
+                        if (pattern != null) {
+                            Matcher m1 = pattern.matcher(line);
+                            if (m1.find()) {
+                                appBinName = m1.group(1);
+                                break;
+                            }
+                        }
                     }
                 }
                 String fullUrl;
                 if (PropConfig.getAppBin().endsWith("/")) {
-                    fullUrl = PropConfig.getAppBin() + matchedNumber + "/" + appBinName;
+                    if (matchedNumber.equals("")) {
+                        fullUrl = PropConfig.getAppBin() + appBinName;
+                    } else {
+                        fullUrl = PropConfig.getAppBin() + matchedNumber + "/" + appBinName;
+                    }
                 } else {
-                    fullUrl = PropConfig.getAppBin() + "/" + matchedNumber + "/" + appBinName;
+                    if (matchedNumber.equals("")) {
+                        fullUrl = PropConfig.getAppBin() + "/" + appBinName;
+                    } else {
+                        fullUrl = PropConfig.getAppBin() + "/" + matchedNumber + "/" + appBinName;
+                    }
                 }
                 logger.info("download file:" + fullUrl);
                 IOHelper.downFileFromUrl(fullUrl, ProjectEnvironment.resourcePath() + appBinName);
                 app = new File(ProjectEnvironment.resourcePath(), appBinName);
                 isDownloaded = true;
             }
-        } else {
+        else {
             if (PropConfig.getAppBin().contains("http")) {
                 app = new File(ProjectEnvironment.resourcePath(), appBinName);
             } else {
