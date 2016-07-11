@@ -252,7 +252,9 @@ public class PropConfig {
         if ("false".equalsIgnoreCase(val)) {
             useProxy = false;
         }
-        useProxy = true;
+        else{
+            useProxy = true;
+        }
     }
 
     /**

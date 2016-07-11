@@ -51,7 +51,6 @@ public class HttpConnectionImp {
         String responseBody = null;
         try {
             CloseableHttpResponse httpResponse = httpClient.execute(baseRequest, clientContext);
-            //统一处理为utf-8
             int status = httpResponse.getStatusLine().getStatusCode();
             if (storeCookie) {
                 CookieStore cookieStore = clientContext.getCookieStore();
@@ -66,6 +65,7 @@ public class HttpConnectionImp {
             HttpEntity entity = httpResponse.getEntity();
             responseBody = entity != null ? EntityUtils.toString(entity) : null;
             if (responseBody != null) {
+                //统一处理为utf-8
                 responseBody = new String(responseBody.getBytes("UTF-8"), "UTF-8");
             }
         } catch (IOException e) {
