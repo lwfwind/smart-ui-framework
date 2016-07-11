@@ -1,18 +1,26 @@
 package com.qa.framework.library.httpclient;
 
 
+import com.qa.framework.cache.DriverCache;
+import com.qa.framework.config.PropConfig;
+import com.qa.framework.library.base.StringHelper;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.Cookie;
 
 import java.io.*;
+import java.util.Set;
 
 /**
  * Created by apple on 15/11/20.
@@ -42,8 +50,36 @@ public class HttpConnectionImp {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpClientContext clientContext = HttpClientContext.create();
         if (useCookie) {
-            CookieStore cookieStore = CookieCache.get();
-            if (cookieStore == null) {
+            CookieCache.clear();
+            Set<Cookie> driverCookies = DriverCache.get().manage().getCookies();
+            org.apache.http.client.CookieStore cookieStore = new BasicCookieStore();
+            for (Cookie cookie : driverCookies) {
+                BasicClientCookie basicCookie = new BasicClientCookie(cookie.getName(), cookie.getValue());
+                basicCookie.setDomain(cookie.getDomain());
+                basicCookie.setPath(cookie.getPath());
+                basicCookie.setExpiryDate(cookie.getExpiry());
+                cookieStore.addCookie(basicCookie);
+            }
+            for (Cookie cookie : driverCookies) {
+                String webPath = PropConfig.getWebPath();
+                String hostName = "";
+                if (StringHelper.startsWithIgnoreCase(webPath, "http://")) {
+                    if (webPath.contains("/")) {
+                        hostName = StringHelper.getTokensList(webPath.substring(7), "/").get(0);
+                    } else {
+                        hostName = webPath.substring(7);
+                    }
+                }
+                if(!cookie.getDomain().equalsIgnoreCase(hostName)){
+                    BasicClientCookie basicCookie = new BasicClientCookie(cookie.getName(), cookie.getValue());
+                    basicCookie.setDomain(hostName);
+                    basicCookie.setPath(cookie.getPath());
+                    basicCookie.setExpiryDate(cookie.getExpiry());
+                    cookieStore.addCookie(basicCookie);
+                }
+            }
+            CookieCache.set(cookieStore);
+            if (cookieStore.getCookies().size() <= 0) {
                 throw new RuntimeException("cookieStore没有在缓存中");
             }
             clientContext.setCookieStore(cookieStore);
