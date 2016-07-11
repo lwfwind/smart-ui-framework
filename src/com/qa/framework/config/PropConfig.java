@@ -16,9 +16,9 @@ public class PropConfig {
     private static Properties props = new Properties();
     //代理配置
     private static boolean useProxy = false;
-    private static String localhost;
-    private static String localport;
-    private static String timeout;
+    private static String localhost = "127.0.0.1";
+    private static String localport = "8888";
+    private static String timeout = "3000";
     //测试服务器配置
     private static String webPath;
     private static String dbPoolName;
