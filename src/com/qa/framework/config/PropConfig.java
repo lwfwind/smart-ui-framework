@@ -23,10 +23,10 @@ public class PropConfig {
     private static String webPath;
     private static String dbPoolName;
     //失败重试次数
-    private static int retryCount;
+    private static int retryCount = 1;
     //自定义report
-    private static String sourceCodeEncoding;
-    private static String sourceCodeDir;
+    private static String sourceCodeEncoding = "UTF-8";
+    private static String sourceCodeDir = "src";
     //浏览器配置
     private static String coreType;
     private static String htmlUnitEmulationType;
