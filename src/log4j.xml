@@ -18,7 +18,7 @@
         <param name="File" value="all.log"/>
         <param name="Append" value="false"/>
         <param name="MaxBackupIndex" value="10"/>
-        <layout class="org.apache.log4j.PatternLayout">
+        <layout class="com.qa.framework.library.log4j.Log4jExPatternLayout">
             <param name="ConversionPattern" value="[%d{dd HH:mm:ss,SSS\} %-5p] [thread %T] [%t] %c{2\} - %m%n"/>
         </layout>
         <filter class="org.apache.log4j.varia.LevelRangeFilter">

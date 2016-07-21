@@ -39,23 +39,23 @@ public class XmlToBean {
         while (allPool.hasNext()) {
             pool = (Element) allPool.next();
             BaseConnBean bcBean = new BaseConnBean();
-            bcBean.setName(XmlUtil.getChildText(pool, "name"));
-            bcBean.setUsername(XmlUtil.getChildText(pool, "username"));
-            bcBean.setPassword(XmlUtil.getChildText(pool, "password"));
-            bcBean.setJdbcurl(XmlUtil.getChildText(pool, "jdbcurl"));
+            bcBean.setName(XmlUtil.getChildText(pool, "name").trim());
+            bcBean.setUsername(XmlUtil.getChildText(pool, "username").trim());
+            bcBean.setPassword(XmlUtil.getChildText(pool, "password").trim());
+            bcBean.setJdbcurl(XmlUtil.getChildText(pool, "jdbcurl").trim());
             try {
                 bcBean.setMax(Integer.parseInt(XmlUtil
-                        .getChildText(pool, "max")));
+                        .getChildText(pool, "max").trim()));
             } catch (NumberFormatException e) {
                 bcBean.setMax(0);
             }
             try {
                 bcBean.setWait(Long.parseLong(XmlUtil
-                        .getChildText(pool, "wait")));
+                        .getChildText(pool, "wait").trim()));
             } catch (NumberFormatException e) {
                 bcBean.setWait(-1L);
             }
-            bcBean.setDriver(XmlUtil.getChildText(pool, "driver"));
+            bcBean.setDriver(XmlUtil.getChildText(pool, "driver").trim());
             pools.add(bcBean);
         }
         return pools;
