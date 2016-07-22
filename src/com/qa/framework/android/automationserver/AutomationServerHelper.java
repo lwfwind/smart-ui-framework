@@ -134,6 +134,33 @@ public class AutomationServerHelper {
     }
 
     /**
+     * Gets last toast.
+     *
+     * @param excludeText the exclude text
+     * @return the last toast
+     */
+    public static String getLastToast(String excludeText) {
+        String returnValue = "";
+        DeviceConnection connection = null;
+        try {
+            connection = new DeviceConnection(device);
+            connection.sendCommand("toast -t 20000 -ex "+excludeText);
+            String line = connection.getInputStream().readLine();
+            if (line != null) {
+                returnValue = line;
+            }
+        } catch (Exception e) {
+            logger.error("Unable to get toast from device " + device);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+        return returnValue;
+    }
+
+    /**
      * Gets element location by text.
      *
      * @param text  the text
