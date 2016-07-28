@@ -218,6 +218,7 @@ public class DriverConfig {
         if (PropConfig.getAppBin().contains("http") && !isDownloaded)
             if (PropConfig.getAppBin().endsWith("apk") || PropConfig.getAppBin().endsWith("ipa") || PropConfig.getAppBin().endsWith("app")) {
                 appBinName = IOHelper.getName(PropConfig.getAppBin());
+                IOHelper.deleteFile(ProjectEnvironment.resourcePath() + appBinName);
                 IOHelper.downFileFromUrl(PropConfig.getAppBin(), ProjectEnvironment.resourcePath() + appBinName);
                 app = new File(ProjectEnvironment.resourcePath(), appBinName);
             } else {
@@ -293,6 +294,7 @@ public class DriverConfig {
                     }
                 }
                 logger.info("download file:" + fullUrl);
+                IOHelper.deleteFile(ProjectEnvironment.resourcePath() + appBinName);
                 IOHelper.downFileFromUrl(fullUrl, ProjectEnvironment.resourcePath() + appBinName);
                 app = new File(ProjectEnvironment.resourcePath(), appBinName);
                 isDownloaded = true;
