@@ -28,7 +28,13 @@ public class TestngXmlGenerator {
      * @param args the input arguments
      */
     public static void main(String[] args) {
-        autoGenerate(args[0], args[1], args[2]);
+        if(args.length > 2) {
+            autoGenerate(args[0], args[1], args[2]);
+        }
+        else
+        {
+            autoGenerate(args[0], args[1]);
+        }
     }
 
     /**
@@ -120,5 +126,15 @@ public class TestngXmlGenerator {
         }
     }
 
+    /**
+     * Auto generate.
+     *
+     * @param outputPath   the output path
+     * @param threadCnt    the thread cnt
+     */
+    public static void autoGenerate(String outputPath, String threadCnt) {
+        String testCasePath = System.getProperty("user.dir");
+        autoGenerate(testCasePath,outputPath,threadCnt);
+    }
 
 }
