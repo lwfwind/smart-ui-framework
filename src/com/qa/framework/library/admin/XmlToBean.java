@@ -4,6 +4,7 @@ import com.qa.framework.config.ProjectEnvironment;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.library.base.XMLHelper;
 import com.qa.framework.library.database.BaseConnBean;
+import org.apache.log4j.Logger;
 import org.dom4j.Element;
 
 import java.util.ArrayList;
@@ -14,7 +15,8 @@ import java.util.List;
  * The type Xml to bean.
  */
 public class XmlToBean {
-
+    private final static Logger logger = Logger
+            .getLogger(XmlToBean.class);
     private static BaseAdminBean baseAdminBean = null;
 
     static {
@@ -34,9 +36,8 @@ public class XmlToBean {
         List<Element> servers = XmlUtil.findElementsByXPath("Servers/Server");
         String serverName = PropConfig.getWebPath().split("/")[2].trim();
         Element server = null;
-        Iterator<Element> allServers = servers.iterator();
-        while (allServers.hasNext()) {
-            server = (Element) allServers.next();
+        for (Element server1 : servers) {
+            server = server1;
             String xmlName = XmlUtil.getChildText(server, "name");
             if (xmlName.equalsIgnoreCase(serverName)) {
                 baseAdminBean = new BaseAdminBean();
@@ -45,7 +46,9 @@ public class XmlToBean {
             }
         }
         if (baseAdminBean == null) {
-            throw new RuntimeException("对不起,请检查AdminConfig.xml的配置");
+            logger.error("对不起,请检查AdminConfig.xml的配置");
+            //http://stackoverflow.com/questions/2070293/why-doesnt-java-allow-to-throw-a-checked-exception-from-static-initialization-b
+            //throw new ExceptionInInitializerError("对不起,请检查AdminConfig.xml的配置");
         }
         Element adminRoot = XmlUtil.getChildElement(server, "admins");
         List<Element> admins = XmlUtil.getChildElements(adminRoot, "admin");
