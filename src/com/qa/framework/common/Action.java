@@ -85,7 +85,7 @@ public class Action {
                 Alert alert = driver.switchTo().alert();
                 msg = alert.getText();
                 alert.accept();
-            } catch (NoAlertPresentException e) {
+            } catch (NoAlertPresentException ignored) {
             }
             pause(500);
             current = System.currentTimeMillis();

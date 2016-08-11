@@ -79,9 +79,6 @@ public class HttpConnectionImp {
                 }
             }
             CookieCache.set(cookieStore);
-            if (cookieStore.getCookies().size() <= 0) {
-                throw new RuntimeException("cookieStore没有在缓存中");
-            }
             clientContext.setCookieStore(cookieStore);
         }
         String responseBody = null;
