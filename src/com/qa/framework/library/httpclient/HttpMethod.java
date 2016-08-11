@@ -33,7 +33,7 @@ public class HttpMethod {
             localport = Integer.valueOf(PropConfig.getLocalport());
             timeout = Integer.valueOf(PropConfig.getTimeout());
         } else {
-            timeout = 3000;
+            timeout = 10000;
         }
     }
 
@@ -91,7 +91,10 @@ public class HttpMethod {
         HttpGet get = new HttpGet(uri);
         if (useProxy) {
             HttpHost proxy = new HttpHost(localhost, localport, "http");
-            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).setProxy(proxy).build();
+            RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(timeout).setSocketTimeout(timeout).setConnectTimeout(timeout).setProxy(proxy).build();
+            get.setConfig(requestConfig);
+        } else {
+            RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(timeout).setSocketTimeout(timeout).setConnectTimeout(timeout).build();
             get.setConfig(requestConfig);
         }
         HttpConnectionImp imp = new HttpConnectionImp(get);
@@ -118,6 +121,9 @@ public class HttpMethod {
             HttpHost proxy = new HttpHost(localhost, localport, "http");
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).setProxy(proxy).build();
             get.setConfig(requestConfig);
+        } else {
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).build();
+            get.setConfig(requestConfig);
         }
         HttpConnectionImp imp = new HttpConnectionImp(get);
         String returnResult = imp.getResponseResult(storeCookie, useCookie);
@@ -143,8 +149,8 @@ public class HttpMethod {
     /**
      * Use get method string.
      *
-     * @param url         the url
-     * @param trytimes    the trytimes
+     * @param url      the url
+     * @param trytimes the trytimes
      * @return the string
      */
     public static String get(String url, int trytimes) {
@@ -152,6 +158,9 @@ public class HttpMethod {
         if (useProxy) {
             HttpHost proxy = new HttpHost(localhost, localport, "http");
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).setProxy(proxy).build();
+            get.setConfig(requestConfig);
+        } else {
+            RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).build();
             get.setConfig(requestConfig);
         }
         HttpConnectionImp imp = new HttpConnectionImp(get);

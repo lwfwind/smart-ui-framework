@@ -18,7 +18,7 @@ public class PropConfig {
     private static boolean useProxy = false;
     private static String localhost = "127.0.0.1";
     private static String localport = "8888";
-    private static String timeout = "3000";
+    private static String timeout = "10000";
     //测试服务器配置
     private static String webPath;
     private static String dbPoolName;
