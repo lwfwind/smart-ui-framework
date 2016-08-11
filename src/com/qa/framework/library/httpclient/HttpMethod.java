@@ -208,7 +208,7 @@ public class HttpMethod {
         List<BasicNameValuePair> basicNameValuePairs = new ArrayList<BasicNameValuePair>();
         if (params != null) {
             for (Param param : params) {
-                BasicNameValuePair basicNameValuePair = new BasicNameValuePair(param.getName(), param.getValue(false));
+                BasicNameValuePair basicNameValuePair = new BasicNameValuePair(param.getName(), param.getValue(true));
                 basicNameValuePairs.add(basicNameValuePair);
             }
         }
