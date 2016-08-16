@@ -195,10 +195,12 @@ public class TestResultListener extends TestListenerAdapter {
         //captureAction brower error include javascript error
         if (PropConfig.getCoreType().equals("GOOGLECHROME")) {
             WebDriver driver = DriverCache.get();
-            LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
-            for (LogEntry entry : logEntries) {
-                logger.info("brower info - " + entry.getLevel() + " " + entry.getMessage());
-            }
+            try {
+                LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
+                for (LogEntry entry : logEntries) {
+                    logger.info("brower info - " + entry.getLevel() + " " + entry.getMessage());
+                }
+            }catch (Exception ignored){}
         }
     }
 
