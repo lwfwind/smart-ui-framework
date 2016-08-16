@@ -47,6 +47,9 @@ public class PropConfig {
     private static String diffImagePath;
     private static int maxColorThreshold;
 
+    //Highlight element for android
+    private static boolean highlight = false;
+
     static {
         File file = new File(System.getProperty("user.dir") + File.separator + "config.properties");
         FileReader fileReader = null;
@@ -69,6 +72,29 @@ public class PropConfig {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * Is highlight boolean.
+     *
+     * @return the boolean
+     */
+    public static boolean isHighlight() {
+        return highlight;
+    }
+
+    /**
+     * Sets highlight.
+     *
+     * @param val the val
+     */
+    public static void setHighlight(String val) {
+        if ("false".equalsIgnoreCase(val)) {
+            highlight = false;
+        }
+        else{
+            highlight = true;
         }
     }
 

@@ -57,6 +57,36 @@ public class AutomationServerHelper {
         }
     }
 
+    /**
+     * highlight boolean.
+     *
+     * @return the boolean
+     */
+    public static boolean highlightElement(boolean flag) {
+        boolean returnValue = false;
+        DeviceConnection connection = null;
+        try {
+            connection = new DeviceConnection(device);
+            if(flag) {
+                connection.sendCommand("highlight 1");
+            }
+            else
+            {
+                connection.sendCommand("highlight 0");
+            }
+            String line = connection.getInputStream().readLine();
+            if (line != null) {
+                returnValue = Boolean.valueOf(line);
+            }
+        } catch (Exception e) {
+            logger.error("Unable to get automation server info from device " + device);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+        return returnValue;
+    }
 
     /**
      * Is music active boolean.

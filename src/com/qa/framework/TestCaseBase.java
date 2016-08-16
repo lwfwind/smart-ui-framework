@@ -1,6 +1,7 @@
 package com.qa.framework;
 
 import com.qa.framework.android.DebugBridge;
+import com.qa.framework.android.automationserver.AutomationServerHelper;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
 import com.qa.framework.config.DriverConfig;
@@ -49,6 +50,7 @@ public abstract class TestCaseBase {
         beforeSuite();
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             DebugBridge.init();
+            AutomationServerHelper.highlightElement(PropConfig.isHighlight());
             //AccessibilityEventMonitor.start();
         }
         HelperLoader.init();
