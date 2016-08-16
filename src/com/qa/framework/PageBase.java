@@ -3,6 +3,7 @@ package com.qa.framework;
 import com.qa.framework.android.uiautomator.UiAutomatorHelper;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.common.Action;
+import com.qa.framework.config.PropConfig;
 import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.web.Element;
 import io.appium.java_client.AppiumDriver;
@@ -254,44 +255,97 @@ public abstract class PageBase {
      * Swipe to up.
      */
     public void swipeToUp() {
-        pause(3000);
-        int width = driver.manage().window().getSize().width;
-        int height = driver.manage().window().getSize().height;
-        ((AppiumDriver) driver).swipe(width / 2, height * 3 / 4, width / 2, height / 4, 1000);
-        pause(1000);
+
+        switch (PropConfig.getCoreType()){
+            case "ANDROIDAPP":
+                pause(3000);
+                int width = driver.manage().window().getSize().width;
+                int height = driver.manage().window().getSize().height;
+                ((AppiumDriver) driver).swipe(width / 2, height * 3 / 4, width / 2, height / 4, 1000);
+                pause(1000);
+                break;
+            case "IOSAPP":
+                pause(4000);
+                System.out.print("向上滑动2");
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                HashMap<String, String> scrollObject = new HashMap<String, String>();
+                scrollObject.put("direction", "down");
+                js.executeScript("mobile: scroll", scrollObject);
+                pause(1000);
+                break;
+        }
     }
 
     /**
      * Swipe to down.
      */
     public void swipeToDown() {
-        pause(3000);
-        int width = driver.manage().window().getSize().width;
-        int height = driver.manage().window().getSize().height;
-        ((AppiumDriver) driver).swipe(width / 2, height / 4, width / 2, height * 3 / 4, 1000);
-        pause(1000);
+        switch (PropConfig.getCoreType()){
+            case "ANDROIDAPP":
+                pause(3000);
+                int width = driver.manage().window().getSize().width;
+                int height = driver.manage().window().getSize().height;
+                ((AppiumDriver) driver).swipe(width / 2, height / 4, width / 2, height * 3 / 4, 1000);
+                pause(1000);
+                break;
+            case "IOSAPP":
+                pause(4000);
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                HashMap<String, String> scrollObject = new HashMap<String, String>();
+                scrollObject.put("direction", "up");
+                js.executeScript("mobile: scroll", scrollObject);
+                pause(1000);
+                break;
+        }
+
     }
 
     /**
      * Swipe to left.
      */
     public void swipeToLeft() {
-        pause(3000);
-        int width = driver.manage().window().getSize().width;
-        int height = driver.manage().window().getSize().height;
-        ((AppiumDriver) driver).swipe(width * 7 / 8, height / 2, width / 8, height / 2, 1000);
-        pause(1000);
+        switch (PropConfig.getCoreType()){
+            case "ANDROIDAPP":
+                pause(3000);
+                int width = driver.manage().window().getSize().width;
+                int height = driver.manage().window().getSize().height;
+                ((AppiumDriver) driver).swipe(width * 7 / 8, height / 2, width / 8, height / 2, 1000);
+                pause(1000);
+                break;
+            case "IOSAPP":
+                pause(4000);
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                HashMap<String, String> scrollObject = new HashMap<String, String>();
+                scrollObject.put("direction", "right");
+                js.executeScript("mobile: scroll", scrollObject);
+                pause(1000);
+                break;
+        }
+
     }
 
     /**
      * Swipe to right.
      */
     public void swipeToRight() {
-        pause(3000);
-        int width = driver.manage().window().getSize().width;
-        int height = driver.manage().window().getSize().height;
-        ((AppiumDriver) driver).swipe(width / 8, height / 2, width * 7 / 8, height / 2, 1000);
-        pause(1000);
+        switch (PropConfig.getCoreType()){
+            case "ANDROIDAPP":
+                pause(3000);
+                int width = driver.manage().window().getSize().width;
+                int height = driver.manage().window().getSize().height;
+                ((AppiumDriver) driver).swipe(width / 8, height / 2, width * 7 / 8, height / 2, 1000);
+                pause(1000);
+                break;
+            case "IOSAPP":
+                pause(4000);
+                JavascriptExecutor js = (JavascriptExecutor) driver;
+                HashMap<String, String> scrollObject = new HashMap<String, String>();
+                scrollObject.put("direction", "left");
+                js.executeScript("mobile: scroll", scrollObject);
+                pause(1000);
+                break;
+        }
+
     }
 
 
