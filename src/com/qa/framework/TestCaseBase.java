@@ -3,7 +3,6 @@ package com.qa.framework;
 import com.qa.framework.android.DebugBridge;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
-import com.qa.framework.cache.PackageCache;
 import com.qa.framework.config.DriverConfig;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.data.SuiteData;
@@ -52,8 +51,6 @@ public abstract class TestCaseBase {
             DebugBridge.init();
             //AccessibilityEventMonitor.start();
         }
-        String packageName=context.getCurrentXmlTest().getClasses().get(0).getName();
-        PackageCache.set(packageName.substring(0, packageName.indexOf(".")));
         HelperLoader.init();
         Class<?> clazz = findImplementClass(SuiteData.class);
         if (clazz != null) {

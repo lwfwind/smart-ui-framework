@@ -1,7 +1,6 @@
 package com.qa.framework.ioc;
 
 import com.qa.framework.InstanceFactory;
-import com.qa.framework.cache.PackageCache;
 import com.qa.framework.config.PropConfig;
 
 import java.lang.annotation.Annotation;
@@ -23,7 +22,7 @@ public class ClassFinder {
 
     static {
         if (PropConfig.getBasePackage() == null) {
-            basePackage = PackageCache.get();
+            basePackage = "/";
         } else {
             basePackage = PropConfig.getBasePackage();
         }
