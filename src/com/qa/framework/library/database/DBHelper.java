@@ -50,17 +50,15 @@ public class DBHelper {
         } else {
             poolName = PropConfig.getDbPoolName();
             if (StringHelper.startsWithIgnoreCase(poolName, "http://")) {
-                String ret=HttpMethod.get(poolName,2);
-                if(ret.contains(",")){
-                    poolName = StringHelper.getTokensList(ret,",").get(0);
-                }
-                else
-                {
+                String ret = HttpMethod.get(poolName, 2);
+                if (ret.contains(",")) {
+                    poolName = StringHelper.getTokensList(ret, ",").get(0);
+                } else {
                     poolName = ret;
                 }
             }
         }
-        logger.info("database pool name:"+poolName);
+        logger.info("database pool name:" + poolName);
     }
 
     /**

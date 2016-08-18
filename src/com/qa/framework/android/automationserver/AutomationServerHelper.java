@@ -5,9 +5,11 @@ import com.qa.framework.android.DebugBridge;
 import com.qa.framework.android.automationserver.hierarchyviewer.HierarchyViewer;
 import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceBridge;
 import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceConnection;
+import com.qa.serializable.Point;
 import org.apache.log4j.Logger;
 
-import java.awt.*;
+import java.io.BufferedInputStream;
+import java.io.ObjectInputStream;
 
 
 /**
@@ -45,11 +47,14 @@ public class AutomationServerHelper {
             logger.info("isMusicActive:" + (isMusicActive() ? "true" : "false"));
             logger.info(getLastToast());
 
-            Rectangle rectangle = getElementLocationByText("15:20", 2);
-            if (rectangle != null) {
-                logger.info("result left:" + rectangle.x + " top:" + rectangle.y + " width:" + rectangle.width + " height:" + rectangle.height);
-            }
-            logger.info(getElementTextById("id/editUsername"));
+            Point point1 = AutomationServerHelper.getViewCenter("editUsername");
+            logger.info(point1.getX());
+            logger.info(point1.getY());
+
+            Point point2 = AutomationServerHelper.getViewCenter("欧美老师",0);
+            logger.info(point2.getX());
+            logger.info(point2.getY());
+
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -67,11 +72,9 @@ public class AutomationServerHelper {
         DeviceConnection connection = null;
         try {
             connection = new DeviceConnection(device);
-            if(flag) {
+            if (flag) {
                 connection.sendCommand("highlight 1");
-            }
-            else
-            {
+            } else {
                 connection.sendCommand("highlight 0");
             }
             String line = connection.getInputStream().readLine();
@@ -79,7 +82,7 @@ public class AutomationServerHelper {
                 returnValue = Boolean.valueOf(line);
             }
         } catch (Exception e) {
-            logger.error("Unable to get automation server info from device " + device);
+            logger.error(e);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -104,7 +107,7 @@ public class AutomationServerHelper {
                 returnValue = Boolean.valueOf(line);
             }
         } catch (Exception e) {
-            logger.error("Unable to get automation server info from device " + device);
+            logger.error(e);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -153,7 +156,7 @@ public class AutomationServerHelper {
                 returnValue = line;
             }
         } catch (Exception e) {
-            logger.error("Unable to get toast from device " + device);
+            logger.error(e);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -174,13 +177,13 @@ public class AutomationServerHelper {
         DeviceConnection connection = null;
         try {
             connection = new DeviceConnection(device);
-            connection.sendCommand("toast -t 20000 -ex "+excludeText);
+            connection.sendCommand("toast -t 20000 -ex " + excludeText);
             String line = connection.getInputStream().readLine();
             if (line != null) {
                 returnValue = line;
             }
         } catch (Exception e) {
-            logger.error("Unable to get toast from device " + device);
+            logger.error(e);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -190,45 +193,47 @@ public class AutomationServerHelper {
         return returnValue;
     }
 
-    /**
-     * Gets element location by text.
-     *
-     * @param text  the text
-     * @param index the index
-     * @return the element location by text
-     */
-    public static Rectangle getElementLocationByText(String text, int index) {
-        return hierarchyViewer.getElementLocationByText(text, index);
+    public static Point getViewCenter(String id) {
+        Point returnValue = null;
+        DeviceConnection connection = null;
+        try {
+            connection = new DeviceConnection(device);
+            connection.sendCommand("center -t " + id);
+            ObjectInputStream is = new ObjectInputStream(new BufferedInputStream(connection.getInStream()));
+            Object obj = is.readObject();
+            if (obj != null) {
+                returnValue = (Point)obj;
+            }
+        } catch (Exception e) {
+            logger.error(e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
+
+        return returnValue;
     }
 
-    /**
-     * Gets element center by text.
-     *
-     * @param text  the text
-     * @param index the index
-     * @return the element center by text
-     */
-    public static Point getElementCenterByText(String text, int index) {
-        return hierarchyViewer.getElementCenterByText(text, index);
-    }
+    public static Point getViewCenter(String text, int index) {
+        Point returnValue = null;
+        DeviceConnection connection = null;
+        try {
+            connection = new DeviceConnection(device);
+            connection.sendCommand("center -t " + text + " -i " + index);
+            ObjectInputStream is = new ObjectInputStream(new BufferedInputStream(connection.getInStream()));
+            Object obj = is.readObject();
+            if (obj != null) {
+                returnValue = (Point)obj;
+            }
+        } catch (Exception e) {
+            logger.error(e);
+        } finally {
+            if (connection != null) {
+                connection.close();
+            }
+        }
 
-    /**
-     * Gets element center by text.
-     *
-     * @param text the text
-     * @return the element center by text
-     */
-    public static Point getElementCenterByText(String text) {
-        return hierarchyViewer.getElementCenterByText(text, 0);
-    }
-
-    /**
-     * Gets element text by id.
-     *
-     * @param id the id
-     * @return the element text by id
-     */
-    public static String getElementTextById(String id) {
-        return hierarchyViewer.getElementTextById(id);
+        return returnValue;
     }
 }

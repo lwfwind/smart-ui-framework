@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
  */
 public interface SuiteData {
     public Logger logger = Logger.getLogger(SuiteData.class);
+
     /**
      * Sets .
      */

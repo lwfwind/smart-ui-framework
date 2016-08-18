@@ -8,10 +8,9 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 
 * Easy to learn
 * Support page object design pattern and extend page factory support highlight element, log action, screenshot action automatically and so on
+* Support identify Toast and PopupWindow for appium through [android-automation-library](https://github.com/lwfwind/android-automation-library)
 * Good support concurrent testing with multi webdriver
 * Re-run failed test cases and capture screenshot automatically when testcase fails
-* Support dependency injection
-* Support identify Toast and PopupWindow for appium through [android-automation-library](https://github.com/lwfwind/android-automation-library)
 
 ## Example
 

@@ -6,7 +6,6 @@ import com.qa.framework.config.PropConfig;
 import com.qa.framework.library.base.StringHelper;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpHost;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -70,7 +69,7 @@ public class HttpConnectionImp {
                         hostName = webPath.substring(7);
                     }
                 }
-                if(!cookie.getDomain().equalsIgnoreCase(hostName)){
+                if (!cookie.getDomain().equalsIgnoreCase(hostName)) {
                     BasicClientCookie basicCookie = new BasicClientCookie(cookie.getName(), cookie.getValue());
                     basicCookie.setDomain(hostName);
                     basicCookie.setPath(cookie.getPath());
@@ -111,11 +110,9 @@ public class HttpConnectionImp {
                 //logger.error(e.getMessage());
             }
         }
-        if(responseBody != null) {
+        if (responseBody != null) {
             return removeBOM(responseBody);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -133,7 +130,7 @@ public class HttpConnectionImp {
             // convert String into InputStream
             InputStream is = new ByteArrayInputStream(responseBody.getBytes("utf-8"));
             // read it with BufferedReader
-            reader = new BufferedReader(new InputStreamReader(new BOMInputStream(is),"utf-8"));
+            reader = new BufferedReader(new InputStreamReader(new BOMInputStream(is), "utf-8"));
             line = reader.readLine();
             reader.close();
         } catch (IOException e) {

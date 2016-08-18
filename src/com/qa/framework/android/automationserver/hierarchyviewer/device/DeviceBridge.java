@@ -498,8 +498,8 @@ public class DeviceBridge {
             Log.e(TAG, "Unable to invalidate view " + viewNode + " in window " + viewNode.window
                     + " on device " + viewNode.window.getDevice());
         } finally {
-            if(connection !=null)
-            connection.close();
+            if (connection != null)
+                connection.close();
         }
     }
 
@@ -517,8 +517,8 @@ public class DeviceBridge {
             Log.e(TAG, "Unable to request layout for node " + viewNode + " in window "
                     + viewNode.window + " on device " + viewNode.window.getDevice());
         } finally {
-            if(connection !=null)
-            connection.close();
+            if (connection != null)
+                connection.close();
         }
     }
 

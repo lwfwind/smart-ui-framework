@@ -6,13 +6,10 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 /**
  * 用于获取类的模板类

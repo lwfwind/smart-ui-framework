@@ -67,6 +67,10 @@ public class DeviceConnection {
         return in;
     }
 
+    public InputStream getInStream() throws IOException {
+        return socketChannel.socket().getInputStream();
+    }
+
     /**
      * Gets output stream.
      *
@@ -76,7 +80,7 @@ public class DeviceConnection {
     public BufferedWriter getOutputStream() throws IOException {
         if (out == null) {
             out = new BufferedWriter(new OutputStreamWriter(socketChannel.socket()
-                            .getOutputStream()));
+                    .getOutputStream()));
         }
         return out;
     }

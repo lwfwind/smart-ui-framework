@@ -8,8 +8,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * ImageCompare changes image from RGB to LAB and make comparison
@@ -91,7 +89,7 @@ public class ImageCompare {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if(benchmark != null) {
+        if (benchmark != null) {
             Integer width = benchmark.getWidth();
             Integer height = benchmark.getHeight();
             difference = new BufferedImage(benchmark.getWidth(), benchmark.getHeight(), BufferedImage.TYPE_INT_RGB);

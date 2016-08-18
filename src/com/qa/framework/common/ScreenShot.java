@@ -31,7 +31,7 @@ public class ScreenShot {
     /**
      * The constant dir.
      */
-    public static String dir =  "screenshots";
+    public static String dir = "screenshots";
 
 
     /**
@@ -59,11 +59,9 @@ public class ScreenShot {
         } catch (Exception e) {
             logger.error("captureFail exception:" + e.toString());
         }
-        if(System.getProperty("screenshotBaseURL") != null){
+        if (System.getProperty("screenshotBaseURL") != null) {
             return System.getProperty("screenshotBaseURL") + File.separator + screenShotPath;
-        }
-        else
-        {
+        } else {
             return screenShotPath;
         }
     }

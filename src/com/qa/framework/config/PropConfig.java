@@ -92,8 +92,7 @@ public class PropConfig {
     public static void setHighlight(String val) {
         if ("false".equalsIgnoreCase(val)) {
             highlight = false;
-        }
-        else{
+        } else {
             highlight = true;
         }
     }
@@ -277,8 +276,7 @@ public class PropConfig {
     public static void setUseProxy(String val) {
         if ("false".equalsIgnoreCase(val)) {
             useProxy = false;
-        }
-        else{
+        } else {
             useProxy = true;
         }
     }

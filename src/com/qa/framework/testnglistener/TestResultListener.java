@@ -167,8 +167,8 @@ public class TestResultListener extends TestListenerAdapter {
     private void saveScreenShot(ITestResult tr) {
         WebDriver driver = DriverCache.get();
         String name = MethodCache.getCurrentMethodName();
-        String screenShotPath =ScreenShot.captureFail(driver, name, tr.getName());
-        if(System.getProperty("screenshotBaseURL") != null){
+        String screenShotPath = ScreenShot.captureFail(driver, name, tr.getName());
+        if (System.getProperty("screenshotBaseURL") != null) {
             Reporter.setCurrentTestResult(tr);
             //把截图写入到Html报告中方便查看
             Reporter.log("<img src=\"" + screenShotPath + "\"/>");
@@ -200,7 +200,8 @@ public class TestResultListener extends TestListenerAdapter {
                 for (LogEntry entry : logEntries) {
                     logger.info("brower info - " + entry.getLevel() + " " + entry.getMessage());
                 }
-            }catch (Exception ignored){}
+            } catch (Exception ignored) {
+            }
         }
     }
 

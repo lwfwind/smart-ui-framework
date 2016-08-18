@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.dom4j.Element;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**

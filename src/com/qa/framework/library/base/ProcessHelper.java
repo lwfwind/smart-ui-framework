@@ -14,16 +14,16 @@ import java.util.concurrent.*;
  */
 public class ProcessHelper {
     /**
-     * The constant errorResult.
-     */
-    private static String errorResult;
-    /**
      * The constant okResult.
      */
     protected static String okResult;
+    /**
+     * The constant errorResult.
+     */
+    private static String errorResult;
     private static Logger logger = Logger.getLogger(ProcessHelper.class);
 
-    public static String getErrorResult(){
+    public static String getErrorResult() {
         return errorResult;
     }
 
