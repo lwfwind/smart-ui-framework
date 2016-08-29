@@ -72,7 +72,7 @@ public class Emulator {
      * @param args the input arguments
      * @throws Exception the exception
      */
-    public static void main(String[] args)
+   /* public static void main(String[] args)
             throws Exception {
         Emulator emulatorHelper = new Emulator("test", "android-22");
         emulatorHelper.closeEmulator();
@@ -83,7 +83,7 @@ public class Emulator {
 
         Emulator emulatorHelper2 = new Emulator("test");
         emulatorHelper2.restartEmulator();
-    }
+    }*/
 
     /**
      * Restart adb.
@@ -360,6 +360,35 @@ public class Emulator {
             }
         }
         throw new Exception("通过adb device 未找到设备名称");
+    }
+
+    public String getDeviceTime() {
+        logger.info("Beginning Reading Device's time");
+        String cmd = this.cmdShell + "adb shell date +%Y-%m-%d/%H:%M:%S";
+        logger.info("cmd==" + cmd);
+        Process process = null;
+        String okResult=null;
+        String deviceTime;
+        try {
+            process = Runtime.getRuntime().exec(cmd);
+             okResult= ProcessHelper.getStreamResult(process, 20L, true, true);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (!okResult.contains("TimeoutException")) {
+            logger.info("Read Device's time scucessfully.");
+            deviceTime=okResult.replace("/"," ");
+
+            return deviceTime;
+        }else {
+            return "";
+        }
+    }
+    public static void main(String[] args){
+        Emulator emulatorHelper = new Emulator("test", "android-22");
+        logger.info(emulatorHelper.getDeviceTime());
     }
 
 }
