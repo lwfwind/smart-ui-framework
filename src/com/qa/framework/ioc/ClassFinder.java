@@ -22,7 +22,7 @@ public class ClassFinder {
 
     static {
         if (PropConfig.getBasePackage() == null) {
-            basePackage = "/";
+            basePackage = "";
         } else {
             basePackage = PropConfig.getBasePackage();
         }

@@ -1,10 +1,8 @@
 package com.qa.framework.testnglistener;
 
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 
-/**
- * Created by kcgw001 on 2016/4/22.
- */
 public interface ICustomTestListener {
 
     /**
@@ -29,4 +27,8 @@ public interface ICustomTestListener {
     void onTestSuccess(ITestResult tr);
 
     void onTestStart(ITestResult tr);
+
+    void onStart(ITestContext testContext);
+
+    void onFinish(ITestContext testContext);
 }

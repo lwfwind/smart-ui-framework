@@ -5,7 +5,6 @@ import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
 import com.qa.framework.config.DriverConfig;
 import com.qa.framework.config.PropConfig;
-import com.qa.framework.data.SuiteData;
 import com.qa.framework.library.base.StringHelper;
 import com.qa.framework.testnglistener.PowerEmailableReporter;
 import com.qa.framework.testnglistener.TestResultListener;
@@ -22,7 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import static com.qa.framework.ioc.AutoInjectHelper.initFields;
-import static com.qa.framework.ioc.IocHelper.findImplementClass;
 
 /**
  * The type Test case base.
@@ -33,7 +31,6 @@ public abstract class TestCaseBase {
      * The constant logger.
      */
     protected static Logger logger = Logger.getLogger(TestCaseBase.class);
-    private SuiteData suiteData = null;
     private String browser = null;
     private String hubURL = null;
 
@@ -52,11 +49,6 @@ public abstract class TestCaseBase {
             //AccessibilityEventMonitor.start();
         }
         HelperLoader.init();
-        Class<?> clazz = findImplementClass(SuiteData.class);
-        if (clazz != null) {
-            suiteData = (SuiteData) clazz.newInstance();
-            suiteData.setup();
-        }
     }
 
     /**
@@ -75,11 +67,6 @@ public abstract class TestCaseBase {
     public void AfterSuite(ITestContext context) throws Exception {
         logger.info("afterSuite");
         afterSuite();
-        Class<?> clazz = findImplementClass(SuiteData.class);
-        if (clazz != null) {
-            suiteData = (SuiteData) clazz.newInstance();
-            suiteData.teardown();
-        }
         if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             //AccessibilityEventMonitor.stop();
             DebugBridge.terminate();

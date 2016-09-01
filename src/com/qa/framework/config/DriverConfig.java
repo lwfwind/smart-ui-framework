@@ -146,12 +146,14 @@ public class DriverConfig {
                     LoggingPreferences loggingprefs = new LoggingPreferences();
                     loggingprefs.enable(LogType.BROWSER, Level.ALL);
                     capabilities.setCapability(CapabilityType.LOGGING_PREFS, loggingprefs);
-                    ChromeOptions options = new ChromeOptions();
-                    List<String> crxFiles = IOHelper.listFilesInDirectory(ProjectEnvironment.getChromeExtensionsLocation(),"*.crx");
-                    for (String crx:crxFiles) {
-                        options.addExtensions(new File(crx));
+                    if(PropConfig.isDebug()) {
+                        ChromeOptions options = new ChromeOptions();
+                        List<String> crxFiles = IOHelper.listFilesInDirectory(ProjectEnvironment.getChromeExtensionsLocation(), "*.crx");
+                        for (String crx : crxFiles) {
+                            options.addExtensions(new File(crx));
+                        }
+                        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                     }
-                    capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                     driverObject = ThreadGuard.protect(new ChromeDriver(capabilities));
                     logger.info("Using GOOGLECHROME Driver...");
                     break;

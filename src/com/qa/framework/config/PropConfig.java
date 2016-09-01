@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
-/**
- * Created by apple on 15/11/18.
- */
 public class PropConfig {
     private static Properties props = new Properties();
     //代理配置
@@ -50,6 +47,9 @@ public class PropConfig {
     //Highlight element for android
     private static boolean highlight = false;
 
+    //Load chrome extensions or not
+    private static boolean debug = false;
+
     static {
         File file = new File(System.getProperty("user.dir") + File.separator + "config.properties");
         FileReader fileReader = null;
@@ -75,6 +75,14 @@ public class PropConfig {
         }
     }
 
+    public static boolean isDebug() {
+        return debug;
+    }
+
+    public static void setDebug(String val) {
+        debug = !"false".equalsIgnoreCase(val);
+    }
+
     /**
      * Is highlight boolean.
      *
@@ -90,11 +98,7 @@ public class PropConfig {
      * @param val the val
      */
     public static void setHighlight(String val) {
-        if ("false".equalsIgnoreCase(val)) {
-            highlight = false;
-        } else {
-            highlight = true;
-        }
+        highlight = !"false".equalsIgnoreCase(val);
     }
 
     /**

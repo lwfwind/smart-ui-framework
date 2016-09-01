@@ -99,15 +99,28 @@ import org.testng.ITestResult;
 
 public class TestListener implements ICustomTestListener {
 
+    @Override
+    public void onStart(ITestContext testContext) {
+        // TODO
+    }
+    
+    @Override
+    public void onTestSuccess(ITestResult tr){
+        // TODO
+    }
+    
+    @Override
     public void onTestFailure(ITestResult tr) {
         // TODO
     }
-
+    
+    @Override
     public void onTestSkipped(ITestResult tr){
         // TODO
     }
 
-    public void onTestSuccess(ITestResult tr){
+    @Override
+    public void onFinish(ITestContext testContext) {
         // TODO
     }
 
