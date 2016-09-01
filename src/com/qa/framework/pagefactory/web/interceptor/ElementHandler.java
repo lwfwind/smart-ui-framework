@@ -78,11 +78,23 @@ public class ElementHandler implements InvocationHandler {
             long end = System.currentTimeMillis() + timeout;
             while (System.currentTimeMillis() < end) {
                 elements = locator.findElements();
-                if (elements != null && elements.size() > 0) {
-                    element = elements.get(0);
-                    if (element != null && element.isDisplayed()) {
+                if (elements.size() > 1) {
+                    boolean isFound = false;
+                    for(WebElement e:elements){
+                        if (e.isDisplayed()) {
+                            element = e;
+                            isFound = true;
+                            break;
+                        }
+                    }
+                    if(isFound){
                         break;
                     }
+                }
+                else
+                {
+                    element = elements.get(0);
+                    break;
                 }
                 this.action.pause(500);
             }

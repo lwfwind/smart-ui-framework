@@ -121,6 +121,10 @@ public class ProjectEnvironment {
         }
     }
 
+    public static String getChromeExtensionsLocation() {
+        return resourcePath() + "chromextensions";
+    }
+
     /**
      * Gets ie driver location.
      *

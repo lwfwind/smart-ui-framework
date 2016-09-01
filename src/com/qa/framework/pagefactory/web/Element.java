@@ -4,6 +4,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.internal.WrapsElement;
 
+import java.util.Dictionary;
+import java.util.Map;
+
 /**
  * wraps a web element interface with extra functionality. Anything added here will be added to all descendants.
  */
@@ -33,6 +36,11 @@ public interface Element extends WebElement, WrapsElement, Locatable {
      * @return the hide attribute
      */
     String getHideAttribute(String attribute);
+
+    /**
+     * Double click.
+     */
+    Map<String, Object> getAllAttributes();
 
     /**
      * Remove read only.

@@ -114,6 +114,16 @@ public class TestResultListener extends TestListenerAdapter {
     @Override
     public void onTestStart(ITestResult tr) {
         super.onTestStart(tr);
+        Class<?> clazz = findImplementClass(ICustomTestListener.class);
+        if (clazz != null) {
+            ICustomTestListener testListenerImp = null;
+            try {
+                testListenerImp = (ICustomTestListener) clazz.newInstance();
+                testListenerImp.onTestStart(tr);
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
         String name = MethodCache.getCurrentMethodName();
         logger.info(name + " Start");
         IOHelper.createNestDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);

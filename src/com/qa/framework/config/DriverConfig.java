@@ -10,9 +10,11 @@ import com.qa.framework.library.base.StringHelper;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.log4j.Logger;
+import org.omg.IOP.IORHelper;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
@@ -144,6 +146,12 @@ public class DriverConfig {
                     LoggingPreferences loggingprefs = new LoggingPreferences();
                     loggingprefs.enable(LogType.BROWSER, Level.ALL);
                     capabilities.setCapability(CapabilityType.LOGGING_PREFS, loggingprefs);
+                    ChromeOptions options = new ChromeOptions();
+                    List<String> crxFiles = IOHelper.listFilesInDirectory(ProjectEnvironment.getChromeExtensionsLocation(),"*.crx");
+                    for (String crx:crxFiles) {
+                        options.addExtensions(new File(crx));
+                    }
+                    capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                     driverObject = ThreadGuard.protect(new ChromeDriver(capabilities));
                     logger.info("Using GOOGLECHROME Driver...");
                     break;

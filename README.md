@@ -46,7 +46,7 @@ public class SearchPage extends PageBase {
 }
 ```
 
-##### 3. Create Service Level Class, which extends ServiceBase Class (Notes: The Sevice Level is not necessary if the automation project is not complex )
+##### 3. Create Service Level Class, which extends ServiceBase Class
 
 ```java
 package test.service;

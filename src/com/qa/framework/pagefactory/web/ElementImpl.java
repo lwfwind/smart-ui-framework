@@ -11,7 +11,9 @@ import org.openqa.selenium.internal.Locatable;
 import org.testng.Assert;
 
 import java.awt.*;
+import java.util.Dictionary;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An implementation of the Element interface. Delegates its work to an underlying WebElement instance for
@@ -216,6 +218,14 @@ public class ElementImpl implements Element {
         String scriptGetValue = "return arguments[0].getAttribute('" + attribute + "')";
         JavascriptExecutor js = (JavascriptExecutor) driver;
         return (String) js.executeScript(scriptGetValue, element);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Map<String, Object> getAllAttributes() {
+        String scriptGetValue = "var items = {}; for (index = 0; index < arguments[0].attributes.length; ++index) { items[arguments[0].attributes[index].name] = arguments[0].attributes[index].value }; return items;";
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        return (Map<String, Object>) js.executeScript(scriptGetValue, element);
     }
 
     @Override

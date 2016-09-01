@@ -27,4 +27,6 @@ public interface ICustomTestListener {
      * @param tr the tr
      */
     void onTestSuccess(ITestResult tr);
+
+    void onTestStart(ITestResult tr);
 }
