@@ -5,8 +5,8 @@ import java.lang.reflect.Field;
 /**
  * Processes the iface type into a useful class reference for wrapping WebElements.
  */
-public final class TimeOutOfFindProcessor {
-    private TimeOutOfFindProcessor() {
+public final class WithTimeoutProcessor {
+    private WithTimeoutProcessor() {
     }
 
     /**
@@ -17,8 +17,8 @@ public final class TimeOutOfFindProcessor {
      * @return the time out of find
      */
     public static int getTimeOutOfFind(Field field, int type) {
-        if (field.isAnnotationPresent(TimeOutOfFind.class)) {
-            TimeOutOfFind annotation = field.getAnnotation(TimeOutOfFind.class);
+        if (field.isAnnotationPresent(WithTimeout.class)) {
+            WithTimeout annotation = field.getAnnotation(WithTimeout.class);
             return annotation.value();
         }
         if (type == 1) {

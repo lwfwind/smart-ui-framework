@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.qa.framework.pagefactory.TimeOutOfFindProcessor.getTimeOutOfFind;
+import static com.qa.framework.pagefactory.WithTimeoutProcessor.getTimeOutOfFind;
 import static io.appium.java_client.pagefactory.utils.ProxyFactory.getEnhancedProxy;
 
 /**

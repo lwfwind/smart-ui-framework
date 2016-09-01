@@ -36,7 +36,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.qa.framework.pagefactory.TimeOutOfFindProcessor.getTimeOutOfFind;
+import static com.qa.framework.pagefactory.WithTimeoutProcessor.getTimeOutOfFind;
 
 /**
  * Intercepts requests to {@link MobileElement}

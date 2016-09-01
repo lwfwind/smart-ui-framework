@@ -41,7 +41,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.qa.framework.pagefactory.TimeOutOfFindProcessor.getTimeOutOfFind;
+import static com.qa.framework.pagefactory.WithTimeoutProcessor.getTimeOutOfFind;
 import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.getCurrentContentType;
 
 /**

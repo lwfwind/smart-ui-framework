@@ -8,7 +8,6 @@ import com.qa.framework.common.ScreenShot;
 import com.qa.framework.pagefactory.web.Element;
 import io.appium.java_client.pagefactory.WithTimeout;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
@@ -17,7 +16,7 @@ import java.lang.reflect.*;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.qa.framework.pagefactory.TimeOutOfFindProcessor.getTimeOutOfFind;
+import static com.qa.framework.pagefactory.WithTimeoutProcessor.getTimeOutOfFind;
 import static com.qa.framework.pagefactory.web.ImplementedByProcessor.getImplementClass;
 import static com.qa.framework.pagefactory.web.ScrollIntoViewProcessor.getScrollIntoView;
 
@@ -65,45 +64,40 @@ public class ElementHandler implements InvocationHandler {
         List<WebElement> elements = null;
         WebElement element = null;
         int previousWindowsCount = driver.getWindowHandles().size();
+        long timeout = 0;
         if (field.isAnnotationPresent(WithTimeout.class)) {
-            try {
-                element = locator.findElement();
-            } catch (NoSuchElementException e) {
-                if ("toString".equals(method.getName())) {
-                    return "Proxy element for: " + locator.toString();
-                } else throw e;
-            }
+            WithTimeout withTimeout = field.getAnnotation(WithTimeout.class);
+            timeout = withTimeout.unit().toMillis(withTimeout.time());
         } else {
-            int timeout = getTimeOutOfFind(field, 1);
-            long end = System.currentTimeMillis() + timeout;
-            while (System.currentTimeMillis() < end) {
-                elements = locator.findElements();
-                if (elements.size() > 1) {
-                    boolean isFound = false;
-                    for(WebElement e:elements){
-                        if (e.isDisplayed()) {
-                            element = e;
-                            isFound = true;
-                            break;
-                        }
-                    }
-                    if(isFound){
+            timeout = getTimeOutOfFind(field, 1);
+        }
+        while (System.currentTimeMillis() < System.currentTimeMillis() + timeout) {
+            elements = locator.findElements();
+            if (elements.size() > 1) {
+                boolean isFound = false;
+                for(WebElement e:elements){
+                    if (e.isDisplayed()) {
+                        element = e;
+                        isFound = true;
                         break;
                     }
                 }
-                else
-                {
-                    element = elements.get(0);
+                if(isFound){
                     break;
                 }
-                this.action.pause(500);
             }
-            if (element == null) {
-                logger.error("the " + logicElementName
-                        + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
-                throw new RuntimeException("the " + logicElementName
-                        + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+            else
+            {
+                element = elements.get(0);
+                break;
             }
+            this.action.pause(500);
+        }
+        if (element == null) {
+            logger.error("the " + logicElementName
+                    + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+            throw new RuntimeException("the " + logicElementName
+                    + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
         }
 
         if ("getWrappedElement".equals(method.getName())) {
