@@ -71,7 +71,9 @@ public class ElementHandler implements InvocationHandler {
         } else {
             timeout = getTimeOutOfFind(field, 1);
         }
-        while (System.currentTimeMillis() < System.currentTimeMillis() + timeout) {
+        long currentTime = System.currentTimeMillis();
+        long maxTime = System.currentTimeMillis() + timeout;
+        while (currentTime < maxTime) {
             elements = locator.findElements();
             if (elements.size() > 1) {
                 boolean isFound = false;
@@ -85,11 +87,12 @@ public class ElementHandler implements InvocationHandler {
                 if (isFound) {
                     break;
                 }
-            } else {
+            } else if(elements.size() == 1) {
                 element = elements.get(0);
                 break;
             }
             this.action.pause(500);
+            currentTime = System.currentTimeMillis();
         }
         if (element == null) {
             logger.error("the " + logicElementName
