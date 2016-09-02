@@ -51,15 +51,6 @@ public class ElementImpl implements Element {
         }
     }
 
-    public void asyncClick(){
-        new Thread() {
-            @Override
-            public void run() {
-                element.click();
-            }
-        }.start();
-    }
-
     @Override
     public void click() {
         element.click();

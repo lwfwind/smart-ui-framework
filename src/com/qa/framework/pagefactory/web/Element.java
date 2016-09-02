@@ -13,11 +13,6 @@ import java.util.Map;
 public interface Element extends WebElement, WrapsElement, Locatable {
 
     /**
-     * Async Click
-     */
-    void asyncClick();
-
-    /**
      * Mouse over.
      */
     void mouseOver();
