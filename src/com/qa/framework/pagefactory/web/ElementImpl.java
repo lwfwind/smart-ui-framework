@@ -11,7 +11,6 @@ import org.openqa.selenium.internal.Locatable;
 import org.testng.Assert;
 
 import java.awt.*;
-import java.util.Dictionary;
 import java.util.List;
 import java.util.Map;
 
@@ -50,6 +49,15 @@ public class ElementImpl implements Element {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public void asyncClick(){
+        new Thread() {
+            @Override
+            public void run() {
+                element.click();
+            }
+        }.start();
     }
 
     @Override

@@ -51,7 +51,7 @@ public class AutomationServerHelper {
             logger.info(point1.getX());
             logger.info(point1.getY());
 
-            Point point2 = AutomationServerHelper.getViewCenter("欧美老师",0);
+            Point point2 = AutomationServerHelper.getViewCenter("欧美老师", 0);
             logger.info(point2.getX());
             logger.info(point2.getY());
 
@@ -65,6 +65,7 @@ public class AutomationServerHelper {
     /**
      * highlight boolean.
      *
+     * @param flag the flag
      * @return the boolean
      */
     public static boolean highlightElement(boolean flag) {
@@ -193,6 +194,12 @@ public class AutomationServerHelper {
         return returnValue;
     }
 
+    /**
+     * Gets view center.
+     *
+     * @param id the id
+     * @return the view center
+     */
     public static Point getViewCenter(String id) {
         Point returnValue = null;
         DeviceConnection connection = null;
@@ -202,7 +209,7 @@ public class AutomationServerHelper {
             ObjectInputStream is = new ObjectInputStream(new BufferedInputStream(connection.getInStream()));
             Object obj = is.readObject();
             if (obj != null) {
-                returnValue = (Point)obj;
+                returnValue = (Point) obj;
             }
         } catch (Exception e) {
             logger.error(e);
@@ -215,6 +222,13 @@ public class AutomationServerHelper {
         return returnValue;
     }
 
+    /**
+     * Gets view center.
+     *
+     * @param text  the text
+     * @param index the index
+     * @return the view center
+     */
     public static Point getViewCenter(String text, int index) {
         Point returnValue = null;
         DeviceConnection connection = null;
@@ -224,7 +238,7 @@ public class AutomationServerHelper {
             ObjectInputStream is = new ObjectInputStream(new BufferedInputStream(connection.getInStream()));
             Object obj = is.readObject();
             if (obj != null) {
-                returnValue = (Point)obj;
+                returnValue = (Point) obj;
             }
         } catch (Exception e) {
             logger.error(e);

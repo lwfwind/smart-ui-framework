@@ -9,15 +9,25 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
+/**
+ * The type Properties setting.
+ */
 public class PropertiesSetting {
 
     /**
+     * The entry point of application.
+     *
      * @param args the input arguments
      */
     public static void main(String[] args) {
         autoSetting(args);
     }
 
+    /**
+     * Auto setting.
+     *
+     * @param args the args
+     */
     public static void autoSetting(String[] args) {
         String path = null;
         if (System.getProperty("basedir") != null) {

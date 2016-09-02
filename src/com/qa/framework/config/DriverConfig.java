@@ -10,7 +10,6 @@ import com.qa.framework.library.base.StringHelper;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.log4j.Logger;
-import org.omg.IOP.IORHelper;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -146,7 +145,7 @@ public class DriverConfig {
                     LoggingPreferences loggingprefs = new LoggingPreferences();
                     loggingprefs.enable(LogType.BROWSER, Level.ALL);
                     capabilities.setCapability(CapabilityType.LOGGING_PREFS, loggingprefs);
-                    if(PropConfig.isDebug()) {
+                    if (PropConfig.isDebug()) {
                         ChromeOptions options = new ChromeOptions();
                         List<String> crxFiles = IOHelper.listFilesInDirectory(ProjectEnvironment.getChromeExtensionsLocation(), "*.crx");
                         for (String crx : crxFiles) {

@@ -121,6 +121,11 @@ public class ProjectEnvironment {
         }
     }
 
+    /**
+     * Gets chrome extensions location.
+     *
+     * @return the chrome extensions location
+     */
     public static String getChromeExtensionsLocation() {
         return resourcePath() + "chromextensions";
     }

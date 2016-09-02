@@ -4,7 +4,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.Locatable;
 import org.openqa.selenium.internal.WrapsElement;
 
-import java.util.Dictionary;
 import java.util.Map;
 
 /**
@@ -12,6 +11,12 @@ import java.util.Map;
  */
 @ImplementedBy(ElementImpl.class)
 public interface Element extends WebElement, WrapsElement, Locatable {
+
+    /**
+     * Async Click
+     */
+    void asyncClick();
+
     /**
      * Mouse over.
      */
@@ -39,6 +44,8 @@ public interface Element extends WebElement, WrapsElement, Locatable {
 
     /**
      * Double click.
+     *
+     * @return the all attributes
      */
     Map<String, Object> getAllAttributes();
 

@@ -75,19 +75,17 @@ public class ElementHandler implements InvocationHandler {
             elements = locator.findElements();
             if (elements.size() > 1) {
                 boolean isFound = false;
-                for(WebElement e:elements){
+                for (WebElement e : elements) {
                     if (e.isDisplayed()) {
                         element = e;
                         isFound = true;
                         break;
                     }
                 }
-                if(isFound){
+                if (isFound) {
                     break;
                 }
-            }
-            else
-            {
+            } else {
                 element = elements.get(0);
                 break;
             }

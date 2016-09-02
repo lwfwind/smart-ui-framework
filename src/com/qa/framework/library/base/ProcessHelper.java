@@ -23,6 +23,11 @@ public class ProcessHelper {
     private static String errorResult;
     private static Logger logger = Logger.getLogger(ProcessHelper.class);
 
+    /**
+     * Gets error result.
+     *
+     * @return the error result
+     */
     public static String getErrorResult() {
         return errorResult;
     }

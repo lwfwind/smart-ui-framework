@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
+/**
+ * The type Prop config.
+ */
 public class PropConfig {
     private static Properties props = new Properties();
     //代理配置
@@ -75,10 +78,20 @@ public class PropConfig {
         }
     }
 
+    /**
+     * Is debug boolean.
+     *
+     * @return the boolean
+     */
     public static boolean isDebug() {
         return debug;
     }
 
+    /**
+     * Sets debug.
+     *
+     * @param val the val
+     */
     public static void setDebug(String val) {
         debug = !"false".equalsIgnoreCase(val);
     }

@@ -67,6 +67,12 @@ public class DeviceConnection {
         return in;
     }
 
+    /**
+     * Gets in stream.
+     *
+     * @return the in stream
+     * @throws IOException the io exception
+     */
     public InputStream getInStream() throws IOException {
         return socketChannel.socket().getInputStream();
     }
