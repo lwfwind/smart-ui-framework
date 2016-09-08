@@ -3,8 +3,9 @@ package com.qa.framework.pagefactory.web.interceptor;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.ElementCache;
 import com.qa.framework.cache.MethodCache;
-import com.qa.framework.common.Action;
+import com.qa.framework.common.Alert;
 import com.qa.framework.common.ScreenShot;
+import com.qa.framework.common.Sleeper;
 import com.qa.framework.pagefactory.web.Element;
 import io.appium.java_client.pagefactory.WithTimeout;
 import org.apache.log4j.Logger;
@@ -26,18 +27,19 @@ import static com.qa.framework.pagefactory.web.ScrollIntoViewProcessor.getScroll
  */
 public class ElementHandler implements InvocationHandler {
     /**
-     * The Action.
+     * The Logger.
      */
-    protected final Action action;
+    protected Logger logger = Logger.getLogger(ElementHandler.class);
+    /**
+     * The Alert.
+     */
+    protected final Alert alert;
+    private final Sleeper sleeper;
     private final WebDriver driver;
     private final ElementLocator locator;
     private final Class<?> implementtingType;
     private final String logicElementName;
     private final Field field;
-    /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(ElementHandler.class);
 
     /**
      * Generates a handler to retrieve the WebElement from a locator for a given WebElement interface descendant.
@@ -55,7 +57,8 @@ public class ElementHandler implements InvocationHandler {
         this.implementtingType = getImplementClass(interfaceType);
         this.logicElementName = field.getName();
         this.field = field;
-        this.action = new Action(driver);
+        this.alert = new Alert(driver);
+        this.sleeper = new Sleeper();
     }
 
     @Override
@@ -91,7 +94,7 @@ public class ElementHandler implements InvocationHandler {
                 element = elements.get(0);
                 break;
             }
-            this.action.pause(500);
+            this.sleeper.sleep();
             currentTime = System.currentTimeMillis();
         }
         if (element == null) {
@@ -112,9 +115,9 @@ public class ElementHandler implements InvocationHandler {
             wapperElement = (Element) obj;
             if (method.getName().equals("click") || method.getName().equals("sendKeys") || method.getName().equals("mouseOver")) {
                 wapperElement.scrollIntoView(getScrollIntoView(field));
-                this.action.pause(50);
+                this.sleeper.sleep(50);
                 wapperElement.highLight();
-                this.action.pause(50);
+                this.sleeper.sleep(50);
             }
             Object ret = null;
 
@@ -124,9 +127,9 @@ public class ElementHandler implements InvocationHandler {
                 ret = method.invoke(obj, paras);
                 ElementCache.set(element);
                 logger.info(logicElementName + " click");
-                this.action.pause(500);
+                this.sleeper.sleep(500);
                 if (driver.getWindowHandles().size() > previousWindowsCount) {
-                    this.action.selectLastOpenedWindow();
+                    this.alert.selectLastOpenedWindow();
                 }
             } else {
                 if (paras != null) {
@@ -135,16 +138,16 @@ public class ElementHandler implements InvocationHandler {
                     logger.info(logicElementName + " " + method.getName());
                 }
                 ret = method.invoke(obj, paras);
-                this.action.pause(500);
+                this.sleeper.sleep(500);
             }
             return ret;
         } catch (InvocationTargetException e) {
             // Unwrap the underlying exception
             if (e.getCause().toString().contains("not clickable") || e.getCause().toString().contains("stale element reference")) {
                 logger.info(e.getCause().toString());
-                this.action.pause(5000);
+                this.sleeper.sleep(5000);
                 wapperElement.click();
-                this.action.pause(2000);
+                this.sleeper.sleep(2000);
                 return "action.click";
             } else {
                 throw e.getCause();

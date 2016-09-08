@@ -5,7 +5,7 @@ import com.qa.framework.bean.Method;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
 import com.qa.framework.cache.ResultCache;
-import com.qa.framework.common.Action;
+import com.qa.framework.common.Alert;
 import com.qa.framework.common.ScreenShot;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.library.base.IOHelper;
@@ -253,7 +253,7 @@ public class TestResultListener extends TestListenerAdapter {
 
     private void printAlertInfo(ITestResult tr) {
         WebDriver driver = DriverCache.get();
-        Action action = new Action(driver);
+        Alert action = new Alert(driver);
         List<String> messages = action.acceptAlert(5000);
         if (messages.size() > 0) {
             logger.info(tr.getName() + " alert messages:" + StringHelper.listToString(messages, " \n"));

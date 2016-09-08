@@ -17,8 +17,9 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  */
 
 import com.qa.framework.cache.MethodCache;
-import com.qa.framework.common.Action;
+import com.qa.framework.common.Alert;
 import com.qa.framework.common.ScreenShot;
+import com.qa.framework.common.Sleeper;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.WithTimeout;
@@ -55,9 +56,10 @@ public class ElementInterceptor implements MethodInterceptor {
      */
     protected final Field field;
     /**
-     * The Action.
+     * The Alert.
      */
-    protected final Action action;
+    protected final Alert alert;
+    private final Sleeper sleeper;
     /**
      * The Logger.
      */
@@ -74,7 +76,8 @@ public class ElementInterceptor implements MethodInterceptor {
         this.locator = locator;
         this.driver = driver;
         this.field = field;
-        this.action = new Action(driver);
+        this.alert = new Alert(driver);
+        this.sleeper = new Sleeper();
     }
 
     public Object intercept(Object obj, Method method, Object[] args,
@@ -109,7 +112,7 @@ public class ElementInterceptor implements MethodInterceptor {
                         break;
                     }
                 }
-                this.action.pause(500);
+                this.sleeper.sleep(500);
             }
             if (realElement == null) {
                 logger.error("the " + this.field.getName()
@@ -126,7 +129,7 @@ public class ElementInterceptor implements MethodInterceptor {
         if (method.getName().equals("click")) {
             String currMethodName = MethodCache.getCurrentMethodName();
             ScreenShot.captureAction(driver, currMethodName, this.field.getName());
-            this.action.pause(500);
+            this.sleeper.sleep(500);
         }
 
         if (args != null && args.length > 0) {

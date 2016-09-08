@@ -1,5 +1,6 @@
 package com.qa.framework;
 
+import com.qa.framework.common.Sleeper;
 import org.apache.log4j.Logger;
 
 import static com.qa.framework.ioc.AutoInjectHelper.initFields;
@@ -14,9 +15,15 @@ public abstract class ServiceBase {
     protected static Logger logger = Logger.getLogger(ServiceBase.class);
 
     /**
+     * The Alert.
+     */
+    public Sleeper sleeper;
+
+    /**
      * Instantiates a new Service base.
      */
     public ServiceBase() {
         initFields(this);
+        sleeper = new Sleeper();
     }
 }

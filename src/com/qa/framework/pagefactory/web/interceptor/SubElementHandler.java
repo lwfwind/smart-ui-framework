@@ -2,8 +2,9 @@ package com.qa.framework.pagefactory.web.interceptor;
 
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
-import com.qa.framework.common.Action;
+import com.qa.framework.common.Alert;
 import com.qa.framework.common.ScreenShot;
+import com.qa.framework.common.Sleeper;
 import com.qa.framework.pagefactory.web.Element;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -19,9 +20,10 @@ import java.util.Arrays;
  */
 public class SubElementHandler implements InvocationHandler {
     /**
-     * The Action.
+     * The Alert.
      */
-    protected final Action action;
+    protected final Alert alert;
+    private final Sleeper sleeper;
     private final Object element;
     private final String logicParentElementName;
     private final int num;
@@ -45,7 +47,8 @@ public class SubElementHandler implements InvocationHandler {
         this.field = field;
         this.num = num;
         this.driver = DriverCache.get();
-        this.action = new Action(driver);
+        this.alert = new Alert(driver);
+        this.sleeper = new Sleeper();
     }
 
     public Object invoke(Object object, Method method, Object[] paras) throws Throwable {
@@ -57,9 +60,9 @@ public class SubElementHandler implements InvocationHandler {
         try {
             if (method.getName().equals("click") || method.getName().equals("sendKeys")) {
                 wapperElement.scrollIntoView(false);
-                this.action.pause(50);
+                this.sleeper.sleep(50);
                 wapperElement.highLight();
-                this.action.pause(50);
+                this.sleeper.sleep(50);
             }
 
             if (method.getName().equals("click")) {
@@ -67,9 +70,9 @@ public class SubElementHandler implements InvocationHandler {
                 ScreenShot.captureAction(driver, currMethodName, logicParentElementName + "_" + num);
                 Object ret = method.invoke(element, paras);
                 logger.info(logicParentElementName + "_" + num + " click");
-                this.action.pause(500);
+                this.sleeper.sleep(500);
                 if (driver.getWindowHandles().size() > previousWindowsCount) {
-                    this.action.selectLastOpenedWindow();
+                    this.alert.selectLastOpenedWindow();
                 }
                 return ret;
             }
@@ -83,7 +86,7 @@ public class SubElementHandler implements InvocationHandler {
             // Unwrap the underlying exception
             if (e.getCause().toString().contains("clickable")) {
                 logger.info(e.getCause());
-                this.action.pause(5000);
+                this.sleeper.sleep(5000);
                 wapperElement.click();
                 return "action.click";
             } else {

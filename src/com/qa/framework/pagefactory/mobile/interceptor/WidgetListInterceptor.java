@@ -16,7 +16,8 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.qa.framework.common.Action;
+import com.qa.framework.common.Alert;
+import com.qa.framework.common.Sleeper;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
 import io.appium.java_client.pagefactory.TimeOutDuration;
 import io.appium.java_client.pagefactory.Widget;
@@ -56,15 +57,12 @@ public class WidgetListInterceptor implements MethodInterceptor {
      * The Field.
      */
     protected final Field field;
-    /**
-     * The Action.
-     */
-    protected final Action action;
     private final Map<ContentType, Constructor<? extends Widget>> instantiationMap;
     private final List<Widget> cachedWidgets = new ArrayList<>();
     private final Class<? extends Widget> declaredType;
     private final TimeOutDuration duration;
     private final WebDriver driver;
+    private final Sleeper sleeper;
     /**
      * The Logger.
      */
@@ -89,7 +87,7 @@ public class WidgetListInterceptor implements MethodInterceptor {
         this.duration = duration;
         this.driver = driver;
         this.field = field;
-        this.action = new Action(driver);
+        this.sleeper = new Sleeper();
     }
 
     public Object intercept(Object obj, Method method, Object[] args,
@@ -120,7 +118,7 @@ public class WidgetListInterceptor implements MethodInterceptor {
                 if (realElements != null && realElements.size() > 0) {
                     break;
                 }
-                this.action.pause(500);
+                this.sleeper.sleep(500);
             }
 
         }

@@ -16,7 +16,8 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.qa.framework.common.Action;
+import com.qa.framework.common.Alert;
+import com.qa.framework.common.Sleeper;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
 import io.appium.java_client.MobileElement;
 import net.sf.cglib.proxy.MethodInterceptor;
@@ -46,13 +47,10 @@ public class SubElementInterceptor implements MethodInterceptor {
      */
     protected final Field field;
     /**
-     * The Action.
-     */
-    protected final Action action;
-    /**
      * The Num.
      */
     protected final int num;
+    private final Sleeper sleeper;
     /**
      * The Logger.
      */
@@ -71,7 +69,7 @@ public class SubElementInterceptor implements MethodInterceptor {
         this.driver = driver;
         this.field = field;
         this.num = num;
-        this.action = new Action(driver);
+        this.sleeper = new Sleeper();
     }
 
     public Object intercept(Object obj, Method method, Object[] args,

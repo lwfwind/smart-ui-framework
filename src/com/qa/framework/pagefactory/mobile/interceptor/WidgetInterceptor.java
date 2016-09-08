@@ -16,7 +16,8 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.qa.framework.common.Action;
+import com.qa.framework.common.Alert;
+import com.qa.framework.common.Sleeper;
 import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.mobile.AppiumFieldDecorator;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
@@ -50,6 +51,11 @@ import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.get
 public class WidgetInterceptor implements MethodInterceptor {
 
     /**
+     * The Logger.
+     */
+    protected Logger logger = Logger.getLogger(WidgetInterceptor.class);
+
+    /**
      * The Locator.
      */
     protected final ElementLocator locator;
@@ -61,18 +67,12 @@ public class WidgetInterceptor implements MethodInterceptor {
      * The Field.
      */
     protected final Field field;
-    /**
-     * The Action.
-     */
-    protected final Action action;
+
     private final Map<ContentType, Constructor<? extends Widget>> instantiationMap;
     private final Map<ContentType, Widget> cachedInstances = new HashMap<>();
     private final TimeOutDuration duration;
-    /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(WidgetInterceptor.class);
     private WebElement cachedElement;
+    private final Sleeper sleeper;
 
     /**
      * Instantiates a new Widget interceptor.
@@ -93,7 +93,7 @@ public class WidgetInterceptor implements MethodInterceptor {
         this.locator = locator;
         this.driver = driver;
         this.field = field;
-        this.action = new Action(driver);
+        this.sleeper = new Sleeper();
     }
 
     /**
@@ -154,7 +154,7 @@ public class WidgetInterceptor implements MethodInterceptor {
                             break;
                         }
                     }
-                    this.action.pause(500);
+                    this.sleeper.sleep(500);
                 }
                 if (realElement == null) {
                     logger.error("the " + this.field.getName()

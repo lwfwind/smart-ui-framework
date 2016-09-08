@@ -1,7 +1,8 @@
 package com.qa.framework.pagefactory.web.interceptor;
 
 import com.qa.framework.cache.DriverCache;
-import com.qa.framework.common.Action;
+import com.qa.framework.common.Alert;
+import com.qa.framework.common.Sleeper;
 import com.qa.framework.pagefactory.web.Element;
 import io.appium.java_client.pagefactory.WithTimeout;
 import org.apache.log4j.Logger;
@@ -25,9 +26,10 @@ import static com.qa.framework.pagefactory.web.ImplementedByProcessor.getImpleme
 public class ElementListHandler implements InvocationHandler {
 
     /**
-     * The Action.
+     * The Alert.
      */
-    protected final Action action;
+    protected final Alert alert;
+    private final Sleeper sleeper;
     private final WebDriver driver;
     private final ElementLocator locator;
     private final Class<?> interfaceType;
@@ -56,8 +58,8 @@ public class ElementListHandler implements InvocationHandler {
         this.implementtingType = getImplementClass(interfaceType);
         this.logicParentElementName = field.getName();
         this.field = field;
-        this.action = new Action(driver);
-
+        this.alert = new Alert(driver);
+        this.sleeper = new Sleeper();
     }
 
     /**
@@ -95,7 +97,7 @@ public class ElementListHandler implements InvocationHandler {
                 if (elements != null && elements.size() > 0) {
                     break;
                 }
-                this.action.pause(500);
+                this.sleeper.sleep(500);
             }
         }
         if (elements == null) {

@@ -2,7 +2,6 @@ package com.qa.framework.common;
 
 import com.qa.framework.library.base.StringHelper;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 
@@ -11,11 +10,11 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * The type Action.
+ * The type Alert.
  */
-public class Action {
+public class Alert {
 
-    private final static Logger logger = Logger.getLogger(Action.class);
+    private final static Logger logger = Logger.getLogger(Alert.class);
     private static int stepInterval = 100;
     /**
      * The Driver.
@@ -23,11 +22,11 @@ public class Action {
     public WebDriver driver;
 
     /**
-     * Instantiates a new Action.
+     * Instantiates a new Alert.
      *
      * @param driver the driver
      */
-    public Action(WebDriver driver) {
+    public Alert(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -82,7 +81,7 @@ public class Action {
         String msg = null;
         while ((msg == null || msg.trim().equalsIgnoreCase("")) && current <= endCur) {
             try {
-                Alert alert = driver.switchTo().alert();
+                org.openqa.selenium.Alert alert = driver.switchTo().alert();
                 msg = alert.getText();
                 alert.accept();
             } catch (NoAlertPresentException ignored) {

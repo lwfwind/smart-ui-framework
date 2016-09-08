@@ -2,7 +2,8 @@ package com.qa.framework;
 
 import com.qa.framework.android.uiautomator.UiAutomatorHelper;
 import com.qa.framework.cache.DriverCache;
-import com.qa.framework.common.Action;
+import com.qa.framework.common.Alert;
+import com.qa.framework.common.Sleeper;
 import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.web.Element;
 import io.appium.java_client.AppiumDriver;
@@ -48,9 +49,10 @@ public abstract class PageBase {
      */
     public IOSDriver iosDriver;
     /**
-     * The Action.
+     * The Alert.
      */
-    public Action action;
+    public Alert alert;
+    public Sleeper sleeper;
 
     /**
      * Instantiates a new Page base.
@@ -58,7 +60,8 @@ public abstract class PageBase {
     public PageBase() {
         this.driver = DriverCache.get();
         if (this.driver != null) {
-            action = new Action(driver);
+            alert = new Alert(driver);
+            sleeper = new Sleeper();
             if (!isMobilePlat()) {
                 driver.manage().timeouts().pageLoadTimeout(120000, TimeUnit.MILLISECONDS);
             }
@@ -161,7 +164,7 @@ public abstract class PageBase {
      */
     public void acceptAlert() {
         try {
-            action.acceptAlert();
+            alert.acceptAlert();
         } catch (NoAlertPresentException e) {
             e.printStackTrace();
         }
@@ -177,7 +180,7 @@ public abstract class PageBase {
             acceptAlert();
             currentTime = System.currentTimeMillis();
         }
-        action.pause(1000);
+        sleeper.sleep();
         initElements(this);
     }
 
@@ -212,7 +215,7 @@ public abstract class PageBase {
     public void closeTab() {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("close()");
-        action.selectLastOpenedWindow();
+        alert.selectLastOpenedWindow();
     }
 
     /**
