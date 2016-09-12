@@ -9,12 +9,10 @@ import com.qa.framework.pagefactory.web.Element;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import io.appium.java_client.ios.IOSElement;
 import io.appium.java_client.remote.MobilePlatform;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoAlertPresentException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.*;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -348,6 +346,13 @@ public abstract class PageBase {
         }
 
     }
-
+    public void setKeyValue(WebElement element, String searchKey) {
+        if (PropConfig.getCoreType().equals("IOSAPP")){
+            IOSElement ioselement=(IOSElement)element;
+            ioselement.setValue(searchKey);
+        }else {
+            element.sendKeys(searchKey);
+        }
+    }
 
 }
