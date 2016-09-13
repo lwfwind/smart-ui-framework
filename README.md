@@ -27,12 +27,6 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 ##### 2. Create Page level Class, which extends PageBase Class
 
 ```java
-package test.page;
-
-import com.qa.framework.PageBase;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
-
 public class SearchPage extends PageBase {
 
     @FindBy(id = "kw")
@@ -49,12 +43,6 @@ public class SearchPage extends PageBase {
 ##### 3. Create Service Level Class, which extends ServiceBase Class
 
 ```java
-package test.service;
-
-import com.qa.framework.ServiceBase;
-import com.qa.framework.ioc.annotation.AutoInject;
-import test.page.SearchPage;
-
 public class SearchService extends ServiceBase {
     @AutoInject
     SearchPage searchPage;
@@ -69,14 +57,6 @@ public class SearchService extends ServiceBase {
 ##### 4. Create TestCase Level Class, which extends TestCaseBase Class
 
 ```java
-package test.testcase;
-
-import com.qa.framework.TestCaseBase;
-import com.qa.framework.ioc.annotation.AutoInject;
-import org.testng.annotations.Test;
-import test.datamodel.TestCaseData;
-import test.service.SearchService;
-
 public class SearchWithServiceTest extends TestCaseBase {
     @AutoInject
     SearchService searchService;
@@ -91,12 +71,6 @@ public class SearchWithServiceTest extends TestCaseBase {
 ##### 5. Create test listener Class to add business log on success/fail/skip, which implement ICustomTestListener Class
 
 ```java
-package test.testnglistener;
-
-import com.qa.framework.testnglistener.ICustomTestListener;
-import org.apache.log4j.Logger;
-import org.testng.ITestResult;
-
 public class TestListener implements ICustomTestListener {
 
     @Override
