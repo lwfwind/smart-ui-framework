@@ -74,7 +74,7 @@ public class DBHelper {
         if (conn == null) {
             try {
                 conn = DBPoolFactory.getDbConnection(poolname);
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 logger.error("get connection failure", e);
                 throw new RuntimeException(e);
             } finally {

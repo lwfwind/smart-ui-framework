@@ -129,7 +129,7 @@ public class DBPoolFactory {
      * @return Connection db connection
      * @throws SQLException the sql exception
      */
-    public synchronized static Connection getDbConnection(String poolname) throws SQLException {
+    public synchronized static Connection getDbConnection(String poolname) throws Exception {
         if (poolNameMap.get(poolname) == null) {
             init(poolname);
             startPool(poolname, dbJdbc, dbUser, dbPwd, max, wait);
@@ -144,7 +144,7 @@ public class DBPoolFactory {
      *
      * @param poolname
      */
-    private static void init(String poolname) {
+    private static void init(String poolname) throws Exception {
 
         List<BaseConnBean> pools = XmlToBean.read();
         for (BaseConnBean baseConnBean : pools) {
@@ -155,8 +155,12 @@ public class DBPoolFactory {
                 max = baseConnBean.getMax();
                 wait = baseConnBean.getWait();
                 driver = baseConnBean.getDriver();
+                break;
             }
 
+        }
+        if(driver==null){
+            throw new Exception("The poolName is not exist or Config is not set true");
         }
     }
 
