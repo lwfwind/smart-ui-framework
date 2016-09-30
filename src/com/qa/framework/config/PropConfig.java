@@ -53,6 +53,10 @@ public class PropConfig {
     //Load chrome extensions or not
     private static boolean debug = false;
 
+    //ios
+    private static String plantfromVersion;
+    private static String uuid;
+
     static {
         File file = new File(System.getProperty("user.dir") + File.separator + "config.properties");
         FileReader fileReader = null;
@@ -495,6 +499,22 @@ public class PropConfig {
      */
     public static void setMaxColorThreshold(String val) {
         maxColorThreshold = Integer.parseInt(val);
+    }
+
+    public static String getUuid() {
+        return uuid;
+    }
+
+    public static void setUuid(String val) {
+        uuid = val;
+    }
+
+    public static String getPlantfromVersion() {
+        return plantfromVersion;
+    }
+
+    public static void setPlantfromVersion(String val) {
+        plantfromVersion = val;
     }
 
 }

@@ -202,10 +202,21 @@ public class DriverConfig {
                     appiumServerUrl = getAppiumServerUrl();
                     app = getAppBin();
                     capabilities = new DesiredCapabilities();
-                    capabilities.setCapability("deviceName", PropConfig.getDeviceName());
-                    capabilities.setCapability("app", app.getAbsolutePath());
+                    if (PropConfig.getDeviceName() != null && PropConfig.getUuid() != null & PropConfig.getPlantfromVersion() != null) {
+                        capabilities.setCapability("deviceName", PropConfig.getDeviceName());
+                        capabilities.setCapability("udid", PropConfig.getUuid());
+                        capabilities.setCapability("plantfromVersion", PropConfig.getPlantfromVersion());
+                    } else {
+                        IDevice device = DebugBridge.getDevice();
+                        if (device != null) {
+                            capabilities.setCapability("deviceName", device.getSerialNumber());
+                        }
+                    }
+                    capabilities.setCapability("platfromName", "ios");
                     capabilities.setCapability("unicodeKeyboard", true);
                     capabilities.setCapability("resetKeyboard", true);
+                    capabilities.setCapability("nativeWebTap", true);
+                    capabilities.setCapability("app", app.getAbsolutePath());
                     driverObject = new IOSDriver<>(new URL(appiumServerUrl), capabilities);
                     logger.info("Using IOS Driver...");
                     break;

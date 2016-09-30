@@ -27,10 +27,6 @@ import static com.qa.framework.pagefactory.web.ScrollIntoViewProcessor.getScroll
  */
 public class ElementHandler implements InvocationHandler {
     /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(ElementHandler.class);
-    /**
      * The Alert.
      */
     protected final Alert alert;
@@ -40,6 +36,10 @@ public class ElementHandler implements InvocationHandler {
     private final Class<?> implementtingType;
     private final String logicElementName;
     private final Field field;
+    /**
+     * The Logger.
+     */
+    protected Logger logger = Logger.getLogger(ElementHandler.class);
 
     /**
      * Generates a handler to retrieve the WebElement from a locator for a given WebElement interface descendant.
@@ -90,7 +90,7 @@ public class ElementHandler implements InvocationHandler {
                 if (isFound) {
                     break;
                 }
-            } else if(elements.size() == 1) {
+            } else if (elements.size() == 1) {
                 element = elements.get(0);
                 break;
             }

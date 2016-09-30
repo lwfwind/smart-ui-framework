@@ -51,16 +51,6 @@ public class TestResultListener extends TestListenerAdapter {
     @Override
     public void onTestFailure(ITestResult tr) {
         super.onTestFailure(tr);
-        Class<?> clazz = findImplementClass(ICustomTestListener.class);
-        if (clazz != null) {
-            ICustomTestListener testListenerImp = null;
-            try {
-                testListenerImp = (ICustomTestListener) clazz.newInstance();
-                testListenerImp.onTestFailure(tr);
-            } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
         String name = MethodCache.getCurrentMethodName();
         logger.error(name + " Failure");
         setResultCache(tr, "fail");
@@ -73,11 +63,29 @@ public class TestResultListener extends TestListenerAdapter {
             printBrowserInfo();
             printStackTrace(tr);
         }
+        Class<?> clazz = findImplementClass(ICustomTestListener.class);
+        if (clazz != null) {
+            ICustomTestListener testListenerImp = null;
+            try {
+                testListenerImp = (ICustomTestListener) clazz.newInstance();
+                testListenerImp.onTestFailure(tr);
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
     public void onTestSkipped(ITestResult tr) {
         super.onTestSkipped(tr);
+        String name = MethodCache.getCurrentMethodName();
+        logger.info(name + " Skipped");
+        setResultCache(tr, "skip");
+        TestCaseBase tb = (TestCaseBase) tr.getInstance();
+        if (!tb.isUnitTest()) {
+            printBrowserInfo();
+            printStackTrace(tr);
+        }
         Class<?> clazz = findImplementClass(ICustomTestListener.class);
         if (clazz != null) {
             ICustomTestListener testListenerImp = null;
@@ -88,19 +96,19 @@ public class TestResultListener extends TestListenerAdapter {
                 e.printStackTrace();
             }
         }
-        String name = MethodCache.getCurrentMethodName();
-        logger.info(name + " Skipped");
-        setResultCache(tr, "skip");
-        TestCaseBase tb = (TestCaseBase) tr.getInstance();
-        if (!tb.isUnitTest()) {
-            printBrowserInfo();
-            printStackTrace(tr);
-        }
     }
 
     @Override
     public void onTestSuccess(ITestResult tr) {
         super.onTestSuccess(tr);
+        String name = MethodCache.getCurrentMethodName();
+        logger.info(name + " Success");
+        setResultCache(tr, "pass");
+        TestCaseBase tb = (TestCaseBase) tr.getInstance();
+        if (!tb.isUnitTest()) {
+            printBrowserInfo();
+        }
+        IOHelper.deleteDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
         Class<?> clazz = findImplementClass(ICustomTestListener.class);
         if (clazz != null) {
             ICustomTestListener testListenerImp = null;
@@ -111,19 +119,14 @@ public class TestResultListener extends TestListenerAdapter {
                 e.printStackTrace();
             }
         }
-        String name = MethodCache.getCurrentMethodName();
-        logger.info(name + " Success");
-        setResultCache(tr, "pass");
-        TestCaseBase tb = (TestCaseBase) tr.getInstance();
-        if (!tb.isUnitTest()) {
-            printBrowserInfo();
-        }
-        IOHelper.deleteDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
     }
 
     @Override
     public void onTestStart(ITestResult tr) {
         super.onTestStart(tr);
+        String name = MethodCache.getCurrentMethodName();
+        logger.info(name + " Start");
+        IOHelper.createNestDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
         Class<?> clazz = findImplementClass(ICustomTestListener.class);
         if (clazz != null) {
             ICustomTestListener testListenerImp = null;
@@ -134,9 +137,6 @@ public class TestResultListener extends TestListenerAdapter {
                 e.printStackTrace();
             }
         }
-        String name = MethodCache.getCurrentMethodName();
-        logger.info(name + " Start");
-        IOHelper.createNestDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
     }
 
     @Override

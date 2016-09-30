@@ -16,7 +16,6 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.qa.framework.common.Alert;
 import com.qa.framework.common.Sleeper;
 import com.qa.framework.pagefactory.mobile.ThrowableUtil;
 import io.appium.java_client.pagefactory.TimeOutDuration;

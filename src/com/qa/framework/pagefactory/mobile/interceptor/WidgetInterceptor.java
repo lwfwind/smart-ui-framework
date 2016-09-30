@@ -16,7 +16,6 @@ package com.qa.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.qa.framework.common.Alert;
 import com.qa.framework.common.Sleeper;
 import com.qa.framework.pagefactory.PageFactory;
 import com.qa.framework.pagefactory.mobile.AppiumFieldDecorator;
@@ -51,11 +50,6 @@ import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.get
 public class WidgetInterceptor implements MethodInterceptor {
 
     /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(WidgetInterceptor.class);
-
-    /**
      * The Locator.
      */
     protected final ElementLocator locator;
@@ -67,12 +61,15 @@ public class WidgetInterceptor implements MethodInterceptor {
      * The Field.
      */
     protected final Field field;
-
     private final Map<ContentType, Constructor<? extends Widget>> instantiationMap;
     private final Map<ContentType, Widget> cachedInstances = new HashMap<>();
     private final TimeOutDuration duration;
-    private WebElement cachedElement;
     private final Sleeper sleeper;
+    /**
+     * The Logger.
+     */
+    protected Logger logger = Logger.getLogger(WidgetInterceptor.class);
+    private WebElement cachedElement;
 
     /**
      * Instantiates a new Widget interceptor.

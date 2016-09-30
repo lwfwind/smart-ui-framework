@@ -157,7 +157,7 @@ public class DBPoolFactory {
                 break;
             }
         }
-        if(driver==null){
+        if (driver == null) {
             throw new Exception("The poolName is not exist or Config is not set true");
         }
     }
