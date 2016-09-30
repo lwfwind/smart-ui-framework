@@ -247,11 +247,13 @@ public abstract class PageBase {
      * Hide keyboard.
      */
     public void hideKeyboard() {
-        AndroidDriver androidDriver = (AndroidDriver) driver;
-        try {
-            androidDriver.hideKeyboard();
-        } catch (WebDriverException ex) {
-            logger.info("<Keyboard>Soft keyboard not present, cannot hide keyboard!!!");
+        if (getPlatform(driver).equals(MobilePlatform.ANDROID)) {
+            AndroidDriver androidDriver = (AndroidDriver) driver;
+            try {
+                androidDriver.hideKeyboard();
+            } catch (WebDriverException ex) {
+                logger.info("<Keyboard>Soft keyboard not present, cannot hide keyboard!!!");
+            }
         }
     }
 
