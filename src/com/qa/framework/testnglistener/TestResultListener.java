@@ -1,5 +1,7 @@
 package com.qa.framework.testnglistener;
 
+import com.library.common.IOHelper;
+import com.library.common.StringHelper;
 import com.qa.framework.TestCaseBase;
 import com.qa.framework.bean.Method;
 import com.qa.framework.cache.DriverCache;
@@ -8,8 +10,6 @@ import com.qa.framework.cache.ResultCache;
 import com.qa.framework.common.Alert;
 import com.qa.framework.common.ScreenShot;
 import com.qa.framework.config.PropConfig;
-import com.qa.framework.library.base.IOHelper;
-import com.qa.framework.library.base.StringHelper;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;

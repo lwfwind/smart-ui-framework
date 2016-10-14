@@ -1,8 +1,8 @@
 package com.qa.framework.library.admin;
 
+import com.library.common.XmlHelper;
 import com.qa.framework.config.ProjectEnvironment;
 import com.qa.framework.config.PropConfig;
-import com.qa.framework.library.base.XMLHelper;
 import com.qa.framework.library.database.BaseConnBean;
 import org.apache.log4j.Logger;
 import org.dom4j.Element;
@@ -30,7 +30,7 @@ public class XmlToBean {
     public static void read(String path) {
 
         List<BaseConnBean> pools = new ArrayList<BaseConnBean>();
-        XMLHelper XmlUtil = new XMLHelper();
+        XmlHelper XmlUtil = new XmlHelper();
         XmlUtil.readXMLFile(path);
         List<Element> servers = XmlUtil.findElementsByXPath("Servers/Server");
         String serverName = PropConfig.getWebPath().split("/")[2].trim();

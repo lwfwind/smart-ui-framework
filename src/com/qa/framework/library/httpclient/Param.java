@@ -1,7 +1,7 @@
 package com.qa.framework.library.httpclient;
 
 
-import com.qa.framework.library.base.StringHelper;
+import com.library.common.StringHelper;
 
 /**
  * 封装一个测试用例需要的一个数据

@@ -1,7 +1,7 @@
 package com.qa.framework.android;
 
-import com.qa.framework.library.base.OSHelper;
-import com.qa.framework.library.base.ProcessHelper;
+import com.library.common.OSHelper;
+import com.library.common.ProcessHelper;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

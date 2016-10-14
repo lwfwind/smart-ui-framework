@@ -4,10 +4,10 @@ import com.android.ddmlib.IDevice;
 import com.android.ddmlib.NullOutputReceiver;
 import com.android.ddmlib.RawImage;
 import com.android.ddmlib.SyncService;
+import com.library.common.IOHelper;
 import com.qa.framework.android.DebugBridge;
 import com.qa.framework.android.automationserver.hierarchyviewer.device.DeviceBridge;
 import com.qa.framework.android.uiautomator.tree.BasicTreeNode;
-import com.qa.framework.library.base.IOHelper;
 import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;

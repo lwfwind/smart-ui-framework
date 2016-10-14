@@ -1,7 +1,7 @@
 package com.qa.framework.common;
 
+import com.library.common.IOHelper;
 import com.qa.framework.config.PropConfig;
-import com.qa.framework.library.base.IOHelper;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;

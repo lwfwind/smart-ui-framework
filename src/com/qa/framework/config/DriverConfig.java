@@ -1,12 +1,12 @@
 package com.qa.framework.config;
 
 import com.android.ddmlib.IDevice;
+import com.library.common.IOHelper;
+import com.library.common.StringHelper;
 import com.opera.core.systems.OperaDriver;
 import com.qa.framework.android.AppiumServer;
 import com.qa.framework.android.DebugBridge;
 import com.qa.framework.android.Emulator;
-import com.qa.framework.library.base.IOHelper;
-import com.qa.framework.library.base.StringHelper;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.apache.log4j.Logger;

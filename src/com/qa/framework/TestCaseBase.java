@@ -1,11 +1,11 @@
 package com.qa.framework;
 
+import com.library.common.StringHelper;
 import com.qa.framework.android.DebugBridge;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.cache.MethodCache;
 import com.qa.framework.config.DriverConfig;
 import com.qa.framework.config.PropConfig;
-import com.qa.framework.library.base.StringHelper;
 import com.qa.framework.testnglistener.PowerEmailableReporter;
 import com.qa.framework.testnglistener.TestResultListener;
 import org.apache.log4j.Logger;

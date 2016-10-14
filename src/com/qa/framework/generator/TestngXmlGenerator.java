@@ -1,8 +1,8 @@
 package com.qa.framework.generator;
 
-import com.qa.framework.library.base.IOHelper;
-import com.qa.framework.library.base.StringHelper;
-import com.qa.framework.library.base.XMLHelper;
+import com.library.common.IOHelper;
+import com.library.common.StringHelper;
+import com.library.common.XmlHelper;
 import org.dom4j.Element;
 
 import java.io.File;
@@ -84,7 +84,7 @@ public class TestngXmlGenerator {
             }
         }
 
-        XMLHelper xml = new XMLHelper();
+        XmlHelper xml = new XmlHelper();
         xml.createDocument();
         Element root = xml.createDocumentRoot("suite");
         xml.addAttribute(root, "name", "xml_" + threadCnt);

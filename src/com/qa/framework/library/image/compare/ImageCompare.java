@@ -1,7 +1,7 @@
 package com.qa.framework.library.image.compare;
 
+import com.library.common.IOHelper;
 import com.qa.framework.config.PropConfig;
-import com.qa.framework.library.base.IOHelper;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

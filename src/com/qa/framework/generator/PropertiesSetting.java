@@ -1,6 +1,6 @@
 package com.qa.framework.generator;
 
-import com.qa.framework.library.base.StringHelper;
+import com.library.common.StringHelper;
 
 import java.io.File;
 import java.io.FileInputStream;

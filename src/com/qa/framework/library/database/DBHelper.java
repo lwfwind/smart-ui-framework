@@ -1,9 +1,9 @@
 package com.qa.framework.library.database;
 
+import com.library.common.ClassHelper;
+import com.library.common.CollectionHelper;
+import com.library.common.StringHelper;
 import com.qa.framework.config.PropConfig;
-import com.qa.framework.library.base.ClassHelper;
-import com.qa.framework.library.base.CollectionHelper;
-import com.qa.framework.library.base.StringHelper;
 import com.qa.framework.library.httpclient.HttpMethod;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
@@ -152,7 +152,7 @@ public class DBHelper {
     public static void initSQL(String sqlPath) {
         try {
             File sqlFile = new File(ClassHelper.getClassPath() + sqlPath);
-            List<String> sqlList = FileUtils.readLines(sqlFile);
+            List<String> sqlList = FileUtils.readLines(sqlFile,"utf-8");
             for (String sql : sqlList) {
                 executeUpdate(sql);
             }

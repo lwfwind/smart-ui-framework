@@ -2,8 +2,8 @@ package com.qa.framework.android.event;
 
 import com.android.ddmlib.IDevice;
 import com.android.ddmlib.MultiLineReceiver;
+import com.library.common.StringHelper;
 import com.qa.framework.android.DebugBridge;
-import com.qa.framework.library.base.StringHelper;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;

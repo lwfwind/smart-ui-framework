@@ -1,10 +1,9 @@
 package com.qa.framework.common;
 
-import com.qa.framework.library.base.StringHelper;
+import com.library.common.StringHelper;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

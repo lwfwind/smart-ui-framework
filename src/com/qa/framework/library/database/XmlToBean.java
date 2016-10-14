@@ -1,7 +1,7 @@
 package com.qa.framework.library.database;
 
+import com.library.common.XmlHelper;
 import com.qa.framework.config.ProjectEnvironment;
-import com.qa.framework.library.base.XMLHelper;
 import org.dom4j.Element;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class XmlToBean {
     public static List<BaseConnBean> read(String path) {
 
         List<BaseConnBean> pools = new ArrayList<BaseConnBean>();
-        XMLHelper XmlUtil = new XMLHelper();
+        XmlHelper XmlUtil = new XmlHelper();
         XmlUtil.readXMLFile(path);
         List<Element> list = XmlUtil.findElementsByXPath("pools/pool");
         Element pool = null;

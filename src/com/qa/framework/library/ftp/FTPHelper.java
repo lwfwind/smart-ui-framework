@@ -1,6 +1,6 @@
 package com.qa.framework.library.ftp;
 
-import com.qa.framework.library.base.IOHelper;
+import com.library.common.IOHelper;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
