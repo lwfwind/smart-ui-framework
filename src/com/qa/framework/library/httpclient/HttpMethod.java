@@ -33,7 +33,7 @@ public class HttpMethod {
             localport = Integer.valueOf(PropConfig.getLocalport());
             timeout = Integer.valueOf(PropConfig.getTimeout());
         } else {
-            timeout = 10000;
+            timeout = 60000;
         }
     }
 
