@@ -101,7 +101,7 @@ public class HttpConnectionImp {
                 responseBody = new String(responseBody.getBytes("UTF-8"), "UTF-8");
             }
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            logger.error(e);
             return null;
         } finally {
             try {
