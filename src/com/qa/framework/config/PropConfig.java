@@ -2,6 +2,7 @@ package com.qa.framework.config;
 
 
 import com.library.common.ReflectHelper;
+import com.qa.framework.ioc.annotation.Value;
 
 import java.io.File;
 import java.io.FileReader;
@@ -9,79 +10,96 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Properties;
 
+import static com.qa.framework.ioc.ValueHelp.initConfigFields;
+
 /**
  * The type Prop config.
  */
 public class PropConfig {
-    private static Properties props = new Properties();
     //代理配置
+    @Value("useProxy")
     private static boolean useProxy = false;
+    @Value("localhost")
     private static String localhost = "127.0.0.1";
+    @Value("localport")
     private static String localport = "8888";
-    private static String timeout = "60000";
+    @Value("timeout")
+    private static String timeout = "30000";
     //测试服务器配置
+    @Value("webPath")
     private static String webPath;
+    @Value("dbPoolName")
     private static String dbPoolName;
     //失败重试次数
+    @Value("retryCount")
     private static int retryCount = 1;
     //自定义report
+    @Value("sourceCodeEncoding")
     private static String sourceCodeEncoding = "UTF-8";
+    @Value("sourceCodeDir")
     private static String sourceCodeDir = "src";
     //浏览器配置
+    @Value("coreType")
     private static String coreType;
+    @Value("htmlUnitEmulationType")
     private static String htmlUnitEmulationType;
+    @Value("htmlUnitProxy")
     private static String htmlUnitProxy;
 
     //base package name
+    @Value("basePackage")
     private static String basePackage;
 
     //Android
+    @Value("appBin")
     private static String appBin;
+    @Value("appiumServerUrl")
     private static String appiumServerUrl;
+    @Value("deviceName")
     private static String deviceName;
     //OCR
+    @Value("tessPath")
     private static String tessPath;
     //image compare
+    @Value("benchmarkImagePath")
     private static String benchmarkImagePath;
+    @Value("actualImagePath")
     private static String actualImagePath;
+    @Value("diffImagePath")
     private static String diffImagePath;
+    @Value("maxColorThreshold")
     private static int maxColorThreshold;
 
     //Highlight element for android
+    @Value("highlight")
     private static boolean highlight = false;
 
     //Load chrome extensions or not
+    @Value("debug")
     private static boolean debug = false;
 
     //ios
+    @Value("plantfromVersion")
     private static String plantfromVersion;
+    @Value("uuid")
     private static String uuid;
 
-    static {
-        File file = new File(System.getProperty("user.dir") + File.separator + "config.properties");
-        FileReader fileReader = null;
-        try {
-            fileReader = new FileReader(file);
-            props.load(fileReader);
-            Field[] fields = PropConfig.class.getDeclaredFields();
-            for (Field field : fields) {
-                if (!field.getName().equals("props") && props.getProperty(field.getName()) != null) {
-                    ReflectHelper.setMethod(PropConfig.class, field.getName(), props.getProperty(field.getName()), String.class);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (fileReader != null) {
-                    fileReader.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+
+    private static PropConfig propConfig;
+    private PropConfig (){
+        initConfigFields(this);
+    }
+    public static PropConfig getInstance() {
+        if (propConfig == null) {
+            synchronized (PropConfig.class) {
+                propConfig = new PropConfig();
             }
         }
+        return propConfig;
     }
-
+    static {
+        PropConfig prop=new PropConfig();
+    }
     /**
      * Is debug boolean.
      *
