@@ -84,6 +84,14 @@ public class PropConfig {
     @Value("uuid")
     private static String uuid;
 
+    //SMS配置
+    @Value("sendMsg")
+    private static boolean sendMsg = false;
+    @Value("SN")
+    private static String SN;
+    @Value("SNPWD")
+    private static String SNPWD;
+
 
     private static PropConfig propConfig;
     private PropConfig (){
@@ -535,4 +543,27 @@ public class PropConfig {
         plantfromVersion = val;
     }
 
+    public static String getSN() {
+        return SN;
+    }
+
+    public static void setSN(String SN) {
+        PropConfig.SN = SN;
+    }
+
+    public static String getSNPWD() {
+        return SNPWD;
+    }
+
+    public static void setSNPWD(String SNPWD) {
+        PropConfig.SNPWD = SNPWD;
+    }
+
+    public static boolean isSendMsg() {
+        return sendMsg;
+    }
+
+    public static void setSendMsg(boolean sendMsg) {
+        PropConfig.sendMsg = sendMsg;
+    }
 }
