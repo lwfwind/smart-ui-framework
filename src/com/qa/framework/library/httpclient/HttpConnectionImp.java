@@ -125,18 +125,23 @@ public class HttpConnectionImp {
      */
     public String removeBOM(String responseBody) {
         BufferedReader reader = null;
+        // convert String into InputStream
+        InputStream is = new ByteArrayInputStream(responseBody.getBytes());
+
+        // read it with BufferedReader
+        reader = new BufferedReader(new InputStreamReader(new BOMInputStream(is)));
+
         String line = null;
+        String lines = "";
         try {
-            // convert String into InputStream
-            InputStream is = new ByteArrayInputStream(responseBody.getBytes("utf-8"));
-            // read it with BufferedReader
-            reader = new BufferedReader(new InputStreamReader(new BOMInputStream(is), "utf-8"));
-            line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                lines = lines + line;
+            }
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return line;
-    }
 
+        return lines;
+    }
 }
