@@ -73,7 +73,11 @@ public class HttpMethod {
      * @return the string
      */
     public static String postUrl(String url) {
-        return PropConfig.getWebPath() + url;
+        if (url.startsWith("http://")||url.startsWith("HTTP://")){
+            return url;
+        }else {
+            return PropConfig.getWebPath() + url;
+        }
     }
 
     /**
