@@ -192,6 +192,9 @@ public class DriverConfig {
                             capabilities.setCapability("deviceName", device.getSerialNumber());
                         }
                     }
+                    if (PropConfig.isNoReset()){
+                        capabilities.setCapability("noReset", true);
+                    }
                     capabilities.setCapability("app", app.getAbsolutePath());
                     capabilities.setCapability("unicodeKeyboard", true);
                     capabilities.setCapability("resetKeyboard", true);
