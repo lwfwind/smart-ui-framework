@@ -92,6 +92,10 @@ public class PropConfig {
     @Value("SNPWD")
     private static String SNPWD;
 
+    //单例测试
+    @Value("noReset")
+    private static boolean noReset;
+
 
     private static PropConfig propConfig;
     private PropConfig (){
@@ -565,5 +569,13 @@ public class PropConfig {
 
     public static void setSendMsg(boolean sendMsg) {
         PropConfig.sendMsg = sendMsg;
+    }
+
+    public static boolean isNoReset() {
+        return noReset;
+    }
+
+    public static void setNoReset(boolean noReset) {
+        PropConfig.noReset = noReset;
     }
 }
