@@ -1,5 +1,6 @@
 package com.qa.framework.testnglistener;
 
+import org.testng.ISuite;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 
@@ -46,7 +47,9 @@ public interface ICustomTestListener {
     /**
      * On finish.
      *
-     * @param testContext the test context
+     * @param iSuite the test context
      */
+    void onFinish(ISuite iSuite);
+
     void onFinish(ITestContext testContext);
 }
