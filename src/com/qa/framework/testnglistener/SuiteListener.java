@@ -13,8 +13,8 @@ import static com.qa.framework.ioc.IocHelper.findImplementClass;
 /**
  * Created by Administrator on 2016/12/12.
  */
-public class SuniteListener implements ISuiteListener {
-    private static Logger logger = Logger.getLogger(SuniteListener.class);
+public class SuiteListener implements ISuiteListener {
+    private static Logger logger = Logger.getLogger(SuiteListener.class);
 
     @Override
     public void onStart(ISuite iSuite) {
