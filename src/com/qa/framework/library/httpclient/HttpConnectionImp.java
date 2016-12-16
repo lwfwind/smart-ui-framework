@@ -59,16 +59,8 @@ public class HttpConnectionImp {
                 basicCookie.setExpiryDate(cookie.getExpiry());
                 cookieStore.addCookie(basicCookie);
             }
+            String hostName = baseRequest.getURI().getHost();
             for (Cookie cookie : driverCookies) {
-                String webPath = PropConfig.getWebPath();
-                String hostName = "";
-                if (StringHelper.startsWithIgnoreCase(webPath, "http://")) {
-                    if (webPath.contains("/")) {
-                        hostName = StringHelper.getTokensList(webPath.substring(7), "/").get(0);
-                    } else {
-                        hostName = webPath.substring(7);
-                    }
-                }
                 if (!cookie.getDomain().equalsIgnoreCase(hostName)) {
                     BasicClientCookie basicCookie = new BasicClientCookie(cookie.getName(), cookie.getValue());
                     basicCookie.setDomain(hostName);

@@ -227,7 +227,7 @@ public class TestResultListener extends TestListenerAdapter {
             try {
                 LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
                 for (LogEntry entry : logEntries) {
-                    logger.info("brower info - " + entry.getLevel() + " " + entry.getMessage());
+                    logger.debug("brower info - " + entry.getLevel() + " " + entry.getMessage());
                 }
             } catch (Exception ignored) {
             }
