@@ -58,7 +58,7 @@ public class TestngXmlGenerator {
             }
             String contents = IOHelper.readFileToString(file);
             for (String line : noBlankLines) {
-                if (contents != null && contents.lastIndexOf("@Test") > 0 && line.lastIndexOf("class") > 0 && line.lastIndexOf("extends") > 0 && line.lastIndexOf("TestCaseBase") > 0) {
+                if (contents != null && contents.lastIndexOf("@Test") > 0 && line.lastIndexOf("class") > 0 && line.lastIndexOf("extends") > 0 ) {
                     className = StringHelper.getBetweenString(line, "class", "extends").trim();
                     isMatchedFile = true;
                     break;
