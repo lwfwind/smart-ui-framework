@@ -14,13 +14,26 @@ import java.util.List;
 public class sendMessage {
     public static String sendMsg(String mobile,String message) throws  IOException {
         String url="http://sdk2.entinfo.cn/webservice.asmx/SendSMS";
-
-        List<Param> params=addParams(mobile,message);
+        String levedMsg=message;
+        String sendMsg=null;
+        String returnMsg=null;
+        boolean sendSuccess=true;
+        while (levedMsg.length()>70){
+            sendMsg=message.substring(0,70);
+            levedMsg=message.substring(70);
+            List<Param> params=addParams(mobile,sendMsg);
+            returnMsg=HttpMethod.usePostMethod(url,params,false,false);
+            if (!returnMsg.contains("成功")){
+                sendSuccess=false;
+                break;
+            }
+        }
+        List<Param> params=addParams(mobile,levedMsg);
         String result= HttpMethod.usePostMethod(url,params,false,false);
-        if (result.contains("成功")){
+        if (result.contains("成功")&&sendSuccess){
             return mobile+"发送短信成功";
         }else{
-            return mobile+"发送短信失败，错误代码为:"+result;
+            return mobile+"发送短信失败，错误代码为:"+result+returnMsg;
         }
     }
 
