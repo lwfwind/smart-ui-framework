@@ -14,9 +14,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by apple on 15/11/19.
- */
 public class HttpMethod {
     /**
      * The constant logger.
@@ -73,9 +70,9 @@ public class HttpMethod {
      * @return the string
      */
     public static String postUrl(String url) {
-        if (url.startsWith("http://")||url.startsWith("HTTP://")){
+        if (url.startsWith("http://") || url.startsWith("HTTP://")) {
             return url;
-        }else {
+        } else {
             return PropConfig.getWebPath() + url;
         }
     }
@@ -90,21 +87,7 @@ public class HttpMethod {
      * @return the string
      */
     public static String useGetMethod(String url, List<Param> params, boolean storeCookie, boolean useCookie) {
-        String uri = getUrl(url, params);
-        logger.info("拼接后的web地址为:" + uri);
-        HttpGet get = new HttpGet(uri);
-        if (useProxy) {
-            HttpHost proxy = new HttpHost(localhost, localport, "http");
-            RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(timeout).setSocketTimeout(timeout).setConnectTimeout(timeout).setProxy(proxy).build();
-            get.setConfig(requestConfig);
-        } else {
-            RequestConfig requestConfig = RequestConfig.custom().setConnectionRequestTimeout(timeout).setSocketTimeout(timeout).setConnectTimeout(timeout).build();
-            get.setConfig(requestConfig);
-        }
-        HttpConnectionImp imp = new HttpConnectionImp(get);
-        String returnResult = imp.getResponseResult(storeCookie, useCookie);
-        logger.info("actual result:" + returnResult);
-        return returnResult;
+        return useGetMethod(url, params, storeCookie, useCookie, 0);
     }
 
     /**
@@ -197,7 +180,7 @@ public class HttpMethod {
      * @param useCookie   the use cookie
      * @return the string
      */
-    public static String usePostMethod(String url, List<Param> params, boolean storeCookie, boolean useCookie) {
+    public static String usePostMethod(String url, List<Param> params, boolean storeCookie, boolean useCookie, int trytimes) {
         String uri = postUrl(url);
         logger.info("拼接后的web地址为:" + uri);
         HttpPost httpPost = new HttpPost(uri);
@@ -223,7 +206,26 @@ public class HttpMethod {
         }
         HttpConnectionImp imp = new HttpConnectionImp(httpPost);
         String returnResult = imp.getResponseResult(storeCookie, useCookie);
-        logger.info("实际结果:" + returnResult);
+        if (returnResult != null) {
+            logger.info("actual result:" + returnResult);
+            return returnResult;
+        } else {
+            int count = 0;
+            while (count < trytimes && returnResult == null) {
+                returnResult = imp.getResponseResult(false, false);
+                count++;
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        logger.info("actual result:" + returnResult);
         return returnResult;
+    }
+
+    public static String usePostMethod(String url, List<Param> params, boolean storeCookie, boolean useCookie) {
+        return usePostMethod(url, params, storeCookie, useCookie, 0);
     }
 }
