@@ -120,7 +120,7 @@ public class Emulator {
             }
             logger.info("close Adb scucessfully.");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -172,7 +172,7 @@ public class Emulator {
             ProcessHelper.closePidsByName(this.emulatorProcessName);
             logger.info("close all emulators scucessfully.");
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

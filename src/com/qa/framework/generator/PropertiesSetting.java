@@ -1,6 +1,7 @@
 package com.qa.framework.generator;
 
 import com.library.common.StringHelper;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -13,6 +14,8 @@ import java.util.Properties;
  * The type Properties setting.
  */
 public class PropertiesSetting {
+    private final static Logger logger = Logger
+            .getLogger(PropertiesSetting.class);
 
     /**
      * The entry point of application.
@@ -47,7 +50,7 @@ public class PropertiesSetting {
             }
             props.store(new FileOutputStream(propsFile), "");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

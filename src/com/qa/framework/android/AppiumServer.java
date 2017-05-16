@@ -85,7 +85,7 @@ public class AppiumServer {
                             return true;
                         }
                     } catch (IOException | InterruptedException | ExecutionException e) {
-                        e.printStackTrace();
+                        logger.error(e.getMessage(), e);
                     }
                 }
             }

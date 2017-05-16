@@ -196,7 +196,7 @@ public class ScreenShot {
             try {
                 bf = ImageIO.read(byteArrayInputStream);
             } catch (IOException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
             return bf;
         }

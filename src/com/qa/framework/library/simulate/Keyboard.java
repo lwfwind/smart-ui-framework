@@ -1,5 +1,7 @@
 package com.qa.framework.library.simulate;
 
+import org.apache.log4j.Logger;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 
@@ -7,6 +9,8 @@ import java.awt.event.KeyEvent;
  * The type Keyboard.
  */
 public class Keyboard extends Robot {
+    private final static Logger logger = Logger
+            .getLogger(Keyboard.class);
 
     /**
      * Instantiates a new Keyboard.
@@ -56,7 +60,7 @@ public class Keyboard extends Robot {
             p = Runtime.getRuntime().exec(cmd);
             p.waitFor();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             if (p != null) {
                 p.destroy();

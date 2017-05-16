@@ -192,7 +192,7 @@ public class DriverConfig {
                             capabilities.setCapability("deviceName", device.getSerialNumber());
                         }
                     }
-                    if (PropConfig.isNoReset()){
+                    if (PropConfig.isNoReset()) {
                         capabilities.setCapability("noReset", true);
                     }
                     capabilities.setCapability("app", app.getAbsolutePath());

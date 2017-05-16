@@ -152,7 +152,7 @@ public class DBHelper {
     public static void initSQL(String sqlPath) {
         try {
             File sqlFile = new File(ClassHelper.getClassPath() + sqlPath);
-            List<String> sqlList = FileUtils.readLines(sqlFile,"utf-8");
+            List<String> sqlList = FileUtils.readLines(sqlFile, "utf-8");
             for (String sql : sqlList) {
                 executeUpdate(sql);
             }

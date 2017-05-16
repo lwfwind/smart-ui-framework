@@ -1,6 +1,7 @@
 package com.qa.framework.library.httpclient;
 
 
+import com.library.common.SocketHelper;
 import com.qa.framework.config.PropConfig;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -19,19 +20,14 @@ public class HttpMethod {
      * The constant logger.
      */
     protected final static Logger logger = Logger.getLogger(HttpMethod.class);
-    private static boolean useProxy = PropConfig.isUseProxy();
     private static String localhost;
     private static Integer localport;
     private static Integer timeout;
 
     static {
-        if (useProxy) {
-            localhost = PropConfig.getLocalhost();
-            localport = Integer.valueOf(PropConfig.getLocalport());
-            timeout = Integer.valueOf(PropConfig.getTimeout());
-        } else {
-            timeout = 60000;
-        }
+        localhost = PropConfig.getLocalhost();
+        localport = Integer.valueOf(PropConfig.getLocalport());
+        timeout = Integer.valueOf(PropConfig.getTimeout());
     }
 
     /**
@@ -104,7 +100,7 @@ public class HttpMethod {
         String uri = getUrl(url, params);
         logger.info("拼接后的web地址为:" + uri);
         HttpGet get = new HttpGet(uri);
-        if (useProxy) {
+        if (SocketHelper.serverListening(localhost, localport)) {
             HttpHost proxy = new HttpHost(localhost, localport, "http");
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).setProxy(proxy).build();
             get.setConfig(requestConfig);
@@ -125,7 +121,7 @@ public class HttpMethod {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
         }
@@ -142,7 +138,7 @@ public class HttpMethod {
      */
     public static String get(String url, int trytimes) {
         HttpGet get = new HttpGet(url);
-        if (useProxy) {
+        if (SocketHelper.serverListening(localhost, localport)) {
             HttpHost proxy = new HttpHost(localhost, localport, "http");
             RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).setProxy(proxy).build();
             get.setConfig(requestConfig);
@@ -163,7 +159,7 @@ public class HttpMethod {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
         }
@@ -185,7 +181,7 @@ public class HttpMethod {
         logger.info("拼接后的web地址为:" + uri);
         HttpPost httpPost = new HttpPost(uri);
         RequestConfig requestConfig = null;
-        if (useProxy) {
+        if (SocketHelper.serverListening(localhost, localport)) {
             HttpHost proxy = new HttpHost(localhost, localport, "http");
             requestConfig = RequestConfig.custom().setSocketTimeout(timeout).setConnectTimeout(timeout).setProxy(proxy).build();
         } else {
@@ -202,7 +198,7 @@ public class HttpMethod {
         try {
             httpPost.setEntity(new UrlEncodedFormEntity(basicNameValuePairs, "UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         HttpConnectionImp imp = new HttpConnectionImp(httpPost);
         String returnResult = imp.getResponseResult(storeCookie, useCookie);
@@ -217,7 +213,7 @@ public class HttpMethod {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             }
         }

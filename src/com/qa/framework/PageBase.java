@@ -157,7 +157,7 @@ public abstract class PageBase {
             Thread.sleep(time);
             //logger.info("Pause " + time + " ms");
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -168,7 +168,7 @@ public abstract class PageBase {
         try {
             alert.acceptAlert();
         } catch (NoAlertPresentException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

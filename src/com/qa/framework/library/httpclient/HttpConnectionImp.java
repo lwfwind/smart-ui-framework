@@ -1,9 +1,7 @@
 package com.qa.framework.library.httpclient;
 
 
-import com.library.common.StringHelper;
 import com.qa.framework.cache.DriverCache;
-import com.qa.framework.config.PropConfig;
 import org.apache.commons.io.input.BOMInputStream;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.CookieStore;
@@ -131,7 +129,7 @@ public class HttpConnectionImp {
             }
             reader.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
 
         return lines;

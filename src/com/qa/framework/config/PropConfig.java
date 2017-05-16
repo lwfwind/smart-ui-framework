@@ -1,24 +1,23 @@
 package com.qa.framework.config;
 
 
-import com.library.common.ReflectHelper;
-import com.qa.framework.ioc.annotation.Value;
+import com.library.common.IOHelper;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.List;
 import java.util.Properties;
-
-import static com.qa.framework.ioc.ValueHelp.initConfigFields;
 
 /**
  * The type Prop config.
  */
 public class PropConfig {
+    private final static Logger logger = Logger
+            .getLogger(PropConfig.class);
     //代理配置
-    @Value("useProxy")
-    private static boolean useProxy = false;
     @Value("localhost")
     private static String localhost = "127.0.0.1";
     @Value("localport")
@@ -98,9 +97,15 @@ public class PropConfig {
 
 
     private static PropConfig propConfig;
-    private PropConfig (){
+
+    static {
+        PropConfig prop = new PropConfig();
+    }
+
+    private PropConfig() {
         initConfigFields(this);
     }
+
     public static PropConfig getInstance() {
         if (propConfig == null) {
             synchronized (PropConfig.class) {
@@ -109,9 +114,7 @@ public class PropConfig {
         }
         return propConfig;
     }
-    static {
-        PropConfig prop=new PropConfig();
-    }
+
     /**
      * Is debug boolean.
      *
@@ -308,28 +311,6 @@ public class PropConfig {
      */
     public static void setWebPath(String val) {
         webPath = val;
-    }
-
-    /**
-     * Is use proxy boolean.
-     *
-     * @return the boolean
-     */
-    public static boolean isUseProxy() {
-        return useProxy;
-    }
-
-    /**
-     * Sets use proxy.
-     *
-     * @param val the val
-     */
-    public static void setUseProxy(String val) {
-        if ("false".equalsIgnoreCase(val)) {
-            useProxy = false;
-        } else {
-            useProxy = true;
-        }
     }
 
     /**
@@ -577,5 +558,90 @@ public class PropConfig {
 
     public static void setNoReset(boolean noReset) {
         PropConfig.noReset = noReset;
+    }
+
+    private static void initConfigFields(Object obj) {
+        Properties props = new Properties();
+        Class<?> clazz = obj.getClass();
+        props = getProperties();
+        Field[] fields = clazz.getDeclaredFields();
+        for (Field field : fields) {
+            String fieldKey;
+            String fieldValue;
+            if (field.isAnnotationPresent(Value.class)) {
+                Value value = field.getAnnotation(Value.class);
+                fieldKey = value.value();
+                if (!field.getName().equals("props") && props.getProperty(fieldKey) != null) {
+                    fieldValue = props.getProperty(fieldKey);
+                    field.setAccessible(true);
+                    setValue(obj, field, fieldValue);
+                }
+            }
+        }
+    }
+
+    private static void setValue(Object obj, Field method, String value) {
+        Object fieldType = method.getType();
+        try {
+            if (String.class.equals(fieldType)) {
+                method.set(obj, value);
+            } else if (byte.class.equals(fieldType)) {
+                method.set(obj, Byte.parseByte(value));
+            } else if (Byte.class.equals(fieldType)) {
+                method.set(obj, Byte.valueOf(value));
+            } else if (boolean.class.equals(fieldType)) {
+                method.set(obj, Boolean.parseBoolean(value));
+            } else if (Boolean.class.equals(fieldType)) {
+                method.set(obj, Boolean.valueOf(value));
+            } else if (short.class.equals(fieldType)) {
+                method.set(obj, Short.parseShort(value));
+            } else if (Short.class.equals(fieldType)) {
+                method.set(obj, Short.valueOf(value));
+            } else if (int.class.equals(fieldType)) {
+                method.set(obj, Integer.parseInt(value));
+            } else if (Integer.class.equals(fieldType)) {
+                method.set(obj, Integer.valueOf(value));
+            } else if (long.class.equals(fieldType)) {
+                method.set(obj, Long.parseLong(value));
+            } else if (Long.class.equals(fieldType)) {
+                method.set(obj, Long.valueOf(value));
+            } else if (float.class.equals(fieldType)) {
+                method.set(obj, Float.parseFloat(value));
+            } else if (Float.class.equals(fieldType)) {
+                method.set(obj, Float.valueOf(value));
+            } else if (double.class.equals(fieldType)) {
+                method.set(obj, Double.parseDouble(value));
+            } else if (Double.class.equals(fieldType)) {
+                method.set(obj, Double.valueOf(value));
+            }
+        } catch (IllegalAccessException e) {
+            logger.error(e.getMessage(), e);
+        }
+    }
+
+
+    private static Properties getProperties() {
+        Properties props = new Properties();
+        List<String> configPathList = IOHelper.listFilesInDirectory(System.getProperty("user.dir"),"config.properties");
+        if(configPathList.size() > 0) {
+            File file = new File(configPathList.get(0));
+            FileReader fileReader = null;
+            try {
+                fileReader = new FileReader(file);
+                props.load(fileReader);
+            } catch (IOException e) {
+                logger.error(e.getMessage(), e);
+            } finally {
+                try {
+                    if (fileReader != null) {
+                        fileReader.close();
+                    }
+                } catch (IOException e) {
+                    logger.error(e.getMessage(), e);
+                }
+            }
+            return props;
+        }
+        return null;
     }
 }

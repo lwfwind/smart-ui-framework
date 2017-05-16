@@ -40,7 +40,7 @@ public class UiAutomatorHelper {
                 DeviceBridge.setupDeviceForward(device);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -61,7 +61,7 @@ public class UiAutomatorHelper {
             logger.info("end screenshot");
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             DebugBridge.terminate();
         }
@@ -139,7 +139,7 @@ public class UiAutomatorHelper {
         try {
             return getUiHierarchyContent(device);
         } catch (UiAutomatorException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         return null;
     }

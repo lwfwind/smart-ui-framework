@@ -1,6 +1,7 @@
 package com.qa.framework.pagefactory.web;
 
 import com.qa.framework.config.DriverConfig;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -19,7 +20,8 @@ import java.util.Map;
  * custom functionality.
  */
 public class ElementImpl implements Element {
-
+    private final static Logger logger = Logger
+            .getLogger(ElementImpl.class);
     private final WebElement element;
     private final WebDriver driver;
 
@@ -45,9 +47,8 @@ public class ElementImpl implements Element {
         }
         try {
             Thread.sleep(time);
-            //logger.info("Pause " + time + " ms");
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -159,7 +160,7 @@ public class ElementImpl implements Element {
         try {
             rb = new Robot();
         } catch (AWTException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         if (rb != null) {
             rb.mouseMove(0, 0);
@@ -169,7 +170,7 @@ public class ElementImpl implements Element {
                 Actions builder = new Actions(driver);
                 builder.moveToElement(element).build().perform();
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
             return;
         }

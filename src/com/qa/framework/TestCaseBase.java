@@ -92,7 +92,7 @@ public abstract class TestCaseBase {
                 try {
                     driver = ThreadGuard.protect(new RemoteWebDriver(new URL(hubURL), capability));
                 } catch (MalformedURLException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 }
             } else {
                 driver = DriverConfig.getDriverObject();

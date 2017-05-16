@@ -33,7 +33,7 @@ public class AutomationServerHelper {
                 hierarchyViewer = new HierarchyViewer(device);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -56,7 +56,7 @@ public class AutomationServerHelper {
             logger.info(point2.getY());
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         } finally {
             DebugBridge.terminate();
         }
@@ -133,7 +133,7 @@ public class AutomationServerHelper {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
             currentTime = System.currentTimeMillis();
         }

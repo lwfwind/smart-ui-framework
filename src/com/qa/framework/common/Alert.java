@@ -4,6 +4,7 @@ import com.library.common.StringHelper;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +43,7 @@ public class Alert {
             Thread.sleep(time);
             //logger.info("Pause " + time + " ms");
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

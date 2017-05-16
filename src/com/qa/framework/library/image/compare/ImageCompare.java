@@ -2,6 +2,7 @@ package com.qa.framework.library.image.compare;
 
 import com.library.common.IOHelper;
 import com.qa.framework.config.PropConfig;
+import org.apache.log4j.Logger;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,8 @@ import java.io.IOException;
  */
 @SuppressWarnings("restriction")
 public class ImageCompare {
+    private final static Logger logger = Logger
+            .getLogger(ImageCompare.class);
 
     /**
      * Change RGB to XYZ
@@ -87,7 +90,7 @@ public class ImageCompare {
             benchmark = ImageIO.read(new File(PropConfig.getBenchmarkImagePath() + File.separator + benchmarkImageName));
             actual = ImageIO.read(new File(PropConfig.getActualImagePath() + File.separator + actualImageName));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         if (benchmark != null) {
             Integer width = benchmark.getWidth();
@@ -117,7 +120,7 @@ public class ImageCompare {
                     out = new FileOutputStream(diffImagePath + File.separator + baseName + ".png");
                     ImageIO.write(difference, "png", out);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    logger.error(e.getMessage(), e);
                 } finally {
                     if (out != null)
                         out.close();

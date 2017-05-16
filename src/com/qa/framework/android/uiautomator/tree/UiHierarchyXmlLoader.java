@@ -1,5 +1,6 @@
 package com.qa.framework.android.uiautomator.tree;
 
+import org.apache.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -18,6 +19,8 @@ import java.util.List;
  * The type Ui hierarchy xml loader.
  */
 public class UiHierarchyXmlLoader {
+    private final static Logger logger = Logger
+            .getLogger(UiHierarchyXmlLoader.class);
     private BasicTreeNode mRootNode;
     private List<Rectangle> mNafNodes;
     private List<BasicTreeNode> mNodeList;
@@ -38,10 +41,10 @@ public class UiHierarchyXmlLoader {
         try {
             parser = factory.newSAXParser();
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         } catch (SAXException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
         DefaultHandler handler = new DefaultHandler() {
@@ -100,10 +103,10 @@ public class UiHierarchyXmlLoader {
         try {
             parser.parse(new File(xmlPath), handler);
         } catch (SAXException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             return null;
         }
         return this.mRootNode;

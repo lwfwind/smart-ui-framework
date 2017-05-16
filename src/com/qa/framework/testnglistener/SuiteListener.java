@@ -71,10 +71,11 @@ public class SuiteListener implements ISuiteListener {
                 testListenerImp = (ICustomTestListener) clazz.newInstance();
                 testListenerImp.onFinish(iSuite);
             } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
+
     private int getId(ITestResult result) {
         int id = result.getTestClass().getName().hashCode();
         id = id + result.getMethod().getMethodName().hashCode();

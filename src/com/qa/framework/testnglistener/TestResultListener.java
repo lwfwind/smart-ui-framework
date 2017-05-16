@@ -43,7 +43,7 @@ public class TestResultListener extends TestListenerAdapter {
                 testListenerImp = (ICustomTestListener) clazz.newInstance();
                 testListenerImp.onStart(testContext);
             } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -70,7 +70,7 @@ public class TestResultListener extends TestListenerAdapter {
                 testListenerImp = (ICustomTestListener) clazz.newInstance();
                 testListenerImp.onTestFailure(tr);
             } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -93,7 +93,7 @@ public class TestResultListener extends TestListenerAdapter {
                 testListenerImp = (ICustomTestListener) clazz.newInstance();
                 testListenerImp.onTestSkipped(tr);
             } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -116,7 +116,7 @@ public class TestResultListener extends TestListenerAdapter {
                 testListenerImp = (ICustomTestListener) clazz.newInstance();
                 testListenerImp.onTestSuccess(tr);
             } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -134,7 +134,7 @@ public class TestResultListener extends TestListenerAdapter {
                 testListenerImp = (ICustomTestListener) clazz.newInstance();
                 testListenerImp.onTestStart(tr);
             } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -150,7 +150,7 @@ public class TestResultListener extends TestListenerAdapter {
                 testListenerImp = (ICustomTestListener) clazz.newInstance();
                 testListenerImp.onFinish(testContext);
             } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
         for (ITestResult passedTest : testContext.getPassedTests().getAllResults()) {
@@ -256,7 +256,7 @@ public class TestResultListener extends TestListenerAdapter {
         Alert alert = new Alert(driver);
         List<String> messages = alert.acceptAlert(5000);
         if (messages.size() > 0) {
-            logger.info(tr.getName() + " alert messages:" + StringHelper.listToString(messages, " \n"));
+            logger.info(tr.getName() + " alert messages:" + StringHelper.join(messages, " \n"));
         }
     }
 

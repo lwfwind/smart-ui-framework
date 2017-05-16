@@ -80,7 +80,7 @@ public class AccessibilityEventMonitor {
                         5000);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -132,7 +132,7 @@ public class AccessibilityEventMonitor {
                             0);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
