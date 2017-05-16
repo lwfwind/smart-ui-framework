@@ -2,6 +2,8 @@ package com.qa.framework.config;
 
 
 import com.library.common.IOHelper;
+import com.library.common.ReflectHelper;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -95,24 +97,13 @@ public class PropConfig {
     @Value("noReset")
     private static boolean noReset;
 
+    public static Properties getProps() {
+        return props;
+    }
 
-    private static PropConfig propConfig;
-
+    private static Properties props;
     static {
-        PropConfig prop = new PropConfig();
-    }
-
-    private PropConfig() {
-        initConfigFields(this);
-    }
-
-    public static PropConfig getInstance() {
-        if (propConfig == null) {
-            synchronized (PropConfig.class) {
-                propConfig = new PropConfig();
-            }
-        }
-        return propConfig;
+        initConfigFields(PropConfig.class);
     }
 
     /**
@@ -560,9 +551,7 @@ public class PropConfig {
         PropConfig.noReset = noReset;
     }
 
-    private static void initConfigFields(Object obj) {
-        Properties props = new Properties();
-        Class<?> clazz = obj.getClass();
+    private static void initConfigFields(Class<?> clazz) {
         props = getProperties();
         Field[] fields = clazz.getDeclaredFields();
         for (Field field : fields) {
@@ -571,48 +560,48 @@ public class PropConfig {
             if (field.isAnnotationPresent(Value.class)) {
                 Value value = field.getAnnotation(Value.class);
                 fieldKey = value.value();
-                if (!field.getName().equals("propConfig") && props.getProperty(fieldKey) != null) {
+                if (!field.getName().equals("props") && props.getProperty(fieldKey) != null) {
                     fieldValue = props.getProperty(fieldKey);
                     field.setAccessible(true);
-                    setValue(obj, field, fieldValue);
+                    setValue(clazz, field, fieldValue);
                 }
             }
         }
     }
 
-    private static void setValue(Object obj, Field method, String value) {
-        Object fieldType = method.getType();
+    private static void setValue(Class<?> clazz, Field field, String value) {
+        Object fieldType = field.getType();
         try {
             if (String.class.equals(fieldType)) {
-                method.set(obj, value);
+                field.set(clazz, value);
             } else if (byte.class.equals(fieldType)) {
-                method.set(obj, Byte.parseByte(value));
+                field.set(clazz, Byte.parseByte(value));
             } else if (Byte.class.equals(fieldType)) {
-                method.set(obj, Byte.valueOf(value));
+                field.set(clazz, Byte.valueOf(value));
             } else if (boolean.class.equals(fieldType)) {
-                method.set(obj, Boolean.parseBoolean(value));
+                field.set(clazz, Boolean.parseBoolean(value));
             } else if (Boolean.class.equals(fieldType)) {
-                method.set(obj, Boolean.valueOf(value));
+                field.set(clazz, Boolean.valueOf(value));
             } else if (short.class.equals(fieldType)) {
-                method.set(obj, Short.parseShort(value));
+                field.set(clazz, Short.parseShort(value));
             } else if (Short.class.equals(fieldType)) {
-                method.set(obj, Short.valueOf(value));
+                field.set(clazz, Short.valueOf(value));
             } else if (int.class.equals(fieldType)) {
-                method.set(obj, Integer.parseInt(value));
+                field.set(clazz, Integer.parseInt(value));
             } else if (Integer.class.equals(fieldType)) {
-                method.set(obj, Integer.valueOf(value));
+                field.set(clazz, Integer.valueOf(value));
             } else if (long.class.equals(fieldType)) {
-                method.set(obj, Long.parseLong(value));
+                field.set(clazz, Long.parseLong(value));
             } else if (Long.class.equals(fieldType)) {
-                method.set(obj, Long.valueOf(value));
+                field.set(clazz, Long.valueOf(value));
             } else if (float.class.equals(fieldType)) {
-                method.set(obj, Float.parseFloat(value));
+                field.set(clazz, Float.parseFloat(value));
             } else if (Float.class.equals(fieldType)) {
-                method.set(obj, Float.valueOf(value));
+                field.set(clazz, Float.valueOf(value));
             } else if (double.class.equals(fieldType)) {
-                method.set(obj, Double.parseDouble(value));
+                field.set(clazz, Double.parseDouble(value));
             } else if (Double.class.equals(fieldType)) {
-                method.set(obj, Double.valueOf(value));
+                field.set(clazz, Double.valueOf(value));
             }
         } catch (IllegalAccessException e) {
             logger.error(e.getMessage(), e);

@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import static com.qa.framework.ioc.AutoInjectHelper.initFields;
 import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.getPlatform;
 
 /**
@@ -60,6 +61,7 @@ public abstract class PageBase {
      * Instantiates a new Page base.
      */
     public PageBase() {
+        initFields(this);
         this.driver = DriverCache.get();
         if (this.driver != null) {
             alert = new Alert(driver);

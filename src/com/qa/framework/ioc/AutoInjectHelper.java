@@ -1,16 +1,17 @@
 package com.qa.framework.ioc;
 
+import com.qa.framework.config.PropConfig;
+import com.qa.framework.config.Value;
 import com.qa.framework.ioc.annotation.Autowired;
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.Properties;
 
 import static com.qa.framework.ioc.IocHelper.findImplementClass;
 
-/**
- * Created by kcgw001 on 2016/3/14.
- */
 public class AutoInjectHelper {
     /**
      * The constant logger.
@@ -30,6 +31,19 @@ public class AutoInjectHelper {
             clazz = clazz.getSuperclass();
             isAbs = Modifier.isAbstract(clazz.getModifiers());
         }
+    }
+
+    private static void proxyFields(Object obj, Class<?> clazz) {
+        do {
+            Field[] fields = clazz.getDeclaredFields();
+            fillForFields(obj, fields);
+
+            if (clazz.getSuperclass() == null) {
+                return;
+            }
+            clazz = clazz.getSuperclass();
+
+        } while (true);
     }
 
     private static void fillForFields(Object obj, Field[] fields) {
@@ -64,19 +78,55 @@ public class AutoInjectHelper {
                     logger.error(e.toString(), e);
                 }
             }
+            else if(field.getAnnotation(Value.class) != null){
+                Value value = field.getAnnotation(Value.class);
+                String fieldKey = value.value();
+                Properties props = PropConfig.getProps();
+                if (props.getProperty(fieldKey) != null) {
+                    String fieldValue = props.getProperty(fieldKey);
+                    field.setAccessible(true);
+                    setValue(obj,field,fieldValue);
+                }
+            }
         }
     }
 
-    private static void proxyFields(Object obj, Class<?> clazz) {
-        do {
-            Field[] fields = clazz.getDeclaredFields();
-            fillForFields(obj, fields);
-
-            if (clazz.getSuperclass() == null) {
-                return;
+    private static void setValue(Object obj, Field field, String value) {
+        Object fieldType = field.getType();
+        try {
+            if (String.class.equals(fieldType)) {
+                field.set(obj, value);
+            } else if (byte.class.equals(fieldType)) {
+                field.set(obj, Byte.parseByte(value));
+            } else if (Byte.class.equals(fieldType)) {
+                field.set(obj, Byte.valueOf(value));
+            } else if (boolean.class.equals(fieldType)) {
+                field.set(obj, Boolean.parseBoolean(value));
+            } else if (Boolean.class.equals(fieldType)) {
+                field.set(obj, Boolean.valueOf(value));
+            } else if (short.class.equals(fieldType)) {
+                field.set(obj, Short.parseShort(value));
+            } else if (Short.class.equals(fieldType)) {
+                field.set(obj, Short.valueOf(value));
+            } else if (int.class.equals(fieldType)) {
+                field.set(obj, Integer.parseInt(value));
+            } else if (Integer.class.equals(fieldType)) {
+                field.set(obj, Integer.valueOf(value));
+            } else if (long.class.equals(fieldType)) {
+                field.set(obj, Long.parseLong(value));
+            } else if (Long.class.equals(fieldType)) {
+                field.set(obj, Long.valueOf(value));
+            } else if (float.class.equals(fieldType)) {
+                field.set(obj, Float.parseFloat(value));
+            } else if (Float.class.equals(fieldType)) {
+                field.set(obj, Float.valueOf(value));
+            } else if (double.class.equals(fieldType)) {
+                field.set(obj, Double.parseDouble(value));
+            } else if (Double.class.equals(fieldType)) {
+                field.set(obj, Double.valueOf(value));
             }
-            clazz = clazz.getSuperclass();
-
-        } while (true);
+        } catch (IllegalAccessException e) {
+            logger.error(e.getMessage(), e);
+        }
     }
 }
