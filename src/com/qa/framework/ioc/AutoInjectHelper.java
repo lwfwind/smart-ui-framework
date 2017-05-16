@@ -1,6 +1,6 @@
 package com.qa.framework.ioc;
 
-import com.qa.framework.ioc.annotation.AutoInject;
+import com.qa.framework.ioc.annotation.Autowired;
 import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
@@ -34,7 +34,7 @@ public class AutoInjectHelper {
 
     private static void fillForFields(Object obj, Field[] fields) {
         for (Field field : fields) {
-            if (field.getAnnotation(AutoInject.class) != null) {
+            if (field.getAnnotation(Autowired.class) != null) {
                 Object proxy = IocContainer.getIocObject(field.getType());
                 if (proxy == null) {
                     logger.debug(field.getName() + " is not existed in IOC Container");

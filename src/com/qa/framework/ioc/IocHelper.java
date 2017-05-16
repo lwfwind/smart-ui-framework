@@ -2,7 +2,7 @@ package com.qa.framework.ioc;
 
 import com.library.common.ArrayHelper;
 import com.library.common.CollectionHelper;
-import com.qa.framework.ioc.annotation.AutoInject;
+import com.qa.framework.ioc.annotation.Autowired;
 import com.qa.framework.ioc.annotation.Impl;
 
 import java.lang.reflect.Field;
@@ -23,7 +23,7 @@ public class IocHelper {
                 Field[] fields = iocClass.getDeclaredFields();
                 if (ArrayHelper.isNotEmpty(fields)) {
                     for (Field field : fields) {
-                        if (field.isAnnotationPresent(AutoInject.class)) {
+                        if (field.isAnnotationPresent(Autowired.class)) {
                             Class<?> interfaceClass = field.getType();
                             Class<?> implementClass = findImplementClass(interfaceClass);
                             if (implementClass != null) {
