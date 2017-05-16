@@ -7,6 +7,7 @@ import com.qa.framework.cache.MethodCache;
 import com.qa.framework.config.DriverConfig;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.testnglistener.PowerEmailableReporter;
+import com.qa.framework.testnglistener.SuiteListener;
 import com.qa.framework.testnglistener.TestResultListener;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -25,7 +26,7 @@ import static com.qa.framework.ioc.AutoInjectHelper.initFields;
 /**
  * The type Test case base.
  */
-@Listeners({TestResultListener.class, PowerEmailableReporter.class})
+@Listeners({TestResultListener.class, SuiteListener.class, PowerEmailableReporter.class})
 public abstract class TestCaseBase {
     /**
      * The constant logger.

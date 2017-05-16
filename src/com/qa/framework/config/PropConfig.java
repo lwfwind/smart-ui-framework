@@ -571,7 +571,7 @@ public class PropConfig {
             if (field.isAnnotationPresent(Value.class)) {
                 Value value = field.getAnnotation(Value.class);
                 fieldKey = value.value();
-                if (!field.getName().equals("props") && props.getProperty(fieldKey) != null) {
+                if (!field.getName().equals("propConfig") && props.getProperty(fieldKey) != null) {
                     fieldValue = props.getProperty(fieldKey);
                     field.setAccessible(true);
                     setValue(obj, field, fieldValue);
@@ -622,7 +622,7 @@ public class PropConfig {
 
     private static Properties getProperties() {
         Properties props = new Properties();
-        List<String> configPathList = IOHelper.listFilesInDirectory(System.getProperty("user.dir"),"config.properties");
+        List<String> configPathList = IOHelper.listFilesInDirectoryRecursive(System.getProperty("user.dir"),"config.properties");
         if(configPathList.size() > 0) {
             File file = new File(configPathList.get(0));
             FileReader fileReader = null;

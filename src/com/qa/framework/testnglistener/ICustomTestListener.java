@@ -44,6 +44,8 @@ public interface ICustomTestListener {
      */
     void onStart(ITestContext testContext);
 
+    void onStart(ISuite iSuite);
+
     /**
      * On finish.
      *
