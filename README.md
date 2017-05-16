@@ -19,7 +19,7 @@ This framework pulled out of the common components such as Driver,TestNG,http/da
 <dependency>
     <groupId>com.github.lwfwind.automation</groupId>
     <artifactId>smart-ui-framework</artifactId>
-    <version>3.2</version>
+    <version>3.4</version>
 </dependency>
 ```
 
@@ -28,7 +28,8 @@ This framework pulled out of the common components such as Driver,TestNG,http/da
 ```java
 public class SearchPage extends PageBase {
 
-    String url = PropConfig.getWebPath();
+    @Value("webPath")
+    private String url;
     @FindBy(id = "kw")
     private WebElement searchTestBox;
 
@@ -44,7 +45,7 @@ public class SearchPage extends PageBase {
 
 ```java
 public class SearchService extends ServiceBase {
-    @AutoInject
+    @Autowired
     SearchPage searchPage;
 
     public void search(String content){
@@ -58,7 +59,7 @@ public class SearchService extends ServiceBase {
 
 ```java
 public class SearchWithServiceTest extends TestCaseBase {
-    @AutoInject
+    @Autowired
     SearchService searchService;
 
     @Test(dataProviderClass = TestCaseData.class, dataProvider = "searchData", description = "搜索测试")
@@ -92,7 +93,22 @@ public class TestListener implements ICustomTestListener {
     public void onTestSkipped(ITestResult tr){
         // TODO
     }
-
+    
+    @Override
+    public void onStart(ISuite iSuite){
+        // TODO
+    }
+    
+    @Override 
+    public void onFinish(ISuite iSuite){
+        // TODO
+    }
+    
+    @Override
+    public void onStart(ITestContext testContext){
+        // TODO
+    };
+    
     @Override
     public void onFinish(ITestContext testContext) {
         // TODO
