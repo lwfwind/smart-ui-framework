@@ -106,6 +106,20 @@ public class ProjectEnvironment {
         return configPath() + "FTPConfig.xml";
     }
 
+    public static String getGeckoDriverLocation() {
+        Properties sysProp = System.getProperties();
+        String osName = sysProp.getProperty("os.name");
+        String osArch = sysProp.getProperty("os.arch");
+        if (osName.startsWith("Win") && osArch.contains("64")) {
+            return resourcePath() + "geckodriver" + File.separator + "geckodriver_win64.exe";
+        } else if (osName.startsWith("Win") && !osArch.contains("64")) {
+            return resourcePath() + "geckodriver" + File.separator + "geckodriver_win32.exe";
+        }
+        else {
+            return resourcePath() + "geckodriver" + File.separator + "geckodriver";
+        }
+    }
+
     /**
      * Gets chrome driver location.
      *

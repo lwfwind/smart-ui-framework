@@ -3,7 +3,6 @@ package com.qa.framework.config;
 import com.android.ddmlib.IDevice;
 import com.library.common.IOHelper;
 import com.library.common.StringHelper;
-import com.opera.core.systems.OperaDriver;
 import com.qa.framework.android.AppiumServer;
 import com.qa.framework.android.DebugBridge;
 import com.qa.framework.android.Emulator;
@@ -20,8 +19,10 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
+import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ThreadGuard;
 
 import java.io.File;
@@ -123,6 +124,7 @@ public class DriverConfig {
             DesiredCapabilities capabilities = null;
             switch (browserType) {
                 case FIREFOX:
+                    System.setProperty("webdriver.gecko.driver", ProjectEnvironment.getGeckoDriverLocation());
                     FirefoxProfile fp = new FirefoxProfile();
                     fp.setPreference("browser.startup.homepage", "about:blank");
                     fp.setPreference("startup.homepage_welcome_url", "about:blank");
@@ -171,7 +173,8 @@ public class DriverConfig {
                     }
                     break;
                 case SAFARI:
-                    // FUTURE
+                    driverObject = ThreadGuard.protect(new SafariDriver());
+                    logger.info("Using Opera Driver...");
                     break;
                 case OPERA:
                     driverObject = ThreadGuard.protect(new OperaDriver());
