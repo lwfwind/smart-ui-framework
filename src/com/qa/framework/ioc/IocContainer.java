@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by kcgw001 on 2016/4/13.
- */
 public class IocContainer {
     private static final Logger logger = Logger.getLogger(IocContainer.class);
     private static final Map<Class<?>, Object> container = new HashMap<Class<?>, Object>();
@@ -23,7 +20,7 @@ public class IocContainer {
                 if (cls.isAnnotationPresent(Service.class)
                         || cls.isAnnotationPresent(Page.class)) {
                     Object instance = cls.newInstance();
-                    container.put(cls, instance);
+                    //container.put(cls, instance);
                     logger.info("Add the class " + cls.getName() + " ioc container");
                 }
             }

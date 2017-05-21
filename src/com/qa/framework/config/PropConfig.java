@@ -2,8 +2,6 @@ package com.qa.framework.config;
 
 
 import com.library.common.IOHelper;
-import com.library.common.ReflectHelper;
-import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -96,14 +94,14 @@ public class PropConfig {
     //单例测试
     @Value("noReset")
     private static boolean noReset;
+    private static Properties props;
+
+    static {
+        initConfigFields(PropConfig.class);
+    }
 
     public static Properties getProps() {
         return props;
-    }
-
-    private static Properties props;
-    static {
-        initConfigFields(PropConfig.class);
     }
 
     /**
@@ -611,8 +609,8 @@ public class PropConfig {
 
     private static Properties getProperties() {
         Properties props = new Properties();
-        List<String> configPathList = IOHelper.listFilesInDirectoryRecursive(System.getProperty("user.dir"),"config.properties");
-        if(configPathList.size() > 0) {
+        List<String> configPathList = IOHelper.listFilesInDirectoryRecursive(System.getProperty("user.dir"), "config.properties");
+        if (configPathList.size() > 0) {
             File file = new File(configPathList.get(0));
             FileReader fileReader = null;
             try {

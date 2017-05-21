@@ -19,32 +19,38 @@ This framework pulled out of the common components such as Driver,TestNG,http/da
 <dependency>
     <groupId>com.github.lwfwind.automation</groupId>
     <artifactId>smart-ui-framework</artifactId>
-    <version>3.4</version>
+    <version>3.5</version>
 </dependency>
 ```
 
-##### 2. Create Page level Class, which extends PageBase Class
+##### 2. Create Page level Class, which annotated by @Page
 
 ```java
-public class SearchPage extends PageBase {
+@Page
+public class SearchPage{
 
+    @Autowired
+    private WebDriver driver;
     @Value("webPath")
     private String url;
     @FindBy(id = "kw")
     private WebElement searchTestBox;
 
     public void searchFor(String text) {
-        open(url);
+        driver.manage().window().maximize();
+        driver.manage().deleteAllCookies();
+        driver.get(url);
         searchTestBox.sendKeys(text);
         searchTestBox.submit();
     }
 }
 ```
 
-##### 3. Create Service Level Class, which extends ServiceBase Class
+##### 3. Create Service Level Class, which annotated by @Service
 
 ```java
-public class SearchService extends ServiceBase {
+@Service
+public class SearchService {
     @Autowired
     SearchPage searchPage;
 

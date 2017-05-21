@@ -114,8 +114,7 @@ public class ProjectEnvironment {
             return resourcePath() + "geckodriver" + File.separator + "geckodriver_win64.exe";
         } else if (osName.startsWith("Win") && !osArch.contains("64")) {
             return resourcePath() + "geckodriver" + File.separator + "geckodriver_win32.exe";
-        }
-        else {
+        } else {
             return resourcePath() + "geckodriver" + File.separator + "geckodriver";
         }
     }

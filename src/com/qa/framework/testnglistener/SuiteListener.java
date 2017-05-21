@@ -1,7 +1,8 @@
 package com.qa.framework.testnglistener;
 
 import org.apache.log4j.Logger;
-import org.testng.*;
+import org.testng.ISuite;
+import org.testng.ISuiteListener;
 
 import static com.qa.framework.ioc.IocHelper.findImplementClass;
 
