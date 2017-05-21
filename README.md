@@ -4,14 +4,11 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 
 * Tags: Selenium, Appium, Webdriver, TestNG, Automation
 
-## Why
-This framework pulled out of the common components such as Driver,TestNG,http/database library, which is needed in all of automation projects, let you focus on the important business and improve development efficiency.
-
 ## Features
 * Support page object design pattern and extend page factory support highlight element, log action, screenshot action automatically and so on
-* Support identify Toast and PopupWindow for appium through [android-automation-library](https://github.com/lwfwind/android-automation-library)
 * Good support concurrent testing with multi webdriver
 * Re-run failed test cases and capture screenshot automatically when testcase fails
+* Support identify Toast and PopupWindow for appium through [android-automation-library](https://github.com/lwfwind/android-automation-library)
 
 ## Example
 ##### 1. Add maven dependency
