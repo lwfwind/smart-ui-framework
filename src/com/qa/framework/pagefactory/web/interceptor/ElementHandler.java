@@ -92,7 +92,9 @@ public class ElementHandler implements InvocationHandler {
                 }
             } else if (elements.size() == 1) {
                 element = elements.get(0);
-                break;
+                if (element.isDisplayed()) {
+                    break;
+                }
             }
             this.sleeper.sleep();
             currentTime = System.currentTimeMillis();
@@ -116,7 +118,9 @@ public class ElementHandler implements InvocationHandler {
             if (method.getName().equals("click") || method.getName().equals("sendKeys") || method.getName().equals("mouseOver")) {
                 wapperElement.scrollIntoView(getScrollIntoView(field));
                 this.sleeper.sleep(50);
-                wapperElement.highLight();
+                try {
+                    wapperElement.highLight();
+                }catch (Exception ignored){};
                 this.sleeper.sleep(50);
             }
             Object ret = null;
@@ -143,7 +147,7 @@ public class ElementHandler implements InvocationHandler {
             return ret;
         } catch (InvocationTargetException e) {
             // Unwrap the underlying exception
-            if (e.getCause().toString().contains("not clickable") || e.getCause().toString().contains("stale element reference")) {
+            if (e.getCause().toString().contains("not clickable") || e.getCause().toString().contains("stale element reference") || e.getCause().toString().contains("StaleElementReferenceException")) {
                 logger.info(e.getCause().toString());
                 this.sleeper.sleep(5000);
                 wapperElement.click();
