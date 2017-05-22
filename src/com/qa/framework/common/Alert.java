@@ -15,7 +15,7 @@ import java.util.Set;
 public class Alert {
 
     private final static Logger logger = Logger.getLogger(Alert.class);
-    private static int stepInterval = 100;
+    private Sleeper sleeper = new Sleeper();
     /**
      * The Driver.
      */
@@ -28,23 +28,6 @@ public class Alert {
      */
     public Alert(WebDriver driver) {
         this.driver = driver;
-    }
-
-    /**
-     * Pause
-     *
-     * @param time in millisecond
-     */
-    public void pause(int time) {
-        if (time <= 0) {
-            return;
-        }
-        try {
-            Thread.sleep(time);
-            //logger.info("Pause " + time + " ms");
-        } catch (InterruptedException e) {
-            logger.error(e.getMessage(), e);
-        }
     }
 
     /**
@@ -86,7 +69,7 @@ public class Alert {
                 alert.accept();
             } catch (NoAlertPresentException ignored) {
             }
-            pause(500);
+            sleeper.sleep();
             current = System.currentTimeMillis();
         }
         return msg;
