@@ -129,6 +129,12 @@ public class DriverConfig {
                     fp.setPreference("browser.startup.homepage", "about:blank");
                     fp.setPreference("startup.homepage_welcome_url", "about:blank");
                     fp.setPreference("startup.homepage_welcome_url.additional", "about:blank");
+                    if (PropConfig.isDebug()) {
+                        List<String> xpiFiles = IOHelper.listFilesInDirectory(ProjectEnvironment.getFirefoxExtensionsLocation(), "*.xpi");
+                        for (String xpi : xpiFiles) {
+                            fp.addExtension(new File(xpi));
+                        }
+                    }
                     driverObject = ThreadGuard.protect(new FirefoxDriver(fp));
                     logger.info("Using FIREFOX Driver...");
                     break;

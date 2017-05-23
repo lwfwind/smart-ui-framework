@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The type Alert.
@@ -15,11 +14,11 @@ import java.util.Set;
 public class Alert {
 
     private final static Logger logger = Logger.getLogger(Alert.class);
-    private Sleeper sleeper = new Sleeper();
     /**
      * The Driver.
      */
     public WebDriver driver;
+    private Sleeper sleeper = new Sleeper();
 
     /**
      * Instantiates a new Alert.
@@ -30,21 +29,6 @@ public class Alert {
         this.driver = driver;
     }
 
-    /**
-     * Select last opened window.
-     */
-    public void selectLastOpenedWindow() {
-        Set<String> windowHandles = driver.getWindowHandles();
-        int index = windowHandles.size() - 1;
-        int count = 0;
-        for (String handler : windowHandles) {
-            if (count != index) {
-                count++;
-            } else {
-                driver.switchTo().window(handler);
-            }
-        }
-    }
 
     /**
      * Accept alert.

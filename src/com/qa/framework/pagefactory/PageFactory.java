@@ -1,6 +1,5 @@
 package com.qa.framework.pagefactory;
 
-import com.qa.framework.PageBase;
 import com.qa.framework.pagefactory.mobile.AppiumFieldDecorator;
 import com.qa.framework.pagefactory.web.ElementDecorator;
 import io.appium.java_client.remote.MobilePlatform;
@@ -29,7 +28,7 @@ public class PageFactory {
      */
     public static void initElements(WebDriver driver, Object page) {
         Class<?> pageClass = page.getClass();
-        while (pageClass != Object.class && pageClass != PageBase.class) {
+        while (pageClass != Object.class) {
             proxyFields(driver, page, pageClass);
             pageClass = pageClass.getSuperclass();
         }

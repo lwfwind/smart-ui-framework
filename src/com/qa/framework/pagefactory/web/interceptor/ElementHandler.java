@@ -6,6 +6,7 @@ import com.qa.framework.cache.MethodCache;
 import com.qa.framework.common.Alert;
 import com.qa.framework.common.ScreenShot;
 import com.qa.framework.common.Sleeper;
+import com.qa.framework.common.Window;
 import com.qa.framework.pagefactory.web.Element;
 import io.appium.java_client.pagefactory.WithTimeout;
 import org.apache.log4j.Logger;
@@ -30,6 +31,7 @@ public class ElementHandler implements InvocationHandler {
      * The Alert.
      */
     protected final Alert alert;
+    private final Window window;
     private final Sleeper sleeper;
     private final WebDriver driver;
     private final ElementLocator locator;
@@ -58,6 +60,7 @@ public class ElementHandler implements InvocationHandler {
         this.logicElementName = field.getName();
         this.field = field;
         this.alert = new Alert(driver);
+        this.window = new Window(driver);
         this.sleeper = new Sleeper();
     }
 
@@ -120,7 +123,9 @@ public class ElementHandler implements InvocationHandler {
                 this.sleeper.sleep(50);
                 try {
                     wapperElement.highLight();
-                }catch (Exception ignored){};
+                } catch (Exception ignored) {
+                }
+                ;
                 this.sleeper.sleep(50);
             }
             Object ret = null;
@@ -133,7 +138,7 @@ public class ElementHandler implements InvocationHandler {
                 logger.info(logicElementName + " click");
                 this.sleeper.sleep(500);
                 if (driver.getWindowHandles().size() > previousWindowsCount) {
-                    this.alert.selectLastOpenedWindow();
+                    this.window.selectLastOpenedWindow();
                 }
             } else {
                 if (paras != null) {

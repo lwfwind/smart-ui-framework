@@ -143,6 +143,10 @@ public class ProjectEnvironment {
         return resourcePath() + "chromextensions";
     }
 
+    public static String getFirefoxExtensionsLocation() {
+        return resourcePath() + "firefoxextensions";
+    }
+
     /**
      * Gets ie driver location.
      *

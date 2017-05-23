@@ -5,6 +5,7 @@ import com.qa.framework.cache.MethodCache;
 import com.qa.framework.common.Alert;
 import com.qa.framework.common.ScreenShot;
 import com.qa.framework.common.Sleeper;
+import com.qa.framework.common.Window;
 import com.qa.framework.pagefactory.web.Element;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -22,7 +23,8 @@ public class SubElementHandler implements InvocationHandler {
     /**
      * The Alert.
      */
-    protected final Alert alert;
+    private final Alert alert;
+    private final Window window;
     private final Sleeper sleeper;
     private final Object element;
     private final String logicParentElementName;
@@ -48,6 +50,7 @@ public class SubElementHandler implements InvocationHandler {
         this.num = num;
         this.driver = DriverCache.get();
         this.alert = new Alert(driver);
+        this.window = new Window(driver);
         this.sleeper = new Sleeper();
     }
 
@@ -72,7 +75,7 @@ public class SubElementHandler implements InvocationHandler {
                 logger.info(logicParentElementName + "_" + num + " click");
                 this.sleeper.sleep(500);
                 if (driver.getWindowHandles().size() > previousWindowsCount) {
-                    this.alert.selectLastOpenedWindow();
+                    this.window.selectLastOpenedWindow();
                 }
                 return ret;
             }
