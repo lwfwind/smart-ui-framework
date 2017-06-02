@@ -115,10 +115,14 @@ public class ElementInterceptor implements MethodInterceptor {
                 this.sleeper.sleep(500);
             }
             if (realElement == null) {
-                logger.error("the " + this.field.getName()
-                        + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
-                throw new RuntimeException("the " + this.field.getName()
-                        + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+                if (!method.getName().equals("isDisplayed")) {
+                    logger.error("the " + this.field.getName()
+                            + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+                    throw new RuntimeException("the " + this.field.getName()
+                            + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
+                }else {
+                    return false;
+                }
             }
         }
 
