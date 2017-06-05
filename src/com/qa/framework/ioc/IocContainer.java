@@ -21,7 +21,7 @@ public class IocContainer {
                         || cls.isAnnotationPresent(Page.class)) {
                     Object instance = cls.newInstance();
                     //container.put(cls, instance);
-                    logger.info("Add the class " + cls.getName() + " ioc container");
+                    //logger.info("Add the class " + cls.getName() + " ioc container");
                 }
             }
         } catch (Exception e) {
