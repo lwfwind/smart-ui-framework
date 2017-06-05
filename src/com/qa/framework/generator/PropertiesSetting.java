@@ -1,5 +1,6 @@
 package com.qa.framework.generator;
 
+import com.library.common.IOHelper;
 import com.library.common.StringHelper;
 import org.apache.log4j.Logger;
 
@@ -32,25 +33,22 @@ public class PropertiesSetting {
      * @param args the args
      */
     public static void autoSetting(String[] args) {
-        String path = null;
-        if (System.getProperty("basedir") != null) {
-            path = System.getProperty("basedir");
-        } else {
-            path = System.getProperty("user.dir");
-        }
-        final File propsFile = new File(path + File.separator, "config.properties");
-        Properties props = new Properties();
-        try {
-            props.load(new FileInputStream(propsFile));
-            for (String arg : args) {
-                if (arg.contains("=")) {
-                    List<String> argList = StringHelper.getTokensList(arg, "=");
-                    props.put(argList.get(0), argList.get(1));
+        List<String> configPathList = IOHelper.listFilesInDirectory(System.getProperty("user.dir"),"config.properties");
+        if(configPathList.size() > 0) {
+            File propsFile = new File(configPathList.get(0));
+            Properties props = new Properties();
+            try {
+                props.load(new FileInputStream(propsFile));
+                for (String arg : args) {
+                    if (arg.contains("=")) {
+                        List<String> argList = StringHelper.getTokensList(arg, "=");
+                        props.put(argList.get(0), argList.get(1));
+                    }
                 }
+                props.store(new FileOutputStream(propsFile), "");
+            } catch (IOException e) {
+                logger.error(e.getMessage(), e);
             }
-            props.store(new FileOutputStream(propsFile), "");
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
         }
     }
 
