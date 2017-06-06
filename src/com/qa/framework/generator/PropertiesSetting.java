@@ -33,7 +33,13 @@ public class PropertiesSetting {
      * @param args the args
      */
     public static void autoSetting(String[] args) {
-        List<String> configPathList = IOHelper.listFilesInDirectory(System.getProperty("user.dir"),"config.properties");
+        String path = null;
+        if (System.getProperty("basedir") != null) {
+            path = System.getProperty("basedir");
+        } else {
+            path = System.getProperty("user.dir");
+        }
+        List<String> configPathList = IOHelper.listFilesInDirectoryRecursive(path,"config.properties");
         if(configPathList.size() > 0) {
             File propsFile = new File(configPathList.get(0));
             Properties props = new Properties();
