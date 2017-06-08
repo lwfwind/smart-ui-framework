@@ -39,24 +39,34 @@ public class HttpMethod {
      */
     public static String getUrl(String url, List<Param> params) {
         StringBuilder webPath = new StringBuilder();
-        webPath.append(PropConfig.getWebPath());
-        if (url.contains("/")) {
-            webPath.append(url);
-        } else {
-            webPath.append(url).append("/");
+        if (!(url.startsWith("http") || url.startsWith("HTTP"))) {
+            webPath.append(PropConfig.getWebPath());
         }
-        if (params != null) {
-            for (Param param : params) {
-                if (param.isShow()) {
+        if (url.endsWith("?")) {
+            webPath.append(url);
+            if (params != null) {
+                for (Param param : params) {
+                    webPath.append(param.getName()).append("=").append(param.getValue(false)).append("&");
+                }
+            }
+            return webPath.toString();
+        } else {
+            if (url.contains("/")) {
+                webPath.append(url);
+            } else {
+                webPath.append(url).append("/");
+            }
+            if (params != null) {
+                for (Param param : params) {
                     webPath.append(param.getName()).append("/").append(param.getValue(false)).append("/");
                 }
             }
-        }
-        if (webPath.substring(webPath.length() - 1).equals("/")) {
-            return webPath.substring(0, webPath.length() - 1);
-        }
+            if (webPath.substring(webPath.length() - 1).equals("/")) {
+                return webPath.substring(0, webPath.length() - 1);
+            }
 
-        return webPath.toString();
+            return webPath.toString();
+        }
     }
 
     /**
@@ -66,7 +76,7 @@ public class HttpMethod {
      * @return the string
      */
     public static String postUrl(String url) {
-        if (url.startsWith("http://") || url.startsWith("HTTP://")) {
+        if (url.startsWith("http") || url.startsWith("HTTP")) {
             return url;
         } else {
             return PropConfig.getWebPath() + url;
