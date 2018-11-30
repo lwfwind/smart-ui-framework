@@ -2,8 +2,8 @@ package com.qa.framework.ioc;
 
 import com.library.common.ArrayHelper;
 import com.library.common.CollectionHelper;
-import com.qa.framework.ioc.annotation.Autowired;
 import com.qa.framework.ioc.annotation.Impl;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.Field;
 import java.util.List;

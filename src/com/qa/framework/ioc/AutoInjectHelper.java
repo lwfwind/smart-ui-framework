@@ -5,11 +5,11 @@ import com.qa.framework.cache.DriverCache;
 import com.qa.framework.common.Driver;
 import com.qa.framework.config.PropConfig;
 import com.qa.framework.config.Value;
-import com.qa.framework.ioc.annotation.Autowired;
 import com.qa.framework.ioc.annotation.Page;
-import com.qa.framework.ioc.annotation.Service;
 import com.qa.framework.pagefactory.PageFactory;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
