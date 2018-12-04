@@ -1,6 +1,7 @@
 package com.qa.framework.ioc;
 
 import com.library.common.ReflectHelper;
+import com.qa.framework.SpringContext;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.common.Driver;
 import com.qa.framework.config.PropConfig;
@@ -9,6 +10,7 @@ import com.qa.framework.ioc.annotation.Page;
 import com.qa.framework.pagefactory.PageFactory;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
@@ -29,7 +31,7 @@ public class AutoInjectHelper {
      *
      * @param obj the obj
      */
-    public static void initFields(Object obj) {
+    public static void initFields(Object obj) throws Exception {
         Class<?> clazz = obj.getClass();
         boolean isAbs = Modifier.isAbstract(clazz.getModifiers());
         while (clazz != Object.class && !isAbs) {
@@ -39,7 +41,7 @@ public class AutoInjectHelper {
         }
     }
 
-    private static void proxyFields(Object obj, Class<?> clazz) {
+    private static void proxyFields(Object obj, Class<?> clazz) throws Exception {
         do {
             Field[] fields = clazz.getDeclaredFields();
             fillForFields(obj, fields);
@@ -52,7 +54,24 @@ public class AutoInjectHelper {
         } while (true);
     }
 
-    private static void fillForFields(Object obj, Field[] fields) {
+    private static Object getBeanFromSpringContext(Field field){
+        ApplicationContext applicationContext = SpringContext.getApplicationContext();
+        if(applicationContext != null) {
+            String[] beanNames = applicationContext.getBeanDefinitionNames();
+            for (String beanName : beanNames) {
+                Object bean = SpringContext.getBean(beanName);
+                Class<?>[] beanImplementClasses = bean.getClass().getInterfaces();
+                for (Class<?> beanImplementClass : beanImplementClasses) {
+                    if (beanImplementClass.getName().equals(field.getType().getName())) {
+                        return bean;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private static void fillForFields(Object obj, Field[] fields) throws Exception {
         for (Field field : fields) {
             if (field.getAnnotation(Autowired.class) != null) {
                 Object proxy = IocContainer.getIocObject(field.getType());
@@ -62,24 +81,30 @@ public class AutoInjectHelper {
                     if (clazz.getSimpleName().equals("WebDriver")) {
                         proxy = DriverCache.get();
                     } else {
-                        Class<?> implementClass = null;
-                        if (Modifier.isAbstract(clazz.getModifiers()) || Modifier.isInterface(clazz.getModifiers())) {
-                            implementClass = findImplementClass(clazz);
-                        } else {
-                            implementClass = clazz;
-                        }
-
-                        try {
-                            if (implementClass != null) {
-                                proxy = implementClass.newInstance();
+                        proxy = getBeanFromSpringContext(field);
+                        if(proxy == null) {
+                            Class<?> implementClass = null;
+                            if (Modifier.isAbstract(clazz.getModifiers()) || Modifier.isInterface(clazz.getModifiers())) {
+                                implementClass = findImplementClass(clazz);
+                            } else {
+                                implementClass = clazz;
                             }
-                        } catch (InstantiationException | IllegalAccessException e) {
-                            logger.error(e.toString(), e);
+
+                            try {
+                                if (implementClass != null) {
+                                    proxy = implementClass.newInstance();
+                                }
+                            } catch (InstantiationException | IllegalAccessException e) {
+                                logger.error(e.toString(), e);
+                            }
                         }
                     }
 
                 } else {
                     logger.debug(field.getName() + " is existed in IOC Container");
+                }
+                if(proxy == null){
+                    throw new Exception("域-"+field.getName() + "-找不到相应的实现类");
                 }
                 try {
                     field.setAccessible(true);
