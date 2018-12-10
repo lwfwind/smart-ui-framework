@@ -60,10 +60,15 @@ public class AutoInjectHelper {
             String[] beanNames = applicationContext.getBeanDefinitionNames();
             for (String beanName : beanNames) {
                 Object bean = SpringContext.getBean(beanName);
-                Class<?>[] beanImplementClasses = bean.getClass().getInterfaces();
-                for (Class<?> beanImplementClass : beanImplementClasses) {
-                    if (beanImplementClass.getName().equals(field.getType().getName())) {
-                        return bean;
+                if(bean.getClass().getName().equals(field.getType().getName())){
+                    return bean;
+                }
+                else {
+                    Class<?>[] beanImplementClasses = bean.getClass().getInterfaces();
+                    for (Class<?> beanImplementClass : beanImplementClasses) {
+                        if (beanImplementClass.getName().equals(field.getType().getName())) {
+                            return bean;
+                        }
                     }
                 }
             }
