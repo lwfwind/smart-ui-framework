@@ -36,12 +36,7 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
     protected static Logger logger = Logger.getLogger(TestCaseBase.class);
     private String browser = null;
     private String hubURL = null;
-
-    @Autowired
-    private PropConfig propConfig;
-
-    @Autowired
-    private DriverConfig driverConfig;
+    
 
     /**
      * Before suite.
@@ -53,7 +48,7 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
     public void BeforeSuite(ITestContext context) throws Exception {
         logger.info("beforeSuite");
         beforeSuite();
-        if (propConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
+        if (PropConfig.get().getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             DebugBridge.init();
             //AccessibilityEventMonitor.start();
         }
@@ -75,7 +70,7 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
     public void AfterSuite(ITestContext context) throws Exception {
         logger.info("afterSuite");
         afterSuite();
-        if (propConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
+        if (PropConfig.get().getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             //AccessibilityEventMonitor.stop();
             DebugBridge.terminate();
         }
@@ -89,7 +84,7 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
 
     private void getDriverObj() throws Exception {
         WebDriver driver = null;
-        if (!(propConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || propConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+        if (!(PropConfig.get().getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.get().getCoreType().equalsIgnoreCase("IOSAPP"))) {
             if (hubURL != null) {
                 DesiredCapabilities capability = null;
                 if (browser.contains("firefox")) {
@@ -103,10 +98,10 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
                     logger.error(e.getMessage(), e);
                 }
             } else {
-                driver = driverConfig.getDriverObject();
+                driver = DriverConfig.getDriverObject();
             }
         } else {
-            driver = driverConfig.getDriverObject();
+            driver = DriverConfig.getDriverObject();
         }
         DriverCache.set(driver);
     }
