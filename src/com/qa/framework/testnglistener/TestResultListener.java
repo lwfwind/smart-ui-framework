@@ -2,6 +2,7 @@ package com.qa.framework.testnglistener;
 
 import com.library.common.IOHelper;
 import com.library.common.StringHelper;
+import com.qa.framework.SpringBootTestCaseBase;
 import com.qa.framework.TestCaseBase;
 import com.qa.framework.bean.Method;
 import com.qa.framework.cache.DriverCache;
@@ -54,8 +55,16 @@ public class TestResultListener extends TestListenerAdapter {
         String name = MethodCache.getCurrentMethodName();
         logger.error(name + " Failure");
         setResultCache(tr, "fail");
-        TestCaseBase tb = (TestCaseBase) tr.getInstance();
-        if (!tb.isUnitTest()) {
+        boolean isUnitTest = false;
+        if(tr.getInstance() instanceof TestCaseBase) {
+            TestCaseBase tb = (TestCaseBase) tr.getInstance();
+            isUnitTest = tb.isUnitTest();
+        }
+        else {
+            SpringBootTestCaseBase tb = (SpringBootTestCaseBase) tr.getInstance();
+            isUnitTest = tb.isUnitTest();
+        }
+        if (!isUnitTest) {
             if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
                 printAlertInfo(tr);
             }
@@ -104,8 +113,16 @@ public class TestResultListener extends TestListenerAdapter {
         String name = MethodCache.getCurrentMethodName();
         logger.info(name + " Success");
         setResultCache(tr, "pass");
-        TestCaseBase tb = (TestCaseBase) tr.getInstance();
-        if (!tb.isUnitTest()) {
+        boolean isUnitTest = false;
+        if(tr.getInstance() instanceof TestCaseBase) {
+            TestCaseBase tb = (TestCaseBase) tr.getInstance();
+            isUnitTest = tb.isUnitTest();
+        }
+        else {
+            SpringBootTestCaseBase tb = (SpringBootTestCaseBase) tr.getInstance();
+            isUnitTest = tb.isUnitTest();
+        }
+        if (!isUnitTest) {
             printBrowserInfo();
         }
         IOHelper.deleteDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);

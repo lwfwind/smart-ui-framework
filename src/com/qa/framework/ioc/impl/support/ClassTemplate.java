@@ -122,6 +122,7 @@ public abstract class ClassTemplate {
 
     private void doAddClass(List<Class<?>> classList, String className) {
         // 加载类
+        logger.info(className);
         Class<?> cls = ClassHelper.loadClass(className, false);
         // 判断是否可以添加类
         if (checkAddClass(cls)) {
