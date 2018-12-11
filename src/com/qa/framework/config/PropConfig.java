@@ -1,634 +1,321 @@
 package com.qa.framework.config;
 
 
-import com.library.common.IOHelper;
-import org.apache.log4j.Logger;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Properties;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * The type Prop config.
  */
-public class PropConfig {
-    private final static Logger logger = Logger
-            .getLogger(PropConfig.class);
+@Component
+public class PropConfig implements InitializingBean {
+
+    private static PropConfig instance;
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        instance = this;
+    }
+
+    public static PropConfig get() {
+        return instance;
+    }
+
     //代理配置
-    @Value("localhost")
-    private static String localhost = "127.0.0.1";
-    @Value("localport")
-    private static String localport = "8888";
-    @Value("timeout")
-    private static String timeout = "30000";
+    @Value("${localhost}")
+    private String localhost = "127.0.0.1";
+    @Value("${localport}")
+    private String localport = "8888";
+    @Value("${timeout}")
+    private String timeout = "30000";
     //测试服务器配置
-    @Value("webPath")
-    private static String webPath;
-    @Value("dbPoolName")
-    private static String dbPoolName;
+    @Value("${webPath}")
+    private String webPath;
+    @Value("${dbPoolName}")
+    private String dbPoolName;
     //失败重试次数
-    @Value("retryCount")
-    private static int retryCount = 1;
+    @Value("${retryCount}")
+    private int retryCount = 1;
     //自定义report
-    @Value("sourceCodeEncoding")
-    private static String sourceCodeEncoding = "UTF-8";
-    @Value("sourceCodeDir")
-    private static String sourceCodeDir = "src";
+    @Value("${sourceCodeEncoding}")
+    private String sourceCodeEncoding = "UTF-8";
+    @Value("${sourceCodeDir}")
+    private String sourceCodeDir = "src";
     //浏览器配置
-    @Value("coreType")
-    private static String coreType;
-    @Value("htmlUnitEmulationType")
-    private static String htmlUnitEmulationType;
-    @Value("htmlUnitProxy")
-    private static String htmlUnitProxy;
-
+    @Value("${coreType}")
+    private String coreType;
+    @Value("${htmlUnitEmulationType}")
+    private String htmlUnitEmulationType;
+    @Value("${htmlUnitProxy}")
+    private String htmlUnitProxy;
     //base package name
-    @Value("basePackage")
-    private static String basePackage;
-
+    @Value("${basePackage}")
+    private String basePackage;
     //Android
-    @Value("appBin")
-    private static String appBin;
-    @Value("appiumServerUrl")
-    private static String appiumServerUrl;
-    @Value("deviceName")
-    private static String deviceName;
+    @Value("${appBin}")
+    private String appBin;
+    @Value("${appiumServerUrl}")
+    private String appiumServerUrl;
+    @Value("${deviceName}")
+    private String deviceName;
     //OCR
-    @Value("tessPath")
-    private static String tessPath;
+    @Value("${tessPath}")
+    private String tessPath;
     //image compare
-    @Value("benchmarkImagePath")
-    private static String benchmarkImagePath;
-    @Value("actualImagePath")
-    private static String actualImagePath;
-    @Value("diffImagePath")
-    private static String diffImagePath;
-    @Value("maxColorThreshold")
-    private static int maxColorThreshold;
-
+    @Value("${benchmarkImagePath}")
+    private String benchmarkImagePath;
+    @Value("${actualImagePath}")
+    private String actualImagePath;
+    @Value("${diffImagePath}")
+    private String diffImagePath;
+    @Value("${maxColorThreshold}")
+    private int maxColorThreshold;
     //Highlight element for android
-    @Value("highlight")
-    private static boolean highlight = false;
-
+    @Value("${highlight}")
+    private boolean highlight = false;
     //Load chrome extensions or not
-    @Value("debug")
-    private static boolean debug = false;
-
+    @Value("${debug}")
+    private boolean debug = false;
     //ios
-    @Value("plantfromVersion")
-    private static String plantfromVersion;
-    @Value("uuid")
-    private static String uuid;
-
+    @Value("${plantfromVersion}")
+    private String plantfromVersion;
+    @Value("${uuid}")
+    private String uuid;
     //SMS配置
-    @Value("sendMsg")
-    private static boolean sendMsg = false;
-    @Value("SN")
-    private static String SN;
-    @Value("SNPWD")
-    private static String SNPWD;
-
+    @Value("${sendMsg}")
+    private boolean sendMsg = false;
+    @Value("${SN}")
+    private String SN;
+    @Value("${SNPWD}")
+    private String SNPWD;
     //单例测试
-    @Value("noReset")
-    private static boolean noReset;
-    private static Properties props;
+    @Value("${noReset}")
+    private boolean noReset;
 
-    static {
-        initConfigFields(PropConfig.class);
-    }
-
-    public static Properties getProps() {
-        return props;
-    }
-
-    /**
-     * Is debug boolean.
-     *
-     * @return the boolean
-     */
-    public static boolean isDebug() {
-        return debug;
-    }
-
-    /**
-     * Sets debug.
-     *
-     * @param val the val
-     */
-    public static void setDebug(String val) {
-        debug = !"false".equalsIgnoreCase(val);
-    }
-
-    /**
-     * Is highlight boolean.
-     *
-     * @return the boolean
-     */
-    public static boolean isHighlight() {
-        return highlight;
-    }
-
-    /**
-     * Sets highlight.
-     *
-     * @param val the val
-     */
-    public static void setHighlight(String val) {
-        highlight = !"false".equalsIgnoreCase(val);
-    }
-
-    /**
-     * Gets base package.
-     *
-     * @return the base package
-     */
-    public static String getBasePackage() {
-        return basePackage;
-    }
-
-    /**
-     * Sets base package.
-     *
-     * @param basePackage the base package
-     */
-    public static void setBasePackage(String basePackage) {
-        PropConfig.basePackage = basePackage;
-    }
-
-    /**
-     * Gets db pool name.
-     *
-     * @return the db pool name
-     */
-    public static String getDbPoolName() {
-        return dbPoolName;
-    }
-
-    /**
-     * Sets db pool name.
-     *
-     * @param dbPoolName the db pool name
-     */
-    public static void setDbPoolName(String dbPoolName) {
-        PropConfig.dbPoolName = dbPoolName;
-    }
-
-    /**
-     * Gets app bin.
-     *
-     * @return the app bin
-     */
-    public static String getAppBin() {
-        return appBin;
-    }
-
-    /**
-     * Sets app bin.
-     *
-     * @param appBin the app bin
-     */
-    public static void setAppBin(String appBin) {
-        PropConfig.appBin = appBin;
-    }
-
-    /**
-     * Gets device name.
-     *
-     * @return the device name
-     */
-    public static String getDeviceName() {
-        return deviceName;
-    }
-
-    /**
-     * Sets device name.
-     *
-     * @param deviceName the device name
-     */
-    public static void setDeviceName(String deviceName) {
-        PropConfig.deviceName = deviceName;
-    }
-
-    /**
-     * Gets appium server url.
-     *
-     * @return the appium server url
-     */
-    public static String getAppiumServerUrl() {
-        return appiumServerUrl;
-    }
-
-    /**
-     * Sets appium server url.
-     *
-     * @param appiumServerUrl the appium server url
-     */
-    public static void setAppiumServerUrl(String appiumServerUrl) {
-        PropConfig.appiumServerUrl = appiumServerUrl;
-    }
-
-    /**
-     * Gets core type.
-     *
-     * @return the core type
-     */
-    public static String getCoreType() {
-        return coreType;
-    }
-
-    /**
-     * Sets core type.
-     *
-     * @param val the val
-     */
-    public static void setCoreType(String val) {
-        coreType = val;
-    }
-
-    /**
-     * Gets html unit proxy.
-     *
-     * @return the html unit proxy
-     */
-    public static String getHtmlUnitProxy() {
-        return htmlUnitProxy;
-    }
-
-    /**
-     * Sets html unit proxy.
-     *
-     * @param val the val
-     */
-    public static void setHtmlUnitProxy(String val) {
-        htmlUnitProxy = val;
-    }
-
-    /**
-     * Gets html unit emulation type.
-     *
-     * @return the html unit emulation type
-     */
-    public static String getHtmlUnitEmulationType() {
-        return htmlUnitEmulationType;
-    }
-
-    /**
-     * Sets html unit emulation type.
-     *
-     * @param val the val
-     */
-    public static void setHtmlUnitEmulationType(String val) {
-        htmlUnitEmulationType = val;
-    }
-
-    /**
-     * Gets web path.
-     *
-     * @return the web path
-     */
-    public static String getWebPath() {
-        return webPath;
-    }
-
-    /**
-     * Sets web path.
-     *
-     * @param val the val
-     */
-    public static void setWebPath(String val) {
-        webPath = val;
-    }
-
-    /**
-     * Gets localhost.
-     *
-     * @return the localhost
-     */
-    public static String getLocalhost() {
+    public String getLocalhost() {
         return localhost;
     }
 
-    /**
-     * Sets localhost.
-     *
-     * @param val the val
-     */
-    public static void setLocalhost(String val) {
-        localhost = val;
+    public void setLocalhost(String localhost) {
+        this.localhost = localhost;
     }
 
-    /**
-     * Gets localport.
-     *
-     * @return the localport
-     */
-    public static String getLocalport() {
+    public String getLocalport() {
         return localport;
     }
 
-    /**
-     * Sets localport.
-     *
-     * @param val the val
-     */
-    public static void setLocalport(String val) {
-        localport = val;
+    public void setLocalport(String localport) {
+        this.localport = localport;
     }
 
-    /**
-     * Gets timeout.
-     *
-     * @return the timeout
-     */
-    public static String getTimeout() {
+    public String getTimeout() {
         return timeout;
     }
 
-    /**
-     * Sets timeout.
-     *
-     * @param val the val
-     */
-    public static void setTimeout(String val) {
-        timeout = val;
+    public void setTimeout(String timeout) {
+        this.timeout = timeout;
     }
 
-    /**
-     * Gets retry count.
-     *
-     * @return the retry count
-     */
-    public static int getRetryCount() {
+    public String getWebPath() {
+        return webPath;
+    }
+
+    public void setWebPath(String webPath) {
+        this.webPath = webPath;
+    }
+
+    public String getDbPoolName() {
+        return dbPoolName;
+    }
+
+    public void setDbPoolName(String dbPoolName) {
+        this.dbPoolName = dbPoolName;
+    }
+
+    public int getRetryCount() {
         return retryCount;
     }
 
-    /**
-     * Sets retry count.
-     *
-     * @param val the val
-     */
-    public static void setRetryCount(String val) {
-        retryCount = Integer.parseInt(val);
+    public void setRetryCount(int retryCount) {
+        this.retryCount = retryCount;
     }
 
-    /**
-     * Gets source code encoding.
-     *
-     * @return the source code encoding
-     */
-    public static String getSourceCodeEncoding() {
+    public String getSourceCodeEncoding() {
         return sourceCodeEncoding;
     }
 
-    /**
-     * Sets source code encoding.
-     *
-     * @param val the val
-     */
-    public static void setSourceCodeEncoding(String val) {
-        sourceCodeEncoding = val;
+    public void setSourceCodeEncoding(String sourceCodeEncoding) {
+        this.sourceCodeEncoding = sourceCodeEncoding;
     }
 
-    /**
-     * Gets source code dir.
-     *
-     * @return the source code dir
-     */
-    public static String getSourceCodeDir() {
+    public String getSourceCodeDir() {
         return sourceCodeDir;
     }
 
-    /**
-     * Sets source code dir.
-     *
-     * @param val the val
-     */
-    public static void setSourceCodeDir(String val) {
-        sourceCodeDir = val;
+    public void setSourceCodeDir(String sourceCodeDir) {
+        this.sourceCodeDir = sourceCodeDir;
     }
 
+    public String getCoreType() {
+        return coreType;
+    }
 
-    /**
-     * Gets tess path.
-     *
-     * @return the tess path
-     */
-    public static String getTessPath() {
+    public void setCoreType(String coreType) {
+        this.coreType = coreType;
+    }
+
+    public String getHtmlUnitEmulationType() {
+        return htmlUnitEmulationType;
+    }
+
+    public void setHtmlUnitEmulationType(String htmlUnitEmulationType) {
+        this.htmlUnitEmulationType = htmlUnitEmulationType;
+    }
+
+    public String getHtmlUnitProxy() {
+        return htmlUnitProxy;
+    }
+
+    public void setHtmlUnitProxy(String htmlUnitProxy) {
+        this.htmlUnitProxy = htmlUnitProxy;
+    }
+
+    public String getBasePackage() {
+        return basePackage;
+    }
+
+    public void setBasePackage(String basePackage) {
+        this.basePackage = basePackage;
+    }
+
+    public String getAppBin() {
+        return appBin;
+    }
+
+    public void setAppBin(String appBin) {
+        this.appBin = appBin;
+    }
+
+    public String getAppiumServerUrl() {
+        return appiumServerUrl;
+    }
+
+    public void setAppiumServerUrl(String appiumServerUrl) {
+        this.appiumServerUrl = appiumServerUrl;
+    }
+
+    public String getDeviceName() {
+        return deviceName;
+    }
+
+    public void setDeviceName(String deviceName) {
+        this.deviceName = deviceName;
+    }
+
+    public String getTessPath() {
         return tessPath;
     }
 
-    /**
-     * Sets tess path.
-     *
-     * @param val the val
-     */
-    public static void setTessPath(String val) {
-        tessPath = val;
+    public void setTessPath(String tessPath) {
+        this.tessPath = tessPath;
     }
 
-    /**
-     * Gets benchmark image path.
-     *
-     * @return the benchmark image path
-     */
-    public static String getBenchmarkImagePath() {
+    public String getBenchmarkImagePath() {
         return benchmarkImagePath;
     }
 
-    /**
-     * Sets benchmark image path.
-     *
-     * @param val the val
-     */
-    public static void setBenchmarkImagePath(String val) {
-        benchmarkImagePath = benchmarkImagePath;
+    public void setBenchmarkImagePath(String benchmarkImagePath) {
+        this.benchmarkImagePath = benchmarkImagePath;
     }
 
-    /**
-     * Gets actual image path.
-     *
-     * @return the actual image path
-     */
-    public static String getActualImagePath() {
+    public String getActualImagePath() {
         return actualImagePath;
     }
 
-    /**
-     * Sets actual image path.
-     *
-     * @param val the val
-     */
-    public static void setActualImagePath(String val) {
-        actualImagePath = val;
+    public void setActualImagePath(String actualImagePath) {
+        this.actualImagePath = actualImagePath;
     }
 
-    /**
-     * Gets diff image path.
-     *
-     * @return the diff image path
-     */
-    public static String getDiffImagePath() {
+    public String getDiffImagePath() {
         return diffImagePath;
     }
 
-    /**
-     * Sets diff image path.
-     *
-     * @param val the val
-     */
-    public static void setDiffImagePath(String val) {
-        diffImagePath = val;
+    public void setDiffImagePath(String diffImagePath) {
+        this.diffImagePath = diffImagePath;
     }
 
-    /**
-     * Gets max color threshold.
-     *
-     * @return the max color threshold
-     */
-    public static int getMaxColorThreshold() {
+    public int getMaxColorThreshold() {
         return maxColorThreshold;
     }
 
-    /**
-     * Sets max color threshold.
-     *
-     * @param val the val
-     */
-    public static void setMaxColorThreshold(String val) {
-        maxColorThreshold = Integer.parseInt(val);
+    public void setMaxColorThreshold(int maxColorThreshold) {
+        this.maxColorThreshold = maxColorThreshold;
     }
 
-    public static String getUuid() {
-        return uuid;
+    public boolean isHighlight() {
+        return highlight;
     }
 
-    public static void setUuid(String val) {
-        uuid = val;
+    public void setHighlight(boolean highlight) {
+        this.highlight = highlight;
     }
 
-    public static String getPlantfromVersion() {
+    public boolean isDebug() {
+        return debug;
+    }
+
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
+    public String getPlantfromVersion() {
         return plantfromVersion;
     }
 
-    public static void setPlantfromVersion(String val) {
-        plantfromVersion = val;
+    public void setPlantfromVersion(String plantfromVersion) {
+        this.plantfromVersion = plantfromVersion;
     }
 
-    public static String getSN() {
-        return SN;
+    public String getUuid() {
+        return uuid;
     }
 
-    public static void setSN(String SN) {
-        PropConfig.SN = SN;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
-    public static String getSNPWD() {
-        return SNPWD;
-    }
-
-    public static void setSNPWD(String SNPWD) {
-        PropConfig.SNPWD = SNPWD;
-    }
-
-    public static boolean isSendMsg() {
+    public boolean isSendMsg() {
         return sendMsg;
     }
 
-    public static void setSendMsg(boolean sendMsg) {
-        PropConfig.sendMsg = sendMsg;
+    public void setSendMsg(boolean sendMsg) {
+        this.sendMsg = sendMsg;
     }
 
-    public static boolean isNoReset() {
+    public String getSN() {
+        return SN;
+    }
+
+    public void setSN(String SN) {
+        this.SN = SN;
+    }
+
+    public String getSNPWD() {
+        return SNPWD;
+    }
+
+    public void setSNPWD(String SNPWD) {
+        this.SNPWD = SNPWD;
+    }
+
+    public boolean isNoReset() {
         return noReset;
     }
 
-    public static void setNoReset(boolean noReset) {
-        PropConfig.noReset = noReset;
-    }
-
-    private static void initConfigFields(Class<?> clazz) {
-        props = getProperties();
-        Field[] fields = clazz.getDeclaredFields();
-        for (Field field : fields) {
-            String fieldKey;
-            String fieldValue;
-            if (field.isAnnotationPresent(Value.class)) {
-                Value value = field.getAnnotation(Value.class);
-                fieldKey = value.value();
-                if (!field.getName().equals("props") && props.getProperty(fieldKey) != null) {
-                    fieldValue = props.getProperty(fieldKey);
-                    field.setAccessible(true);
-                    setValue(clazz, field, fieldValue);
-                }
-            }
-        }
-    }
-
-    private static void setValue(Class<?> clazz, Field field, String value) {
-        Object fieldType = field.getType();
-        try {
-            if (String.class.equals(fieldType)) {
-                field.set(clazz, value);
-            } else if (byte.class.equals(fieldType)) {
-                field.set(clazz, Byte.parseByte(value));
-            } else if (Byte.class.equals(fieldType)) {
-                field.set(clazz, Byte.valueOf(value));
-            } else if (boolean.class.equals(fieldType)) {
-                field.set(clazz, Boolean.parseBoolean(value));
-            } else if (Boolean.class.equals(fieldType)) {
-                field.set(clazz, Boolean.valueOf(value));
-            } else if (short.class.equals(fieldType)) {
-                field.set(clazz, Short.parseShort(value));
-            } else if (Short.class.equals(fieldType)) {
-                field.set(clazz, Short.valueOf(value));
-            } else if (int.class.equals(fieldType)) {
-                field.set(clazz, Integer.parseInt(value));
-            } else if (Integer.class.equals(fieldType)) {
-                field.set(clazz, Integer.valueOf(value));
-            } else if (long.class.equals(fieldType)) {
-                field.set(clazz, Long.parseLong(value));
-            } else if (Long.class.equals(fieldType)) {
-                field.set(clazz, Long.valueOf(value));
-            } else if (float.class.equals(fieldType)) {
-                field.set(clazz, Float.parseFloat(value));
-            } else if (Float.class.equals(fieldType)) {
-                field.set(clazz, Float.valueOf(value));
-            } else if (double.class.equals(fieldType)) {
-                field.set(clazz, Double.parseDouble(value));
-            } else if (Double.class.equals(fieldType)) {
-                field.set(clazz, Double.valueOf(value));
-            }
-        } catch (IllegalAccessException e) {
-            logger.error(e.getMessage(), e);
-        }
+    public void setNoReset(boolean noReset) {
+        this.noReset = noReset;
     }
 
 
-    private static Properties getProperties() {
-        Properties props = new Properties();
-        List<String> configPathList = IOHelper.listFilesInDirectoryRecursive(System.getProperty("user.dir"), "config.properties");
-        if (configPathList.size() > 0) {
-            File file = new File(configPathList.get(0));
-            FileReader fileReader = null;
-            try {
-                fileReader = new FileReader(file);
-                props.load(fileReader);
-            } catch (IOException e) {
-                logger.error(e.getMessage(), e);
-            } finally {
-                try {
-                    if (fileReader != null) {
-                        fileReader.close();
-                    }
-                } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
-                }
-            }
-            return props;
-        }
-        return null;
-    }
 }

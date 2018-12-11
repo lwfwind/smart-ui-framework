@@ -1,4 +1,4 @@
-package com.qa.framework.ioc.annotation;
+package com.qa.framework.Inject.annotation;
 
 import org.springframework.stereotype.Component;
 

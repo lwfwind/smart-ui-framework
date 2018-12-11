@@ -14,7 +14,7 @@ public class TestngRetry implements IRetryAnalyzer {
     private static int maxRetryCount;
 
     static {
-        maxRetryCount = PropConfig.getRetryCount();
+        maxRetryCount = PropConfig.get().getRetryCount();
         if (maxRetryCount == 0) {
             maxRetryCount = 1;
         }

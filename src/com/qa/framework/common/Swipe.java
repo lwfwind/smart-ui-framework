@@ -20,7 +20,7 @@ public class Swipe {
      */
     public void swipeToUp() {
         sleeper.sleep(3000);
-        switch (PropConfig.getCoreType()) {
+        switch (PropConfig.get().getCoreType()) {
             case "ANDROIDAPP":
                 int width = driver.manage().window().getSize().width;
                 int height = driver.manage().window().getSize().height;
@@ -41,7 +41,7 @@ public class Swipe {
      */
     public void swipeToDown() {
         sleeper.sleep(3000);
-        switch (PropConfig.getCoreType()) {
+        switch (PropConfig.get().getCoreType()) {
             case "ANDROIDAPP":
                 int width = driver.manage().window().getSize().width;
                 int height = driver.manage().window().getSize().height;
@@ -62,7 +62,7 @@ public class Swipe {
      */
     public void swipeToLeft() {
         sleeper.sleep(3000);
-        switch (PropConfig.getCoreType()) {
+        switch (PropConfig.get().getCoreType()) {
             case "ANDROIDAPP":
                 int width = driver.manage().window().getSize().width;
                 int height = driver.manage().window().getSize().height;
@@ -83,7 +83,7 @@ public class Swipe {
      */
     public void swipeToRight() {
         sleeper.sleep(3000);
-        switch (PropConfig.getCoreType()) {
+        switch (PropConfig.get().getCoreType()) {
             case "ANDROIDAPP":
                 int width = driver.manage().window().getSize().width;
                 int height = driver.manage().window().getSize().height;

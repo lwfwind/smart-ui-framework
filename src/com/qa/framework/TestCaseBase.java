@@ -14,6 +14,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ThreadGuard;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 
@@ -21,19 +23,25 @@ import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import static com.qa.framework.ioc.AutoInjectHelper.initFields;
+import static com.qa.framework.Inject.AutoInjectHelper.initFields;
 
 /**
  * The type Test case base.
  */
 @Listeners({TestResultListener.class, SuiteListener.class, PowerEmailableReporter.class})
-public abstract class TestCaseBase {
+public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
     /**
      * The constant logger.
      */
     protected static Logger logger = Logger.getLogger(TestCaseBase.class);
     private String browser = null;
     private String hubURL = null;
+
+    @Autowired
+    private PropConfig propConfig;
+
+    @Autowired
+    private DriverConfig driverConfig;
 
     /**
      * Before suite.
@@ -45,11 +53,10 @@ public abstract class TestCaseBase {
     public void BeforeSuite(ITestContext context) throws Exception {
         logger.info("beforeSuite");
         beforeSuite();
-        if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
+        if (propConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             DebugBridge.init();
             //AccessibilityEventMonitor.start();
         }
-        HelperLoader.init();
     }
 
     /**
@@ -68,7 +75,7 @@ public abstract class TestCaseBase {
     public void AfterSuite(ITestContext context) throws Exception {
         logger.info("afterSuite");
         afterSuite();
-        if (PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
+        if (propConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             //AccessibilityEventMonitor.stop();
             DebugBridge.terminate();
         }
@@ -82,7 +89,7 @@ public abstract class TestCaseBase {
 
     private void getDriverObj() throws Exception {
         WebDriver driver = null;
-        if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+        if (!(propConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || propConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
             if (hubURL != null) {
                 DesiredCapabilities capability = null;
                 if (browser.contains("firefox")) {
@@ -96,10 +103,10 @@ public abstract class TestCaseBase {
                     logger.error(e.getMessage(), e);
                 }
             } else {
-                driver = DriverConfig.getDriverObject();
+                driver = driverConfig.getDriverObject();
             }
         } else {
-            driver = DriverConfig.getDriverObject();
+            driver = driverConfig.getDriverObject();
         }
         DriverCache.set(driver);
     }
@@ -112,7 +119,7 @@ public abstract class TestCaseBase {
      * @throws Exception the exception
      */
     @Parameters({"browser", "hubURL"})
-    @org.testng.annotations.BeforeClass(alwaysRun = true)
+    @BeforeClass(alwaysRun = true)
     public void BeforeClass(@Optional String browser, @Optional String hubURL) throws Exception {
         logger.info("beforeClass");
         this.browser = browser;

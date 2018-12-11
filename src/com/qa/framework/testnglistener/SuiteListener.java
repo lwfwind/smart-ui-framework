@@ -4,8 +4,6 @@ import org.apache.log4j.Logger;
 import org.testng.ISuite;
 import org.testng.ISuiteListener;
 
-import static com.qa.framework.ioc.IocHelper.findImplementClass;
-
 
 public class SuiteListener implements ISuiteListener {
     private static Logger logger = Logger.getLogger(SuiteListener.class);
@@ -14,15 +12,11 @@ public class SuiteListener implements ISuiteListener {
     public void onStart(ISuite iSuite) {
         logger.info(iSuite.getName() + " Start");
 
-        Class<?> clazz = findImplementClass(ICustomTestListener.class);
-        if (clazz != null) {
+        Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
+        if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            try {
-                testListenerImp = (ICustomTestListener) clazz.newInstance();
-                testListenerImp.onStart(iSuite);
-            } catch (InstantiationException | IllegalAccessException e) {
-                logger.error(e.getMessage(), e);
-            }
+            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp.onStart(iSuite);
         }
     }
 
@@ -30,15 +24,11 @@ public class SuiteListener implements ISuiteListener {
     public void onFinish(ISuite iSuite) {
         logger.info(iSuite.getName() + " Finish");
 
-        Class<?> clazz = findImplementClass(ICustomTestListener.class);
-        if (clazz != null) {
+        Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
+        if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            try {
-                testListenerImp = (ICustomTestListener) clazz.newInstance();
-                testListenerImp.onFinish(iSuite);
-            } catch (InstantiationException | IllegalAccessException e) {
-                logger.error(e.getMessage(), e);
-            }
+            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp.onFinish(iSuite);
         }
     }
 }

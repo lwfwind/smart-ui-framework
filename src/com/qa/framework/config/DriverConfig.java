@@ -51,16 +51,16 @@ public class DriverConfig {
     private static String appBinName = "";
 
     static {
-        if (PropConfig.getCoreType().contains(",")) {
-            String[] browsers = PropConfig.getCoreType().split(",");
+        if (PropConfig.get().getCoreType().contains(",")) {
+            String[] browsers = PropConfig.get().getCoreType().split(",");
             for (String browser : browsers) {
                 stack.push(browser.trim());
             }
         } else {
-            setBrowser(PropConfig.getCoreType());
+            setBrowser(PropConfig.get().getCoreType());
         }
-        if (PropConfig.getHtmlUnitEmulationType() != null) {
-            setHTMLUnitEmulation(PropConfig.getHtmlUnitEmulationType());
+        if (PropConfig.get().getHtmlUnitEmulationType() != null) {
+            setHTMLUnitEmulation(PropConfig.get().getHtmlUnitEmulationType());
         } else {
             setHTMLUnitEmulation(htmlUnitEmulation.FIREFOX);
         }
@@ -129,7 +129,7 @@ public class DriverConfig {
                     fp.setPreference("browser.startup.homepage", "about:blank");
                     fp.setPreference("startup.homepage_welcome_url", "about:blank");
                     fp.setPreference("startup.homepage_welcome_url.additional", "about:blank");
-                    if (PropConfig.isDebug()) {
+                    if (PropConfig.get().isDebug()) {
                         List<String> xpiFiles = IOHelper.listFilesInDirectory(ProjectEnvironment.getFirefoxExtensionsLocation(), "*.xpi");
                         for (String xpi : xpiFiles) {
                             fp.addExtension(new File(xpi));
@@ -153,7 +153,7 @@ public class DriverConfig {
                     LoggingPreferences loggingprefs = new LoggingPreferences();
                     loggingprefs.enable(LogType.BROWSER, Level.ALL);
                     capabilities.setCapability(CapabilityType.LOGGING_PREFS, loggingprefs);
-                    if (PropConfig.isDebug()) {
+                    if (PropConfig.get().isDebug()) {
                         ChromeOptions options = new ChromeOptions();
                         List<String> crxFiles = IOHelper.listFilesInDirectory(ProjectEnvironment.getChromeExtensionsLocation(), "*.crx");
                         for (String crx : crxFiles) {
@@ -165,13 +165,13 @@ public class DriverConfig {
                     logger.info("Using GOOGLECHROME Driver...");
                     break;
                 case HTMLUNIT:
-                    if (PropConfig.getHtmlUnitProxy() != null) {
+                    if (PropConfig.get().getHtmlUnitProxy() != null) {
                         driverObject = new HtmlUnitDriver(
                                 setHTMLUnitCapabilitiesWithProxy(
-                                        PropConfig.getHtmlUnitProxy(),
+                                        PropConfig.get().getHtmlUnitProxy(),
                                         emulationType));
                         logger.info("Using HTMLUNIT Driver... with proxy "
-                                + PropConfig.getHtmlUnitProxy());
+                                + PropConfig.get().getHtmlUnitProxy());
                     } else {
                         driverObject = new HtmlUnitDriver(
                                 setHTMLUnitCapabilities(emulationType));
@@ -190,8 +190,8 @@ public class DriverConfig {
                     appiumServerUrl = getAppiumServerUrl();
                     app = getAppBin();
                     capabilities = new DesiredCapabilities();
-                    if (PropConfig.getDeviceName() != null && isFirstLaunch) {
-                        Emulator emulator = new Emulator(PropConfig.getDeviceName());
+                    if (PropConfig.get().getDeviceName() != null && isFirstLaunch) {
+                        Emulator emulator = new Emulator(PropConfig.get().getDeviceName());
                         emulator.restartEmulator();
                         capabilities.setCapability("deviceName", emulator.getDeviceName());
                         isFirstLaunch = false;
@@ -201,7 +201,7 @@ public class DriverConfig {
                             capabilities.setCapability("deviceName", device.getSerialNumber());
                         }
                     }
-                    if (PropConfig.isNoReset()) {
+                    if (PropConfig.get().isNoReset()) {
                         capabilities.setCapability("noReset", true);
                     }
                     capabilities.setCapability("app", app.getAbsolutePath());
@@ -214,10 +214,10 @@ public class DriverConfig {
                     appiumServerUrl = getAppiumServerUrl();
                     app = getAppBin();
                     capabilities = new DesiredCapabilities();
-                    if (PropConfig.getDeviceName() != null && PropConfig.getUuid() != null & PropConfig.getPlantfromVersion() != null) {
-                        capabilities.setCapability("deviceName", PropConfig.getDeviceName());
-                        capabilities.setCapability("udid", PropConfig.getUuid());
-                        capabilities.setCapability("plantfromVersion", PropConfig.getPlantfromVersion());
+                    if (PropConfig.get().getDeviceName() != null && PropConfig.get().getUuid() != null & PropConfig.get().getPlantfromVersion() != null) {
+                        capabilities.setCapability("deviceName", PropConfig.get().getDeviceName());
+                        capabilities.setCapability("udid", PropConfig.get().getUuid());
+                        capabilities.setCapability("plantfromVersion", PropConfig.get().getPlantfromVersion());
                     } else {
                         IDevice device = DebugBridge.getDevice();
                         if (device != null) {
@@ -247,14 +247,14 @@ public class DriverConfig {
 
     private static File getAppBin() {
         File app = null;
-        if (PropConfig.getAppBin().contains("http") && !isDownloaded)
-            if (PropConfig.getAppBin().endsWith("apk") || PropConfig.getAppBin().endsWith("ipa") || PropConfig.getAppBin().endsWith("app")) {
-                appBinName = IOHelper.getName(PropConfig.getAppBin());
+        if (PropConfig.get().getAppBin().contains("http") && !isDownloaded)
+            if (PropConfig.get().getAppBin().endsWith("apk") || PropConfig.get().getAppBin().endsWith("ipa") || PropConfig.get().getAppBin().endsWith("app")) {
+                appBinName = IOHelper.getName(PropConfig.get().getAppBin());
                 IOHelper.deleteFile(ProjectEnvironment.resourcePath() + appBinName);
-                IOHelper.downFileFromUrl(PropConfig.getAppBin(), ProjectEnvironment.resourcePath() + appBinName);
+                IOHelper.downFileFromUrl(PropConfig.get().getAppBin(), ProjectEnvironment.resourcePath() + appBinName);
                 app = new File(ProjectEnvironment.resourcePath(), appBinName);
             } else {
-                String source = IOHelper.getSourceFromUrl(PropConfig.getAppBin());
+                String source = IOHelper.getSourceFromUrl(PropConfig.get().getAppBin());
                 List<String> lines = StringHelper.getTokensList(source, "\n");
                 Collections.reverse(lines);
                 String matchedNumber = "";
@@ -264,10 +264,10 @@ public class DriverConfig {
                     if (m.find()) {
                         matchedNumber = m.group(0);
                         String nextSource;
-                        if (PropConfig.getAppBin().endsWith("/")) {
-                            nextSource = IOHelper.getSourceFromUrl(PropConfig.getAppBin() + matchedNumber);
+                        if (PropConfig.get().getAppBin().endsWith("/")) {
+                            nextSource = IOHelper.getSourceFromUrl(PropConfig.get().getAppBin() + matchedNumber);
                         } else {
-                            nextSource = IOHelper.getSourceFromUrl(PropConfig.getAppBin() + "/" + matchedNumber);
+                            nextSource = IOHelper.getSourceFromUrl(PropConfig.get().getAppBin() + "/" + matchedNumber);
                         }
                         if (nextSource.contains(".apk")) {
                             Pattern r1 = Pattern.compile("href=\"(.*\\.apk)");
@@ -312,17 +312,17 @@ public class DriverConfig {
                     }
                 }
                 String fullUrl;
-                if (PropConfig.getAppBin().endsWith("/")) {
+                if (PropConfig.get().getAppBin().endsWith("/")) {
                     if (matchedNumber.equals("")) {
-                        fullUrl = PropConfig.getAppBin() + appBinName;
+                        fullUrl = PropConfig.get().getAppBin() + appBinName;
                     } else {
-                        fullUrl = PropConfig.getAppBin() + matchedNumber + "/" + appBinName;
+                        fullUrl = PropConfig.get().getAppBin() + matchedNumber + "/" + appBinName;
                     }
                 } else {
                     if (matchedNumber.equals("")) {
-                        fullUrl = PropConfig.getAppBin() + "/" + appBinName;
+                        fullUrl = PropConfig.get().getAppBin() + "/" + appBinName;
                     } else {
-                        fullUrl = PropConfig.getAppBin() + "/" + matchedNumber + "/" + appBinName;
+                        fullUrl = PropConfig.get().getAppBin() + "/" + matchedNumber + "/" + appBinName;
                     }
                 }
                 logger.info("download file:" + fullUrl);
@@ -332,10 +332,10 @@ public class DriverConfig {
                 isDownloaded = true;
             }
         else {
-            if (PropConfig.getAppBin().contains("http")) {
+            if (PropConfig.get().getAppBin().contains("http")) {
                 app = new File(ProjectEnvironment.resourcePath(), appBinName);
             } else {
-                app = new File(ProjectEnvironment.resourcePath(), PropConfig.getAppBin());
+                app = new File(ProjectEnvironment.resourcePath(), PropConfig.get().getAppBin());
             }
         }
         return app;
@@ -347,7 +347,7 @@ public class DriverConfig {
      * @return the appium server url
      */
     public static String getAppiumServerUrl() {
-        String appiumServerUrl = PropConfig.getAppiumServerUrl();
+        String appiumServerUrl = PropConfig.get().getAppiumServerUrl();
         if (appiumServerUrl == null) {
             AppiumServer.start("127.0.0.1", 4723);
             appiumServerUrl = "http://127.0.0.1:4723/wd/hub";

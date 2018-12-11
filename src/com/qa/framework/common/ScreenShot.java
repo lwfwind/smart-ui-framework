@@ -49,7 +49,7 @@ public class ScreenShot {
         String screenShotPath = fail + File.separator + t + "-" + fileName + ".jpg";
 
         try {
-            if (PropConfig.getCoreType().equalsIgnoreCase("GOOGLECHROME")) {
+            if (PropConfig.get().getCoreType().equalsIgnoreCase("GOOGLECHROME")) {
                 FullScreen fullScreen = new FullScreen(driver);
                 fullScreen.take(screenShotPath);
             } else {

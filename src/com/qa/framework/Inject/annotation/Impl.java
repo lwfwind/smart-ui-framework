@@ -1,4 +1,4 @@
-package com.qa.framework.ioc.annotation;
+package com.qa.framework.Inject.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

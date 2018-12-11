@@ -2,7 +2,6 @@ package com.qa.framework.testnglistener;
 
 import com.library.common.IOHelper;
 import com.library.common.StringHelper;
-import com.qa.framework.SpringBootTestCaseBase;
 import com.qa.framework.TestCaseBase;
 import com.qa.framework.bean.Method;
 import com.qa.framework.cache.DriverCache;
@@ -16,6 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -23,8 +23,6 @@ import org.testng.TestListenerAdapter;
 
 import java.io.File;
 import java.util.*;
-
-import static com.qa.framework.ioc.IocHelper.findImplementClass;
 
 /**
  * Test result Listener.
@@ -37,15 +35,11 @@ public class TestResultListener extends TestListenerAdapter {
     public void onStart(ITestContext testContext) {
         super.onStart(testContext);
         logger.info("testContext Start");
-        Class<?> clazz = findImplementClass(ICustomTestListener.class);
-        if (clazz != null) {
+        Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
+        if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            try {
-                testListenerImp = (ICustomTestListener) clazz.newInstance();
-                testListenerImp.onStart(testContext);
-            } catch (InstantiationException | IllegalAccessException e) {
-                logger.error(e.getMessage(), e);
-            }
+            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp.onStart(testContext);
         }
     }
 
@@ -61,26 +55,22 @@ public class TestResultListener extends TestListenerAdapter {
             isUnitTest = tb.isUnitTest();
         }
         else {
-            SpringBootTestCaseBase tb = (SpringBootTestCaseBase) tr.getInstance();
+            TestCaseBase tb = (TestCaseBase) tr.getInstance();
             isUnitTest = tb.isUnitTest();
         }
         if (!isUnitTest) {
-            if (!(PropConfig.getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.getCoreType().equalsIgnoreCase("IOSAPP"))) {
+            if (!(PropConfig.get().getCoreType().equalsIgnoreCase("ANDROIDAPP") || PropConfig.get().getCoreType().equalsIgnoreCase("IOSAPP"))) {
                 printAlertInfo(tr);
             }
             saveScreenShot(tr);
             printBrowserInfo();
             printStackTrace(tr);
         }
-        Class<?> clazz = findImplementClass(ICustomTestListener.class);
-        if (clazz != null) {
+        Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
+        if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            try {
-                testListenerImp = (ICustomTestListener) clazz.newInstance();
-                testListenerImp.onTestFailure(tr);
-            } catch (InstantiationException | IllegalAccessException e) {
-                logger.error(e.getMessage(), e);
-            }
+            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp.onTestFailure(tr);
         }
     }
 
@@ -95,15 +85,11 @@ public class TestResultListener extends TestListenerAdapter {
             printBrowserInfo();
             printStackTrace(tr);
         }
-        Class<?> clazz = findImplementClass(ICustomTestListener.class);
-        if (clazz != null) {
+        Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
+        if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            try {
-                testListenerImp = (ICustomTestListener) clazz.newInstance();
-                testListenerImp.onTestSkipped(tr);
-            } catch (InstantiationException | IllegalAccessException e) {
-                logger.error(e.getMessage(), e);
-            }
+            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp.onTestSkipped(tr);
         }
     }
 
@@ -119,22 +105,18 @@ public class TestResultListener extends TestListenerAdapter {
             isUnitTest = tb.isUnitTest();
         }
         else {
-            SpringBootTestCaseBase tb = (SpringBootTestCaseBase) tr.getInstance();
+            TestCaseBase tb = (TestCaseBase) tr.getInstance();
             isUnitTest = tb.isUnitTest();
         }
         if (!isUnitTest) {
             printBrowserInfo();
         }
         IOHelper.deleteDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
-        Class<?> clazz = findImplementClass(ICustomTestListener.class);
-        if (clazz != null) {
+        Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
+        if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            try {
-                testListenerImp = (ICustomTestListener) clazz.newInstance();
-                testListenerImp.onTestSuccess(tr);
-            } catch (InstantiationException | IllegalAccessException e) {
-                logger.error(e.getMessage(), e);
-            }
+            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp.onTestSuccess(tr);
         }
     }
 
@@ -144,15 +126,11 @@ public class TestResultListener extends TestListenerAdapter {
         String name = MethodCache.getCurrentMethodName();
         logger.info(name + " Start");
         IOHelper.createNestDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
-        Class<?> clazz = findImplementClass(ICustomTestListener.class);
-        if (clazz != null) {
+        Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
+        if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            try {
-                testListenerImp = (ICustomTestListener) clazz.newInstance();
-                testListenerImp.onTestStart(tr);
-            } catch (InstantiationException | IllegalAccessException e) {
-                logger.error(e.getMessage(), e);
-            }
+            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp.onTestStart(tr);
         }
     }
 
@@ -160,15 +138,11 @@ public class TestResultListener extends TestListenerAdapter {
     public void onFinish(ITestContext testContext) {
         super.onFinish(testContext);
         logger.info("testContext Finish");
-        Class<?> clazz = findImplementClass(ICustomTestListener.class);
-        if (clazz != null) {
+        Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
+        if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            try {
-                testListenerImp = (ICustomTestListener) clazz.newInstance();
-                testListenerImp.onFinish(testContext);
-            } catch (InstantiationException | IllegalAccessException e) {
-                logger.error(e.getMessage(), e);
-            }
+            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp.onFinish(testContext);
         }
         for (ITestResult passedTest : testContext.getPassedTests().getAllResults()) {
             logger.info("PassedTests = " + passedTest.getName());
@@ -239,7 +213,7 @@ public class TestResultListener extends TestListenerAdapter {
 
     private void printBrowserInfo() {
         //captureAction brower error include javascript error
-        if (PropConfig.getCoreType().equals("GOOGLECHROME")) {
+        if (PropConfig.get().getCoreType().equals("GOOGLECHROME")) {
             WebDriver driver = DriverCache.get();
             try {
                 LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
