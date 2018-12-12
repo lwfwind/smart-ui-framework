@@ -103,12 +103,12 @@ public class ElementHandler implements InvocationHandler {
             currentTime = System.currentTimeMillis();
         }
         if (element == null) {
-            if(!method.getName().equals("isDisplayed")) {
+            if (!method.getName().equals("isDisplayed")) {
                 logger.error("the " + logicElementName
                         + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
                 throw new RuntimeException("the " + logicElementName
                         + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
-            }else {
+            } else {
                 return false;
             }
         }

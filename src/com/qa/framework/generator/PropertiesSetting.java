@@ -39,8 +39,8 @@ public class PropertiesSetting {
         } else {
             path = System.getProperty("user.dir");
         }
-        List<String> configPathList = IOHelper.listFilesInDirectoryRecursive(path,"config.properties");
-        if(configPathList.size() > 0) {
+        List<String> configPathList = IOHelper.listFilesInDirectoryRecursive(path, "config.properties");
+        if (configPathList.size() > 0) {
             File propsFile = new File(configPathList.get(0));
             Properties props = new Properties();
             try {

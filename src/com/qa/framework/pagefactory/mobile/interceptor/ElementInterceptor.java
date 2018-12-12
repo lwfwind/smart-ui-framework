@@ -120,7 +120,7 @@ public class ElementInterceptor implements MethodInterceptor {
                             + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
                     throw new RuntimeException("the " + this.field.getName()
                             + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
-                }else {
+                } else {
                     return false;
                 }
             }

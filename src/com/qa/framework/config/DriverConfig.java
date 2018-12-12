@@ -454,25 +454,32 @@ public class DriverConfig {
         /**
          * Firefox selected browser.
          */
-        FIREFOX, /**
+        FIREFOX,
+        /**
          * Ie selected browser.
          */
-        IE, /**
+        IE,
+        /**
          * Safari selected browser.
          */
-        SAFARI, /**
+        SAFARI,
+        /**
          * Opera selected browser.
          */
-        OPERA, /**
+        OPERA,
+        /**
          * Googlechrome selected browser.
          */
-        GOOGLECHROME, /**
+        GOOGLECHROME,
+        /**
          * Androidapp selected browser.
          */
-        ANDROIDAPP, /**
+        ANDROIDAPP,
+        /**
          * Iosapp selected browser.
          */
-        IOSAPP, /**
+        IOSAPP,
+        /**
          * Htmlunit selected browser.
          */
         HTMLUNIT
@@ -483,16 +490,20 @@ public class DriverConfig {
         /**
          * None html unit emulation.
          */
-        NONE, /**
+        NONE,
+        /**
          * Firefox html unit emulation.
          */
-        FIREFOX, /**
+        FIREFOX,
+        /**
          * Ie 6 html unit emulation.
          */
-        IE6, /**
+        IE6,
+        /**
          * Ie 7 html unit emulation.
          */
-        IE7, /**
+        IE7,
+        /**
          * Ie 8 html unit emulation.
          */
         IE8

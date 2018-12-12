@@ -14,8 +14,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ThreadGuard;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
 
@@ -36,7 +34,7 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
     protected static Logger logger = Logger.getLogger(TestCaseBase.class);
     private String browser = null;
     private String hubURL = null;
-    
+
 
     /**
      * Before suite.

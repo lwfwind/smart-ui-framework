@@ -55,7 +55,7 @@ public class DeviceBridge {
      *
      * @param listener the listener
      */
-/*
+    /*
      * This adds a listener to the debug bridge. The listener is notified of
      * connecting/disconnecting devices, devices coming online, etc.
      */
@@ -319,7 +319,7 @@ public class DeviceBridge {
      * @param device the device
      * @return the window [ ]
      */
-/*
+    /*
      * This loads the list of windows from the specified device. The format is:
      * hashCode1 title1 hashCode2 title2 ... hashCodeN titleN DONE.
      */
@@ -382,7 +382,7 @@ public class DeviceBridge {
      * @param device the device
      * @return the focused window
      */
-/*
+    /*
      * This gets the hash code of the window that has focus. Only works with
      * protocol version 3 and above.
      */

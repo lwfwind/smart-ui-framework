@@ -426,13 +426,16 @@ public class ViewNode {
         /**
          * Red profile rating.
          */
-        RED, /**
+        RED,
+        /**
          * Yellow profile rating.
          */
-        YELLOW, /**
+        YELLOW,
+        /**
          * Green profile rating.
          */
-        GREEN, /**
+        GREEN,
+        /**
          * None profile rating.
          */
         NONE

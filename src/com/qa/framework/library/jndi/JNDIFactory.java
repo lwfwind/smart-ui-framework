@@ -112,10 +112,12 @@ public class JNDIFactory {
         /**
          * Dns jndi type.
          */
-        DNS, /**
+        DNS,
+        /**
          * Ldap jndi type.
          */
-        LDAP, /**
+        LDAP,
+        /**
          * Adp jndi type.
          */
         ADP,

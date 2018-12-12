@@ -55,7 +55,7 @@ public class AppiumServer {
                 try {
                     ss.close();
                 } catch (IOException e) {
-                /* should not be thrown */
+                    /* should not be thrown */
                 }
             }
         }

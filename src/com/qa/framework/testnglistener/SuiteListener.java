@@ -15,7 +15,7 @@ public class SuiteListener implements ISuiteListener {
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp = (ICustomTestListener) obj;
             testListenerImp.onStart(iSuite);
         }
     }
@@ -27,7 +27,7 @@ public class SuiteListener implements ISuiteListener {
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp = (ICustomTestListener) obj;
             testListenerImp.onFinish(iSuite);
         }
     }

@@ -15,7 +15,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.Reporter;
@@ -38,7 +37,7 @@ public class TestResultListener extends TestListenerAdapter {
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp = (ICustomTestListener) obj;
             testListenerImp.onStart(testContext);
         }
     }
@@ -50,11 +49,10 @@ public class TestResultListener extends TestListenerAdapter {
         logger.error(name + " Failure");
         setResultCache(tr, "fail");
         boolean isUnitTest = false;
-        if(tr.getInstance() instanceof TestCaseBase) {
+        if (tr.getInstance() instanceof TestCaseBase) {
             TestCaseBase tb = (TestCaseBase) tr.getInstance();
             isUnitTest = tb.isUnitTest();
-        }
-        else {
+        } else {
             TestCaseBase tb = (TestCaseBase) tr.getInstance();
             isUnitTest = tb.isUnitTest();
         }
@@ -69,7 +67,7 @@ public class TestResultListener extends TestListenerAdapter {
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp = (ICustomTestListener) obj;
             testListenerImp.onTestFailure(tr);
         }
     }
@@ -88,7 +86,7 @@ public class TestResultListener extends TestListenerAdapter {
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp = (ICustomTestListener) obj;
             testListenerImp.onTestSkipped(tr);
         }
     }
@@ -100,11 +98,10 @@ public class TestResultListener extends TestListenerAdapter {
         logger.info(name + " Success");
         setResultCache(tr, "pass");
         boolean isUnitTest = false;
-        if(tr.getInstance() instanceof TestCaseBase) {
+        if (tr.getInstance() instanceof TestCaseBase) {
             TestCaseBase tb = (TestCaseBase) tr.getInstance();
             isUnitTest = tb.isUnitTest();
-        }
-        else {
+        } else {
             TestCaseBase tb = (TestCaseBase) tr.getInstance();
             isUnitTest = tb.isUnitTest();
         }
@@ -115,7 +112,7 @@ public class TestResultListener extends TestListenerAdapter {
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp = (ICustomTestListener) obj;
             testListenerImp.onTestSuccess(tr);
         }
     }
@@ -129,7 +126,7 @@ public class TestResultListener extends TestListenerAdapter {
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp = (ICustomTestListener) obj;
             testListenerImp.onTestStart(tr);
         }
     }
@@ -141,7 +138,7 @@ public class TestResultListener extends TestListenerAdapter {
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
             ICustomTestListener testListenerImp = null;
-            testListenerImp = (ICustomTestListener)obj;
+            testListenerImp = (ICustomTestListener) obj;
             testListenerImp.onFinish(testContext);
         }
         for (ITestResult passedTest : testContext.getPassedTests().getAllResults()) {

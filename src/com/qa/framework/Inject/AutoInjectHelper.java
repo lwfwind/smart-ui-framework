@@ -1,11 +1,11 @@
 package com.qa.framework.Inject;
 
+import com.google.gson.Gson;
+import com.qa.framework.Inject.annotation.Page;
 import com.qa.framework.SpringContext;
 import com.qa.framework.cache.DriverCache;
 import com.qa.framework.common.Driver;
-import com.qa.framework.Inject.annotation.Page;
 import com.qa.framework.pagefactory.PageFactory;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -50,6 +50,21 @@ public class AutoInjectHelper {
         } while (true);
     }
 
+    private static String serializeObject(Object o) {
+        Gson gson = new Gson();
+        return gson.toJson(o);
+    }
+
+    private static Object deserializeObject(String s, Object o) {
+        Gson gson = new Gson();
+        return gson.fromJson(s, o.getClass());
+    }
+
+    private static Object cloneObject(Object o) {
+        String s = serializeObject(o);
+        return deserializeObject(s, o);
+    }
+
     private static Object getBeanFromSpringContext(Field field) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         ApplicationContext applicationContext = SpringContext.getApplicationContext();
         if (applicationContext != null) {
@@ -57,12 +72,12 @@ public class AutoInjectHelper {
             for (String beanName : beanNames) {
                 Object bean = SpringContext.getBean(beanName);
                 if (bean.getClass().getName().equals(field.getType().getName())) {
-                    return BeanUtils.cloneBean(bean);
+                    return cloneObject(bean);
                 } else {
                     Class<?>[] beanImplementClasses = bean.getClass().getInterfaces();
                     for (Class<?> beanImplementClass : beanImplementClasses) {
                         if (beanImplementClass.getName().equals(field.getType().getName())) {
-                            return BeanUtils.cloneBean(bean);
+                            return cloneObject(bean);
                         }
                     }
                 }
@@ -82,7 +97,7 @@ public class AutoInjectHelper {
             if (clazz.getSimpleName().equals("WebDriver")) {
                 proxy = DriverCache.get();
             } else {
-                if(field.isAnnotationPresent(Autowired.class)) {
+                if (field.isAnnotationPresent(Autowired.class)) {
                     proxy = getBeanFromSpringContext(field);
                 }
             }
