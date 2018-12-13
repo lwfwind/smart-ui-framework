@@ -44,6 +44,7 @@ public class PowerEmailableReporter implements IReporter {
     @Override
     public void generateReport(List<XmlSuite> xml, List<ISuite> suites, String outdir) {
         try {
+            outdir = System.getProperty("user.dir")+File.separator+"target";
             m_out = createWriter(outdir);
         } catch (IOException e) {
             logger.error("output file", e);

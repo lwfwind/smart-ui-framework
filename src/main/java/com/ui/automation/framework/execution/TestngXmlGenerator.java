@@ -1,4 +1,4 @@
-package com.ui.automation.framework.generator;
+package com.ui.automation.framework.execution;
 
 import com.library.common.IOHelper;
 import com.library.common.StringHelper;
@@ -21,30 +21,26 @@ public class TestngXmlGenerator {
     /**
      * System.setProperty("browser","chrome");
      * System.setProperty("hubURL","http://192.168.20.196:4444/wd/hub");
-     * autoGenerate("D:\\git\\web_ui_automation\\src","D:\\git\\web_ui_automation\\test-xml\\","1");
-     * autoGenerate("D:\\git\\web_ui_automation\\src","D:\\git\\web_ui_automation\\test-xml\\","11");
-     * autoGenerate("D:\\git\\web_ui_automation\\src","D:\\git\\web_ui_automation\\test-xml\\","11");
-     *
+     * autoGenerate("1");
      * @param args the input arguments
      */
     public static void main(String[] args) {
-        if (args.length > 2) {
-            autoGenerate(args[0], args[1], args[2]);
-        } else {
+        if (args.length > 1) {
             autoGenerate(args[0], args[1]);
+        } else {
+            autoGenerate(args[0]);
         }
     }
 
     /**
      * Auto generate.
      *
-     * @param testCasePath the test case path
-     * @param outputPath   the output path
+     * @param modulePath the module path
      * @param threadCnt    the thread cnt
      */
-    public static void autoGenerate(String testCasePath, String outputPath, String threadCnt) {
+    public static void autoGenerate(String modulePath, String threadCnt) {
         methodListMap.clear();
-        List<String> files = IOHelper.listFilesInDirectoryRecursive(testCasePath, "*.java");
+        List<String> files = IOHelper.listFilesInDirectoryRecursive(modulePath, "*.java");
         String className = null;
         String packageName = null;
         for (String file : files) {
@@ -93,9 +89,9 @@ public class TestngXmlGenerator {
         xml.addAttribute(root, "verbose", "1");
         Element listeners = xml.addChildElement(root, "listeners");
         Element listener = xml.addChildElement(listeners, "listener");
-        xml.addAttribute(listener, "class-name", "com.qa.framework.testnglistener.RetryListener");
+        xml.addAttribute(listener, "class-name", "com.ui.automation.framework.testnglistener.RetryListener");
         Element listener2 = xml.addChildElement(listeners, "listener");
-        xml.addAttribute(listener2, "class-name", "com.qa.framework.testnglistener.SuiteListener");
+        xml.addAttribute(listener2, "class-name", "com.ui.automation.framework.testnglistener.SuiteListener");
         for (Map<String, Object> methodMap : methodListMap) {
             Element test = xml.addChildElement(root, "test");
             xml.addAttribute(test, "name", methodMap.get("className").toString() + "_" + methodMap.get("methodName").toString());
@@ -117,7 +113,8 @@ public class TestngXmlGenerator {
             Element include = xml.addChildElement(methods, "include");
             xml.addAttribute(include, "name", methodMap.get("methodName").toString());
         }
-        IOHelper.deleteDirectory(outputPath);
+        String outputPath = modulePath+File.separator+"target";
+        //IOHelper.deleteDirectory(outputPath);
         IOHelper.createNestDirectory(outputPath);
         if (outputPath.endsWith("/")) {
             xml.saveTo(outputPath + "xml_" + threadCnt + ".xml");
@@ -129,12 +126,11 @@ public class TestngXmlGenerator {
     /**
      * Auto generate.
      *
-     * @param outputPath the output path
      * @param threadCnt  the thread cnt
      */
-    public static void autoGenerate(String outputPath, String threadCnt) {
-        String testCasePath = System.getProperty("user.dir");
-        autoGenerate(testCasePath, outputPath, threadCnt);
+    public static void autoGenerate(String threadCnt) {
+        String basePath = System.getProperty("user.dir");
+        autoGenerate(basePath, threadCnt);
     }
 
 }
