@@ -4,7 +4,7 @@
 
     <groupId>com.github.lwfwind.automation</groupId>
     <artifactId>smart-ui-framework</artifactId>
-    <version>3.6</version>
+    <version>3.8</version>
     <packaging>jar</packaging>
     <description>Support web and moblie automaton based on selenium and appium</description>
     <url>https://github.com/lwfwind/smart-ui-framework</url>
