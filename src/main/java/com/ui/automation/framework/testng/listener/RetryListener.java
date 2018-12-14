@@ -1,4 +1,4 @@
-package com.ui.automation.framework.testnglistener;
+package com.ui.automation.framework.testng.listener;
 
 import org.testng.IAnnotationTransformer;
 import org.testng.IRetryAnalyzer;

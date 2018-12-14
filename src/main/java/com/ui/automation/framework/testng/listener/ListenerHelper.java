@@ -1,4 +1,4 @@
-package com.ui.automation.framework.testnglistener;
+package com.ui.automation.framework.testng.listener;
 
 import com.ui.automation.framework.SpringContext;
 import org.apache.log4j.Logger;

@@ -96,29 +96,29 @@ public class AutoInjectHelper {
             }
             if (clazz.getSimpleName().equals("WebDriver")) {
                 proxy = DriverCache.get();
+                if (proxy != null) {
+                    field.setAccessible(true);
+                    field.set(obj, proxy);
+                }
             } else {
                 if (field.isAnnotationPresent(Autowired.class)) {
-                    proxy = getBeanFromSpringContext(field);
-                }
-            }
-            if (proxy != null) {
-                field.setAccessible(true);
-                field.set(obj, proxy);
-            }
-            if (proxy != null) {
-                try {
                     if (field.getType().isAnnotationPresent(Service.class) || field.getType().isAnnotationPresent(Page.class)) {
-                        initFields(proxy);
-                        if (field.getType().isAnnotationPresent(Page.class)) {
-                            Driver driver = new Driver(DriverCache.get());
-                            if (!driver.isMobilePlat()) {
-                                DriverCache.get().manage().timeouts().pageLoadTimeout(120000, TimeUnit.MILLISECONDS);
+                        proxy = getBeanFromSpringContext(field);
+                        if (proxy != null) {
+                            field.setAccessible(true);
+                            field.set(obj, proxy);
+                        }
+                        if (proxy != null) {
+                            initFields(proxy);
+                            if (field.getType().isAnnotationPresent(Page.class)) {
+                                Driver driver = new Driver(DriverCache.get());
+                                if (!driver.isMobilePlat()) {
+                                    DriverCache.get().manage().timeouts().pageLoadTimeout(120000, TimeUnit.MILLISECONDS);
+                                }
+                                PageFactory.initElements(DriverCache.get(), proxy);
                             }
-                            PageFactory.initElements(DriverCache.get(), proxy);
                         }
                     }
-                } catch (IllegalAccessException e) {
-                    logger.error(e.toString(), e);
                 }
             }
         }

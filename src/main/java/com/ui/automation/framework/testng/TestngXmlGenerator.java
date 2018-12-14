@@ -1,4 +1,4 @@
-package com.ui.automation.framework.execution;
+package com.ui.automation.framework.testng;
 
 import com.library.common.IOHelper;
 import com.library.common.StringHelper;

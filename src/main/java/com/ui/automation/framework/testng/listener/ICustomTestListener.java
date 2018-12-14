@@ -1,4 +1,4 @@
-package com.ui.automation.framework.testnglistener;
+package com.ui.automation.framework.testng.listener;
 
 import org.testng.ISuite;
 import org.testng.ITestContext;

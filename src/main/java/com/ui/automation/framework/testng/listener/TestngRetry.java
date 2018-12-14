@@ -1,6 +1,5 @@
-package com.ui.automation.framework.testnglistener;
+package com.ui.automation.framework.testng.listener;
 
-import com.ui.automation.framework.config.PropConfig;
 import org.apache.log4j.Logger;
 import org.testng.IRetryAnalyzer;
 import org.testng.ITestResult;

@@ -1,4 +1,4 @@
-package com.ui.automation.framework.testnglistener;
+package com.ui.automation.framework.testng.listener;
 
 import com.library.common.IOHelper;
 import com.library.common.StringHelper;
