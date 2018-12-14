@@ -89,9 +89,9 @@ public class TestngXmlGenerator {
         xml.addAttribute(root, "verbose", "1");
         Element listeners = xml.addChildElement(root, "listeners");
         Element listener = xml.addChildElement(listeners, "listener");
-        xml.addAttribute(listener, "class-name", "com.ui.automation.framework.testnglistener.RetryListener");
+        xml.addAttribute(listener, "class-name", "com.ui.automation.framework.testng.listener.RetryListener");
         Element listener2 = xml.addChildElement(listeners, "listener");
-        xml.addAttribute(listener2, "class-name", "com.ui.automation.framework.testnglistener.SuiteListener");
+        xml.addAttribute(listener2, "class-name", "com.ui.automation.framework.testng.listener.SuiteListener");
         for (Map<String, Object> methodMap : methodListMap) {
             Element test = xml.addChildElement(root, "test");
             xml.addAttribute(test, "name", methodMap.get("className").toString() + "_" + methodMap.get("methodName").toString());
