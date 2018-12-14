@@ -117,9 +117,9 @@ public class TestngXmlGenerator {
         //IOHelper.deleteDirectory(outputPath);
         IOHelper.createNestDirectory(outputPath);
         if (outputPath.endsWith("/")) {
-            xml.saveTo(outputPath + "xml_" + threadCnt + ".xml");
+            xml.saveTo(outputPath + "testng_" + threadCnt + ".xml");
         } else {
-            xml.saveTo(outputPath + File.separator + "xml_" + threadCnt + ".xml");
+            xml.saveTo(outputPath + File.separator + "testng_" + threadCnt + ".xml");
         }
     }
 

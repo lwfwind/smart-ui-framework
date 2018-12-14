@@ -13,7 +13,12 @@ public class ProjectEnvironment {
     private static String basePath;
 
     static {
-        basePath = System.getProperty("user.dir") + File.separator;
+        if(System.getProperty("basedir") != null){
+            basePath = System.getProperty("basedir") + File.separator;
+
+        }else {
+            basePath = System.getProperty("user.dir") + File.separator;
+        }
     }
 
     /**

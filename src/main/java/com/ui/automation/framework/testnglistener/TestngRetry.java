@@ -11,14 +11,10 @@ import org.testng.Reporter;
  */
 public class TestngRetry implements IRetryAnalyzer {
     private static Logger logger = Logger.getLogger(TestngRetry.class);
-    private static int maxRetryCount;
+    private static int maxRetryCount = 1;
 
     static {
-        maxRetryCount = PropConfig.get().getRetryCount();
-        if (maxRetryCount == 0) {
-            maxRetryCount = 1;
-        }
-        logger.info("retrycount=" + maxRetryCount);
+        logger.info("retryCount=" + maxRetryCount);
     }
 
     private int retryCount = 1;
