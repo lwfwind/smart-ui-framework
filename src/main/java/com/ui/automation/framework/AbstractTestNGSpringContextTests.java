@@ -119,18 +119,6 @@ public abstract class AbstractTestNGSpringContextTests implements IHookable, App
         this.applicationContext = applicationContext;
     }
 
-
-    /**
-     * Delegates to the configured {@link TestContextManager} to call
-     * {@linkplain TestContextManager#beforeTestClass() 'before test class'} callbacks.
-     *
-     * @throws Exception if a registered TestExecutionListener throws an exception
-     */
-    @BeforeClass(alwaysRun = true)
-    protected void springTestContextBeforeTestClass() throws Exception {
-        this.testContextManager.beforeTestClass();
-    }
-
     /**
      * Delegates to the configured {@link TestContextManager} to
      * {@linkplain TestContextManager#prepareTestInstance(Object) prepare} this test
@@ -141,21 +129,10 @@ public abstract class AbstractTestNGSpringContextTests implements IHookable, App
      */
     @BeforeSuite(alwaysRun = true)
     protected void springTestContextPrepareTestInstance() throws Exception {
+        if(SpringContext.getApplicationContext() != null){return;}
         this.testContextManager.prepareTestInstance(this);
     }
 
-    /**
-     * Delegates to the configured {@link TestContextManager} to
-     * {@linkplain TestContextManager#beforeTestMethod(Object, Method) pre-process}
-     * the test method before the actual test is executed.
-     *
-     * @param testMethod the test method which is about to be executed
-     * @throws Exception allows all exceptions to propagate
-     */
-    @BeforeMethod(alwaysRun = true)
-    protected void springTestContextBeforeTestMethod(Method testMethod) throws Exception {
-        this.testContextManager.beforeTestMethod(this, testMethod);
-    }
 
     /**
      * Delegates to the {@linkplain IHookCallBack#runTestMethod(ITestResult) test
@@ -232,14 +209,14 @@ public abstract class AbstractTestNGSpringContextTests implements IHookable, App
         return testResultException;
     }
 
-    private RuntimeException throwAsUncheckedException(Throwable t) {
+    private void throwAsUncheckedException(Throwable t) {
         try {
             throwAs(t);
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
         // Appeasing the compiler: the following line will never be executed.
-        throw new IllegalStateException(t);
+        //throw new IllegalStateException(t);
     }
 
     @SuppressWarnings("unchecked")

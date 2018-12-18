@@ -24,11 +24,15 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.support.ThreadGuard;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
+import java.util.Properties;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
@@ -122,15 +126,30 @@ public class DriverConfig {
             String appiumServerUrl;
             File app;
             DesiredCapabilities capabilities = null;
+            File file;
+            Resource resource;
+            Properties sysProp = System.getProperties();
+            String osName = sysProp.getProperty("os.name");
+            String osArch = sysProp.getProperty("os.arch");
             switch (browserType) {
                 case FIREFOX:
-                    System.setProperty("webdriver.gecko.driver", ProjectEnvironment.getGeckoDriverLocation());
+                    if (osName.startsWith("Win") && osArch.contains("64")) {
+                        resource = new ClassPathResource("static"+File.separator+"geckodriver"+File.separator+"geckodriver_win64.exe");
+                    } else if (osName.startsWith("Win") && !osArch.contains("64")) {
+                        resource = new ClassPathResource("static"+File.separator+"geckodriver"+File.separator+"geckodriver_win32.exe");
+                    } else {
+                        resource = new ClassPathResource("static"+File.separator+"geckodriver"+File.separator+"geckodriver");
+                    }
+                    file = resource.getFile();
+                    System.setProperty("webdriver.gecko.driver",
+                            file.getAbsolutePath());
                     FirefoxProfile fp = new FirefoxProfile();
                     fp.setPreference("browser.startup.homepage", "about:blank");
                     fp.setPreference("startup.homepage_welcome_url", "about:blank");
                     fp.setPreference("startup.homepage_welcome_url.additional", "about:blank");
                     if (PropConfig.get().isDebug()) {
-                        List<String> xpiFiles = IOHelper.listFilesInDirectory(ProjectEnvironment.getFirefoxExtensionsLocation(), "*.xpi");
+                        resource = new ClassPathResource("static"+File.separator+"firefoxextensions");
+                        List<String> xpiFiles = IOHelper.listFilesInDirectory(resource.getFile().getAbsolutePath(), "*.xpi");
                         for (String xpi : xpiFiles) {
                             fp.addExtension(new File(xpi));
                         }
@@ -139,7 +158,15 @@ public class DriverConfig {
                     logger.info("Using FIREFOX Driver...");
                     break;
                 case IE:
-                    System.setProperty("webdriver.ie.driver", ProjectEnvironment.getIEDriverLocation());
+                    if (osArch.contains("64")) {
+                        resource = new ClassPathResource("static"+File.separator+"iedriver"+File.separator+"64"+File.separator+"IEDriverServer.exe");
+                    } else {
+                        resource = new ClassPathResource("static"+File.separator+"iedriver"+File.separator+"32"+File.separator+"IEDriverServer.exe");
+                    }
+                    file = resource.getFile();
+                    System.setProperty("webdriver.ie.driver",
+                            file.getAbsolutePath());
+
                     capabilities = DesiredCapabilities.internetExplorer();
                     capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
                     capabilities.setCapability("requireWindowFocus", true);
@@ -147,15 +174,22 @@ public class DriverConfig {
                     logger.info("Using INTERNET EXPLORER Driver...");
                     break;
                 case GOOGLECHROME:
+                    if (osName.startsWith("Win")) {
+                        resource = new ClassPathResource("static"+File.separator+"chromedriver"+File.separator+"chromedriver_for_win.exe");
+                    } else {
+                        resource = new ClassPathResource("static"+File.separator+"chromedriver"+File.separator+"chromedriver");
+                    }
+                    file = resource.getFile();
                     System.setProperty("webdriver.chrome.driver",
-                            ProjectEnvironment.getChromeDriverLocation());
+                            file.getAbsolutePath());
                     capabilities = DesiredCapabilities.chrome();
                     LoggingPreferences loggingprefs = new LoggingPreferences();
                     loggingprefs.enable(LogType.BROWSER, Level.ALL);
                     capabilities.setCapability(CapabilityType.LOGGING_PREFS, loggingprefs);
                     if (PropConfig.get().isDebug()) {
                         ChromeOptions options = new ChromeOptions();
-                        List<String> crxFiles = IOHelper.listFilesInDirectory(ProjectEnvironment.getChromeExtensionsLocation(), "*.crx");
+                        resource = new ClassPathResource("static"+File.separator+"chromextensions");
+                        List<String> crxFiles = IOHelper.listFilesInDirectory(resource.getFile().getAbsolutePath(), "*.crx");
                         for (String crx : crxFiles) {
                             options.addExtensions(new File(crx));
                         }
@@ -245,14 +279,16 @@ public class DriverConfig {
         return driverObject;
     }
 
-    private static File getAppBin() {
+    private static File getAppBin() throws IOException {
         File app = null;
+        Resource resource = new ClassPathResource("static"+File.separator);
+        String resourcePath = resource.getFile().getAbsolutePath();
         if (PropConfig.get().getAppBin().contains("http") && !isDownloaded)
             if (PropConfig.get().getAppBin().endsWith("apk") || PropConfig.get().getAppBin().endsWith("ipa") || PropConfig.get().getAppBin().endsWith("app")) {
                 appBinName = IOHelper.getName(PropConfig.get().getAppBin());
-                IOHelper.deleteFile(ProjectEnvironment.resourcePath() + appBinName);
-                IOHelper.downFileFromUrl(PropConfig.get().getAppBin(), ProjectEnvironment.resourcePath() + appBinName);
-                app = new File(ProjectEnvironment.resourcePath(), appBinName);
+                IOHelper.deleteFile(resourcePath + appBinName);
+                IOHelper.downFileFromUrl(PropConfig.get().getAppBin(), resourcePath + appBinName);
+                app = new File(resourcePath, appBinName);
             } else {
                 String source = IOHelper.getSourceFromUrl(PropConfig.get().getAppBin());
                 List<String> lines = StringHelper.getTokensList(source, "\n");
@@ -326,16 +362,16 @@ public class DriverConfig {
                     }
                 }
                 logger.info("download file:" + fullUrl);
-                IOHelper.deleteFile(ProjectEnvironment.resourcePath() + appBinName);
-                IOHelper.downFileFromUrl(fullUrl, ProjectEnvironment.resourcePath() + appBinName);
-                app = new File(ProjectEnvironment.resourcePath(), appBinName);
+                IOHelper.deleteFile(resourcePath + appBinName);
+                IOHelper.downFileFromUrl(fullUrl, resourcePath + appBinName);
+                app = new File(resourcePath, appBinName);
                 isDownloaded = true;
             }
         else {
             if (PropConfig.get().getAppBin().contains("http")) {
-                app = new File(ProjectEnvironment.resourcePath(), appBinName);
+                app = new File(resourcePath, appBinName);
             } else {
-                app = new File(ProjectEnvironment.resourcePath(), PropConfig.get().getAppBin());
+                app = new File(resourcePath, PropConfig.get().getAppBin());
             }
         }
         return app;
