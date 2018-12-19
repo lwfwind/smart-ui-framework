@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.ui.automation.framework.Inject.annotation.Page;
 import com.ui.automation.framework.SpringContext;
 import com.ui.automation.framework.cache.DriverCache;
-import com.ui.automation.framework.common.Driver;
+import com.ui.automation.framework.webdriver.Driver;
 import com.ui.automation.framework.pagefactory.PageFactory;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

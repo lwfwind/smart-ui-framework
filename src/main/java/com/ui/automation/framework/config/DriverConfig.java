@@ -110,7 +110,6 @@ public class DriverConfig {
             }
         }
         setHTMLUnitEmulation(htmlUnitEmulation.FIREFOX);
-        logger.error("'" + value + UNKNOWN_BROWSER_TYPE);
     }
 
     /**

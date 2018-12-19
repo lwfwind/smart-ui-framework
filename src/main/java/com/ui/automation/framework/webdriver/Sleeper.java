@@ -1,4 +1,4 @@
-package com.ui.automation.framework.common;
+package com.ui.automation.framework.webdriver;
 
 /**
  * The type Sleeper.

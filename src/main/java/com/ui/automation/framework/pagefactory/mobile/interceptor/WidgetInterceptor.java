@@ -16,7 +16,7 @@ package com.ui.automation.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.ui.automation.framework.common.Sleeper;
+import com.ui.automation.framework.webdriver.Sleeper;
 import com.ui.automation.framework.pagefactory.PageFactory;
 import com.ui.automation.framework.pagefactory.mobile.AppiumFieldDecorator;
 import com.ui.automation.framework.pagefactory.mobile.ThrowableUtil;

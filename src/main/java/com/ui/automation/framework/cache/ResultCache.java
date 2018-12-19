@@ -1,6 +1,6 @@
 package com.ui.automation.framework.cache;
 
-import com.ui.automation.framework.bean.Method;
+import com.ui.automation.framework.testng.listener.bean.Method;
 
 import java.util.HashMap;
 

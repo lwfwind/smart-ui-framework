@@ -16,8 +16,8 @@ package com.ui.automation.framework.pagefactory.mobile.interceptor;
  * limitations under the License.
  */
 
-import com.ui.automation.framework.common.Alert;
-import com.ui.automation.framework.common.Sleeper;
+import com.ui.automation.framework.webdriver.Alert;
+import com.ui.automation.framework.webdriver.Sleeper;
 import com.ui.automation.framework.pagefactory.mobile.ProxyUtil;
 import com.ui.automation.framework.pagefactory.mobile.ThrowableUtil;
 import com.ui.automation.framework.pagefactory.WithTimeoutProcessor;

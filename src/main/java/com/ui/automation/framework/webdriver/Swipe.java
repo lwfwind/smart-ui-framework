@@ -1,4 +1,4 @@
-package com.ui.automation.framework.common;
+package com.ui.automation.framework.webdriver;
 
 import com.ui.automation.framework.config.PropConfig;
 import io.appium.java_client.AppiumDriver;

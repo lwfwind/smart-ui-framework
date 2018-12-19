@@ -1,8 +1,8 @@
 package com.ui.automation.framework.pagefactory.web.interceptor;
 
 import com.ui.automation.framework.cache.DriverCache;
-import com.ui.automation.framework.common.Alert;
-import com.ui.automation.framework.common.Sleeper;
+import com.ui.automation.framework.webdriver.Alert;
+import com.ui.automation.framework.webdriver.Sleeper;
 import com.ui.automation.framework.pagefactory.web.Element;
 import com.ui.automation.framework.pagefactory.WithTimeoutProcessor;
 import io.appium.java_client.pagefactory.WithTimeout;

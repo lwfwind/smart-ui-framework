@@ -17,9 +17,9 @@ package com.ui.automation.framework.pagefactory.mobile.interceptor;
  */
 
 import com.ui.automation.framework.cache.MethodCache;
-import com.ui.automation.framework.common.Alert;
-import com.ui.automation.framework.common.ScreenShot;
-import com.ui.automation.framework.common.Sleeper;
+import com.ui.automation.framework.webdriver.Alert;
+import com.ui.automation.framework.webdriver.ScreenShot;
+import com.ui.automation.framework.webdriver.Sleeper;
 import com.ui.automation.framework.pagefactory.mobile.ThrowableUtil;
 import com.ui.automation.framework.pagefactory.WithTimeoutProcessor;
 import io.appium.java_client.MobileElement;

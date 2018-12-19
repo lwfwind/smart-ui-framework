@@ -1,4 +1,4 @@
-package com.ui.automation.framework.bean;
+package com.ui.automation.framework.testng.listener.bean;
 
 /**
  * Created by kcgw001 on 2016/2/24.

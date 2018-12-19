@@ -1,4 +1,4 @@
-package com.ui.automation.framework.common;
+package com.ui.automation.framework.webdriver;
 
 import com.library.common.IOHelper;
 import com.ui.automation.framework.config.PropConfig;
@@ -121,9 +121,9 @@ public class ScreenShot {
          * Init.
          */
         public void init() {
-            actureContentHeight = (long) js.executeScript("return $(document).height();");
-            visibleWindowHeight = (long) js.executeScript("return $(window).height();");
-            scrollTop = (long) js.executeScript("return $(document).scrollTop()");
+            actureContentHeight = (long)Double.parseDouble(String.valueOf(js.executeScript("return $(document).height();")));
+            visibleWindowHeight = (long)Double.parseDouble(String.valueOf(js.executeScript("return $(window).height();")));
+            scrollTop = (long)Double.parseDouble(String.valueOf(js.executeScript("return $(document).scrollTop();"))) + 1;
         }
 
 
@@ -221,6 +221,9 @@ public class ScreenShot {
                 }
                 totalHeight += bf.getHeight();
                 js.executeScript("scrollBy(arguments[0], arguments[1])", 0, visibleWindowHeight);
+                logger.info("scrollTop:"+scrollTop);
+                logger.info("actureContentHeight:"+actureContentHeight);
+                logger.info("visibleWindowHeight:"+visibleWindowHeight);
             } while (scrollTop < actureContentHeight - visibleWindowHeight);
             BufferedImage finalBuf = new BufferedImage(totalWidth, totalHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics = finalBuf.createGraphics();
