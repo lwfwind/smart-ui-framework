@@ -72,9 +72,8 @@ public class ScreenShot {
      * @param driver            the driver
      * @param currentMethodName the current method name
      * @param fileName          the file name
-     * @return the string
      */
-    public static String captureAction(WebDriver driver, String currentMethodName, String fileName) {
+    public static void captureAction(WebDriver driver, String currentMethodName, String fileName) {
         String t = new SimpleDateFormat("MM-dd-HH-mm-ss").format(new Date());
         String allActions = dir + File.separator + "Actions" + File.separator + time + File.separator + currentMethodName;
         File f = new File(allActions);
@@ -86,9 +85,7 @@ public class ScreenShot {
             } catch (Exception e) {
                 logger.error("captureAction exception:" + e.toString());
             }
-            return screenShotPath;
         }
-        return "dir not existed";
     }
 
     private static class FullScreen {
