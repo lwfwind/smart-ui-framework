@@ -525,6 +525,7 @@ public class PowerEmailableReporter implements IReporter {
         out.println("<html xmlns=\"http://www.w3.org/1999/xhtml\">");
         out.println("<head>");
         out.println("<title>TestNG Report</title>");
+        out.println("<meta http-equiv=\"Content-Type\" content=\"text/html;charset=utf-8\" />");
         out.println("<style type=\"text/css\">");
         out.println("table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}");
         out.println("td,th {border:1px solid #009;padding:.25em .5em}");

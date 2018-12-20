@@ -66,7 +66,7 @@ public class TestngXml {
         XmlHelper xml = new XmlHelper();
         xml.createDocument();
         Element root = xml.createDocumentRoot("suite");
-        xml.addAttribute(root, "name", "xml_" + threadCnt);
+        xml.addAttribute(root, "name", "suite_" + threadCnt);
         xml.addAttribute(root, "thread-count", String.valueOf(threadCnt));
         xml.addAttribute(root, "parallel", "tests");
         xml.addAttribute(root, "verbose", "1");
