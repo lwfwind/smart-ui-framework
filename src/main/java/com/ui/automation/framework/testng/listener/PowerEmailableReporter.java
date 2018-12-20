@@ -44,7 +44,6 @@ public class PowerEmailableReporter implements IReporter {
     @Override
     public void generateReport(List<XmlSuite> xml, List<ISuite> suites, String outdir) {
         try {
-            outdir = System.getProperty("user.dir")+File.separator+"target";
             m_out = createWriter(outdir);
         } catch (IOException e) {
             logger.error("output file", e);
@@ -73,7 +72,7 @@ public class PowerEmailableReporter implements IReporter {
      */
     protected PrintWriter createWriter(String outdir) throws IOException {
         IOHelper.createNestDirectory(outdir);
-        return new PrintWriter(new BufferedWriter(new FileWriter(new File(outdir, "power-emailable-report.html"))));
+        return new PrintWriter(outdir+File.separator+"power-emailable-report.html","UTF-8");
     }
 
     /**

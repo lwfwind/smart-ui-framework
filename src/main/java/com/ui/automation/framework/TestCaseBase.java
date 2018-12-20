@@ -16,6 +16,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ThreadGuard;
 import org.testng.ITestContext;
 import org.testng.annotations.*;
+import org.uncommons.reportng.HTMLReporter;
 
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -26,7 +27,7 @@ import static com.ui.automation.framework.Inject.AutoInjectHelper.initFields;
 /**
  * The type Test case base.
  */
-@Listeners({TestResultListener.class, SuiteListener.class, PowerEmailableReporter.class})
+@Listeners({TestResultListener.class, SuiteListener.class, PowerEmailableReporter.class, HTMLReporter.class})
 public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
     /**
      * The constant logger.

@@ -1,9 +1,13 @@
 package com.ui.automation.framework.library.simulate;
 
 import org.apache.log4j.Logger;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * The type Keyboard.
@@ -53,7 +57,13 @@ public class Keyboard extends Robot {
      * @param text the text
      */
     public void inputKeyboard(String text) {
-        String cmd = System.getProperty("user.dir") + "\\res\\SeleniumCommand.exe" + " sendKeys " + text;
+        Resource resource = new ClassPathResource("static");
+        String cmd = null;
+        try {
+            cmd = resource.getFile().getAbsolutePath() + File.separator + "SeleniumCommand.exe" + " sendKeys " + text;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         Process p = null;
         try {

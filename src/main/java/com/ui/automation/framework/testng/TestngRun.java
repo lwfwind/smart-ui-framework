@@ -31,13 +31,10 @@ public class TestngRun {
      * @param xmlSuiteFile  the testng suite xml file
      */
     public static void execute(String xmlSuiteFile) {
-        Resource resource = new ClassPathResource("/");
-        String resourcePath = null;
         try {
-            resourcePath = resource.getFile().getAbsolutePath();
-            List<XmlSuite> suite = (List <XmlSuite>)(new Parser(resourcePath+File.separator+xmlSuiteFile).parse());
+            List<XmlSuite> xmlSuiteList = (List <XmlSuite>)(new Parser(xmlSuiteFile).parse());
             TestNG testNG = new TestNG();
-            testNG.setXmlSuites(suite);
+            testNG.setXmlSuites(xmlSuiteList);
             testNG.run();
         } catch (IOException | SAXException | ParserConfigurationException e) {
             e.printStackTrace();

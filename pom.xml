@@ -138,6 +138,16 @@
             <artifactId>testng</artifactId>
             <version>6.8.5</version>
         </dependency>
+        <dependency>
+            <groupId>org.uncommons</groupId>
+            <artifactId>reportng</artifactId>
+            <version>1.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.1.0</version>
+        </dependency>
 
         <dependency>
             <groupId>com.thoughtworks.qdox</groupId>
@@ -258,6 +268,12 @@
             <groupId>com.android.tools</groupId>
             <artifactId>common</artifactId>
             <version>25.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.11</version>
         </dependency>
 
     </dependencies>
