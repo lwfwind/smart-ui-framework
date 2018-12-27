@@ -2,3 +2,5 @@
 .idea/
 target/
 smart-ui-framework.iml
+smart-ui-framework.ipr
+smart-ui-framework.iws
