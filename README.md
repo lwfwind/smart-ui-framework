@@ -2,9 +2,10 @@
 
 Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework based on [Webdriver](http://seleniumhq.org/), [Appium](http://appium.io/) and [TestNG](http://testng.org/doc/index.html).
 
-* Tags: Selenium, Appium, Webdriver, TestNG, Automation
+* Tags: Selenium, Appium, Webdriver, TestNG, Automation,Spring boot
 
 ## Features
+* Support spring boot on client code
 * Support page object design pattern and extend page factory support highlight element, log action, screenshot action automatically and so on
 * Good support concurrent testing with multi webdriver
 * Re-run failed test cases and capture screenshot automatically when testcase fails
