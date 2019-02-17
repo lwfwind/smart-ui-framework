@@ -5,7 +5,7 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 * Tags: Selenium, Appium, Webdriver, TestNG, Automation,Spring boot
 
 ## Features
-* Support spring boot on client code
+* Support spring boot grammar such as @Value,@Autowired on client code
 * Support page object design pattern and extend page factory support highlight element, log action, screenshot action automatically and so on
 * Good support concurrent testing with multi webdriver
 * Re-run failed test cases and capture screenshot automatically when testcase fails
@@ -17,7 +17,7 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 <dependency>
     <groupId>com.github.lwfwind.automation</groupId>
     <artifactId>smart-ui-framework</artifactId>
-    <version>3.6</version>
+    <version>3.8</version>
 </dependency>
 ```
 
@@ -27,19 +27,21 @@ Smart-ui-framework is a light, robust Web/Android/IOS UI automation framework ba
 @Page
 public class SearchPage{
 
-    @Autowired
     private WebDriver driver;
-    @Value("webPath")
+
+    @Value("${webPath}")
     private String url;
+
     @FindBy(id = "kw")
     private WebElement searchTestBox;
 
+    @FindBy(id = "su")
+    private WebElement searchBtn;
+
     public void searchFor(String text) {
-        driver.manage().window().maximize();
-        driver.manage().deleteAllCookies();
         driver.get(url);
         searchTestBox.sendKeys(text);
-        searchTestBox.submit();
+        searchBtn.click();
     }
 }
 ```
