@@ -6,10 +6,10 @@ import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DocletTag;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaMethod;
+import lombok.extern.slf4j.Slf4j;
 import org.testng.*;
 import org.testng.collections.Lists;
 import org.testng.internal.Utils;
-import org.testng.log4testng.Logger;
 import org.testng.xml.XmlSuite;
 
 import java.io.*;
@@ -21,9 +21,8 @@ import java.util.*;
  * Reported designed to render self-contained HTML top down view of a testing
  * suite.
  */
+@Slf4j
 public class PowerEmailableReporter implements IReporter {
-    private static final Logger logger = Logger.getLogger(PowerEmailableReporter.class);
-
     // ~ Instance fields ------------------------------------------------------
 
     private PrintWriter m_out;
@@ -46,7 +45,7 @@ public class PowerEmailableReporter implements IReporter {
         try {
             m_out = createWriter(outdir);
         } catch (IOException e) {
-            logger.error("output file", e);
+            log.error("output file", e);
             return;
         }
         builder.setEncoding(PropConfig.get().getSourceCodeEncoding());
@@ -656,7 +655,7 @@ public class PowerEmailableReporter implements IReporter {
          * Arranges methods by classname and method name
          */
         public int compare(IInvokedMethod o1, IInvokedMethod o2) {
-            // logger.info("Comparing " + o1.getMethodName() + " " +
+            // log.info("Comparing " + o1.getMethodName() + " " +
             // o1.getDate()
             // + " and " + o2.getMethodName() + " " + o2.getDate());
             return (int) (o1.getDate() - o2.getDate());

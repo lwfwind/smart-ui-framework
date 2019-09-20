@@ -3,7 +3,7 @@ package com.ui.automation.framework.android;
 import com.android.SdkConstants;
 import com.android.ddmlib.AndroidDebugBridge;
 import com.android.ddmlib.IDevice;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,9 +13,8 @@ import java.util.List;
 /**
  * The type Debug bridge.
  */
+@Slf4j
 public class DebugBridge {
-    private final static Logger logger = Logger
-            .getLogger(DebugBridge.class);
     private static AndroidDebugBridge sDebugBridge;
 
     @SuppressWarnings("unused")
@@ -63,7 +62,7 @@ public class DebugBridge {
             try {
                 adbLocation = getAdbLocation();
             } catch (Exception e) {
-                logger.error(e.getMessage(), e);
+                log.error(e.getMessage(), e);
             }
             if (adbLocation != null) {
                 AndroidDebugBridge.init(false);

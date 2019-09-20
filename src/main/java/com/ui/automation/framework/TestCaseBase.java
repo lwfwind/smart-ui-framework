@@ -9,7 +9,7 @@ import com.ui.automation.framework.config.PropConfig;
 import com.ui.automation.framework.testng.listener.PowerEmailableReporter;
 import com.ui.automation.framework.testng.listener.SuiteListener;
 import com.ui.automation.framework.testng.listener.TestResultListener;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -28,11 +28,8 @@ import static com.ui.automation.framework.Inject.AutoInjectHelper.initFields;
  * The type Test case base.
  */
 @Listeners({TestResultListener.class, SuiteListener.class, PowerEmailableReporter.class, HTMLReporter.class})
+@Slf4j
 public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
-    /**
-     * The constant logger.
-     */
-    protected static Logger logger = Logger.getLogger(TestCaseBase.class);
     private String browser = null;
     private String hubURL = null;
 
@@ -45,7 +42,7 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
      */
     @BeforeSuite(alwaysRun = true)
     public void BeforeSuite(ITestContext context) throws Exception {
-        logger.info("beforeSuite");
+        log.info("beforeSuite");
         beforeSuite();
         if (PropConfig.get().getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             DebugBridge.init();
@@ -67,7 +64,7 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
      */
     @AfterSuite(alwaysRun = true)
     public void AfterSuite(ITestContext context) throws Exception {
-        logger.info("afterSuite");
+        log.info("afterSuite");
         afterSuite();
         if (PropConfig.get().getCoreType().equalsIgnoreCase("ANDROIDAPP")) {
             //AccessibilityEventMonitor.stop();
@@ -94,7 +91,7 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
                 try {
                     driver = ThreadGuard.protect(new RemoteWebDriver(new URL(hubURL), capability));
                 } catch (MalformedURLException e) {
-                    logger.error(e.getMessage(), e);
+                    log.error(e.getMessage(), e);
                 }
             } else {
                 driver = DriverConfig.getDriverObject();
@@ -119,7 +116,7 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
     @Parameters({"browser", "hubURL"})
     @BeforeClass(alwaysRun = true)
     public void BeforeClass(@Optional String browser, @Optional String hubURL) throws Exception {
-        logger.info("beforeClass");
+        log.info("beforeClass");
         this.browser = browser;
         this.hubURL = hubURL;
         beforeClass();
@@ -145,7 +142,7 @@ public abstract class TestCaseBase extends AbstractTestNGSpringContextTests {
      */
     @AfterClass(alwaysRun = true)
     public void AfterClass() {
-        logger.info("afterClass");
+        log.info("afterClass");
         afterClass();
     }
 

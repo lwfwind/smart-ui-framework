@@ -9,7 +9,7 @@ import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,10 +20,8 @@ import java.util.ArrayList;
 /**
  * The type Pdf util.
  */
+@Slf4j
 public class PDFHelper {
-
-    private final static Logger logger = Logger
-            .getLogger(PDFHelper.class);
 
     /**
      * Parses a PDF to a plain text file.
@@ -45,7 +43,7 @@ public class PDFHelper {
             out.flush();
             out.close();
         } catch (IOException e) {
-            logger.error(e.toString());
+            log.error(e.toString());
         }
     }
 
@@ -91,9 +89,9 @@ public class PDFHelper {
                 strSourceFile.read(b, 0, b.length);
                 PdfReader pdfr = new PdfReader(new PdfReader(b));
                 int num = pdfr.getNumberOfPages();
-                logger.info("Total page is:" + num);
+                log.info("Total page is:" + num);
                 if (num < toPage || fromPage < 1 || fromPage > toPage) {
-                    logger.error("incorrect page setup!");
+                    log.error("incorrect page setup!");
                 } else {
                     for (int i = fromPage; i <= toPage; i++) {
                         document.newPage();
@@ -106,7 +104,7 @@ public class PDFHelper {
             strSourceFile.close();
             copy.close();
         } catch (IOException | DocumentException e) {
-            logger.error(e.toString());
+            log.error(e.toString());
         }
     }
 
@@ -127,7 +125,7 @@ public class PDFHelper {
                 strSourceFile.read(b, 0, b.length);
                 PdfReader pdfr = new PdfReader(new PdfReader(b));
                 int num = pdfr.getNumberOfPages();
-                logger.info("Total page is:" + num);
+                log.info("Total page is:" + num);
                 for (int i = 1; i <= num; i++) {
                     document.newPage();
                     PdfImportedPage page = copy.getImportedPage(pdfr, i);
@@ -139,7 +137,7 @@ public class PDFHelper {
             strSourceFile.close();
             copy.close();
         } catch (IOException | DocumentException e) {
-            logger.error(e.toString());
+            log.error(e.toString());
         }
     }
 
@@ -164,7 +162,7 @@ public class PDFHelper {
                     strSourceFile.read(b, 0, b.length);
                     PdfReader pdfr = new PdfReader(new PdfReader(b));
                     num = pdfr.getNumberOfPages();
-                    logger.info("Total page is:" + num);
+                    log.info("Total page is:" + num);
                     for (int j = 1; j <= num; j++) {
                         document.newPage();
                         PdfImportedPage page = copy.getImportedPage(pdfr, j);
@@ -176,7 +174,7 @@ public class PDFHelper {
             document.close();
             copy.close();
         } catch (IOException | DocumentException e) {
-            logger.error(e.toString());
+            log.error(e.toString());
         }
     }
 
@@ -202,7 +200,7 @@ public class PDFHelper {
                     strSourceFile.read(b, 0, b.length);
                     PdfReader pdfr = new PdfReader(new PdfReader(b));
                     num = pdfr.getNumberOfPages();
-                    logger.info("Total page is:" + num);
+                    log.info("Total page is:" + num);
                     for (int j = 1; j <= num; j++) {
                         document.newPage();
                         PdfImportedPage page = copy.getImportedPage(pdfr, j);
@@ -214,7 +212,7 @@ public class PDFHelper {
             document.close();
             copy.close();
         } catch (IOException | DocumentException e) {
-            logger.error(e.toString());
+            log.error(e.toString());
         }
     }
 

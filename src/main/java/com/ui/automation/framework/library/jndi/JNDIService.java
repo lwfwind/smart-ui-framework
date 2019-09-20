@@ -1,18 +1,15 @@
 package com.ui.automation.framework.library.jndi;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.naming.directory.DirContext;
 
 /**
  * The type Jndi service.
  */
+@Slf4j
 public abstract class JNDIService {
-    /**
-     * The constant logger.
-     */
-    protected final static Logger logger = Logger
-            .getLogger(JNDIService.class);
+
     /**
      * The Dir context.
      */
@@ -36,7 +33,7 @@ public abstract class JNDIService {
                 dirContext.close();
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 }

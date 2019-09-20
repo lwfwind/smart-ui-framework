@@ -23,9 +23,9 @@ import com.ui.automation.framework.pagefactory.mobile.ThrowableUtil;
 import com.ui.automation.framework.pagefactory.WithTimeoutProcessor;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.WithTimeout;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
@@ -41,6 +41,7 @@ import static io.appium.java_client.pagefactory.utils.ProxyFactory.getEnhancedPr
 /**
  * Intercepts requests to the list of {@link MobileElement}
  */
+@Slf4j
 public class ElementListInterceptor implements MethodInterceptor {
     /**
      * The Locator.
@@ -59,10 +60,7 @@ public class ElementListInterceptor implements MethodInterceptor {
      */
     protected final Alert alert;
     private final Sleeper sleeper;
-    /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(ElementListInterceptor.class);
+
     private List<WebElement> proxyedElements = new ArrayList<>();
 
     /**
@@ -92,12 +90,15 @@ public class ElementListInterceptor implements MethodInterceptor {
             realElements = locator.findElements();
             WithTimeout withTimeout = field.getAnnotation(WithTimeout.class);
             int unit = 1;
-            if (withTimeout.unit() == TimeUnit.SECONDS) {
-                unit = 1;
-            } else if (withTimeout.unit() == TimeUnit.HOURS) {
-                unit = 3600;
-            } else if (withTimeout.unit() == TimeUnit.MINUTES) {
-                unit = 60;
+            switch (withTimeout.unit()) {
+                case SECONDS:
+                    break;
+                case HOURS:
+                    unit = 3600;
+                    break;
+                case MINUTES:
+                    unit = 60;
+                    break;
             }
             timeout = (int) withTimeout.time() * unit;
         } else {
@@ -113,7 +114,7 @@ public class ElementListInterceptor implements MethodInterceptor {
 
         }
         if (realElements == null) {
-            logger.error("the " + this.field.getName()
+            log.error("the " + this.field.getName()
                     + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
             throw new RuntimeException("the " + this.field.getName()
                     + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");

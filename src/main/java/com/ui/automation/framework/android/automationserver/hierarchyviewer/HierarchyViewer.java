@@ -4,7 +4,7 @@ import com.android.ddmlib.IDevice;
 import com.ui.automation.framework.android.automationserver.hierarchyviewer.device.DeviceBridge;
 import com.ui.automation.framework.android.automationserver.hierarchyviewer.device.ViewNode;
 import com.ui.automation.framework.android.automationserver.hierarchyviewer.device.Window;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ import java.util.ArrayList;
 /**
  * The type Hierarchy viewer.
  */
+@Slf4j
 public class HierarchyViewer {
     private static final String TAG = "hierarchyviewer";
-    private static Logger logger = Logger.getLogger(HierarchyViewer.class);
     private IDevice device = null;
 
 
@@ -85,7 +85,7 @@ public class HierarchyViewer {
                     ViewNode.Property mTopProperty = node.namedProperties.get("layout:mTop");
                     Point point = new Point(Integer.parseInt(mLeftProperty.value), Integer.parseInt(mTopProperty.value));
                     getValidLeftTopPoint(node, point);
-                    logger.info(node.namedProperties.get("text:mText").value + " left:" + point.x + " top:" + point.y + " width:" + node.width + " height:" + node.height);
+                    log.info(node.namedProperties.get("text:mText").value + " left:" + point.x + " top:" + point.y + " width:" + node.width + " height:" + node.height);
                     return new Rectangle(point.x, point.y, node.width, node.height);
                 }
             }

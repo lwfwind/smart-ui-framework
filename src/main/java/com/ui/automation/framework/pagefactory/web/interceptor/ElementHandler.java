@@ -10,7 +10,7 @@ import com.ui.automation.framework.webdriver.Window;
 import com.ui.automation.framework.pagefactory.web.Element;
 import com.ui.automation.framework.pagefactory.WithTimeoutProcessor;
 import io.appium.java_client.pagefactory.WithTimeout;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
@@ -26,6 +26,7 @@ import static com.ui.automation.framework.pagefactory.web.ScrollIntoViewProcesso
  * Replaces DefaultLocatingElementHandler. Simply opens it up to descendants of the WebElement interface, and other
  * mix-ins of WebElement and Locatable, etc. Saves the wrapping type for calling the constructor of the wrapped classes.
  */
+@Slf4j
 public class ElementHandler implements InvocationHandler {
     /**
      * The Alert.
@@ -38,10 +39,6 @@ public class ElementHandler implements InvocationHandler {
     private final Class<?> implementtingType;
     private final String logicElementName;
     private final Field field;
-    /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(ElementHandler.class);
 
     /**
      * Generates a handler to retrieve the WebElement from a locator for a given WebElement interface descendant.
@@ -104,7 +101,7 @@ public class ElementHandler implements InvocationHandler {
         }
         if (element == null) {
             if (!method.getName().equals("isDisplayed")) {
-                logger.error("the " + logicElementName
+                log.error("the " + logicElementName
                         + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
                 throw new RuntimeException("the " + logicElementName
                         + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
@@ -139,16 +136,16 @@ public class ElementHandler implements InvocationHandler {
                 ScreenShot.captureAction(driver, currMethodName, logicElementName);
                 ret = method.invoke(obj, paras);
                 ElementCache.set(element);
-                logger.info(logicElementName + " click");
+                log.info(logicElementName + " click");
                 this.sleeper.sleep(500);
                 if (driver.getWindowHandles().size() > previousWindowsCount) {
                     this.window.selectLastOpenedWindow();
                 }
             } else {
                 if (paras != null) {
-                    logger.info(logicElementName + " " + method.getName() + " " + Arrays.deepToString(paras));
+                    log.info(logicElementName + " " + method.getName() + " " + Arrays.deepToString(paras));
                 } else {
-                    logger.info(logicElementName + " " + method.getName());
+                    log.info(logicElementName + " " + method.getName());
                 }
                 ret = method.invoke(obj, paras);
                 this.sleeper.sleep(500);
@@ -157,7 +154,7 @@ public class ElementHandler implements InvocationHandler {
         } catch (InvocationTargetException e) {
             // Unwrap the underlying exception
             if (e.getCause().toString().contains("not clickable") || e.getCause().toString().contains("stale element reference") || e.getCause().toString().contains("StaleElementReferenceException")) {
-                logger.info(e.getCause().toString());
+                log.info(e.getCause().toString());
                 this.sleeper.sleep(5000);
                 wapperElement.click();
                 this.sleeper.sleep(2000);

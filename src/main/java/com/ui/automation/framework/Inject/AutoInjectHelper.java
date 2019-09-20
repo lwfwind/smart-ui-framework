@@ -6,7 +6,7 @@ import com.ui.automation.framework.SpringContext;
 import com.ui.automation.framework.cache.DriverCache;
 import com.ui.automation.framework.webdriver.Driver;
 import com.ui.automation.framework.pagefactory.PageFactory;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class AutoInjectHelper {
-    /**
-     * The constant logger.
-     */
-    protected final static Logger logger = Logger.getLogger(AutoInjectHelper.class);
 
     /**
      * Init fields.
@@ -89,7 +86,7 @@ public class AutoInjectHelper {
     private static void fillForFields(Object obj, Field[] fields) throws Exception {
         for (Field field : fields) {
             Object proxy = null;
-            logger.debug(field.getName() + " is not existed in IOC Container");
+            log.debug(field.getName() + " is not existed in IOC Container");
             Class<?> clazz = field.getType();
             if (clazz.getName().startsWith("java.lang")) {
                 continue;

@@ -25,9 +25,9 @@ import io.appium.java_client.pagefactory.WithTimeout;
 import io.appium.java_client.pagefactory.bys.ContentType;
 import io.appium.java_client.pagefactory.locator.CacheableLocator;
 import io.appium.java_client.pagefactory.utils.ProxyFactory;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.pagefactory.ElementLocator;
@@ -46,6 +46,7 @@ import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.get
 /**
  * The type Widget list interceptor.
  */
+@Slf4j
 public class WidgetListInterceptor implements MethodInterceptor {
 
     /**
@@ -62,10 +63,7 @@ public class WidgetListInterceptor implements MethodInterceptor {
     private final TimeOutDuration duration;
     private final WebDriver driver;
     private final Sleeper sleeper;
-    /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(WidgetListInterceptor.class);
+
     private List<WebElement> cachedElements;
 
     /**
@@ -101,12 +99,15 @@ public class WidgetListInterceptor implements MethodInterceptor {
             realElements = locator.findElements();
             WithTimeout withTimeout = field.getAnnotation(WithTimeout.class);
             int unit = 1;
-            if (withTimeout.unit() == TimeUnit.SECONDS) {
-                unit = 1;
-            } else if (withTimeout.unit() == TimeUnit.HOURS) {
-                unit = 3600;
-            } else if (withTimeout.unit() == TimeUnit.MINUTES) {
-                unit = 60;
+            switch (withTimeout.unit()) {
+                case SECONDS:
+                    break;
+                case HOURS:
+                    unit = 3600;
+                    break;
+                case MINUTES:
+                    unit = 60;
+                    break;
             }
             timeout = (int) withTimeout.time() * unit;
         } else {
@@ -122,7 +123,7 @@ public class WidgetListInterceptor implements MethodInterceptor {
 
         }
         if (realElements == null) {
-            logger.error("the " + this.field.getName()
+            log.error("the " + this.field.getName()
                     + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
             throw new RuntimeException("the " + this.field.getName()
                     + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");

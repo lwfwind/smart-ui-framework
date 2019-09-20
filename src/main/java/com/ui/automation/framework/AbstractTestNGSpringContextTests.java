@@ -16,8 +16,6 @@
 
 package com.ui.automation.framework;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.lang.Nullable;
@@ -85,10 +83,6 @@ import java.lang.reflect.Method;
         DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public abstract class AbstractTestNGSpringContextTests implements IHookable, ApplicationContextAware {
 
-    /**
-     * Logger available to subclasses.
-     */
-    protected final Log logger = LogFactory.getLog(getClass());
     private final TestContextManager testContextManager;
     /**
      * The {@link ApplicationContext} that was injected into this test instance

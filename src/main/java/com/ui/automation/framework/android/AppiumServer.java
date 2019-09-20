@@ -2,7 +2,7 @@ package com.ui.automation.framework.android;
 
 import com.library.common.OSHelper;
 import com.library.common.ProcessHelper;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.DatagramSocket;
@@ -13,9 +13,9 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * The type Appium server.
  */
+@Slf4j
 public class AppiumServer {
     private final static ReentrantLock lock = new ReentrantLock(true); //uses "fair" thread ordering policy
-    private static Logger logger = Logger.getLogger(AppiumServer.class);
     private static Process process;
 
     /**
@@ -26,8 +26,8 @@ public class AppiumServer {
      */
     public static void main(String[] args)
             throws Exception {
-        logger.info(available(4723));
-        logger.info(start("127.0.0.1", 4723));
+        log.info(String.valueOf(available(4723)));
+        log.info(String.valueOf(start("127.0.0.1", 4723)));
     }
 
     /**
@@ -78,14 +78,14 @@ public class AppiumServer {
                     try {
                         ProcessHelper.closePidsByName("node.exe");
                         String cmd = "cmd.exe /C start appium -a " + address + " -p " + port;
-                        logger.info("cmd==" + cmd);
+                        log.info("cmd==" + cmd);
                         process = Runtime.getRuntime().exec(cmd);
                         ProcessHelper.getStreamResult(process);
                         if (!available(port)) {
                             return true;
                         }
                     } catch (IOException | InterruptedException | ExecutionException e) {
-                        logger.error(e.getMessage(), e);
+                        log.error(e.getMessage(), e);
                     }
                 }
             }

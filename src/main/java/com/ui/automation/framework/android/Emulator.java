@@ -2,7 +2,7 @@ package com.ui.automation.framework.android;
 
 import com.library.common.OSHelper;
 import com.library.common.ProcessHelper;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * The type Adb.
  */
+@Slf4j
 public class Emulator {
     /**
      * The constant logcatPath.
@@ -22,7 +23,6 @@ public class Emulator {
      * The constant allLogcatPath.
      */
     public static String allLogcatPath = System.getProperty("java.io.tmpdir") + (OSHelper.isUnix() ? File.separator : "") + "AllLogcat.txt";
-    private static Logger logger = Logger.getLogger(Emulator.class);
     private String emulatorProcessName;
     private String avdName;
     private String sdkTarget;
@@ -95,9 +95,9 @@ public class Emulator {
     public void restartAdb()
             throws IOException, InterruptedException, ExecutionException {
         for (int i = 0; i < 3; i++) {
-            logger.info("Beginning Restart adb");
+            log.info("Beginning Restart adb");
             String cmd = this.cmdShell + "adb start-server";
-            logger.info("cmd==" + cmd);
+            log.info("cmd==" + cmd);
 
             Process process = Runtime.getRuntime().exec(cmd);
             String restart = ProcessHelper.getStreamResult(process, 20, false);
@@ -112,15 +112,15 @@ public class Emulator {
      */
     public void closeAdb() {
         try {
-            logger.info("Beginning Close Adb.");
+            log.info("Beginning Close Adb.");
             if (OSHelper.isWindows()) {
                 ProcessHelper.closePidsByName("adb.exe");
             } else {
                 ProcessHelper.closePidsByName("adb");
             }
-            logger.info("close Adb scucessfully.");
+            log.info("close Adb scucessfully.");
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -133,14 +133,14 @@ public class Emulator {
      */
     public void createEmulator()
             throws IOException, InterruptedException, ExecutionException {
-        logger.info("Beginning Create emulator.");
+        log.info("Beginning Create emulator.");
         String cmd = this.cmdShell + "android create avd --name " + this.avdName + " --target " + this.sdkTarget + " --force --sdcard 100M";
         if (ProcessHelper.getErrorResult().contains("This platform has more than one ABI. Please specify one using --abi")) {
-            logger.info("enter abi configuration");
+            log.info("enter abi configuration");
             cmd = cmd + " --abi armeabi-v7a";
-            logger.info("cmd = " + cmd);
+            log.info("cmd = " + cmd);
         }
-        logger.info("cmd==" + cmd);
+        log.info("cmd==" + cmd);
 
         Process process = Runtime.getRuntime().exec(cmd);
         Thread.sleep(2000L);
@@ -151,16 +151,16 @@ public class Emulator {
         try {
             ProcessHelper.getStreamResult(process);
         } catch (IOException e) {
-            logger.info(e.getClass().getName());
-            logger.info(ProcessHelper.getErrorResult());
+            log.info(e.getClass().getName());
+            log.info(ProcessHelper.getErrorResult());
             if (ProcessHelper.getErrorResult().contains("This platform has more than one ABI. Please specify one using --abi")) {
-                logger.info(e.getClass().getName());
+                log.info(e.getClass().getName());
                 createEmulator();
             } else {
                 throw e;
             }
         }
-        logger.info("Create emulator sucessfully.");
+        log.info("Create emulator sucessfully.");
     }
 
     /**
@@ -168,11 +168,11 @@ public class Emulator {
      */
     public void closeEmulator() {
         try {
-            logger.info("Beginning Close emulator.");
+            log.info("Beginning Close emulator.");
             ProcessHelper.closePidsByName(this.emulatorProcessName);
-            logger.info("close all emulators scucessfully.");
+            log.info("close all emulators scucessfully.");
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -185,14 +185,14 @@ public class Emulator {
      */
     public void deleteEmulator()
             throws IOException, InterruptedException, ExecutionException {
-        logger.info("Beginning Delete emulator.");
+        log.info("Beginning Delete emulator.");
         String cmd = this.cmdShell + "android delete avd -n " + this.avdName;
-        logger.info("cmd==" + cmd);
+        log.info("cmd==" + cmd);
 
         Process process = Runtime.getRuntime().exec(cmd);
 
         ProcessHelper.getStreamResult(process, 20, false);
-        logger.info("Delete emulator scucessfully.");
+        log.info("Delete emulator scucessfully.");
     }
 
 
@@ -221,10 +221,10 @@ public class Emulator {
         String emulatorName = "";
         for (int i = 0; i < 3; i++) {
             try {
-                logger.info("Beginning Start emulator.");
+                log.info("Beginning Start emulator.");
                 Thread.sleep(2000L);
                 String cmd = this.cmdShell + "emulator -avd " + this.avdName + " -partition-size 256";
-                logger.info("cmd==" + cmd);
+                log.info("cmd==" + cmd);
                 Process process = Runtime.getRuntime().exec(cmd);
                 ProcessHelper.getStreamResult(process);
                 Thread.sleep(60000L);
@@ -240,7 +240,7 @@ public class Emulator {
                 closeAdb();
                 Thread.sleep(5000L);
             } else {
-                logger.info("Start emulator scucessfully.");
+                log.info("Start emulator scucessfully.");
                 return emulatorName;
             }
         }
@@ -254,19 +254,19 @@ public class Emulator {
      */
     public void remount()
             throws IOException {
-        logger.info("Beginning adb remount.");
+        log.info("Beginning adb remount.");
         for (int i = 0; i < 3; i++) {
             try {
                 String cmd = this.cmdShell + " adb -s " + getDeviceName() + " remount";
-                logger.info("cmd==" + cmd);
+                log.info("cmd==" + cmd);
                 Process process = Runtime.getRuntime().exec(cmd);
                 String okResult = ProcessHelper.getStreamResult(process);
                 if (okResult.contains("succeeded")) {
-                    logger.info("adb remount successfully");
+                    log.info("adb remount successfully");
                     return;
                 }
             } catch (Exception e) {
-                logger.info(e.getMessage());
+                log.info(e.getMessage());
             }
         }
         throw new IOException("adb remount failed");
@@ -278,11 +278,11 @@ public class Emulator {
         String[] processes = taskList.split("\r\n");
         for (String process1 : processes) {
             if (process1.contains(processName)) {
-                logger.info(processName + "==" + process1);
+                log.info(processName + "==" + process1);
                 String[] process = process1.split(processName);
                 if (process[1] != null) {
                     String pid = process[1].trim().split(" ")[0];
-                    logger.info("pid==" + pid);
+                    log.info("pid==" + pid);
                     pids.add(pid);
                 }
             }
@@ -293,14 +293,14 @@ public class Emulator {
     private String listDevices()
             throws Exception {
         for (int i = 0; i < 3; i++) {
-            logger.info("Beginning list Devices.");
+            log.info("Beginning list Devices.");
             String cmd = this.cmdShell + "adb devices";
-            logger.info("cmd==" + cmd);
+            log.info("cmd==" + cmd);
 
             Process process = Runtime.getRuntime().exec(cmd);
             String okResult = ProcessHelper.getStreamResult(process, 20L, true, true);
             if (!okResult.contains("TimeoutException")) {
-                logger.info("list Devices scucessfully.");
+                log.info("list Devices scucessfully.");
                 return okResult;
             }
         }
@@ -309,9 +309,9 @@ public class Emulator {
 
     private boolean getEmulatorStatus(String emulatorName)
             throws Exception {
-        logger.info("Beginning getprop init.svc.bootanim");
+        log.info("Beginning getprop init.svc.bootanim");
         String cmd = this.cmdShell + "adb -s " + emulatorName + " shell getprop init.svc.bootanim";
-        logger.info("cmd==" + cmd);
+        log.info("cmd==" + cmd);
         Process process = null;
         process = Runtime.getRuntime().exec(cmd);
         String okResult = ProcessHelper.getStreamResult(process, 120L, true, true);
@@ -329,9 +329,9 @@ public class Emulator {
     public boolean waitForFullyBooted(int timeout, String emulatorName)
             throws Exception {
         long startTime = System.currentTimeMillis();
-        logger.info("startTime=" + startTime);
+        log.info("startTime=" + startTime);
         long endTime = startTime + timeout;
-        logger.info("endTime=" + endTime);
+        log.info("endTime=" + endTime);
         while (System.currentTimeMillis() < endTime) {
             boolean status = getEmulatorStatus(emulatorName);
             if (status) {
@@ -351,11 +351,11 @@ public class Emulator {
     public String getDeviceName()
             throws Exception {
         String result = listDevices();
-        logger.info("listDevices: " + result);
+        log.info("listDevices: " + result);
         String[] splitDevices = result.split("\r\n");
         for (int j = 0; j < splitDevices.length; j++) {
             if (splitDevices[j].contains("device") && !splitDevices[j].contains("devices")) {
-                logger.info("splitDevice[" + j + "]: " + splitDevices[j]);
+                log.info("splitDevice[" + j + "]: " + splitDevices[j]);
                 return splitDevices[j].split("\\s")[0];
             }
         }

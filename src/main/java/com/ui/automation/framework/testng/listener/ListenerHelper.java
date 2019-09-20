@@ -1,15 +1,11 @@
 package com.ui.automation.framework.testng.listener;
 
 import com.ui.automation.framework.SpringContext;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 
+@Slf4j
 public class ListenerHelper {
-    /**
-     * The constant logger.
-     */
-    protected final static Logger logger = Logger.getLogger(ListenerHelper.class);
-
 
     public static Object findImplementClass(Class clazz) {
         ApplicationContext applicationContext = SpringContext.getApplicationContext();

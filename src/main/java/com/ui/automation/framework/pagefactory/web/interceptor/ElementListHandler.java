@@ -6,7 +6,7 @@ import com.ui.automation.framework.webdriver.Sleeper;
 import com.ui.automation.framework.pagefactory.web.Element;
 import com.ui.automation.framework.pagefactory.WithTimeoutProcessor;
 import io.appium.java_client.pagefactory.WithTimeout;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.Locatable;
@@ -23,6 +23,7 @@ import static com.ui.automation.framework.pagefactory.web.ImplementedByProcessor
 /**
  * Wraps a list of WebElements in multiple wrapped elements.
  */
+@Slf4j
 public class ElementListHandler implements InvocationHandler {
 
     /**
@@ -36,10 +37,6 @@ public class ElementListHandler implements InvocationHandler {
     private final Class<?> implementtingType;
     private final String logicParentElementName;
     private final Field field;
-    /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(ElementListHandler.class);
 
     /**
      * Given an interface and a locator, apply a wrapper over a list of elements.
@@ -101,7 +98,7 @@ public class ElementListHandler implements InvocationHandler {
             }
         }
         if (elements == null) {
-            logger.error("the " + logicParentElementName
+            log.error("the " + logicParentElementName
                     + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
             throw new RuntimeException("the " + logicParentElementName
                     + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");

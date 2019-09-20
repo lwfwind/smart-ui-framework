@@ -7,7 +7,7 @@ import com.ui.automation.framework.webdriver.ScreenShot;
 import com.ui.automation.framework.webdriver.Sleeper;
 import com.ui.automation.framework.webdriver.Window;
 import com.ui.automation.framework.pagefactory.web.Element;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 
 import java.lang.reflect.Field;
@@ -19,6 +19,7 @@ import java.util.Arrays;
 /**
  * The type Sub element handler.
  */
+@Slf4j
 public class SubElementHandler implements InvocationHandler {
     /**
      * The Alert.
@@ -31,10 +32,6 @@ public class SubElementHandler implements InvocationHandler {
     private final int num;
     private final WebDriver driver;
     private final Field field;
-    /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(SubElementHandler.class);
 
     /**
      * Instantiates a new Sub element handler.
@@ -72,7 +69,7 @@ public class SubElementHandler implements InvocationHandler {
                 String currMethodName = MethodCache.getCurrentMethodName();
                 ScreenShot.captureAction(driver, currMethodName, logicParentElementName + "_" + num);
                 Object ret = method.invoke(element, paras);
-                logger.info(logicParentElementName + "_" + num + " click");
+                log.info(logicParentElementName + "_" + num + " click");
                 this.sleeper.sleep(500);
                 if (driver.getWindowHandles().size() > previousWindowsCount) {
                     this.window.selectLastOpenedWindow();
@@ -80,15 +77,15 @@ public class SubElementHandler implements InvocationHandler {
                 return ret;
             }
             if (paras != null) {
-                logger.info(logicParentElementName + "_" + num + " " + method.getName() + " " + Arrays.deepToString(paras));
+                log.info(logicParentElementName + "_" + num + " " + method.getName() + " " + Arrays.deepToString(paras));
             } else {
-                logger.info(logicParentElementName + "_" + num + " " + method.getName());
+                log.info(logicParentElementName + "_" + num + " " + method.getName());
             }
             return method.invoke(element, paras);
         } catch (InvocationTargetException e) {
             // Unwrap the underlying exception
             if (e.getCause().toString().contains("clickable")) {
-                logger.info(e.getCause());
+                log.info(String.valueOf(e.getCause()));
                 this.sleeper.sleep(5000);
                 wapperElement.click();
                 return "action.click";

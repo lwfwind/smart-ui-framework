@@ -4,7 +4,7 @@ import com.android.ddmlib.IDevice;
 import com.android.ddmlib.MultiLineReceiver;
 import com.library.common.StringHelper;
 import com.ui.automation.framework.android.DebugBridge;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +15,8 @@ import java.util.concurrent.Executors;
 /**
  * The type Accessibility event monitor.
  */
+@Slf4j
 public class AccessibilityEventMonitor {
-    private static Logger logger = Logger.getLogger(AccessibilityEventMonitor.class);
     private static ExecutorService executorService = Executors.newSingleThreadExecutor();
     private static List<String> toastEventLogs = new ArrayList<String>();
     private static boolean isCancelMonitored = false;
@@ -80,7 +80,7 @@ public class AccessibilityEventMonitor {
                         5000);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -92,14 +92,14 @@ public class AccessibilityEventMonitor {
      */
     public static void main(String[] args) throws InterruptedException {
         DebugBridge.init();
-        logger.info("executorService started");
+        log.info("executorService started");
         start();
         Thread.sleep(10000);
-        logger.info(getLastToast());
+        log.info(getLastToast());
         stop();
-        logger.info("executorService stoped");
+        log.info("executorService stoped");
         DebugBridge.terminate();
-        logger.info("DebugBridge terminated");
+        log.info("DebugBridge terminated");
     }
 
     /**
@@ -132,7 +132,7 @@ public class AccessibilityEventMonitor {
                             0);
                 }
             } catch (Exception e) {
-                logger.error(e.getMessage(), e);
+                log.error(e.getMessage(), e);
             }
         }
     }

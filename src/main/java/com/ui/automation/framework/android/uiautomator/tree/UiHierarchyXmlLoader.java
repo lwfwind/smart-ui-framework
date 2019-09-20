@@ -1,6 +1,6 @@
 package com.ui.automation.framework.android.uiautomator.tree;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -18,9 +18,8 @@ import java.util.List;
 /**
  * The type Ui hierarchy xml loader.
  */
+@Slf4j
 public class UiHierarchyXmlLoader {
-    private final static Logger logger = Logger
-            .getLogger(UiHierarchyXmlLoader.class);
     private BasicTreeNode mRootNode;
     private List<Rectangle> mNafNodes;
     private List<BasicTreeNode> mNodeList;
@@ -40,11 +39,8 @@ public class UiHierarchyXmlLoader {
         SAXParser parser = null;
         try {
             parser = factory.newSAXParser();
-        } catch (ParserConfigurationException e) {
-            logger.error(e.getMessage(), e);
-            return null;
-        } catch (SAXException e) {
-            logger.error(e.getMessage(), e);
+        } catch (ParserConfigurationException | SAXException e) {
+            log.error(e.getMessage(), e);
             return null;
         }
         DefaultHandler handler = new DefaultHandler() {
@@ -103,10 +99,10 @@ public class UiHierarchyXmlLoader {
         try {
             parser.parse(new File(xmlPath), handler);
         } catch (SAXException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return null;
         } catch (IOException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return null;
         }
         return this.mRootNode;

@@ -1,5 +1,7 @@
 package com.ui.automation.framework.library.jndi;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.naming.NamingEnumeration;
 import javax.naming.directory.*;
 import java.util.HashMap;
@@ -8,6 +10,7 @@ import java.util.Map;
 /**
  * The type Ldap service.
  */
+@Slf4j
 public class LDAPService extends JNDIService {
 
     /**
@@ -39,19 +42,19 @@ public class LDAPService extends JNDIService {
                         .hasMore(); ) {
                     Object attrID = e.next();
                     if (attrID != null) {
-                        logger.info(attrID.toString() + " = "
+                        log.info(attrID.toString() + " = "
                                 + attributes.get((String) attrID).get());
                     }
                 }
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             if (results != null) {
                 try {
                     results.close();
                 } catch (Exception e) {
-                    logger.error(e.getMessage());
+                    log.error(e.getMessage());
                 }
             }
         }
@@ -81,13 +84,13 @@ public class LDAPService extends JNDIService {
                 return retValue;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             if (results != null) {
                 try {
                     results.close();
                 } catch (Exception e) {
-                    logger.error(e.getMessage());
+                    log.error(e.getMessage());
                 }
             }
         }
@@ -120,13 +123,13 @@ public class LDAPService extends JNDIService {
                 directReports.put((String) eid.get(), (String) fullName.get());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             if (results != null) {
                 try {
                     results.close();
                 } catch (Exception e) {
-                    logger.error(e.getMessage());
+                    log.error(e.getMessage());
                 }
             }
         }
@@ -162,13 +165,13 @@ public class LDAPService extends JNDIService {
                 directReports.put((String) eid.get(), (String) fullName.get());
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
         } finally {
             if (results != null) {
                 try {
                     results.close();
                 } catch (Exception e) {
-                    logger.error(e.getMessage());
+                    log.error(e.getMessage());
                 }
             }
         }

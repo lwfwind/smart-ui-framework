@@ -2,8 +2,8 @@ package com.ui.automation.framework.webdriver;
 
 import com.library.common.IOHelper;
 import com.ui.automation.framework.config.PropConfig;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 
 import javax.imageio.ImageIO;
@@ -20,10 +20,8 @@ import java.util.List;
 /**
  * The type Screen shot.
  */
+@Slf4j
 public class ScreenShot {
-
-    private final static Logger logger = Logger
-            .getLogger(ScreenShot.class);
     /**
      * The constant time.
      */
@@ -57,7 +55,7 @@ public class ScreenShot {
                 FileUtils.copyFile(sourceFile, new File(screenShotPath));
             }
         } catch (Exception e) {
-            logger.error("captureFail exception:" + e.toString());
+            log.error("captureFail exception:" + e.toString());
         }
         if (System.getProperty("screenshotBaseURL") != null) {
             return System.getProperty("screenshotBaseURL") + File.separator + screenShotPath;
@@ -83,7 +81,7 @@ public class ScreenShot {
                 File sourceFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
                 FileUtils.copyFile(sourceFile, new File(screenShotPath));
             } catch (Exception e) {
-                logger.error("captureAction exception:" + e.toString());
+                log.error("captureAction exception:" + e.toString());
             }
         }
     }
@@ -144,7 +142,7 @@ public class ScreenShot {
                 isLoaded = (Boolean) js.executeScript("return typeof jQuery != 'undefined'");
             } catch (WebDriverException e) {
                 isLoaded = false;
-                logger.error("isJQueryLoaded exception:" + e.toString());
+                log.error("isJQueryLoaded exception:" + e.toString());
             }
             return isLoaded;
         }
@@ -156,7 +154,7 @@ public class ScreenShot {
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {
-                logger.error(e.toString());
+                log.error(e.toString());
             }
 
         }
@@ -177,7 +175,7 @@ public class ScreenShot {
                 }
                 waitASecond();
             }
-            logger.info("injectJQuery done");
+            log.info("injectJQuery done");
         }
 
         /**
@@ -193,7 +191,7 @@ public class ScreenShot {
             try {
                 bf = ImageIO.read(byteArrayInputStream);
             } catch (IOException e) {
-                logger.error(e.getMessage(), e);
+                log.error(e.getMessage(), e);
             }
             return bf;
         }
@@ -221,9 +219,9 @@ public class ScreenShot {
                 }
                 totalHeight += bf.getHeight();
                 js.executeScript("scrollBy(arguments[0], arguments[1])", 0, visibleWindowHeight);
-                logger.info("scrollTop:"+scrollTop);
-                logger.info("actureContentHeight:"+actureContentHeight);
-                logger.info("visibleWindowHeight:"+visibleWindowHeight);
+                log.info("scrollTop:"+scrollTop);
+                log.info("actureContentHeight:"+actureContentHeight);
+                log.info("visibleWindowHeight:"+visibleWindowHeight);
             } while (scrollTop < actureContentHeight - visibleWindowHeight);
             BufferedImage finalBuf = new BufferedImage(totalWidth, totalHeight, BufferedImage.TYPE_INT_RGB);
             Graphics2D graphics = finalBuf.createGraphics();
@@ -237,7 +235,7 @@ public class ScreenShot {
             try {
                 ImageIO.write(finalBuf, "jpg", new File(path));
             } catch (IOException e) {
-                logger.error("FullScreen.take exception:" + e.toString());
+                log.error("FullScreen.take exception:" + e.toString());
             }
         }
 

@@ -24,9 +24,9 @@ import com.ui.automation.framework.pagefactory.mobile.ThrowableUtil;
 import com.ui.automation.framework.pagefactory.WithTimeoutProcessor;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.pagefactory.WithTimeout;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -41,6 +41,7 @@ import java.util.List;
 /**
  * Intercepts requests to {@link MobileElement}
  */
+@Slf4j
 public class ElementInterceptor implements MethodInterceptor {
     /**
      * The Locator.
@@ -59,10 +60,6 @@ public class ElementInterceptor implements MethodInterceptor {
      */
     protected final Alert alert;
     private final Sleeper sleeper;
-    /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(ElementInterceptor.class);
 
     /**
      * Instantiates a new Element interceptor.
@@ -115,7 +112,7 @@ public class ElementInterceptor implements MethodInterceptor {
             }
             if (realElement == null) {
                 if (!method.getName().equals("isDisplayed")) {
-                    logger.error("the " + this.field.getName()
+                    log.error("the " + this.field.getName()
                             + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
                     throw new RuntimeException("the " + this.field.getName()
                             + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
@@ -136,9 +133,9 @@ public class ElementInterceptor implements MethodInterceptor {
         }
 
         if (args != null && args.length > 0) {
-            logger.info(this.field.getName() + " " + method.getName() + " " + Arrays.deepToString(args));
+            log.info(this.field.getName() + " " + method.getName() + " " + Arrays.deepToString(args));
         } else {
-            logger.info(this.field.getName() + " " + method.getName());
+            log.info(this.field.getName() + " " + method.getName());
         }
 
         try {

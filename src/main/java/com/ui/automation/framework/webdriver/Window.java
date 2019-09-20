@@ -2,7 +2,7 @@ package com.ui.automation.framework.webdriver;
 
 import com.ui.automation.framework.android.uiautomator.UiAutomatorHelper;
 import io.appium.java_client.remote.MobilePlatform;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
@@ -13,9 +13,9 @@ import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.get
 /**
  * The type Alert.
  */
+@Slf4j
 public class Window {
 
-    private final static Logger logger = Logger.getLogger(Window.class);
     /**
      * The Driver.
      */

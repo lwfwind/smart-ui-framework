@@ -1,7 +1,7 @@
 package com.ui.automation.framework.pagefactory.web;
 
 import com.ui.automation.framework.config.DriverConfig;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.*;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
@@ -19,9 +19,8 @@ import java.util.Map;
  * An implementation of the Element interface. Delegates its work to an underlying WebElement instance for
  * custom functionality.
  */
+@Slf4j
 public class ElementImpl implements Element {
-    private final static Logger logger = Logger
-            .getLogger(ElementImpl.class);
     private final WebElement element;
     private final WebDriver driver;
 
@@ -48,7 +47,7 @@ public class ElementImpl implements Element {
         try {
             Thread.sleep(time);
         } catch (InterruptedException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -160,7 +159,7 @@ public class ElementImpl implements Element {
         try {
             rb = new Robot();
         } catch (AWTException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         if (rb != null) {
             rb.mouseMove(0, 0);
@@ -170,7 +169,7 @@ public class ElementImpl implements Element {
                 Actions builder = new Actions(driver);
                 builder.moveToElement(element).build().perform();
             } catch (Exception e) {
-                logger.error(e.getMessage(), e);
+                log.error(e.getMessage(), e);
             }
             return;
         }

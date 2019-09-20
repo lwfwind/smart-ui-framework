@@ -1,6 +1,6 @@
 package com.ui.automation.framework.library.simulate;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.htmlunit.HtmlUnitWebElement;
 
@@ -10,9 +10,8 @@ import java.awt.event.InputEvent;
 /**
  * The type Mouse.
  */
+@Slf4j
 public class Mouse {
-
-    private final static Logger logger = Logger.getLogger(Mouse.class);
 
     /**
      * Click.
@@ -51,7 +50,7 @@ public class Mouse {
             robot.mousePress(InputEvent.BUTTON1_MASK);
             robot.mouseRelease(InputEvent.BUTTON1_MASK);
         } catch (AWTException e) {
-            logger.error(e.toString());
+            log.error(e.toString());
         }
     }
 

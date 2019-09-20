@@ -8,7 +8,7 @@ import com.ui.automation.framework.android.DebugBridge;
 import com.ui.automation.framework.android.Emulator;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -41,11 +41,10 @@ import java.util.regex.Pattern;
 /**
  * The type Driver config.
  */
+@Slf4j
 public class DriverConfig {
     private static final String UNKNOWN_BROWSER_TYPE = "' is an unknown browser type!";
     private static final String INTERNET_EXPLORER = "internet explorer";
-    private final static Logger logger = Logger
-            .getLogger(DriverConfig.class);
     private static WebDriver driverObject = null;
     private transient static Stack<String> stack = new Stack<String>();
     private transient static selectedBrowser browserType;
@@ -88,7 +87,7 @@ public class DriverConfig {
                 return;
             }
         }
-        logger.error("'" + value + UNKNOWN_BROWSER_TYPE);
+        log.error("'" + value + UNKNOWN_BROWSER_TYPE);
     }
 
     /**
@@ -154,7 +153,7 @@ public class DriverConfig {
                         }
                     }
                     driverObject = ThreadGuard.protect(new FirefoxDriver(fp));
-                    logger.info("Using FIREFOX Driver...");
+                    log.info("Using FIREFOX Driver...");
                     break;
                 case IE:
                     if (osArch.contains("64")) {
@@ -170,7 +169,7 @@ public class DriverConfig {
                     capabilities.setCapability(InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAINS, true);
                     capabilities.setCapability("requireWindowFocus", true);
                     driverObject = ThreadGuard.protect(new InternetExplorerDriver(capabilities));
-                    logger.info("Using INTERNET EXPLORER Driver...");
+                    log.info("Using INTERNET EXPLORER Driver...");
                     break;
                 case GOOGLECHROME:
                     if (osName.startsWith("Win")) {
@@ -195,7 +194,7 @@ public class DriverConfig {
                         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
                     }
                     driverObject = ThreadGuard.protect(new ChromeDriver(capabilities));
-                    logger.info("Using GOOGLECHROME Driver...");
+                    log.info("Using GOOGLECHROME Driver...");
                     break;
                 case HTMLUNIT:
                     if (PropConfig.get().getHtmlUnitProxy() != null) {
@@ -203,21 +202,21 @@ public class DriverConfig {
                                 setHTMLUnitCapabilitiesWithProxy(
                                         PropConfig.get().getHtmlUnitProxy(),
                                         emulationType));
-                        logger.info("Using HTMLUNIT Driver... with proxy "
+                        log.info("Using HTMLUNIT Driver... with proxy "
                                 + PropConfig.get().getHtmlUnitProxy());
                     } else {
                         driverObject = new HtmlUnitDriver(
                                 setHTMLUnitCapabilities(emulationType));
-                        logger.info("Using HTMLUNIT Driver...");
+                        log.info("Using HTMLUNIT Driver...");
                     }
                     break;
                 case SAFARI:
                     driverObject = ThreadGuard.protect(new SafariDriver());
-                    logger.info("Using Opera Driver...");
+                    log.info("Using Opera Driver...");
                     break;
                 case OPERA:
                     driverObject = ThreadGuard.protect(new OperaDriver());
-                    logger.info("Using Opera Driver...");
+                    log.info("Using Opera Driver...");
                     break;
                 case ANDROIDAPP:
                     appiumServerUrl = getAppiumServerUrl();
@@ -241,7 +240,7 @@ public class DriverConfig {
                     capabilities.setCapability("unicodeKeyboard", true);
                     capabilities.setCapability("resetKeyboard", true);
                     driverObject = new AndroidDriver<>(new URL(appiumServerUrl), capabilities);
-                    logger.info("Using Android Driver...");
+                    log.info("Using Android Driver...");
                     break;
                 case IOSAPP:
                     appiumServerUrl = getAppiumServerUrl();
@@ -263,16 +262,16 @@ public class DriverConfig {
                     capabilities.setCapability("nativeWebTap", true);
                     capabilities.setCapability("app", app.getAbsolutePath());
                     driverObject = new IOSDriver<>(new URL(appiumServerUrl), capabilities);
-                    logger.info("Using IOS Driver...");
+                    log.info("Using IOS Driver...");
                     break;
                 default:
-                    logger.error("'" + browserType + UNKNOWN_BROWSER_TYPE);
+                    log.error("'" + browserType + UNKNOWN_BROWSER_TYPE);
                     throw new Exception("'" + browserType
                             + UNKNOWN_BROWSER_TYPE);
             }
 
         } catch (Exception x) {
-            logger.error("Error in getDriverObject{}" + x.getMessage());
+            log.error("Error in getDriverObject{}" + x.getMessage());
             throw new Exception("Error in getDriverObject{}" + x.getMessage());
         }
         return driverObject;
@@ -360,7 +359,7 @@ public class DriverConfig {
                         fullUrl = PropConfig.get().getAppBin() + "/" + matchedNumber + "/" + appBinName;
                     }
                 }
-                logger.info("download file:" + fullUrl);
+                log.info("download file:" + fullUrl);
                 IOHelper.deleteFile(resourcePath + appBinName);
                 IOHelper.downFileFromUrl(fullUrl, resourcePath + appBinName);
                 app = new File(resourcePath, appBinName);

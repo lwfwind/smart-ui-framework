@@ -1,6 +1,6 @@
 package com.ui.automation.framework.library.jndi;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -11,9 +11,8 @@ import javax.naming.directory.DirContext;
 /**
  * The type Dns service.
  */
+@Slf4j
 public class DNSService extends JNDIService {
-    private final static Logger logger = Logger
-            .getLogger(DNSService.class);
 
     /**
      * Instantiates a new Dns service.
@@ -44,7 +43,7 @@ public class DNSService extends JNDIService {
                 }
             }
         } catch (NamingException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return null;
     }

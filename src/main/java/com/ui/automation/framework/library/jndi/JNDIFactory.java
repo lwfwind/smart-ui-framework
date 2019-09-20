@@ -1,6 +1,6 @@
 package com.ui.automation.framework.library.jndi;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.naming.Context;
 import javax.naming.NamingException;
@@ -11,9 +11,8 @@ import java.util.Properties;
 /**
  * The type Jndi factory.
  */
+@Slf4j
 public class JNDIFactory {
-    private final static Logger logger = Logger
-            .getLogger(JNDIFactory.class);
 
     private static final String LDAPFACTORY = "com.sun.jndi.ldap.LdapCtxFactory";
 
@@ -81,7 +80,7 @@ public class JNDIFactory {
             DirContext ctx = new InitialDirContext(mEnv);
             return ctx;
         } catch (NamingException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return null;
     }
@@ -100,7 +99,7 @@ public class JNDIFactory {
             DirContext ctx = new InitialDirContext(mEnv);
             return ctx;
         } catch (NamingException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return null;
     }

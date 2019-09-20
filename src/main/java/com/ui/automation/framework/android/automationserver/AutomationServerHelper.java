@@ -6,7 +6,7 @@ import com.ui.automation.framework.android.automationserver.hierarchyviewer.Hier
 import com.ui.automation.framework.android.automationserver.hierarchyviewer.device.DeviceBridge;
 import com.ui.automation.framework.android.automationserver.hierarchyviewer.device.DeviceConnection;
 import com.ui.automation.serializable.Point;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.BufferedInputStream;
 import java.io.ObjectInputStream;
@@ -15,8 +15,8 @@ import java.io.ObjectInputStream;
 /**
  * The type Automation server helper.
  */
+@Slf4j
 public class AutomationServerHelper {
-    private static Logger logger = Logger.getLogger(AutomationServerHelper.class);
     private static IDevice device = null;
     private static HierarchyViewer hierarchyViewer = null;
 
@@ -33,7 +33,7 @@ public class AutomationServerHelper {
                 hierarchyViewer = new HierarchyViewer(device);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -44,19 +44,19 @@ public class AutomationServerHelper {
      */
     public static void main(String[] args) {
         try {
-            logger.info("isMusicActive:" + (isMusicActive() ? "true" : "false"));
-            logger.info(getLastToast());
+            log.info("isMusicActive:" + (isMusicActive() ? "true" : "false"));
+            log.info(getLastToast());
 
             Point point1 = AutomationServerHelper.getViewCenter("editUsername");
-            logger.info(point1.getX());
-            logger.info(point1.getY());
+            log.info(String.valueOf(point1.getX()));
+            log.info(String.valueOf(point1.getY()));
 
             Point point2 = AutomationServerHelper.getViewCenter("欧美老师", 0);
-            logger.info(point2.getX());
-            logger.info(point2.getY());
+            log.info(String.valueOf(point2.getX()));
+            log.info(String.valueOf(point2.getY()));
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             DebugBridge.terminate();
         }
@@ -80,10 +80,10 @@ public class AutomationServerHelper {
             }
             String line = connection.getInputStream().readLine();
             if (line != null) {
-                returnValue = Boolean.valueOf(line);
+                returnValue = Boolean.parseBoolean(line);
             }
         } catch (Exception e) {
-            logger.error(e);
+            log.error(e.getMessage(),e);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -105,10 +105,10 @@ public class AutomationServerHelper {
             connection.sendCommand("isMusicActive");
             String line = connection.getInputStream().readLine();
             if (line != null) {
-                returnValue = Boolean.valueOf(line);
+                returnValue = Boolean.parseBoolean(line);
             }
         } catch (Exception e) {
-            logger.error(e);
+            log.error(e.getMessage(),e);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -133,7 +133,7 @@ public class AutomationServerHelper {
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
-                logger.error(e.getMessage(), e);
+                log.error(e.getMessage(), e);
             }
             currentTime = System.currentTimeMillis();
         }
@@ -157,7 +157,7 @@ public class AutomationServerHelper {
                 returnValue = line;
             }
         } catch (Exception e) {
-            logger.error(e);
+            log.error(e.getMessage(),e);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -184,7 +184,7 @@ public class AutomationServerHelper {
                 returnValue = line;
             }
         } catch (Exception e) {
-            logger.error(e);
+            log.error(e.getMessage(),e);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -212,7 +212,7 @@ public class AutomationServerHelper {
                 returnValue = (Point) obj;
             }
         } catch (Exception e) {
-            logger.error(e);
+            log.error(e.getMessage(),e);
         } finally {
             if (connection != null) {
                 connection.close();
@@ -241,7 +241,7 @@ public class AutomationServerHelper {
                 returnValue = (Point) obj;
             }
         } catch (Exception e) {
-            logger.error(e);
+            log.error(e.getMessage(),e);
         } finally {
             if (connection != null) {
                 connection.close();

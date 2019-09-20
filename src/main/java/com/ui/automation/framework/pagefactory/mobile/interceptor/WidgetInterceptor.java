@@ -26,9 +26,9 @@ import io.appium.java_client.pagefactory.Widget;
 import io.appium.java_client.pagefactory.WithTimeout;
 import io.appium.java_client.pagefactory.bys.ContentType;
 import io.appium.java_client.pagefactory.locator.CacheableLocator;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -47,6 +47,7 @@ import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.get
 /**
  * The type Widget interceptor.
  */
+@Slf4j
 public class WidgetInterceptor implements MethodInterceptor {
 
     /**
@@ -65,10 +66,7 @@ public class WidgetInterceptor implements MethodInterceptor {
     private final Map<ContentType, Widget> cachedInstances = new HashMap<>();
     private final TimeOutDuration duration;
     private final Sleeper sleeper;
-    /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(WidgetInterceptor.class);
+
     private WebElement cachedElement;
 
     /**
@@ -154,7 +152,7 @@ public class WidgetInterceptor implements MethodInterceptor {
                     this.sleeper.sleep(500);
                 }
                 if (realElement == null) {
-                    logger.error("the " + this.field.getName()
+                    log.error("the " + this.field.getName()
                             + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");
                     throw new RuntimeException("the " + this.field.getName()
                             + " element can't be found and the time(" + String.valueOf(timeout) + ") is out");

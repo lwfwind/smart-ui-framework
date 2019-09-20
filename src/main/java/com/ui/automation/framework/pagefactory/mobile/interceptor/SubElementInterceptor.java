@@ -19,9 +19,9 @@ package com.ui.automation.framework.pagefactory.mobile.interceptor;
 import com.ui.automation.framework.webdriver.Sleeper;
 import com.ui.automation.framework.pagefactory.mobile.ThrowableUtil;
 import io.appium.java_client.MobileElement;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -32,6 +32,7 @@ import java.util.Arrays;
 /**
  * Intercepts requests to {@link MobileElement}
  */
+@Slf4j
 public class SubElementInterceptor implements MethodInterceptor {
     /**
      * The Element.
@@ -50,11 +51,6 @@ public class SubElementInterceptor implements MethodInterceptor {
      */
     protected final int num;
     private final Sleeper sleeper;
-    /**
-     * The Logger.
-     */
-    protected Logger logger = Logger.getLogger(SubElementInterceptor.class);
-
     /**
      * Instantiates a new Sub element interceptor.
      *
@@ -78,9 +74,9 @@ public class SubElementInterceptor implements MethodInterceptor {
         }
 
         if (args != null && args.length > 0) {
-            logger.info(this.field.getName() + "_" + num + " " + method.getName() + " " + Arrays.deepToString(args));
+            log.info(this.field.getName() + "_" + num + " " + method.getName() + " " + Arrays.deepToString(args));
         } else {
-            logger.info(this.field.getName() + "_" + num + " " + method.getName());
+            log.info(this.field.getName() + "_" + num + " " + method.getName());
         }
 
         try {

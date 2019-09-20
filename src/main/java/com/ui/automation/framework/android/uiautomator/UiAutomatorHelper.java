@@ -8,7 +8,7 @@ import com.library.common.IOHelper;
 import com.ui.automation.framework.android.DebugBridge;
 import com.ui.automation.framework.android.automationserver.hierarchyviewer.device.DeviceBridge;
 import com.ui.automation.framework.android.uiautomator.tree.BasicTreeNode;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * The type Ui automator helper.
  */
+@Slf4j
 public class UiAutomatorHelper {
     /**
      * The constant UIAUTOMATOR_MIN_API_LEVEL.
@@ -30,8 +31,6 @@ public class UiAutomatorHelper {
     private static final String UIDUMP_DEVICE_PATH = "/data/local/tmp/uidump.xml";  //$NON-NLS-1$
     private static final int XML_CAPTURE_TIMEOUT_SEC = 40;
     private static IDevice device = null;
-    private static Logger logger = Logger.getLogger(UiAutomatorHelper.class);
-
     static {
         DebugBridge.init();
         try {
@@ -40,7 +39,7 @@ public class UiAutomatorHelper {
                 DeviceBridge.setupDeviceForward(device);
             }
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
     }
 
@@ -51,17 +50,17 @@ public class UiAutomatorHelper {
      */
     public static void main(String[] args) {
         try {
-            logger.info(getUiHierarchyContent());
-            logger.info(searchUiHierarchyContent("QQ"));
+            log.info(getUiHierarchyContent());
+            log.info(String.valueOf(searchUiHierarchyContent("QQ")));
 
-            logger.info("start screenshot");
+            log.info("start screenshot");
             BufferedImage bufferedImage = UiAutomatorHelper.takeSnapshot();
             File outputfile = new File("test.png");
             ImageIO.write(bufferedImage, "png", outputfile);
-            logger.info("end screenshot");
+            log.info("end screenshot");
 
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             DebugBridge.terminate();
         }
@@ -139,7 +138,7 @@ public class UiAutomatorHelper {
         try {
             return getUiHierarchyContent(device);
         } catch (UiAutomatorException e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         }
         return null;
     }

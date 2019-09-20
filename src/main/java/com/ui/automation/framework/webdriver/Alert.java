@@ -1,7 +1,7 @@
 package com.ui.automation.framework.webdriver;
 
 import com.library.common.StringHelper;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.WebDriver;
 
@@ -11,9 +11,9 @@ import java.util.List;
 /**
  * The type Alert.
  */
+@Slf4j
 public class Alert {
 
-    private final static Logger logger = Logger.getLogger(Alert.class);
     /**
      * The Driver.
      */
@@ -73,7 +73,7 @@ public class Alert {
             String msg = acceptAlertAndMsg();
             if (StringHelper.isNotEmpty(msg)) {
                 alertMsg.add(msg);
-                logger.info(">>>>>>>>>>>>>>>>>>>>  alert:" + msg + " <<<<<<<<<<<<<<<<<<<<<<<<<<");
+                log.info(">>>>>>>>>>>>>>>>>>>>  alert:" + msg + " <<<<<<<<<<<<<<<<<<<<<<<<<<");
             }
             currentTime = System.currentTimeMillis();
         }

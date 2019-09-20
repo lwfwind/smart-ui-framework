@@ -3,7 +3,7 @@ package com.ui.automation.framework.pagefactory;
 import com.ui.automation.framework.pagefactory.mobile.AppiumFieldDecorator;
 import com.ui.automation.framework.pagefactory.web.ElementDecorator;
 import io.appium.java_client.remote.MobilePlatform;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 import org.openqa.selenium.support.pagefactory.FieldDecorator;
@@ -16,9 +16,8 @@ import static io.appium.java_client.pagefactory.utils.WebDriverUnpackUtility.get
 /**
  * Factory class to make using Page Objects simpler and easier.
  */
+@Slf4j
 public class PageFactory {
-    private final static Logger logger = Logger
-            .getLogger(PageFactory.class);
 
     /**
      * Init elements.
@@ -50,7 +49,7 @@ public class PageFactory {
                     field.setAccessible(true);
                     field.set(page, proxy);
                 } catch (IllegalAccessException e) {
-                    logger.error(e.toString(), e);
+                    log.error(e.getMessage(), e);
                 }
             }
         }

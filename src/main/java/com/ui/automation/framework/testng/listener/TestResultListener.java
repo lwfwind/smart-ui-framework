@@ -10,7 +10,7 @@ import com.ui.automation.framework.cache.ResultCache;
 import com.ui.automation.framework.webdriver.Alert;
 import com.ui.automation.framework.webdriver.ScreenShot;
 import com.ui.automation.framework.config.PropConfig;
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
@@ -26,14 +26,13 @@ import java.util.*;
 /**
  * Test result Listener.
  */
+@Slf4j
 public class TestResultListener extends TestListenerAdapter {
-
-    private static Logger logger = Logger.getLogger(TestResultListener.class);
 
     @Override
     public void onStart(ITestContext testContext) {
         super.onStart(testContext);
-        logger.info("testContext Start");
+        log.info("testContext Start");
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
             ICustomTestListener testListenerImp = null;
@@ -46,7 +45,7 @@ public class TestResultListener extends TestListenerAdapter {
     public void onTestFailure(ITestResult tr) {
         super.onTestFailure(tr);
         String name = MethodCache.getCurrentMethodName();
-        logger.error(name + " Failure");
+        log.error(name + " Failure");
         setResultCache(tr, "fail");
         boolean isUnitTest = false;
         if (tr.getInstance() instanceof TestCaseBase) {
@@ -76,7 +75,7 @@ public class TestResultListener extends TestListenerAdapter {
     public void onTestSkipped(ITestResult tr) {
         super.onTestSkipped(tr);
         String name = MethodCache.getCurrentMethodName();
-        logger.info(name + " Skipped");
+        log.info(name + " Skipped");
         setResultCache(tr, "skip");
         TestCaseBase tb = (TestCaseBase) tr.getInstance();
         if (!tb.isUnitTest()) {
@@ -95,7 +94,7 @@ public class TestResultListener extends TestListenerAdapter {
     public void onTestSuccess(ITestResult tr) {
         super.onTestSuccess(tr);
         String name = MethodCache.getCurrentMethodName();
-        logger.info(name + " Success");
+        log.info(name + " Success");
         setResultCache(tr, "pass");
         boolean isUnitTest = false;
         if (tr.getInstance() instanceof TestCaseBase) {
@@ -121,7 +120,7 @@ public class TestResultListener extends TestListenerAdapter {
     public void onTestStart(ITestResult tr) {
         super.onTestStart(tr);
         String name = MethodCache.getCurrentMethodName();
-        logger.info(name + " Start");
+        log.info(name + " Start");
         IOHelper.createNestDirectory(ScreenShot.dir + File.separator + "Actions" + File.separator + ScreenShot.time + File.separator + name);
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
@@ -134,7 +133,7 @@ public class TestResultListener extends TestListenerAdapter {
     @Override
     public void onFinish(ITestContext testContext) {
         super.onFinish(testContext);
-        logger.info("testContext Finish");
+        log.info("testContext Finish");
         Object obj = ListenerHelper.findImplementClass(ICustomTestListener.class);
         if (obj != null) {
             ICustomTestListener testListenerImp = null;
@@ -142,15 +141,15 @@ public class TestResultListener extends TestListenerAdapter {
             testListenerImp.onFinish(testContext);
         }
         for (ITestResult passedTest : testContext.getPassedTests().getAllResults()) {
-            logger.info("PassedTests = " + passedTest.getName());
+            log.info("PassedTests = " + passedTest.getName());
         }
 
         for (ITestResult skipTest : testContext.getSkippedTests().getAllResults()) {
-            logger.info("SkipTest = " + skipTest.getName());
+            log.info("SkipTest = " + skipTest.getName());
         }
 
         for (ITestResult failedTest : testContext.getFailedTests().getAllResults()) {
-            logger.info("FailedTest = " + failedTest.getName());
+            log.info("FailedTest = " + failedTest.getName());
         }
 
         HashMap<Integer, Method> map = ResultCache.get();
@@ -162,7 +161,7 @@ public class TestResultListener extends TestListenerAdapter {
                         for (Iterator<ITestResult> iterator = testContext.getFailedTests().getAllResults().iterator(); iterator.hasNext(); ) {
                             ITestResult testResult = iterator.next();
                             if (entry.getValue().getHashCode() == getId(testResult)) {
-                                logger.info("Remove fail but retry pass test: " + entry.getValue().getName());
+                                log.info("Remove fail but retry pass test: " + entry.getValue().getName());
                                 iterator.remove();
                                 break;
                             }
@@ -204,7 +203,7 @@ public class TestResultListener extends TestListenerAdapter {
                 stackTrace.append(e.toString());
                 stackTrace.append("\n");
             }
-            logger.error(stackTrace);
+            log.error(String.valueOf(stackTrace));
         }
     }
 
@@ -215,7 +214,7 @@ public class TestResultListener extends TestListenerAdapter {
             try {
                 LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
                 for (LogEntry entry : logEntries) {
-                    logger.debug("brower info - " + entry.getLevel() + " " + entry.getMessage());
+                    log.debug("brower info - " + entry.getLevel() + " " + entry.getMessage());
                 }
             } catch (Exception ignored) {
             }
@@ -244,7 +243,7 @@ public class TestResultListener extends TestListenerAdapter {
         Alert alert = new Alert(driver);
         List<String> messages = alert.acceptAlert(5000);
         if (messages.size() > 0) {
-            logger.info(tr.getName() + " alert messages:" + StringHelper.join(messages, " \n"));
+            log.info(tr.getName() + " alert messages:" + StringHelper.join(messages, " \n"));
         }
     }
 

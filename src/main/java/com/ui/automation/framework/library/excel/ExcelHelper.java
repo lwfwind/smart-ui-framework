@@ -1,6 +1,6 @@
 package com.ui.automation.framework.library.excel;
 
-import org.apache.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFFormulaEvaluator;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -19,10 +19,8 @@ import java.util.*;
 /**
  * General convenience methods for working with excel 2003/2007
  */
+@Slf4j
 public class ExcelHelper {
-
-    private final static Logger logger = Logger
-            .getLogger(ExcelHelper.class);
 
     /**
      * The WorkBook path created in LoadFile
@@ -56,13 +54,13 @@ public class ExcelHelper {
             try {
                 workbook = WorkbookFactory.create(fis);
             } catch (InvalidFormatException e) {
-                logger.error(e.toString());
+                log.error(e.toString());
             }
 
             // setHssfsheet(getHssfworkbook().getSheetAt(iWorkSheet));
             sheet = getWorkbook().getSheetAt(iWorkSheet);
         } catch (IOException e) {
-            logger.error(e.toString());
+            log.error(e.toString());
         }
         return this;
     }
@@ -233,7 +231,7 @@ public class ExcelHelper {
 
             }
         } catch (Exception e) {
-            logger.error(e.toString());
+            log.error(e.toString());
         }
         return Array2DFromSheet;
     }
@@ -269,7 +267,7 @@ public class ExcelHelper {
 
             }
         } catch (Exception e) {
-            logger.error(e.toString());
+            log.error(e.toString());
         }
         return Array2DFromSheet;
     }
@@ -304,7 +302,7 @@ public class ExcelHelper {
 
             }
         } catch (Exception e) {
-            logger.error(e.toString(), e);
+            log.error(e.toString(), e);
         }
         return data2DFromSheet;
     }
@@ -498,7 +496,7 @@ public class ExcelHelper {
             workbook.write(fileOut);
             fileOut.close();
         } catch (IOException e) {
-            logger.error(e.toString());
+            log.error(e.toString());
         }
     }
 
@@ -662,7 +660,7 @@ public class ExcelHelper {
                     .getRowIndex();
             return buildRowHeadingDictionary(iHeadingRow, iRow);
         } catch (Exception e) {
-            logger.error("The " + strUniquecolValue + " can't be found in "
+            log.error("The " + strUniquecolValue + " can't be found in "
                     + (iColumn + 1) + " column in the file-" + sWorkBookPath, e);
         }
         return null;
@@ -824,7 +822,7 @@ public class ExcelHelper {
                                      String outputFile, String sheetName) {
         this.createExcel(outputFile, sheetName);
         this.createCells(listMap.size() + 1, listMap.get(0).size());
-        logger.info("Start to export to the result file " + outputFile);
+        log.info("Start to export to the result file " + outputFile);
         int iRow = 0;
         int iCol = 0;
         // Fill the header row
@@ -843,7 +841,7 @@ public class ExcelHelper {
         }
         // Save
         this.saveWorkbook();
-        logger.info("The export process are done!");
+        log.info("The export process are done!");
     }
 
     /**
